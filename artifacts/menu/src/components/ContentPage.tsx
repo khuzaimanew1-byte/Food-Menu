@@ -1,6 +1,6 @@
 import React from "react";
 import MenuBorder from "./MenuBorder";
-import MenuHeading from "./MenuHeading";
+import MenuHeading from "./MenuHeading/MenuHeading";
 import { MenuItemCard, MenuItemProps } from "./MenuItemCard";
 
 interface ContentPageProps {
