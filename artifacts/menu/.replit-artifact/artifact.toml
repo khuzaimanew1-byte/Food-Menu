@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Infinity Castle's Cuisine Menu"
+version = "1.0.0"
+id = "artifacts/menu"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26151
+
+[services.development]
+run = "pnpm --filter @workspace/menu run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/menu", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/menu/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26151"
+BASE_PATH = "/"

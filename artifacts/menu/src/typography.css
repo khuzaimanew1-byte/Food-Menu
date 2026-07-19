@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;0,700;1,500;1,600&family=Jost:wght@200;300;400;500&display=swap');
+
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-menu: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Jost', system-ui, sans-serif;
+  --gold: #d4af37;
+  --gold-light: #F3DFA8;
+  --gold-mid: #C9A15A;
+  --gold-warm: #E6C583;
+  --gold-muted: #C9A76A;
+  --charcoal: #1c1c1c;
+  --charcoal-deep: #0a0806;
+  --text-cream: #F8F2E3;
+  --text-muted: #ABA08D;
+}
