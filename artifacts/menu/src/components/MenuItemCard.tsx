@@ -14,9 +14,9 @@ export function MenuItemCard({ id, name, description, price, image }: MenuItemPr
     <div style={{
       display: 'flex',
       alignItems: 'center',
-      gap: '2.2cqw',
-      paddingBlock: '2.5cqw',
-      borderBottom: '1px solid rgba(201,167,106,0.05)'
+      gap: '2.8cqw',
+      paddingBlock: '2.2cqw',
+      borderBottom: '1px solid rgba(201,167,106,0.08)'
     }}>
       {/* Number badge */}
       <div style={{
@@ -44,7 +44,7 @@ export function MenuItemCard({ id, name, description, price, image }: MenuItemPr
 
       <ItemAvatar src={image} alt={name} />
 
-      <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: '0.7cqw' }}>
+      <div style={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', gap: '0.5cqw' }}>
         <div style={{
           display: 'flex',
           alignItems: 'baseline',
@@ -88,13 +88,9 @@ export function MenuItemCard({ id, name, description, price, image }: MenuItemPr
           fontFamily: "'Jost', sans-serif",
           fontWeight: 300,
           fontSize: 'clamp(9px, 1.5cqw, 13px)',
-          lineHeight: 1.6,
+          lineHeight: 1.7,
           color: '#ABA08D',
-          margin: 0,
-          overflow: 'hidden',
-          display: '-webkit-box',
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical' as const,
+          margin: 0
         }}>
           {description}
         </p>

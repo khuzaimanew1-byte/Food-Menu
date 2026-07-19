@@ -11,11 +11,14 @@ interface NavControlsProps {
 export function NavControls({ currentPage, totalPages, onPrev, onNext }: NavControlsProps) {
   return (
     <div className="no-print" style={{
+      position: 'fixed',
+      bottom: '2vh',
+      left: '50%',
+      transform: 'translateX(-50%)',
       display: 'flex',
       alignItems: 'center',
       gap: '16px',
       zIndex: 100,
-      flexShrink: 0,
     }}>
       <NavButton direction="prev" onClick={onPrev} disabled={currentPage === 0} />
       <div style={{

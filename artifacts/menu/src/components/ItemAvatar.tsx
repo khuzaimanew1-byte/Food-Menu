@@ -13,8 +13,8 @@ export function ItemAvatar({ src, alt }: ItemAvatarProps) {
       boxShadow: '0 0.5cqw 1.4cqw rgba(0,0,0,0.55)',
       borderRadius: '2px', // Slight rounding if desired
       background: 'rgba(0,0,0,0.2)',
-      flex: '0 0 13.5cqw',
-      width: '13.5cqw'
+      flex: '0 0 11.6cqw',
+      width: '11.6cqw'
     }}>
       <div style={{
         border: '1px solid rgba(201,167,106,0.28)',
