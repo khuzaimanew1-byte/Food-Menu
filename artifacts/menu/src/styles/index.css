@@ -1,9 +1,10 @@
 @import "./typography.css";
+
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
 
-@import "./styles/menu-layout.css";
+@import "./menu-layout.css";
 
 @custom-variant dark (&:is(.dark *));
 
