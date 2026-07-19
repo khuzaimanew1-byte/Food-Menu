@@ -1,92 +1,56 @@
-.stage { 
-  width: 100vw; 
-  height: 100vh; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  background: var(--charcoal-deep); 
-  position: relative; 
-  overflow: hidden; 
+.stage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--charcoal-deep);
+  position: relative;
 }
 
-.a4-box { 
-  container-type: inline-size; 
-  container-name: menu-page; 
-  aspect-ratio: 210/297; 
-  height: 92vh; 
-  max-height: 92vh; 
-  width: auto; 
-  max-width: calc(92vh * 210 / 297); 
-  overflow-y: auto; 
-  overflow-x: hidden; 
-  position: relative; 
+.a4-box {
+  container-type: inline-size;
+  container-name: menu-page;
+  flex: 0 0 auto;
+  aspect-ratio: 210 / 297;
+  height: 88vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .a4-padding {
-  padding: 3cqw 5cqw 6cqw 5cqw;
+  padding: 14cqw 14cqw 11cqw 14cqw;
 }
 
-@media print { 
-  .a4-box { 
-    overflow: visible; 
-    height: auto; 
-    max-height: none;
-    max-width: 100%;
+@media print {
+  .stage {
+    display: block;
+    height: auto;
+    background: none;
+  }
+  .a4-box {
+    height: auto;
     width: 100%;
     aspect-ratio: auto;
-  } 
-  .no-print { 
-    display: none !important; 
+    overflow: visible;
+  }
+  .no-print {
+    display: none !important;
   }
   body {
     background: var(--charcoal);
   }
-  .stage {
-    height: auto;
-    display: block;
-    background: none;
-  }
 }
 
-.two-col .items-grid { 
-  display: grid; 
-  grid-template-columns: 1fr 1fr; 
-  gap: 0 3cqw; 
+.two-col .items-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 3cqw;
 }
 
-.items-grid { 
-  display: grid; 
-  grid-template-columns: 1fr; 
-}
-
-.menu-heading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 100%;
-  margin-bottom: 2cqw;
-}
-
-.ornament-top {
-  width: 2.2em;
-  height: auto;
-}
-
-.heading-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2em;
-  max-width: 100%;
-}
-
-.divider-line {
-  flex: 0 0 4em;
-  height: 0.35em;
-}
-
-.divider-line svg {
-  width: 100%;
-  height: 100%;
-  display: block;
+.items-grid {
+  display: grid;
+  grid-template-columns: 1fr;
 }

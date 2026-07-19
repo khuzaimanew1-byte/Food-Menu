@@ -1,4 +1,5 @@
 import React, { useId } from "react";
+import "./MenuHeading.css";
 
 interface MenuHeadingProps {
   text?: string;
