@@ -123,18 +123,19 @@ function MenuApp() {
 
   return (
     <div className="stage">
-      <div className="a4-box">
-        {renderPage()}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '28px' }}>
+        <div className="a4-box">
+          {renderPage()}
+        </div>
+        <NavControls 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          onPrev={handlePrev} 
+          onNext={handleNext} 
+        />
       </div>
       
       <PrintButton />
-      
-      <NavControls 
-        currentPage={currentPage} 
-        totalPages={totalPages} 
-        onPrev={handlePrev} 
-        onNext={handleNext} 
-      />
       
       {currentPage > 0 && currentPage < 5 && (
         <div 

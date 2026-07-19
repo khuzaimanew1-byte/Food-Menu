@@ -12,7 +12,7 @@ function MenuBorder({ pg = 1, children }: MenuBorderProps) {
 
   return (
     <div className="menu-container" style={{ position:"relative",width:"100%",maxWidth:"1054px",aspectRatio:"1054 / 1492",backgroundColor:"#1c1c1c",boxShadow:"0 0 50px rgba(0,0,0,0.8)",overflow:"hidden" }}>
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none"}} viewBox="0 0 1054 1492" xmlns="http://www.w3.org/2000/svg">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-[10]" style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:10}} viewBox="0 0 1054 1492" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <style>{`
             .gold-stroke { stroke:#d4af37; fill:none; stroke-linecap:square; stroke-linejoin:miter; }

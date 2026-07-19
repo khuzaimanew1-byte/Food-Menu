@@ -1,9 +1,10 @@
 .stage { 
   width: 100vw; 
   height: 100vh; 
-  display: flex; 
+  display: flex;
+  flex-direction: column;
   align-items: center; 
-  justify-content: center; 
+  justify-content: center;
   background: var(--charcoal-deep); 
   position: relative; 
   overflow: hidden; 
@@ -13,17 +14,18 @@
   container-type: inline-size; 
   container-name: menu-page; 
   aspect-ratio: 210/297; 
-  height: 92vh; 
-  max-height: 92vh; 
+  height: 80vh; 
+  max-height: 80vh; 
   width: auto; 
-  max-width: calc(92vh * 210 / 297); 
+  max-width: calc(80vh * 210 / 297); 
   overflow-y: auto; 
   overflow-x: hidden; 
-  position: relative; 
+  position: relative;
+  flex-shrink: 0;
 }
 
 .a4-padding {
-  padding: 3cqw 5cqw 6cqw 5cqw;
+  padding: 8cqw 8cqw 10cqw 8cqw;
 }
 
 @media print { 
@@ -63,20 +65,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1cqw;
   margin-bottom: 2cqw;
 }
 
 .ornament-top {
-  width: 40%;
-  max-width: 200px;
-  margin-bottom: -0.5em;
+  width: 18%;
+  max-width: 80px;
+  margin-bottom: 0.3em;
 }
 
 .heading-row {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 1em;
+  gap: 0.5em;
 }
 
 .divider-line {
@@ -84,6 +87,7 @@
   height: 10px;
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .divider-line svg {
