@@ -3,7 +3,7 @@
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
 
-@import "./layout.css";
+@import "./menu-layout.css";
 
 @custom-variant dark (&:is(.dark *));
 
