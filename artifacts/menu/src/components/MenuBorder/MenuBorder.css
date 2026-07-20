@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   max-width: 1054px;
-  aspect-ratio: 1054 / 1492;
+  aspect-ratio: 210 / 297;
   background: var(--chr);
   box-shadow: 0 0 50px var(--blk8);
   overflow: hidden;
