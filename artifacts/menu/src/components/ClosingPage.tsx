@@ -1,6 +1,6 @@
 import React from "react";
 import MenuBorder from "./MenuBorder/MenuBorder";
-import closingImg from '@assets/closing_page_1784457723685.png';
+import closingImg from '@assets/closing_page_1784589382394.png';
 
 export function ClosingPage() {
   return (
