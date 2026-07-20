@@ -1,6 +1,6 @@
 import React from "react";
 import MenuBorder from "./MenuBorder/MenuBorder";
-import coverImg from '@assets/Cover_page_1784457716080.png';
+import coverImg from '@assets/Cover_page_1784589382396.png';
 
 export function CoverPage() {
   return (
