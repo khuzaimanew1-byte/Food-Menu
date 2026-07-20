@@ -1,0 +1,34 @@
+The UI changed after separating component styles into individual CSS files. Do not make assumptions or apply random fixes. First perform a complete root-cause analysis and identify every reason why the visual output differs from before.
+
+Investigate the entire codebase and verify each of the following:
+
+- Compare the current UI with the original implementation and identify every visual difference.
+- Verify that every component CSS file is correctly imported and loaded exactly once.
+- Check for missing, incorrect, duplicate, or circular CSS imports.
+- Verify that import order has not changed the CSS cascade or specificity.
+- Check whether any styles were accidentally removed, renamed, or modified during extraction.
+- Detect any selectors whose specificity changed after moving styles.
+- Find overridden styles caused by later-loaded CSS files.
+- Check whether global styles were mistakenly moved into component CSS, or component styles were mistakenly left in global CSS.
+- Verify that no SVG presentation attributes, inline SVG styles, gradients, filters, masks, clip paths, transforms, viewBox settings, or SVG-specific properties were incorrectly converted into CSS or removed from the SVG itself.
+- Check whether pseudo-elements, pseudo-classes, keyframes, media queries, CSS variables, font declarations, animations, transitions, or utility classes were lost or changed.
+- Verify that all class names, IDs, data attributes, and selectors still exactly match the rendered markup.
+- Detect unused CSS, missing CSS, duplicate CSS, conflicting CSS, and orphaned selectors.
+- Check whether CSS Modules, scoped styles, or global styles were unintentionally mixed.
+- Verify that no layout, spacing, sizing, positioning, typography, z-index, overflow, flex, grid, transform, opacity, filter, or transition values changed.
+- Ensure no inherited styles changed because of moving rules into different files.
+- Check whether asset paths, fonts, icons, images, SVG references, or CSS variables became invalid after restructuring.
+- Verify that every component still owns only its own styles and that shared styles remain shared instead of being duplicated.
+- Compare computed styles for affected elements to identify exactly which properties changed and where those changes originated.
+
+Produce a detailed root-cause report before making any modifications.
+
+For every issue include:
+1. Component affected.
+2. Exact file and line(s).
+3. Root cause.
+4. Previous behavior.
+5. Current behavior.
+6. Minimal fix required.
+
+Only after the complete analysis is finished, apply the smallest possible fixes to restore the original appearance. Do not refactor, redesign, optimize, or rewrite unrelated code. Preserve all existing functionality while making the UI pixel-identical to the original.
