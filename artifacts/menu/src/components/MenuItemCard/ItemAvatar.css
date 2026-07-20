@@ -1,0 +1,25 @@
+.iavt {
+  padding: 0.32cqw;
+  border: 1px solid var(--gmu55);
+  box-shadow: 0 0.5cqw 1.4cqw var(--blk55);
+  border-radius: 2px;
+  background: var(--blk2);
+  flex: 0 0 11.6cqw;
+  width: 11.6cqw;
+}
+
+.iavt-in {
+  border: 1px solid var(--gmu28);
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--ink);
+  border-radius: 1px;
+}
+
+.iavt-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.22) saturate(1.15) contrast(1.08) brightness(0.92);
+}

@@ -1,4 +1,4 @@
-.menu-heading-container {
+.mh-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,12 +6,12 @@
   margin-bottom: 2cqw;
 }
 
-.ornament-top {
+.mh-crown {
   width: 2.2em;
   height: auto;
 }
 
-.heading-row {
+.mh-row {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,13 +19,24 @@
   max-width: 100%;
 }
 
-.divider-line {
+.mh-div {
   flex: 0 0 4em;
   height: 0.35em;
 }
 
-.divider-line svg {
+.mh-div svg {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.mh-ttl {
+  font-family: var(--ff);
+  font-weight: 700;
+  font-size: 1em;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+  text-align: center;
 }

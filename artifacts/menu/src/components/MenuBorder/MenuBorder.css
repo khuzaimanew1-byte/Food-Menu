@@ -1,0 +1,46 @@
+.mb-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1054px;
+  aspect-ratio: 1054 / 1492;
+  background: var(--chr);
+  box-shadow: 0 0 50px var(--blk8);
+  overflow: hidden;
+}
+
+.mb-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+}
+
+.mb-body {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* SVG ornament classes */
+.mb-gs {
+  stroke: var(--gold);
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.mb-gf { fill: var(--gold); }
+.mb-hl { stroke-width: 1; }
+.mb-th { stroke-width: 2; }
+
+.mb-pgn {
+  font-family: var(--ff);
+  font-weight: 700;
+  font-size: 22px;
+  fill: var(--gold);
+  letter-spacing: 1px;
+}

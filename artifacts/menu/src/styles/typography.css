@@ -1,16 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;0,700;1,500;1,600&family=Jost:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;0,700;1,500;1,600&display=swap');
 
 :root {
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-menu: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Jost', system-ui, sans-serif;
-  --gold: #d4af37;
-  --gold-light: #F3DFA8;
-  --gold-mid: #C9A15A;
-  --gold-warm: #E6C583;
-  --gold-muted: #C9A76A;
-  --charcoal: #1c1c1c;
-  --charcoal-deep: #0a0806;
-  --text-cream: #F8F2E3;
-  --text-muted: #ABA08D;
+  /* Font */
+  --ff:    'Cormorant Garamond', Georgia, serif;
+
+  /* Gold */
+  --gold:  #d4af37;
+  --gl:    #F3DFA8;
+  --gm:    #C9A15A;
+  --gw:    #E6C583;
+  --gmu:   #C9A76A;
+  --glt:   #EDD9AC;
+
+  /* Gold alpha */
+  --ga1:   rgba(212,175,55,0.1);
+  --ga5:   rgba(212,175,55,0.5);
+  --ga9:   rgba(212,175,55,0.9);
+
+  /* Gold-muted alpha */
+  --gmu2:  rgba(201,167,106,0.02);
+  --gmu5:  rgba(201,167,106,0.5);
+  --gmu8:  rgba(201,167,106,0.08);
+  --gmu14: rgba(201,167,106,0.14);
+  --gmu28: rgba(201,167,106,0.28);
+  --gmu55: rgba(201,167,106,0.55);
+
+  /* Background */
+  --chr:   #1c1c1c;
+  --chrd:  #0a0806;
+  --ink:   #211C15;
+
+  /* Text */
+  --cr:    #F8F2E3;
+  --mut:   #ABA08D;
+
+  /* Black alpha */
+  --blk2:  rgba(0,0,0,0.2);
+  --blk4:  rgba(0,0,0,0.4);
+  --blk55: rgba(0,0,0,0.55);
+  --blk8:  rgba(0,0,0,0.8);
 }

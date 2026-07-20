@@ -1,7 +1,8 @@
 import React from "react";
-import MenuBorder from "./MenuBorder";
-import MenuHeading from "./MenuHeading/MenuHeading";
-import { MenuItemCard, MenuItemProps } from "./MenuItemCard";
+import MenuBorder from "../MenuBorder/MenuBorder";
+import MenuHeading from "../MenuHeading/MenuHeading";
+import { MenuItemCard, MenuItemProps } from "../MenuItemCard/MenuItemCard";
+import "./ContentPage.css";
 
 interface ContentPageProps {
   pageNumber: number;
@@ -16,10 +17,9 @@ export function ContentPage({ pageNumber, heading, items, layout, showCrown = tr
 
   return (
     <MenuBorder pg={pageNumber}>
-      <div className={`a4-padding ${layoutClass}`} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div className={`a4-padding cp-in ${layoutClass}`}>
         <MenuHeading text={heading} showCrown={showCrown} />
-        
-        <div className="items-grid" style={{ flex: 1, alignContent: 'start' }}>
+        <div className="items-grid cp-grid">
           {items.map(item => (
             <MenuItemCard key={item.id} {...item} />
           ))}
