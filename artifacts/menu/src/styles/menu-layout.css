@@ -13,9 +13,8 @@
 .a4-box {
   container-type: inline-size;
   container-name: menu-page;
-  flex: 0 0 auto;
   aspect-ratio: 210 / 297;
-  height: 88vh;
+  height: 90vh;
   overflow: hidden;
   position: relative;
 }
@@ -30,15 +29,18 @@
     height: auto;
     background: none;
   }
+
   .a4-box {
     height: auto;
     width: 100%;
     aspect-ratio: auto;
     overflow: visible;
   }
+
   .no-print {
     display: none !important;
   }
+
   body {
     background: var(--chr);
   }
@@ -55,6 +57,10 @@
   grid-template-columns: 1fr;
 }
 
-.pg-bg { z-index: -1; }
+.pg-bg {
+  z-index: -1;
+}
 
-.pg-img { object-fit: cover; }
+.pg-img {
+  object-fit: cover;
+}
