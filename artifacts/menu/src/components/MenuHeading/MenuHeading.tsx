@@ -4,13 +4,12 @@ import "./MenuHeading.css";
 interface MenuHeadingProps {
   text?: string;
   showCrown?: boolean;
-  size?: string;
 }
 
-function MenuHeading({ text = "Turkish Specialties", showCrown = true, size = "28px" }: MenuHeadingProps) {
+function MenuHeading({ text = "Turkish Specialties", showCrown = true }: MenuHeadingProps) {
   const uid = useId().replace(/:/g, "");
   return (
-    <div className="mh-wrap f-col" style={{ fontSize: size }}>
+    <div className="mh-wrap mn-hd flex flex-col items-center">
       {showCrown && (
         <svg className="mh-crown" viewBox="0 0 100 40">
           <path d="M50 35 C40 35,30 20,20 20 C10 20,5 30,0 25 M50 35 C60 35,70 20,80 20 C90 20,95 30,100 25" stroke="var(--gold)" fill="none" strokeWidth="1.5"/>
@@ -20,7 +19,7 @@ function MenuHeading({ text = "Turkish Specialties", showCrown = true, size = "2
           <path d="M65 15 Q75 5 85 15 T85 25" stroke="var(--gold)" fill="none" strokeWidth="1.5"/>
         </svg>
       )}
-      <div className="mh-row f-ctr">
+      <div className="mh-row flex items-center justify-center">
         <div className="mh-div">
           <svg preserveAspectRatio="none" viewBox="0 0 100 10">
             <defs>

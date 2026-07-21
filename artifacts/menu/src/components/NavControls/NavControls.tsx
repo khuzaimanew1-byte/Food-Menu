@@ -11,9 +11,9 @@ interface NavControlsProps {
 
 export function NavControls({ currentPage, totalPages, onPrev, onNext }: NavControlsProps) {
   return (
-    <div className="no-print nav-wrap f-aic">
+    <div className="no-print nav-wrap flex items-center">
       <NavButton direction="prev" onClick={onPrev} disabled={currentPage === 0} />
-      <div className="nav-dot rnd" />
+      <div className="nav-dot rounded-full" />
       <NavButton direction="next" onClick={onNext} disabled={currentPage === totalPages - 1} />
     </div>
   );

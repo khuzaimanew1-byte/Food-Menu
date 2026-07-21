@@ -12,12 +12,12 @@ export interface MenuItemProps {
 
 export function MenuItemCard({ id, name, description, price, image }: MenuItemProps) {
   return (
-    <div className="mic f-aic">
-      <div className="mic-bdg f-ctr">
+    <div className="mic flex items-center">
+      <div className="mic-bdg flex items-center justify-center">
         <span className="mic-num ff-s">{id}</span>
       </div>
       <ItemAvatar src={image} alt={name} />
-      <div className="mic-body f-col">
+      <div className="mic-body flex flex-col">
         <div className="mic-row">
           <h3 className="mic-name ff-s">{name}</h3>
           <div className="mic-lead" />

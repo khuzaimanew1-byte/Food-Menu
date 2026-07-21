@@ -13,7 +13,7 @@ function MenuBorder({ pg = 1, children }: MenuBorderProps) {
 
   return (
     <div className="mb-wrap">
-      <svg className="mb-svg abs-0 sz-ful" viewBox="0 0 1054 1492" xmlns="http://www.w3.org/2000/svg">
+      <svg className="mb-svg absolute inset-0 w-full h-full" viewBox="0 0 1054 1492" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <g id={cornerId}>
             <polyline className="mb-gs" points="45,115 45,45 115,45"/>
@@ -33,7 +33,6 @@ function MenuBorder({ pg = 1, children }: MenuBorderProps) {
             <rect className="mb-gf" height="3" width="3" x="50" y="93.5"/>
           </g>
         </defs>
-        <rect className="mb-gs" height="1472" width="1034" x="10" y="10"/>
         <rect className="mb-gs mb-th" height="1432" width="994" x="30" y="30"/>
         <use href={`#${cornerId}`} x="0" y="0"/>
         <use href={`#${cornerId}`} transform="translate(1054,0) scale(-1,1)" x="0" y="0"/>
@@ -55,7 +54,7 @@ function MenuBorder({ pg = 1, children }: MenuBorderProps) {
           </g>
         )}
       </svg>
-      <div className="mb-body f-col sz-ful">
+      <div className="mb-body flex flex-col w-full h-full">
         {children}
       </div>
     </div>

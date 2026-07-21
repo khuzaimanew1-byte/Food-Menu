@@ -2,6 +2,7 @@
   width: 4vw;
   height: 4vw;
   border: .2cqw solid var(--ga5);
+  background: var(--blk4);
   backdrop-filter: blur(4px);
   opacity: 1;
   transition: all 0.2s ease;
@@ -22,4 +23,5 @@
 .nav-ico {
   width: 2.5cqw;
   height: 2.5cqw;
+  color: var(--gold);
 }
