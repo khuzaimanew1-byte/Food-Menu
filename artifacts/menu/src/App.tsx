@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Printer } from "lucide-react";
 import "./App.css";
 
 import { CoverPage } from "./components/CoverPage";
 import { ClosingPage } from "./components/ClosingPage";
 import { ContentPage } from "./components/ContentPage/ContentPage";
-import { NavControls } from "./components/NavControls/NavControls";
+import { CtrlDock } from "./components/CtrlDock/CtrlDock";
 
 const queryClient = new QueryClient();
 
@@ -295,17 +294,6 @@ const DESSERT_ITEMS = [
   },
 ];
 
-function PrintButton() {
-  return (
-    <button
-      onClick={() => window.print()}
-      className="no-print prnt-btn flex items-center justify-center rounded-full cursor-pointer"
-    >
-      <Printer className="prnt-ico" />
-    </button>
-  );
-}
-
 function MenuApp() {
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = 6;
@@ -363,16 +351,15 @@ function MenuApp() {
 
   return (
     <div className="stage">
-      <div className="a4-box">{renderPage()}</div>
-
-      <PrintButton />
-
-      <NavControls
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPrev={handlePrev}
-        onNext={handleNext}
-      />
+      <div className="pg-wrap">
+        <div className="a4-box">{renderPage()}</div>
+        <CtrlDock
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
+      </div>
     </div>
   );
 }

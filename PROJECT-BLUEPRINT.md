@@ -14,8 +14,9 @@ IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEA
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
 | FEAT-07 | BE | API server — NestJS 10, health route | D |
-| FEAT-06 | FE | Print button | D |
-| FEAT-05 | FE | Page navigation (prev/next NavControls) | D |
+| FEAT-11 | FE | CtrlDock — unified pill dock (nav + print + ∞ progress) | D |
+| FEAT-06 | FE | Print button (now inside CtrlDock) | D |
+| FEAT-05 | FE | Page navigation (prev/next, now inside CtrlDock) | D |
 | FEAT-04 | FE | Menu item cards (name, desc, price, avatar) | D |
 | FEAT-03 | FE | Closing page — static bg image | D |
 | FEAT-02 | FE | Content pages — 4 category sections | D |
@@ -68,4 +69,4 @@ No archived rows yet. Archive triggers at 25 active rows per table → BLUEPRINT
 ---
 
 ## 7. LAST TOUCHED
-07-21 — blueprint created from codebase audit
+07-21 — CtrlDock implemented (components/CtrlDock/); pg-wrap wraps a4-box; NavControls/NavButton/PrintButton superseded but kept

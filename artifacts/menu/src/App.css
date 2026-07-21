@@ -1,16 +1,1 @@
-.prnt-btn {
-  position: fixed;
-  top: 1.5vh;
-  right: 1.5vw;
-  padding: .5rem;
-  border: 2px solid var(--ga5);
-  background: var(--blk4);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-}
-
-.prnt-ico {
-  width: 1.6em;
-  height: 1.6em;
-  color: var(--gold);
-}
+/* App-level styles — CtrlDock handles print+nav; no per-app button styles needed */

@@ -1,0 +1,23 @@
+Implement a new control dock for the menu viewer (print + page nav). Check SSOT-Rules.md and PROJECT-BLUEPRINT.md silently first.
+
+Structure: Mirror existing component pattern (check MenuHeading/MenuBorder/MenuItem folders) — create components/PrintBtn/ and components/NavCtrl/ (if missing), each with colocated logic + separate CSS file if styling exceeds utility classes. No inline styles, no shared-file additions unless reused 5+ times.
+
+Design — single pill dock, overlapping box's bottom edge by ~50% (reads as part of the box, not detached):
+
+Translucent charcoal-dark bg, backdrop blur, hairline gold border (~40% opacity).
+
+Left to right inside dock:
+
+Prev chevron — small echo of the box's existing corner-bracket motif behind/around it (reuse that SVG/pattern scaled down, not a generic circle-button)
+Page progress as infinity (∞) glyph, not dots/numbers — active-page loop filled/glowing gold, others faded. More pages than loops can show → repeating/segmented infinity that fills proportionally; use judgment, keep thin-stroke gold
+"•" divider — reuse exact tagline dot-separator style, don't invent new
+Print button — miniature echo of the crown emblem's circular halo ring, icon centered inside
+Next chevron — same corner-bracket echo as prev
+
+States: rest = low-opacity gold; hover = full opacity + soft gold glow (low-spread box-shadow); active = slight scale-down. Min 44px touch target via padding regardless of visual icon size.
+
+Responsiveness: all sizing/gaps in cqw tied to the same container as .a4-box — no vw, no fixed px, no separate mobile breakpoints needed.
+
+Colors/fonts: zero hardcoded hex or font names — use existing variables.css tokens (Charcoal Dark, Amber Gold, Warm Cream, fonts). Missing variable → add to variables.css, don't hardcode locally.
+
+Before finishing: check for existing corner-bracket SVG, dot-separator, and emblem-ring styles — reuse/extend, never duplicate. Update PROJECT-BLUEPRINT.md silently with new components. List every file created/changed.

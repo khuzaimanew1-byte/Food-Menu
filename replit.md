@@ -1,6 +1,6 @@
-# [Project name]
+# Infinity Castle's Cuisine — Digital Menu
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A paginated digital restaurant menu (Arabic, Turkish, Grill, Desserts) with cover → content → closing pages, print support, and a unified control dock.
 
 ## Run & Operate
 

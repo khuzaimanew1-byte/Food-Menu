@@ -1,0 +1,154 @@
+/* ——— Dock container ——— */
+.ctrl-dock {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 20;
+  gap: 1.5cqw;
+  padding: 1.4cqw 2.8cqw;
+  background: color-mix(in srgb, var(--chrd) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--ga5);   /* ~40% opacity gold hairline */
+  border-radius: 100cqw;          /* full pill */
+}
+
+/* ——— Every button in the dock ——— */
+.dock-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 44 px touch target via cqw padding + icon size */
+  width: 7cqw;
+  height: 7cqw;
+  padding: 0.8cqw;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: var(--ga5);              /* resting: low-opacity gold */
+  transition: color 0.2s ease, transform 0.12s ease;
+}
+
+.dock-btn:not(.dock-off):hover {
+  color: var(--gold);             /* hover: full opacity */
+}
+
+.dock-btn:not(.dock-off):active {
+  transform: scale(0.88);         /* active: slight scale-down */
+}
+
+.dock-off {
+  opacity: 0.22;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ——— Corner bracket background ——— */
+.brkt-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.28;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.dock-btn:not(.dock-off):hover .brkt-svg {
+  opacity: 0.55;
+  filter: drop-shadow(0 0 2px var(--ga5));
+}
+
+.brkt-s  { stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: square; stroke-linejoin: miter; }
+.brkt-t  { stroke: var(--gold); fill: none; stroke-width: 0.9; }
+.brkt-f  { fill: var(--gold); }
+
+/* ——— Chevron icon ——— */
+.dock-chev {
+  width: 2.2cqw;
+  height: 2.2cqw;
+  color: inherit;
+  position: relative;
+  z-index: 1;
+  transition: filter 0.2s ease;
+}
+
+.dock-btn:not(.dock-off):hover .dock-chev {
+  filter: drop-shadow(0 0 2.5px var(--ga5));
+}
+
+/* ——— Infinity progress ——— */
+.dock-inf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inf-svg {
+  width: 8cqw;
+  height: 3.6cqw;
+  overflow: visible;
+}
+
+.inf-bg {
+  stroke: var(--ga5);
+  fill: none;
+  stroke-width: 1.1;
+  opacity: 0.35;
+}
+
+.inf-act {
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ——— Dot divider (exact tagline • style) ——— */
+.dock-sep {
+  font-family: var(--ff);
+  font-size: 1.8cqw;
+  color: var(--ga5);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ——— Halo ring (crown-emblem echo) ——— */
+.halo-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.dock-prnt:hover .halo-svg {
+  opacity: 1;
+  filter: drop-shadow(0 0 3px var(--ga5));
+}
+
+.halo-o  { stroke: var(--gold); fill: none; stroke-width: 1; }
+.halo-i  { stroke: var(--gold); fill: none; stroke-width: 0.7; }
+.halo-mk { stroke: var(--gold); stroke-width: 1.2; }
+.halo-dot { fill: var(--gold); }
+
+/* ——— Print icon ——— */
+.dock-pico {
+  width: 2.2cqw;
+  height: 2.2cqw;
+  color: inherit;
+  position: relative;
+  z-index: 1;
+  transition: filter 0.2s ease;
+}
+
+.dock-prnt:hover .dock-pico {
+  filter: drop-shadow(0 0 2.5px var(--ga5));
+}
