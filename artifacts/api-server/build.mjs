@@ -15,7 +15,7 @@ async function buildAll() {
   await rm(distDir, { recursive: true, force: true });
 
   await esbuild({
-    entryPoints: [path.resolve(artifactDir, "src/index.ts")],
+    entryPoints: [{ in: path.resolve(artifactDir, "src/main.ts"), out: "index" }],
     platform: "node",
     bundle: true,
     format: "esm",
@@ -47,6 +47,11 @@ async function buildAll() {
       "isolated-vm",
       "lightningcss",
       "pg-native",
+      "class-transformer",
+      "class-validator",
+      "@nestjs/microservices",
+      "@nestjs/websockets",
+      "cache-manager",
       "oracledb",
       "mongodb-client-encryption",
       "nodemailer",
