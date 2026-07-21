@@ -2,25 +2,15 @@
   position: fixed;
   top: 1.5vh;
   right: 1.5vw;
-  padding: .8cqw;
-  border: .2cqw solid var(--ga5);
+  padding: .5rem;
+  border: 2px solid var(--ga5);
   background: var(--blk4);
-  backdrop-filter: blur(.4cqw);
+  backdrop-filter: blur(4px);
   z-index: 100;
 }
 
 .prnt-ico {
-  width: 2.4cqw;
-  height: 2.4cqw;
+  width: 1.6em;
+  height: 1.6em;
   color: var(--gold);
-}
-
-.pg-tot {
-  position: fixed;
-  bottom: 2vh;
-  right: 2vw;
-  font-weight: 300;
-  font-size: 11px;
-  color: var(--ga5);
-  z-index: 100;
 }

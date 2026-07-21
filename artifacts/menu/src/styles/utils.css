@@ -1,1 +1,8 @@
-.ff-s { font-family: var(--ff); }
+.ff-s    { font-family: var(--ff); }
+
+.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  user-select: none;
+  cursor: not-allowed;
+}
