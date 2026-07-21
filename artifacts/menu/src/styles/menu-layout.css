@@ -14,7 +14,8 @@
   container-type: inline-size;
   container-name: menu-page;
   aspect-ratio: 210 / 297;
-  height: 90vh;
+  height: min(90vh, 90vw * (297 / 210));
+  width: min(90vw, 90vh * (210 / 297));
   overflow: hidden;
   position: relative;
 }
