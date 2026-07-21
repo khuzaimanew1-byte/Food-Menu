@@ -12,7 +12,6 @@ import { NavControls } from "./components/NavControls/NavControls";
 
 const queryClient = new QueryClient();
 
-// Data
 const ARABIC_ITEMS = [
   { id: 1,  name: "Chicken Shawarma",  description: "Marinated chicken, thinly sliced & wrapped with garlic sauce.",       price: "$12.99" },
   { id: 2,  name: "Beef Shawarma",     description: "Tender beef slices with pickles & tahini sauce.",                     price: "$14.99" },
@@ -72,8 +71,8 @@ const DESSERT_ITEMS = [
 
 function PrintButton() {
   return (
-    <button onClick={() => window.print()} className="no-print prnt-btn">
-      <Printer className="prnt-ico" />
+    <button onClick={() => window.print()} className="no-print prnt-btn f-ctr rnd bg-b4 ptr">
+      <Printer className="prnt-ico c-gld" />
     </button>
   );
 }
@@ -113,7 +112,7 @@ function MenuApp() {
       />
 
       {currentPage > 0 && currentPage < 5 && (
-        <div className="no-print pg-tot">
+        <div className="no-print pg-tot ff-s">
           Page {currentPage} of 4
         </div>
       )}

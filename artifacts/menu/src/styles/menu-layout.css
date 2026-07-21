@@ -21,7 +21,7 @@
 }
 
 .a4-padding {
-  padding: 14cqw 14cqw 11cqw 14cqw;
+  padding: 9cqw 9cqw 11cqw;
 }
 
 @media print {
@@ -55,15 +55,6 @@
   grid-template-columns: 1fr;
 }
 
-/* Shared full-bleed image page */
-.pg-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
+.pg-bg { z-index: -1; }
 
-.pg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.pg-img { object-fit: cover; }

@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;0,700;1,500;1,600&display=swap');
 
 :root {
-  /* Font */
   --ff:    'Cormorant Garamond', Georgia, serif;
   --ff2:   'Cormorant', Georgia, serif;
 
-  /* Gold */
   --gold:  #d4af37;
   --gl:    #F3DFA8;
   --gm:    #C9A15A;
@@ -13,12 +11,10 @@
   --gmu:   #C9A76A;
   --glt:   #EDD9AC;
 
-  /* Gold alpha */
   --ga1:   rgba(212,175,55,0.1);
   --ga5:   rgba(212,175,55,0.5);
   --ga9:   rgba(212,175,55,0.9);
 
-  /* Gold-muted alpha */
   --gmu2:  rgba(201,167,106,0.02);
   --gmu5:  rgba(201,167,106,0.5);
   --gmu8:  rgba(201,167,106,0.08);
@@ -26,16 +22,13 @@
   --gmu28: rgba(201,167,106,0.28);
   --gmu55: rgba(201,167,106,0.55);
 
-  /* Background */
   --chr:   #1c1c1c;
   --chrd:  #0a0806;
   --ink:   #211C15;
 
-  /* Text */
   --cr:    #F8F2E3;
   --mut:   #ABA08D;
 
-  /* Black alpha */
   --blk2:  rgba(0,0,0,0.2);
   --blk4:  rgba(0,0,0,0.4);
   --blk55: rgba(0,0,0,0.55);
