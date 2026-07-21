@@ -1,8 +1,1 @@
-.nav-wrap { gap: 1.5vw; }
-
-.nav-dot {
-  width: .5cqw;
-  height: .5cqw;
-  background: var(--gold);
-  opacity: 0.7;
-}
+.nav-wrap { gap: .5em; }
