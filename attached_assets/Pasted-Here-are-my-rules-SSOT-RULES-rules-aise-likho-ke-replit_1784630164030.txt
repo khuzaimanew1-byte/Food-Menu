@@ -1,0 +1,127 @@
+Here are my rules:
+SSOT RULES
+rules aise likho ke replit unn rules ko dekhe jinpe wo apply karne ki zaroorat pare, poora na pare, kyunke kuch rules apply nhin bhi honge, aise heads likho jiss se poora context parhne se pehle pata chale iski zaroorat nhin hai aur jiski zaroorat hai usko poora parhe iski efficiency 95-98% se bhi zyada ho aisa na ho jiski zaroorat hai wo nhin parha, simple aur effective rules ke words hon
+
+BASE RULES
+-project mein aik blueprint file ho take project mein kuch bhi ho blueprint mein add ho taake record rahe.
+- Har implementation mein automatically best practice apply karo —
+performance, security, aur maintainability ke liye. Koi cheez
+explicitly mention na ho tab bhi optimal solution choose karo.
+Mediocre ya "working" solution kabhi acceptable nahi —
+hamesha best possible approach use karo.
+-Apply all these SSOT rules across the entire project without exception. Every existing and new line of code must comply. Any implementation that violates even a single rule is strictly forbidden and must be refactored until fully compliant.
+-Search the entire codebase before writing new code. Reuse, extend, or consolidate existing implementations into a single source of truth. Functionally identical code is a duplicate—never duplicate logic, components, styles, hooks, utilities, services, validations, types, constants, configs, or business rules.
+
+FRONTEND RULES
+-jitney bhi custom names wale hain unko max 5-6 char dena hai, css var, js var, functions, database fields, files, folders name etc, inn sab par recognizing short form use karna.
+-Har component ko alag ui component mein daalna hai jinmein chote chote recognizing component se lakar bade component tak sab include hain, bg etc Keep related UI, logic, styles, types, and assets in different file, but keep together so easily recognize the responsibility.
+-Sirf page ke css files alag styles folder mein hongi, aur logic files alag folder mein.
+-kuch global files hongi globals.css  (issmein global styling hogi jaise:  reset, body, scrollbar), variables.css  (issmein saare css var honge jaise: colors, spacing, font etc.), typography.css (issmein saari text styling hogi).
+-modals trigger pe mount honge aur close hone par unmount.
+-jab mein specify large modals par unpe First open → mount immediately
+Close → 10s countdown before unmount
+Reopen → cancel countdown 
+jinko specify karoon unpe comment daalna // hybrid mount.
+-smooth animation apply karna poore app pe.
+-creative navigation animation hon har page par conponents ke aur pages pe, navigation ki position ke hisaab se animate ho, taake pata chale navigate huwa hai,
+
+LOGICS RULES
+-List rendering mein key kabhi array index nahi — unique ID use karo, useEffect mein unnecessary dependencies nahi — clean dependencies array, Heavy computation → useMemo mandatory, Debounce → search/input fields pe 300ms
+-Preserve modular architecture. Never merge single-purpose files to reduce file count. Keep one responsibility per file, colocate feature code with its owner, reuse shared modules, and keep only global concerns in global files.
+
+CODE FIXES
+-Jab code update kar rahe ho toh ye khayal rakhna ke user experience aur ui change na ho thora sa bhi frontend logic jo user ko dikh rahe hain, baaki internal frontend code, backend code change kar sakte ho magar result wahi aaye aur better efficiency ke saath. 
+-connents nhin daalo sirf bohot hi major places par comment lagana max 3 words ka extra letters nhin hon.
+-duplicate ya override styles ya logic nhin ho, agar wo exist karein toh unhe remove karo.
+-unused code, dead codes, duplicate codes (duplicate matlab jo mostly same ho logic ya lines unhealag file par aur phir import ur jo changing lines likhni paregi ya completely duplicated bhi, agar poore app mein kahin bhi dubara exist kare toh duplicated mein include), override codes, styles ya logic remove karna, poore web mein kahin exist nhin karein.
+-font-family aur colors ko strictly restrict hai ke wo hard coded nhin hon.
+-logic aur ko optimize rakho agar kuch part same hai toh function ya class use karo, taake 2 line bhi same exist nhin ho poore project mein.
+-agar same logic chota ho sakta hai toh bade code ko update karo.
+-agar aik line ki styling min 5 baar use ho rahi hai toh usko utilities css file mein daalo.
+-js mein aik line bhi repeat nhin ho, tum separate page bana sakte ho
+-folders aur files ko logical aur chote names do aur positioning bhi better karo.
+-console.log → forbidden (remove before commit), console.error → allowed sirf genuine runtime errors ke liye.
+-Write optimized, minimal logic, avoid redundant conditions, duplicate implementations, and custom code that replicates existing/default behavior. Prefer the simplest maintainable solution.
+
+DATABASE
+-Database schema is the source of truth for data. OpenAPI spec is the source of truth for all public APIs. All frontend clients, hooks, types, and Zod schemas must be generated from the OpenAPI spec. Never maintain duplicate manual implementations.
+
+OPTIMIZATION
+-creative aur effective optimization techniques apply karo.
+**⚡ Frontend**
+- Lists 50+ items → virtual scroll (`react-window`)
+- Images → `loading="lazy"` default
+- First screen → sirf zaroori JS/CSS load ho
+- Har page apna chunk, bundle max 150kb gzipped
+- Library partial import — `import {fn} from 'lib'`, full import forbidden
+- 3rd party scripts → `defer`/`async` only
+- `will-change` sirf animated elements pe
+- `React.memo` pure components pe, `useMemo`/`useCallback` expensive ops pe
+- Heavy computation → Web Workers, main thread block na ho
+- `<link rel="preload">` fonts aur hero images ke liye
+- Service Worker — asset caching + offline support
+- Elements viewport mein aayein tab hi render/animate — `IntersectionObserver`
+
+**🔧 Backend**
+- Har list API paginated, default size 20
+- Response mein sirf needed fields, N+1 queries forbidden
+- Bulk operations support karo
+- Har foreign key pe index, frequent fields pe composite index
+- `SELECT *` forbidden
+- Static/config data cache karo, har baar DB mat jaao
+- `Cache-Control` headers set karo same responses pe
+- DB connection pooling mandatory — har request pe naya connection forbidden
+- Long tasks → background queue, API response block na ho
+- `gzip`/`brotli` compression mandatory
+- DB queries timeout set karo
+- Sensitive data kabhi log na ho — passwords, tokens
+-Request Management Strategy
+Queue & Memory
+Requests IndexedDB mein store, RAM mein sirf 3 active requests
+Request complete → foran RAM + IndexedDB se delete
+Tab close → RAM flush, IndexedDB persist, wapas aane pe resume
+Every 5min → completed purge, 1hr+ old cache purge, storage 80%+ → oldest low-priority delete
+Adaptive Batching
+1–3 req → immediate (100ms)
+4–15 req → batch 3, 500ms
+16–40 req → batch 8, 1s
+41–100 → batch 15, 2s
+100+ → batch 25, 3s + backpressure
+Chunking
+Payload 50kb+ → 50kb chunks, parallel send
+Failed → sirf woh chunk retry, poora request nahi
+Deduplication + Cache
+Same request queue/in-flight → drop, response share karo
+Response 30s cache → same request → cache se return, API call nahi
+Priority
+P0 Critical → queue bypass (auth)
+P1 High → next batch (user actions)
+P2 Normal → normal queue
+P3 Low → idle time, flood → silently drop
+Circuit Breaker
+5 errors → OPEN, 10s band
+1 test req → success → CLOSED / fail → OPEN 20s
+Retry: 1s → 2s → 4s → 8s, max 3 retries, 30s timeout
+Compression
+Payload 1kb+ → gzip, JSON se nulls/undefined strip
+Binary → ArrayBuffer, base64 forbidden
+Account Isolation
+Har account ki apni IndexedDB keys: acc_{id}_queue/cache/failed
+Memory mein sirf active account ka data
+
+**🌐 Network**
+- Images WebP, max 200kb
+- SVG agar 2kb se chota → inline karo
+- Sirf used font weights load hon
+- Multiple API calls → batch karo jahan possible
+- `ETag`/`Last-Modified` support karo
+- HTTP/2 enable karo
+- `<link rel="dns-prefetch">` third party domains ke liye
+- Critical CSS inline karo `<head>` mein
+
+**🔒 Security**
+- Input sanitize karo frontend pe bhi
+- Rate limiting API pe mandatory
+- HTTPS only, HTTP redirect karo
+- JWT short expiry + refresh token pattern
+- CORS strictly configured — `*` forbidden production mein

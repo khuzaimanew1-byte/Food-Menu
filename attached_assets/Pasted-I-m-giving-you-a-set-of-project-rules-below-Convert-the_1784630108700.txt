@@ -1,0 +1,52 @@
+I'm giving you a set of project rules below. Convert them into SSOT-Rules.md, optimized so you read the absolute minimum — not full sections, individual rule lines only, based on what the current task actually touches.
+
+Step 1 — Atomic rule format:
+Every rule gets a unique short tag and lives on exactly one line: [TAG] rule text. Tags are keyword-based so they're greppable, e.g. [MODAL-MOUNT], [CSS-COLOR], [API-PAGINATE], [NAME-LEN]. This lets you jump to one line instead of reading a whole category when only one rule applies.
+
+Step 2 — Compression per rule (same as before, stays strict):
+One line, imperative, no prose, no filler, exact numbers preserved. Example:
+[MODAL-HYBRID] Specified modals only: open=mount instantly, close=10s delay then unmount, reopen=cancel delay. Comment: // hybrid mount
+
+Step 3 — Two-tier lookup instead of one:
+
+Tier 1 — Category table (which file section, coarse):
+
+| Task touches... | Section |
+|---|---|
+| UI/component/React | FRONTEND |
+| CSS/tailwind/design | STYLING |
+| hooks/state/business logic | LOGIC |
+| API/NestJS | BACKEND |
+| schema/ORM/query | DATABASE |
+| new file/folder | ARCHITECTURE |
+| editing existing code | REFACTORING |
+| speed/bundle/cache | OPTIMIZATION |
+| auth/input/exposure | SECURITY
+
+Tier 2 — Tag index inside each section (fine-grained, so you don't read the whole section):
+
+## FRONTEND
+Tags: [COMP-SPLIT] [MODAL-MOUNT] [MODAL-HYBRID] [NAV-ANIM] [ANIM-SMOOTH] [NAME-LEN]
+[COMP-SPLIT] one rule line
+[MODAL-MOUNT] one rule line
+...
+
+Before reading section body, scan only the Tags line. Match tags to the task keyword-by-keyword. Read ONLY the matched tag lines, skip the rest of the section entirely — even within a relevant section, most lines usually don't apply.
+
+Step 4 — Base and Universal Enforcement follow the same tag system, not a blanket "always read fully" rule:
+Base gets its own Tags line too. Scan it, pull only matched tags — e.g. a pure logic-only task might only need [REUSE-CHECK] and [BEST-PRACTICE] from Base, not all 6 Base rules. Universal Enforcement stays genuinely tiny (max 6 tags) since those apply almost every time regardless — but still scan-then-pick, don't dump all 6 into reasoning if only 2 are relevant to a one-line fix.
+
+Step 5 — Operating instruction (top of file):
+"On every task: identify keywords in the task → check Tier 1 for section(s) → check that section's Tags line → read only matching tag lines, plus any Base/Universal tags that match → implement → self-check only against the tags you read, not the whole file → never announce this process, comply silently. New task with no clear tag match → ask once, don't guess."
+
+Step 6 — Cross-references stay tag-based, not prose:
+If a rule spans categories, don't duplicate it — reference the tag: [STYLING → CSS-COLOR] instead of restating.
+
+Step 7 — New rules later:
+Slot into nearest existing tag family; only create a new tag if genuinely no existing one fits. Don't create new top-level sections without asking.
+
+Do not lose a single constraint from what I paste — every rule must survive in meaning, just tagged and compressed. If something is ambiguous, ask before assuming.
+
+Here are my rules:
+
+[apne rules yahan paste karo]
