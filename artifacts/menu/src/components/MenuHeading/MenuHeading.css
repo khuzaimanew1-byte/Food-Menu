@@ -1,17 +1,15 @@
+.mn-hd { font-size: 1.4em; }
+
 .mh-wrap {
-  align-items: center;
   max-width: 100%;
   margin: 1cqw 0;
   position: relative;
 }
 
 .mh-crown {
-  width: 3.2em;
   height: auto;
   position: absolute;
   top: -1.1em;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .mh-row {
@@ -20,7 +18,7 @@
 }
 
 .mh-div {
-  flex: 0 0 3.6em;
+  flex: 0 0 2.2em;
   height: 0.5em;
 }
 
@@ -31,9 +29,9 @@
 }
 
 .mh-ttl {
-  font-weight: 500;
-  font-size: .8em;
-  letter-spacing: .2em;
+  font-weight: 700;
+  font-size: .9em;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gold);
   margin: 0;

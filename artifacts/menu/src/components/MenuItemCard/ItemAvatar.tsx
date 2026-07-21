@@ -10,7 +10,7 @@ export function ItemAvatar({ src, alt }: ItemAvatarProps) {
   return (
     <div className="iavt">
       <div className="iavt-in">
-        {src && <img src={src} alt={alt || "Menu Item"} className="iavt-img sz-ful" />}
+        {src && <img src={src} alt={alt || "Menu Item"} className="iavt-img w-full h-full" />}
       </div>
     </div>
   );

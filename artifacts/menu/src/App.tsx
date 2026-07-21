@@ -71,8 +71,8 @@ const DESSERT_ITEMS = [
 
 function PrintButton() {
   return (
-    <button onClick={() => window.print()} className="no-print prnt-btn f-ctr rnd bg-b4 ptr">
-      <Printer className="prnt-ico c-gld" />
+    <button onClick={() => window.print()} className="no-print prnt-btn flex items-center justify-center rounded-full cursor-pointer">
+      <Printer className="prnt-ico" />
     </button>
   );
 }
@@ -87,10 +87,10 @@ function MenuApp() {
   const renderPage = () => {
     switch (currentPage) {
       case 0: return <CoverPage />;
-      case 1: return <ContentPage pageNumber={1} heading="Arabic Specialties"            items={ARABIC_ITEMS}  layout="single"     />;
-      case 2: return <ContentPage pageNumber={2} heading="Turkish Specialties"           items={TURKISH_ITEMS} layout="two-column" />;
+      case 1: return <ContentPage pageNumber={1} heading="Arabic Specialties"               items={ARABIC_ITEMS}  layout="single"     />;
+      case 2: return <ContentPage pageNumber={2} heading="Turkish Specialties"              items={TURKISH_ITEMS} layout="two-column" />;
       case 3: return <ContentPage pageNumber={3} heading="Chef Signatures & Premium Grills" items={GRILLS_ITEMS}  layout="two-column" />;
-      case 4: return <ContentPage pageNumber={4} heading="Desserts & Premium Selections" items={DESSERT_ITEMS} layout="single"     />;
+      case 4: return <ContentPage pageNumber={4} heading="Desserts & Premium Selections"    items={DESSERT_ITEMS} layout="single"     />;
       case 5: return <ClosingPage />;
       default: return <CoverPage />;
     }

@@ -4,6 +4,7 @@
   right: 1.5vw;
   padding: .8cqw;
   border: .2cqw solid var(--ga5);
+  background: var(--blk4);
   backdrop-filter: blur(.4cqw);
   z-index: 100;
 }
@@ -11,6 +12,7 @@
 .prnt-ico {
   width: 2.4cqw;
   height: 2.4cqw;
+  color: var(--gold);
 }
 
 .pg-tot {
