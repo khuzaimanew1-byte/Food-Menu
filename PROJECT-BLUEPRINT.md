@@ -40,6 +40,9 @@ Tags: STACK, FOLDER, CODEGEN, IMAGES, NAMING, STYLES, RULES
 ## 4. STANDING INSTRUCTIONS
 | Date | Rule | Status |
 |---|---|---|
+| 07-21 | Pre-task: scan SSOT-Rules.md + §4+§5 keyword-matched rows; conflict→stop+flag | D |
+| 07-21 | Post-task: update PROJECT-BLUEPRINT.md silently, no narration, no permission-ask | D |
+| 07-21 | "remember this"/"from now on" → log §4 immediately, dated, one line, apply unprompted | D |
 | 07-21 | Check SSOT-Rules.md tags before every task | D |
 | 07-21 | Images: WebP in public/img/, max 5-6 char names | D |
 | 07-21 | All custom names max 5-6 chars (files, vars, CSS, DB fields) | D |
