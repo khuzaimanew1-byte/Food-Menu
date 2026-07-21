@@ -1,0 +1,56 @@
+Create PROJECT-BLUEPRINT.md at the project root. This file must stay scannable forever, even at 500+ entries — it's for recognition, not reading. No prose, no paragraphs, no explanations. Pure tables and tags.
+
+Design rules (apply to every section):
+
+Every entry is one row/line, max ~8-10 words. If it needs more, it's the wrong place — put a link to the actual file/code instead.
+Use fixed short status codes everywhere, never write them out: D=done, P=in-progress, X=planned/pending, R=resolved, !=blocking/critical
+Every section starts with a one-line index of tags/IDs in it (so you scan the index line first, jump straight to the matching row, never read the whole table top to bottom)
+Newest entries always added at the top of their table, not the bottom — recent = most relevant, no scrolling through old history to find current state
+
+Structure:
+
+# BLUEPRINT — scan only, don't read linearly
+
+## 1. CORE
+[one line: what this project is, changes almost never]
+
+## 2. FEATURES
+IDs in this section: FEAT-01, FEAT-02, ...
+| ID | Area | Name | Status |
+|---|---|---|---|
+| FEAT-12 | BE | neon-adapter | D |
+(new features get next ID, appended to TOP of table)
+
+## 3. ARCHITECTURE
+Tags: STACK, NAMING, FOLDER
+| Tag | Decision |
+|---|---|
+| STACK | React+Nest+Drizzle+Neon |
+(one line per decision, only touched on structural change)
+
+## 4. STANDING INSTRUCTIONS
+| Date | Rule | Status |
+|---|---|---|
+| 07-21 | Neon driver for all new DB conn | D |
+Never silently drop a row here. If a new task conflicts with a row, stop and flag before proceeding.
+
+## 5. WATCHOUTS
+| Date | Note | Status |
+|---|---|---|
+| 07-21 | schema empty, don't assume tables exist | !
+
+## 6. ARCHIVE INDEX
+Once any table above exceeds 25 rows, move its oldest/resolved rows into BLUEPRINT-ARCHIVE.md under a matching heading, and leave only a one-line pointer here: "FEATURES rows 1-25 archived → see BLUEPRINT-ARCHIVE.md#features". Active tables stay short forever this way.
+
+## 7. LAST TOUCHED
+[date] — [what changed, max 6 words]
+
+Operating behavior:
+
+On any task: check section 4 and 5 rows relevant to the task's keywords only — scan the ID/tag index line first, jump to matching rows, ignore the rest.
+After finishing a task: add/update rows silently, no announcement, no explanation of what you're logging.
+When any table crosses 25 active rows, archive the oldest as described in section 6 — do this automatically without being asked.
+Never write a sentence where a row will do. If you're about to write more than one line for an entry, stop and shorten it or split it into Area+ID+Status instead.
+Do not restate old entries when adding new ones — additive only, don't rewrite history.
+
+Start by creating this file with whatever can currently be inferred about the project. Keep every future update in this exact dense, tabular, ID-tagged format — never revert to prose as the project grows.
