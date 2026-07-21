@@ -9,7 +9,7 @@ import "./PrintBtn.css";
 export function PrintBtn() {
   return (
     <button
-      className="prnt-btn no-print"
+      className="prnt-btn glass no-print"
       onClick={() => window.print()}
       aria-label="Print menu"
     >
