@@ -1,43 +1,63 @@
-/* ── PrintBtn: floats above top-right of pg-wrap, overlapping by ~50% ── */
+/* ── PrintBtn: action button pinned to top-right corner of pg-wrap ── */
 .prnt-btn {
   position: absolute;
   top: 0;
-  right: 3cqw;
+  right: 0;
+  /* Sit right at the corner — shift in by 1px so border aligns with box edge */
   transform: translateY(-50%);
   z-index: 20;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  /* touch target: icon SVG sets visual size, padding ensures tappability */
-  padding: 0;
-  background: none;
-  border: none;
+  gap: 0.55em;
+  padding: 0.55em 1.1em 0.55em 0.85em;
+
+  /* Action button: solid dark bg, gold border, angular (no radius) */
+  background: color-mix(in srgb, var(--chrd) 90%, var(--gold) 10%);
+  border: 1px solid var(--ga9);
+  border-radius: 2px;
   cursor: pointer;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 
-  /* resting: softly lit */
-  opacity: 0.6;
-  filter: drop-shadow(0 0 3px var(--ga5));
-  transition: opacity 0.2s ease, filter 0.2s ease, transform 0.12s ease;
+  /* Typography */
+  font-family: var(--ff);
+  font-size: 1.5cqw;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  white-space: nowrap;
+
+  opacity: 0.72;
+  box-shadow: 0 0 8px rgba(0,0,0,0.6), 0 0 4px var(--ga1);
+  transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.12s ease;
 }
 
 .prnt-btn:hover {
   opacity: 1;
-  filter: drop-shadow(0 0 6px var(--ga9));
+  box-shadow: 0 0 12px rgba(0,0,0,0.7), 0 0 8px var(--ga5);
 }
 
 .prnt-btn:active {
-  transform: translateY(-50%) scale(0.9);
+  transform: translateY(-50%) scale(0.94);
 }
 
-.prnt-svg {
-  width: 8cqw;
-  height: 8cqw;
+/* Printer SVG icon */
+.prnt-icon {
+  width: 2.2cqw;
+  height: 2.2cqw;
+  flex: 0 0 auto;
 }
 
-/* Stroke classes — mirror MenuBorder naming convention */
-.pb-gs { stroke: var(--gold); fill: none; stroke-width: 1.6; stroke-linecap: square; stroke-linejoin: miter; }
-.pb-gt { stroke: var(--gold); fill: none; stroke-width: 0.9; }
-.pb-gl { stroke: var(--gmu); fill: none; stroke-width: 1.2; }
-.pb-gf { fill: var(--gold); }
+/* Label */
+.prnt-label {
+  display: inline-block;
+  /* Vertically centre the small-caps label with the icon */
+  line-height: 1;
+}
+
+/* SVG fill/stroke classes */
+.pi-gs { stroke: var(--gold); fill: none; stroke-width: 1.3; stroke-linejoin: miter; }
+.pi-gm { stroke: var(--ga9); fill: color-mix(in srgb, var(--chrd) 80%, var(--gold) 10%); stroke-width: 1.1; }
+.pi-gf { fill: var(--gold); }
+.pi-gl { stroke: var(--gmu); fill: none; stroke-width: 0.9; stroke-linecap: square; }
