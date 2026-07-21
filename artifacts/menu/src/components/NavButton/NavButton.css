@@ -8,9 +8,6 @@
   outline: none;
 }
 
-.nav-btn.disabled {
-  background: var(--blk2);
-}
 
 .nav-btn:not(.disabled):hover {
   border-color: var(--ga9);
