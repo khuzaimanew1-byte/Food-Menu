@@ -9,7 +9,7 @@ interface NavButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export function NavButton({ direction, disabled, ...props }: NavButtonProps) {
   const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
   return (
-    <button disabled={disabled} className="nav-btn flex items-center justify-center rounded-full cursor-pointer no-print" {...props}>
+    <button disabled={disabled} className={`nav-btn flex items-center justify-center rounded-full cursor-pointer no-print${disabled ? " disabled" : ""}`} {...props}>
       <Icon className="nav-ico" strokeWidth={2} />
     </button>
   );
