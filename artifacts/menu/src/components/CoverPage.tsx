@@ -5,8 +5,8 @@ import coverImg from '@assets/Cover_page_1784589382396.png';
 export function CoverPage() {
   return (
     <MenuBorder pg={false}>
-      <div className="pg-bg">
-        <img src={coverImg} alt="Infinity Castle's Cuisine Cover" className="pg-img" />
+      <div className="pg-bg abs-0">
+        <img src={coverImg} alt="Infinity Castle's Cuisine Cover" className="pg-img sz-ful" />
       </div>
     </MenuBorder>
   );

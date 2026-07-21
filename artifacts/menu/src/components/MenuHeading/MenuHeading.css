@@ -1,27 +1,27 @@
 .mh-wrap {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   max-width: 100%;
-  margin-bottom: 2cqw;
+  margin: 1cqw 0;
+  position: relative;
 }
 
 .mh-crown {
-  width: 2.2em;
+  width: 3.2em;
   height: auto;
+  position: absolute;
+  top: -1.1em;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .mh-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2em;
+  gap: .6cqw;
   max-width: 100%;
 }
 
 .mh-div {
-  flex: 0 0 4em;
-  height: 0.35em;
+  flex: 0 0 3.6em;
+  height: 0.5em;
 }
 
 .mh-div svg {
@@ -31,9 +31,8 @@
 }
 
 .mh-ttl {
-  font-family: var(--ff);
-  font-weight: 700;
-  font-size: .9em;
+  font-weight: 500;
+  font-size: .8em;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--gold);

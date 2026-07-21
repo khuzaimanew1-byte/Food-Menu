@@ -5,8 +5,8 @@ import closingImg from '@assets/closing_page_1784589382394.png';
 export function ClosingPage() {
   return (
     <MenuBorder pg={false}>
-      <div className="pg-bg">
-        <img src={closingImg} alt="Infinity Castle's Cuisine Closing" className="pg-img" />
+      <div className="pg-bg abs-0">
+        <img src={closingImg} alt="Infinity Castle's Cuisine Closing" className="pg-img sz-ful" />
       </div>
     </MenuBorder>
   );

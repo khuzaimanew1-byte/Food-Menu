@@ -2,29 +2,21 @@
   position: fixed;
   top: 1.5vh;
   right: 1.5vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 50%;
-  border: 1px solid var(--ga5);
-  background: var(--blk4);
-  backdrop-filter: blur(4px);
-  cursor: pointer;
+  padding: .8cqw;
+  border: .2cqw solid var(--ga5);
+  backdrop-filter: blur(.4cqw);
   z-index: 100;
 }
 
 .prnt-ico {
-  color: var(--gold);
-  width: 24px;
-  height: 24px;
+  width: 2.4cqw;
+  height: 2.4cqw;
 }
 
 .pg-tot {
   position: fixed;
   bottom: 2vh;
   right: 2vw;
-  font-family: var(--ff);
   font-weight: 300;
   font-size: 11px;
   color: var(--ga5);

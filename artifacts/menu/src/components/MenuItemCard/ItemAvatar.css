@@ -18,8 +18,6 @@
 }
 
 .iavt-img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   filter: sepia(0.22) saturate(1.15) contrast(1.08) brightness(0.92);
 }

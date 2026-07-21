@@ -17,7 +17,7 @@ export function ContentPage({ pageNumber, heading, items, layout, showCrown = tr
 
   return (
     <MenuBorder pg={pageNumber}>
-      <div className={`a4-padding cp-in f-col sz-ful ${layoutClass}`}>
+      <div className={`a4-padding cp-in ${layoutClass}`}>
         <MenuHeading text={heading} showCrown={showCrown} />
         <div className="items-grid cp-grid">
           {items.map(item => (
