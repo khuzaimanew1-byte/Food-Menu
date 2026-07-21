@@ -1,0 +1,27 @@
+Redesign the menu viewer's controls — a floating PrintBtn above the top edge, and a NavCtrl dock below with arrows and page indicators.
+
+First, silently check SSOT-Rules.md, PROJECT-BLUEPRINT.md, and the existing MenuBorder/MenuHeading components for the corner-bracket motif and emblem halo-ring styling — reuse these visual patterns for the new controls, but keep PrintBtn as its own independent floating element (not physically merged into existing SVGs).
+
+Structure: components/NavCtrl/ and components/PrintBtn/, colocated logic + separate CSS, matching the pattern of existing components. No inline styles; only add to shared files if something is reused 5+ times elsewhere.
+
+Layout:
+
+                    [print]
+        ------------------------
+        |          Menu          |
+        ------------------------
+   [prev]  • • ● • • •  [next]
+
+Print button: floats above the box's top edge (partial overlap), top-right, visually independent from the box's own corner decoration. Style it in the same decorative family as the existing corner-bracket/emblem motifs (angular, gold-line based, not a generic circle icon button).
+
+NavCtrl dock: spans the box's full width, overlaps the bottom edge partially. Prev/next arrows anchor to the outer edges, page indicators sit in the center.
+
+Arrows should feel like they belong to the same visual family as the corner-bracket motif — angular, not generic rounded chevrons.
+
+Page indicators: one marker per page, styled using the same accent-dot/diamond motif already present elsewhere in the design (not plain generic dots). Active page should stand out clearly (fill + glow). Every indicator should be clickable to jump to that page directly. If there are more pages than fit comfortably, make the indicator strip scrollable/draggable, and keep the active indicator in view automatically as pages change.
+
+States: all controls should feel gently "lit" even at rest (soft glow, gold tone, not full brightness), brightening further on hover, with a subtle press feedback on tap. Make sure touch targets stay comfortably tappable even if the visual elements are small.
+
+Use only cqw-based sizing tied to the same container as .a4-box (no vw, no fixed px), so this scales naturally without needing separate mobile breakpoints. Use only existing variables.css tokens for color/fonts — add new tokens there if needed, don't hardcode.
+
+Before finishing: make sure the floating print button doesn't visually collide with the box's existing corner decoration, confirm no duplicate SVGs/styles were created where reuse was possible, update PROJECT-BLUEPRINT.md silently, and list every file changed or created.

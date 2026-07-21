@@ -1,0 +1,139 @@
+/* ── NavCtrl dock: spans full width, overlaps bottom edge by ~50% ── */
+.navc-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(50%);
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 0.8cqw;
+  height: 9cqw;
+
+  background: color-mix(in srgb, var(--chrd) 84%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--ga5);
+  border-bottom: 1px solid var(--ga5);
+}
+
+/* Thin gold rules on left/right edges */
+.navc-wrap::before,
+.navc-wrap::after {
+  content: "";
+  flex: 0 0 1px;
+  height: 100%;
+  background: var(--ga5);
+}
+
+/* ── Base button reset ── */
+.navc-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* resting: softly lit */
+  opacity: 0.55;
+  filter: drop-shadow(0 0 2px var(--ga5));
+  transition: opacity 0.18s ease, filter 0.18s ease, transform 0.1s ease;
+}
+
+.navc-btn:not(.navc-off):not(.pg-dot):hover,
+.navc-btn:not(.navc-off).pg-dot:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 5px var(--ga9));
+}
+
+.navc-btn:not(.navc-off):active {
+  transform: scale(0.88);
+}
+
+.navc-off {
+  opacity: 0.18;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Arrow buttons ── */
+.navc-arr {
+  flex: 0 0 auto;
+  /* touch target via size */
+  width: 10cqw;
+  height: 9cqw;
+  padding: 1cqw;
+}
+
+.arr-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Matches MenuBorder visual language */
+.arr-fill { fill: var(--gold); }
+.arr-line { stroke: var(--gold); fill: none; stroke-width: 1.4; }
+.arr-dot  { fill: var(--gold); }
+.arr-brk  { stroke: var(--gold); fill: none; stroke-width: 1; stroke-linecap: square; }
+
+/* ── Page indicator strip ── */
+.pg-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  flex: 1 1 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  /* hide scrollbar while preserving scroll functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  justify-content: center;
+  padding: 0 1cqw;
+}
+
+.pg-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Per-page diamond indicator ── */
+.pg-dot {
+  flex: 0 0 auto;
+  /* generous touch target */
+  width: 5.5cqw;
+  height: 5.5cqw;
+  padding: 1cqw;
+}
+
+.dot-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Inactive diamond: outlined, faded */
+.dot-dmnd {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.2;
+}
+
+/* Active diamond: filled + glow — override via parent class */
+.pg-act .dot-svg {
+  filter: drop-shadow(0 0 4px var(--ga9));
+}
+
+.pg-act .dot-dmnd {
+  fill: var(--gold);
+  stroke: var(--gold);
+}
+
+.pg-act {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 6px var(--ga9)) !important;
+}

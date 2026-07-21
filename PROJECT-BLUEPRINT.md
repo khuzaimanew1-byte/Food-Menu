@@ -14,9 +14,10 @@ IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEA
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
 | FEAT-07 | BE | API server — NestJS 10, health route | D |
-| FEAT-11 | FE | CtrlDock — unified pill dock (nav + print + ∞ progress) | D |
-| FEAT-06 | FE | Print button (now inside CtrlDock) | D |
-| FEAT-05 | FE | Page navigation (prev/next, now inside CtrlDock) | D |
+| FEAT-12 | FE | PrintBtn — angular bracket-frame float, top-right overlap | D |
+| FEAT-11 | FE | NavCtrl — full-width dock, diamond arrows + diamond page indicators | D |
+| FEAT-06 | FE | Print button (superseded by FEAT-12) | D |
+| FEAT-05 | FE | Page navigation (superseded by FEAT-11) | D |
 | FEAT-04 | FE | Menu item cards (name, desc, price, avatar) | D |
 | FEAT-03 | FE | Closing page — static bg image | D |
 | FEAT-02 | FE | Content pages — 4 category sections | D |
@@ -47,6 +48,7 @@ Tags: STACK, FOLDER, CODEGEN, IMAGES, NAMING, STYLES, RULES
 | 07-21 | "remember this"/"from now on" → log §4 immediately, dated, one line, apply unprompted | D |
 | 07-21 | Check SSOT-Rules.md tags before every task | D |
 | 07-21 | Images: WebP in public/img/, max 5-6 char names | D |
+| 07-21 | Controls: PrintBtn floats top-right (translateY -50%); NavCtrl spans full width bottom (translateY 50%) — both inside pg-wrap | D |
 | 07-21 | All custom names max 5-6 chars (files, vars, CSS, DB fields) | D |
 
 ---
@@ -69,4 +71,4 @@ No archived rows yet. Archive triggers at 25 active rows per table → BLUEPRINT
 ---
 
 ## 7. LAST TOUCHED
-07-21 — CtrlDock implemented (components/CtrlDock/); pg-wrap wraps a4-box; NavControls/NavButton/PrintButton superseded but kept
+07-21 — PrintBtn + NavCtrl redesign: angular bracket motif print button (top-right float) + full-width diamond-arrow/diamond-indicator dock (bottom overlap)

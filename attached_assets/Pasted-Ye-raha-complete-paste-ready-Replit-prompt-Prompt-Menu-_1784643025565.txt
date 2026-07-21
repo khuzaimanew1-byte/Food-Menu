@@ -1,0 +1,37 @@
+Ye raha complete, paste-ready Replit prompt:
+
+Prompt: Menu viewer ke control dock (PrintBtn + NavCtrl) ko redesign karo — motif-consistent, disabled-look fix
+
+Pehle silently check karo SSOT-Rules.md, PROJECT-BLUEPRINT.md, aur existing MenuBorder/MenuHeading components ke andar do cheezein locate karo: (1) corner-bracket SVG (L-shaped nested lines + floating square + accent dots), (2) emblem halo-ring aur uske accent-dot markers. In dono ko exact reuse karna hai — koi naya generic icon shape mat banao.
+
+Structure: components/NavCtrl/ aur components/PrintBtn/ folders mein colocated logic + separate CSS (agar utility classes se zyada styling chahiye). Koi inline styles nahi. Shared file mein sirf tab add karo agar 5+ jagah reuse ho.
+
+1. Prev/Next arrows — Bracket-arrow hybrid
+Corner-bracket ka wahi nested right-angle line construction lo (2-3 straight strokes jaisa box ke corners mein hai), ek end ko close karke arrowhead bana do — chevron khud unhi straight segments se bane, koi rounded/curved chevron glyph import mat karo. Next = right-pointing, Prev = mirrored left-pointing. Same stroke-width jo corner-brackets mein hai use karo (cqw proportion).
+
+2. Print button — Nested-square frame, non-round, with signature accent
+
+Container shape: circle nahi, corner-motif ka nested-square frame (square-within-L-bracket) is button ka container shape ban jaye — is se dock aur box automatically visually tied lagte hain.
+Andar icon: printer glyph strictly straight-line/right-angle mein redraw karo (paper-tray + output line), koi filled shape ya rounded corner nahi.
+Ek corner pe chhota accent dot/diamond add karo (jaisa emblem halo aur corner-bracket ends pe hai) — ye button ka signature mark banega, generic na lage.
+
+3. Progress indicator — Interactive lemniscate (infinity) scrubber
+
+Infinity symbol ko decorative glyph ki jagah actual SVG path (lemniscate curve, fixed viewBox) ki tarah banao.
+Har page ka marker path ke arc-length ke proportion pe plot karo (getPointAtLength technique) taake markers curve pe evenly-distributed rahein chahe pages 2 hon ya 20 — is se count badhne pe bhi curve break nahi hoga.
+Active page marker: filled gold + glow. Baaki markers: faded gold (~40% opacity, wahi gold hue, gray nahi).
+Pointer/drag support add karo curve ke upar — jahan bhi drag/tap ho, nearest point curve pe find karke us se corresponding page pe switch karo. Ye pehle wali complaint (switchable nahi tha, overflow-hidden bar) permanently solve karega.
+overflow: hidden container pe mat lagao jo drag ko block kare — path apne fixed viewBox mein already contained hai, scroll ki zaroorat nahi.
+
+States (teeno elements pe consistent):
+
+Rest: pure Amber Gold hue, 55-65% opacity (20-30% jaisa low mat rakho — wahi disabled illusion deta hai), subtle ambient glow already ON (low-blur low-spread gold box-shadow) taake "lit but idle" lage, "off" nahi.
+Hover: opacity 100%, glow intensify, smooth transition.
+Active/tap: scale ~0.95, glow retain.
+cursor: pointer explicit set karo; check koi shared .disabled/.muted utility class in icons pe accidentally apply toh nahi ho rahi.
+
+Dock container: translucent charcoal-dark bg, backdrop blur, hairline gold border (~40% opacity), box ke bottom edge ko ~50% overlap kare. Sab sizing/gaps .a4-box wale hi container ke cqw units mein — koi vw ya fixed px, koi separate mobile breakpoint nahi. Touch target min 44px padding se maintain karo visual icon chhota rehte hue bhi.
+
+Colors/fonts: sirf variables.css tokens. Naya token chahiye toh wahin add karo, kahin hardcode mat karo.
+
+Before finishing: confirm karo corner-bracket SVG aur emblem accent-dot styles dono NavCtrl/PrintBtn mein reused hain, duplicate SVG paths nahi bane. PROJECT-BLUEPRINT.md silently update karo in components ke changes ke sath. Har file jo create/change hui uski poori list do.

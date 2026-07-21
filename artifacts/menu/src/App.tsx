@@ -7,7 +7,8 @@ import "./App.css";
 import { CoverPage } from "./components/CoverPage";
 import { ClosingPage } from "./components/ClosingPage";
 import { ContentPage } from "./components/ContentPage/ContentPage";
-import { CtrlDock } from "./components/CtrlDock/CtrlDock";
+import { PrintBtn } from "./components/PrintBtn/PrintBtn";
+import { NavCtrl } from "./components/NavCtrl/NavCtrl";
 
 const queryClient = new QueryClient();
 
@@ -299,8 +300,8 @@ function MenuApp() {
   const totalPages = 6;
 
   const handlePrev = () => setCurrentPage((p) => Math.max(0, p - 1));
-  const handleNext = () =>
-    setCurrentPage((p) => Math.min(totalPages - 1, p + 1));
+  const handleNext = () => setCurrentPage((p) => Math.min(totalPages - 1, p + 1));
+  const handleGoto = (p: number) => setCurrentPage(Math.max(0, Math.min(totalPages - 1, p)));
 
   const renderPage = () => {
     switch (currentPage) {
@@ -352,12 +353,14 @@ function MenuApp() {
   return (
     <div className="stage">
       <div className="pg-wrap">
+        <PrintBtn />
         <div className="a4-box">{renderPage()}</div>
-        <CtrlDock
+        <NavCtrl
           currentPage={currentPage}
           totalPages={totalPages}
           onPrev={handlePrev}
           onNext={handleNext}
+          onGoto={handleGoto}
         />
       </div>
     </div>

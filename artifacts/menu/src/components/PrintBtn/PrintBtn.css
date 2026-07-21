@@ -1,0 +1,43 @@
+/* ── PrintBtn: floats above top-right of pg-wrap, overlapping by ~50% ── */
+.prnt-btn {
+  position: absolute;
+  top: 0;
+  right: 3cqw;
+  transform: translateY(-50%);
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* touch target: icon SVG sets visual size, padding ensures tappability */
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+
+  /* resting: softly lit */
+  opacity: 0.6;
+  filter: drop-shadow(0 0 3px var(--ga5));
+  transition: opacity 0.2s ease, filter 0.2s ease, transform 0.12s ease;
+}
+
+.prnt-btn:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px var(--ga9));
+}
+
+.prnt-btn:active {
+  transform: translateY(-50%) scale(0.9);
+}
+
+.prnt-svg {
+  width: 8cqw;
+  height: 8cqw;
+}
+
+/* Stroke classes — mirror MenuBorder naming convention */
+.pb-gs { stroke: var(--gold); fill: none; stroke-width: 1.6; stroke-linecap: square; stroke-linejoin: miter; }
+.pb-gt { stroke: var(--gold); fill: none; stroke-width: 0.9; }
+.pb-gl { stroke: var(--gmu); fill: none; stroke-width: 1.2; }
+.pb-gf { fill: var(--gold); }
