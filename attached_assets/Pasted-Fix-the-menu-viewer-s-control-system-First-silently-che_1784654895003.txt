@@ -1,0 +1,19 @@
+Fix the menu viewer's control system. First, silently check SSOT-Rules.md and PROJECT-BLUEPRINT.md.
+
+1. Duplicate folder: Both NavControls and NavCtrl exist and appear to serve the same purpose. Inspect both, keep/merge into one, delete the other, and update all imports. Confirm nothing else in the codebase still references the deleted one.
+
+2. Reuse NavButton: An existing NavButton component already exists — use it for the prev/next arrows instead of building new one-off buttons. Extend it with props (direction, disabled) if needed rather than duplicating its logic or styles.
+
+3. Opacity — correcting a previous mistake: Every control (print button, arrows, page indicators) should be at full opacity and fully visible whenever it is functionally usable. Reduced opacity should only apply when a control is genuinely disabled — for example, the prev arrow on the first page, or next arrow on the last page — driven by actual page-index logic, not a decorative "idle" state. There is no separate dim-when-idle state; usable always means fully visible.
+
+4. Print button placement: Position it at a corner of the page/viewport (not attached to or overlapping the menu box's own corner decoration) — pick whichever corner best avoids colliding with existing page elements, and keep it visually independent from the box, style this btn as action btn woth border radius.
+
+5. Print button style: Icon plus the word "Print" together, styled as a proper action button — rectangular or pill-shaped with border-radius, not a circle, not icon-only.
+
+6. NavCtrl as one cohesive panel: Give the whole dock bar its own background (blur, subtle tint, border-radius) so prev arrow, page indicators, and next arrow all read as sitting inside a single control panel and the border radius — not separate elements floating over empty space.
+
+Keep reusing existing corner-bracket/emblem-dot motifs for styling inspiration where it fits naturally, use only variables.css tokens for colors/fonts, and size everything in cqw tied to .a4-box's container — no vw, no fixed px, no hardcoded values.
+
+If anything above is ambiguous (e.g. which exact corner for the print button, or how the merged Nav component should be named), make a reasonable choice and note it in your summary rather than guessing silently.
+
+Before finishing: confirm the folder cleanup didn't break imports, confirm NavButton is actually reused not copied, verify disabled states trigger only at real first/last page boundaries, update PROJECT-BLUEPRINT.md silently, and list every file created, changed, or deleted.

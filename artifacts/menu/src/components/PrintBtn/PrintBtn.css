@@ -1,43 +1,53 @@
-/* ── PrintBtn: floats above top-right of pg-wrap, overlapping by ~50% ── */
+/* ── PrintBtn: fixed to viewport bottom-right corner ── */
 .prnt-btn {
-  position: absolute;
-  top: 0;
-  right: 3cqw;
-  transform: translateY(-50%);
-  z-index: 20;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
 
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* touch target: icon SVG sets visual size, padding ensures tappability */
-  padding: 0;
-  background: none;
-  border: none;
+  gap: 0.5em;
+  padding: 0.55em 1.1em;
+
+  /* Pill shape */
+  border-radius: 100em;
+  border: 1px solid var(--ga5);
+  background: color-mix(in srgb, var(--chrd) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  font-family: var(--ff);
+  font-size: 1rem;
+  color: var(--gold);
   cursor: pointer;
   outline: none;
 
-  /* resting: softly lit */
-  opacity: 0.6;
-  filter: drop-shadow(0 0 3px var(--ga5));
-  transition: opacity 0.2s ease, filter 0.2s ease, transform 0.12s ease;
+  /* full opacity — always usable */
+  opacity: 1;
+  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease, background 0.18s ease;
 }
 
 .prnt-btn:hover {
-  opacity: 1;
-  filter: drop-shadow(0 0 6px var(--ga9));
+  border-color: var(--ga9);
+  background: color-mix(in srgb, var(--chr) 70%, transparent);
+  filter: drop-shadow(0 0 6px var(--ga5));
 }
 
 .prnt-btn:active {
-  transform: translateY(-50%) scale(0.9);
+  transform: scale(0.94);
 }
 
-.prnt-svg {
-  width: 8cqw;
-  height: 8cqw;
+.prnt-ico {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
-/* Stroke classes — mirror MenuBorder naming convention */
-.pb-gs { stroke: var(--gold); fill: none; stroke-width: 1.6; stroke-linecap: square; stroke-linejoin: miter; }
-.pb-gt { stroke: var(--gold); fill: none; stroke-width: 0.9; }
-.pb-gl { stroke: var(--gmu); fill: none; stroke-width: 1.2; }
-.pb-gf { fill: var(--gold); }
+.prnt-lbl {
+  font-size: 0.9em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}

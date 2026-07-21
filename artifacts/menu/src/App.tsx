@@ -353,7 +353,6 @@ function MenuApp() {
   return (
     <div className="stage">
       <div className="pg-wrap">
-        <PrintBtn />
         <div className="a4-box">{renderPage()}</div>
         <NavCtrl
           currentPage={currentPage}
@@ -363,6 +362,8 @@ function MenuApp() {
           onGoto={handleGoto}
         />
       </div>
+      {/* PrintBtn is fixed to the viewport — DOM position doesn't affect placement */}
+      <PrintBtn />
     </div>
   );
 }
