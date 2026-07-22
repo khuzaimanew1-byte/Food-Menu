@@ -1,20 +1,17 @@
 import React from "react";
-import { Printer } from "lucide-react";
-import "./PrintBtn.css";
+import "../Button/base.css";
+import "../Button/icon-text.css";
+import { PrintIcon } from "../Button/icons/PrintIcon";
 
-/**
- * Print action button — pill shape, icon + "Print" label, fixed to the
- * bottom-right corner of the viewport. Visually independent from the menu box.
- */
 export function PrintBtn() {
   return (
     <button
-      className="prnt-btn glass no-print"
+      className="btn btit glass no-print"
       onClick={() => window.print()}
       aria-label="Print menu"
     >
-      <Printer className="prnt-ico" aria-hidden />
-      <span className="prnt-lbl">Print</span>
+      <PrintIcon className="btit-ico" />
+      <span className="btit-lbl">Print</span>
     </button>
   );
 }

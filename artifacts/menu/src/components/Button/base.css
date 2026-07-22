@@ -1,0 +1,21 @@
+.btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--gold));
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease, background 0.18s ease;
+}
+
+.btn:hover  { filter: drop-shadow(0 0 8px rgba(var(--gold), .28)); }
+.btn:active { transform: scale(0.94); }
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+  cursor: not-allowed;
+}

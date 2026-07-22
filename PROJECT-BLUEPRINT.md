@@ -14,6 +14,7 @@ IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEA
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
 | FEAT-07 | BE | API server — NestJS 10, health route | D |
+| FEAT-13 | FE | Button/ system: base.css + icon-text.css + icon-only.css + ArrowIcon + PrintIcon | D |
 | FEAT-12 | FE | PrintBtn — angular bracket-frame float, top-right overlap | D |
 | FEAT-11 | FE | NavCtrl — full-width dock, diamond arrows + diamond page indicators | D |
 | FEAT-06 | FE | Print button (superseded by FEAT-12) | D |
@@ -31,7 +32,7 @@ Tags: STACK, FOLDER, CODEGEN, IMAGES, NAMING, STYLES, RULES
 | Tag | Decision |
 |---|---|
 | RULES | SSOT-Rules.md at root governs all code |
-| STYLES | globals.css / variables.css / typography.css only global; page CSS in styles/ |
+| STYLES | globals.css / variables.css / typography.css only global; page CSS in styles/; button base in components/Button/ |
 | NAMING | All custom names max 5-6 chars, recognizable short forms |
 | IMAGES | Static images → artifacts/menu/public/img/, served via BASE_URL prefix |
 | CODEGEN | OpenAPI spec → Orval → lib/api-client-react + lib/api-zod (never manual) |
@@ -71,4 +72,4 @@ No archived rows yet. Archive triggers at 25 active rows per table → BLUEPRINT
 ---
 
 ## 7. LAST TOUCHED
-07-21 — PrintBtn + NavCtrl redesign: angular bracket motif print button (top-right float) + full-width diamond-arrow/diamond-indicator dock (bottom overlap)
+07-22 — Button/ system: base.css (.btn + .disabled), icon-text.css (.btit), icon-only.css (.btio + arrow SVG classes); ArrowIcon (CSS mirror, no glyph dupe), PrintIcon inline SVG; .disabled moved from utils.css; NavButton/PrintBtn CSS deleted; NavCtrl uses ArrowIcon

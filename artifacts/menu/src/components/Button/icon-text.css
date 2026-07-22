@@ -1,43 +1,27 @@
-/* Fixed top-right viewport corner */
-.prnt-btn {
+.btit {
   position: fixed;
   top: 1.2rem;
   right: 1.2rem;
   z-index: 20;
-
-  display: flex;
-  align-items: center;
   gap: 0.4em;
   padding: 0.38em 0.78em;
-
   border-radius: 100em;
-
   font-family: var(--ff);
   font-size: 1rem;
-  color: rgb(var(--gold));
-  cursor: pointer;
-  outline: none;
-
-  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease, background 0.18s ease;
 }
 
-.prnt-btn:hover {
+.btit:hover {
   border-color: rgba(var(--gold), .9);
   background: color-mix(in srgb, rgb(var(--chr)) 62%, transparent);
-  filter: drop-shadow(0 0 8px rgba(var(--gold), .28));
 }
 
-.prnt-btn:active {
-  transform: scale(0.94);
-}
-
-.prnt-ico {
+.btit-ico {
   width: 1em;
   height: 1em;
   flex-shrink: 0;
 }
 
-.prnt-lbl {
+.btit-lbl {
   font-size: 0.9em;
   font-weight: 600;
   letter-spacing: 0.08em;

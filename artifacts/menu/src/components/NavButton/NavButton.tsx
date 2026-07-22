@@ -1,20 +1,17 @@
 import React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import "./NavButton.css";
+import "../Button/base.css";
+import "../Button/icon-only.css";
 
-interface NavButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  direction: "prev" | "next";
-}
+interface NavBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export function NavButton({ direction, disabled, children, className, ...props }: NavButtonProps) {
-  const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
+export function NavButton({ disabled, children, className, ...props }: NavBtnProps) {
   return (
     <button
       disabled={disabled}
-      className={`nav-btn flex items-center justify-center cursor-pointer no-print${disabled ? " disabled" : ""}${className ? " " + className : ""}`}
+      className={`btn btio no-print${disabled ? " disabled" : ""}${className ? " " + className : ""}`}
       {...props}
     >
-      {children ?? <Icon className="nav-ico" strokeWidth={2} />}
+      {children}
     </button>
   );
 }

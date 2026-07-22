@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { NavButton } from "../NavButton/NavButton";
+import { ArrowIcon } from "../Button/icons/ArrowIcon";
 import "./NavCtrl.css";
 
 interface NavCtrlProps {
@@ -10,39 +11,6 @@ interface NavCtrlProps {
   onGoto: (page: number) => void;
 }
 
-/**
- * Diamond arrowhead SVG — echoes MenuBorder's page-nav diamond motif.
- * Rendered as the child of NavButton so arrow button logic stays in one place.
- */
-function ArrIcon({ dir }: { dir: "prev" | "next" }) {
-  const isPrev = dir === "prev";
-  return (
-    <svg className="arr-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-      {isPrev ? (
-        <>
-          <polygon className="arr-fill" points="8,20 15,13 22,20 15,27" />
-          <line className="arr-line" x1="22" y1="20" x2="34" y2="20" />
-          <circle className="arr-dot" cx="34" cy="20" r="2.2" />
-          <polyline className="arr-brk" points="8,10 8,8 16,8" />
-          <polyline className="arr-brk" points="8,30 8,32 16,32" />
-        </>
-      ) : (
-        <>
-          <polygon className="arr-fill" points="32,20 25,13 18,20 25,27" />
-          <line className="arr-line" x1="18" y1="20" x2="6" y2="20" />
-          <circle className="arr-dot" cx="6" cy="20" r="2.2" />
-          <polyline className="arr-brk" points="32,10 32,8 24,8" />
-          <polyline className="arr-brk" points="32,30 32,32 24,32" />
-        </>
-      )}
-    </svg>
-  );
-}
-
-/**
- * Page indicator strip — one diamond per page, scrollable when many pages.
- * Active: filled gold + glow. Inactive: outlined, full opacity (still clickable).
- */
 function PgStrip({
   current,
   total,
@@ -84,23 +52,21 @@ export function NavCtrl({ currentPage, totalPages, onPrev, onNext, onGoto }: Nav
   return (
     <div className="navc-wrap glass no-print">
       <NavButton
-        direction="prev"
         disabled={currentPage === 0}
         onClick={onPrev}
         className="navc-arr"
       >
-        <ArrIcon dir="prev" />
+        <ArrowIcon dir="prev" />
       </NavButton>
 
       <PgStrip current={currentPage} total={totalPages} onGoto={onGoto} />
 
       <NavButton
-        direction="next"
         disabled={currentPage === totalPages - 1}
         onClick={onNext}
         className="navc-arr"
       >
-        <ArrIcon dir="next" />
+        <ArrowIcon dir="next" />
       </NavButton>
     </div>
   );
