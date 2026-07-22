@@ -1,1 +1,1 @@
-/* App-level styles — CtrlDock handles print+nav; no per-app button styles needed */
+/* NavCtrl owns nav; PrintBtn owns print */

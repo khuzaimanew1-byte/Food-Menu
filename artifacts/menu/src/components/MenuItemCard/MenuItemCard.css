@@ -1,14 +1,14 @@
 .mic {
   gap: 2.8cqw;
   padding-block: 2.2cqw;
-  border-bottom: 1px solid var(--gmu8);
+  border-bottom: 1px solid rgba(var(--gmu), .08);
 }
 
 .mic-bdg {
   width: 3.8cqw;
   height: 3.8cqw;
-  border: 1.3px solid var(--gmu);
-  background: linear-gradient(135deg, var(--gmu14), var(--gmu2));
+  border: 1.3px solid rgb(var(--gmu));
+  background: linear-gradient(135deg, rgba(var(--gmu), .14), rgba(var(--gmu), .02));
   transform: rotate(45deg);
   flex-shrink: 0;
 }
@@ -17,7 +17,7 @@
   transform: rotate(-45deg);
   font-weight: 600;
   font-size: clamp(10px, 1.6cqw, 14px);
-  color: var(--glt);
+  color: rgb(var(--glt));
   line-height: 1;
 }
 
@@ -37,25 +37,25 @@
   text-transform: uppercase;
   font-size: clamp(12px, 2.15cqw, 19px);
   letter-spacing: 0.06em;
-  color: var(--cr);
+  color: rgb(var(--cr));
   margin: 0;
 }
 
 .mic-lead {
   flex: 1 1 0;
   height: 1px;
-  background: linear-gradient(to right, var(--gmu5), var(--gmu8));
+  background: linear-gradient(to right, rgba(var(--gmu), .5), rgba(var(--gmu), .08));
 }
 
 .mic-price {
   font-weight: 700;
   font-style: italic;
   font-size: clamp(12px, 1.95cqw, 17px);
-  background-image: linear-gradient(180deg, var(--gl) 0%, var(--gm) 55%, var(--gw) 100%);
+  background-image: linear-gradient(180deg, rgb(var(--gl)) 0%, rgb(var(--gm)) 55%, rgb(var(--gw)) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: var(--gm);
+  color: rgb(var(--gm));
   white-space: nowrap;
 }
 
@@ -63,6 +63,6 @@
   font-weight: 300;
   font-size: clamp(9px, 1.5cqw, 13px);
   line-height: 1.7;
-  color: var(--mut);
+  color: rgb(var(--mut));
   margin: 0;
 }

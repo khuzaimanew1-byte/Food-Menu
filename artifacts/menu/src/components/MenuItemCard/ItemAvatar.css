@@ -1,19 +1,19 @@
 .iavt {
   padding: 0.32cqw;
-  border: 1px solid var(--gmu55);
-  box-shadow: 0 0.5cqw 1.4cqw var(--blk55);
+  border: 1px solid rgba(var(--gmu), .55);
+  box-shadow: 0 0.5cqw 1.4cqw rgba(var(--blk), .55);
   border-radius: 2px;
-  background: var(--blk2);
+  background: rgba(var(--blk), .2);
   flex: 0 0 11.6cqw;
   width: 11.6cqw;
 }
 
 .iavt-in {
-  border: 1px solid var(--gmu28);
+  border: 1px solid rgba(var(--gmu), .28);
   overflow: hidden;
   width: 100%;
   aspect-ratio: 4 / 3;
-  background: var(--ink);
+  background: rgb(var(--ink));
   border-radius: 1px;
 }
 

@@ -5,12 +5,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--chrd);
+  background: rgb(var(--chrd));
   position: relative;
 }
 
-/* pg-wrap: same sizing as the old a4-box, now also the cqw container
-   so the CtrlDock inside shares the same cqw scale as page content */
+/* cqw container — shared by page content and CtrlDock */
 .pg-wrap {
   container-type: inline-size;
   container-name: menu-page;
@@ -18,7 +17,7 @@
   height: min(90vh, 90vw * (297 / 210));
   width: min(90vw, 90vh * (210 / 297));
   position: relative;
-  overflow: visible; /* allow dock to bleed below */
+  overflow: visible;
 }
 
 .a4-box {
@@ -58,7 +57,7 @@
   }
 
   body {
-    background: var(--chr);
+    background: rgb(var(--chr));
   }
 }
 

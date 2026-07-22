@@ -2,8 +2,8 @@
   position: relative;
   width: 100%;
   aspect-ratio: 210 / 297;
-  background: var(--chr);
-  box-shadow: 0 0 50px var(--blk8);
+  background: rgb(var(--chr));
+  box-shadow: 0 0 50px rgba(var(--blk), .8);
   overflow: hidden;
 }
 
@@ -18,17 +18,17 @@
 }
 
 .mb-gs {
-  stroke: var(--gold);
+  stroke: rgb(var(--gold));
   fill: none;
   stroke-linecap: square;
   stroke-linejoin: miter;
 }
-.mb-gf { fill: var(--gold); }
+.mb-gf { fill: rgb(var(--gold)); }
 .mb-th { stroke-width: 2; }
 
 .mb-pgn {
   font-family: var(--ff2);
   font-size: 12cqw;
   letter-spacing: .5cqw;
-  fill: var(--gold);
+  fill: rgb(var(--gold));
 }

@@ -1,5 +1,4 @@
-/* ── NavCtrl: full-width panel, overlaps bottom edge of a4-box by ~50% ── */
-/* Glass look comes from the shared .glass class in styles/glass.css        */
+/* NavCtrl: overlaps a4-box bottom by 50% */
 .navc-wrap {
   position: absolute;
   bottom: 0;
@@ -18,7 +17,7 @@
   border-radius: 2cqw;
 }
 
-/* ── Arrow buttons (NavButton with navc-arr class) ── */
+/* Arrow buttons (navc-arr modifier) */
 .navc-arr {
   flex: 0 0 auto;
   width: 8.5cqw;
@@ -26,13 +25,12 @@
 }
 
 .navc-arr:not(.disabled):hover {
-  filter: drop-shadow(0 0 4px var(--ga9));
+  filter: drop-shadow(0 0 4px rgba(var(--gold), .9));
 }
 
 .navc-arr:not(.disabled):active {
   transform: scale(0.88);
 }
-
 
 .arr-svg {
   width: 100%;
@@ -40,12 +38,12 @@
 }
 
 /* MenuBorder visual language */
-.arr-fill { fill: var(--gold); }
-.arr-line { stroke: var(--gold); fill: none; stroke-width: 1.4; }
-.arr-dot  { fill: var(--gold); }
-.arr-brk  { stroke: var(--gold); fill: none; stroke-width: 1; stroke-linecap: square; }
+.arr-fill { fill: rgb(var(--gold)); }
+.arr-line { stroke: rgb(var(--gold)); fill: none; stroke-width: 1.4; }
+.arr-dot  { fill: rgb(var(--gold)); }
+.arr-brk  { stroke: rgb(var(--gold)); fill: none; stroke-width: 1; stroke-linecap: square; }
 
-/* ── Page indicator strip ── */
+/* Page indicator strip */
 .pg-strip {
   display: flex;
   align-items: center;
@@ -61,7 +59,7 @@
 
 .pg-strip::-webkit-scrollbar { display: none; }
 
-/* ── Per-page diamond indicator ── */
+/* Per-page diamond indicator */
 .pg-dot {
   flex: 0 0 auto;
   width: 5cqw;
@@ -74,14 +72,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* full opacity — clickable and fully visible */
   opacity: 1;
   transition: filter 0.15s ease, transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .pg-dot:hover {
-  filter: drop-shadow(0 0 4px var(--ga9));
+  filter: drop-shadow(0 0 4px rgba(var(--gold), .9));
 }
 
 .pg-dot:active {
@@ -97,16 +94,16 @@
 /* Inactive: outlined diamond */
 .dot-dmnd {
   fill: none;
-  stroke: var(--gold);
+  stroke: rgb(var(--gold));
   stroke-width: 1.3;
 }
 
 /* Active: filled gold + glow */
 .pg-act .dot-dmnd {
-  fill: var(--gold);
-  stroke: var(--gold);
+  fill: rgb(var(--gold));
+  stroke: rgb(var(--gold));
 }
 
 .pg-act .dot-svg {
-  filter: drop-shadow(0 0 3px var(--ga9));
+  filter: drop-shadow(0 0 3px rgba(var(--gold), .9));
 }

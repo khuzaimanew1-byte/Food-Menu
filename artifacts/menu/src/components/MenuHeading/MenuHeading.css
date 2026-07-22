@@ -35,7 +35,7 @@
   font-size: .9em;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: rgb(var(--gold));
   margin: 0;
   text-align: center;
 }

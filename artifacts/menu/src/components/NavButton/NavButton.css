@@ -1,4 +1,4 @@
-/* Base nav button — sizing overridden by consumer context (e.g. navc-wrap) */
+/* Sizing overridden by consumer context */
 .nav-btn {
   border: none;
   background: none;
@@ -7,9 +7,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-
 .nav-ico {
   width: 1.5em;
   height: 1.5em;
-  color: var(--gold);
+  color: rgb(var(--gold));
 }
