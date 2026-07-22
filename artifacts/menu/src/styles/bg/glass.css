@@ -1,0 +1,47 @@
+/* ── glass: shared frosted glass-tint panel treatment ─────────────────── */
+/*
+ * Single source of truth for the frosted-glass effect used on NavCtrl and
+ * PrintBtn. Import this file via utils.css — never duplicate these props
+ * in individual component stylesheets.
+ *
+ * Layers (bottom → top):
+ *   base     — semi-transparent near-black  → readable over any background
+ *   tint     — faint gold wash              → ties panels to brand palette
+ *   sheen    — diagonal light highlight     → glass depth illusion
+ *   blur     — backdrop-filter              → true frosted effect
+ *   border   — gold-edged stroke            → crisp panel boundary
+ *   shadows  — inner highlight + outer glow → lifts panel off the page
+ */
+.glass {
+  background:
+    /* diagonal sheen — top-left to bottom-right */
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.01) 45%,
+      transparent 100%
+    ),
+    /* gold tint wash */
+    linear-gradient(
+      180deg,
+      rgba(212, 175, 55, 0.07) 0%,
+      rgba(212, 175, 55, 0.03) 100%
+    ),
+    /* dark semi-transparent base */
+    color-mix(in srgb, var(--chrd) 52%, transparent);
+
+  backdrop-filter: blur(22px) saturate(1.8);
+  -webkit-backdrop-filter: blur(22px) saturate(1.8);
+
+  /* layered border: gold edge + subtle outer ring for depth */
+  border: 1px solid color-mix(in srgb, var(--gold) 38%, rgba(255, 255, 255, 0.1));
+  box-shadow:
+    /* inner top highlight */
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    /* inner bottom gold glow */
+    inset 0 -1px 0 rgba(212, 175, 55, 0.1),
+    /* outer ring — doubles the border, adds depth */
+    0 0 0 1px rgba(212, 175, 55, 0.07),
+    /* drop shadow */
+    0 8px 32px rgba(0, 0, 0, 0.55);
+}
