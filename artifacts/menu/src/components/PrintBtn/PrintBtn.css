@@ -20,8 +20,6 @@
   cursor: pointer;
   outline: none;
 
-  /* full opacity — always usable */
-  opacity: 1;
   transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease, background 0.18s ease;
 }
 

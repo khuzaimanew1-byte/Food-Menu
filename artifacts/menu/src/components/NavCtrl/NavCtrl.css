@@ -33,10 +33,6 @@
   transform: scale(0.88);
 }
 
-/* disabled state comes from NavButton's .disabled class */
-.navc-arr.disabled {
-  opacity: 0.22;
-}
 
 .arr-svg {
   width: 100%;
