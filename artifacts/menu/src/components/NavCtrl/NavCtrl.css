@@ -21,11 +21,8 @@
 /* ── Arrow buttons (NavButton with navc-arr class) ── */
 .navc-arr {
   flex: 0 0 auto;
-  width: 11cqw;
-  height: 8.5cqw;
-  padding: 0.5cqw;
-  /* full opacity — visible whenever usable */
-  opacity: 1;
+  width: 8.5cqw;
+  height: fit-content;
 }
 
 .navc-arr:not(.disabled):hover {

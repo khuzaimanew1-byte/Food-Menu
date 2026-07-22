@@ -30,11 +30,8 @@
     /* dark semi-transparent base */
     color-mix(in srgb, var(--chrd) 52%, transparent);
 
-  backdrop-filter: blur(22px) saturate(1.8);
-  -webkit-backdrop-filter: blur(22px) saturate(1.8);
-
-  /* layered border: gold edge + subtle outer ring for depth */
-  border: 1px solid color-mix(in srgb, var(--gold) 38%, rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(1px) saturate(6.8);
+  -webkit-backdrop-filter: blur(1px) saturate(6.8);
   box-shadow:
     /* inner top highlight */
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
@@ -44,4 +41,10 @@
     0 0 0 1px rgba(212, 175, 55, 0.07),
     /* drop shadow */
     0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .glass {
+    border: 2px solid color-mix(in srgb, var(--gold) 80%, rgba(255, 255, 255, 0.1));
+  }
 }
