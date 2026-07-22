@@ -1,0 +1,52 @@
+Refactor the glass/button CSS across NavCtrl and PrintBtn. Check SSOT-Rules.md first, silently. No visual/behavioral regressions.
+
+Current CSS with issues:
+
+css
+.glass {
+    backdrop-filter: blur(1px) saturate(6.8);
+}
+.navc-arr {
+    flex: 0 0 auto;
+    width: 8.5cqw;
+    height: fit-content;
+    /* padding: 0.5cqw; */
+    /* opacity: 1; */
+}
+.arr-svg {
+    /* width: 2.5rem; */
+    /* height: auto; */
+}
+.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    user-select: none;
+    cursor: not-allowed;
+}
+.glass {
+    @supports (color: color-mix(in lab, red, red)) {
+        border: 2px solid color-mix(in srgb, var(--gold) 80%, rgba(255, 255, 255, 0.1));
+    }
+}
+
+1. RGB-triplet color variables: every color used at varying opacity (gold, charcoal) should be an RGB-triplet variable in variables.css, applied via rgb(var(--x-rgb) / opacity) — replace all hardcoded rgba/color-mix, including the border above.
+
+2. Delete all commented-out lines shown above and any other dead code in these files.
+
+3. Leave .disabled values untouched — same opacity/pointer-events/cursor as shown. One shared class, imported wherever needed, never redefined per component.
+
+4. File split — use components/btn/ structure:
+
+btn-1.css — shared button look: colors, background, border, sizing/shape (anything common to nav arrows + PrintBtn)
+iconbtn-1 — SVG-specific styling/shape changes per icon (arrow glyph, print glyph)
+No property duplicated across both.
+
+5. Rename .glass → .glass-bg, tune for premium not hidden: background behind the panel should stay visibly recognizable — soft, diffused, not obscured. Use lower base opacity + moderate (not heavy) blur, a saturation boost so colors stay rich, slight contrast reduction for soft edges. Fix border via the RGB-triplet approach. Review box-shadow layering (soft inner highlight + soft outer shadow) so it adds depth without extra darkness that hides the background.
+
+6. Preserve :hover/:active states correctly scoped to whichever file now owns each property, after the split.
+
+Describe changes in plain text, no new code in your summary. Before finishing: confirm disabled/hover/active states are preserved, no duplicate styles remain, and list every file changed.
+
+Professional suggestion for file organization (worth telling Replit or deciding yourself before it proceeds):
+
+Ek naming ambiguity hai jo clarify karni chahiye — agar future mein btn-2, iconbtn-2 type variants aane wale hain (jaise different button styles for different contexts), toh numbered suffix theek hai. Lekin agar sirf yehi ek button style hai poore app mein, toh btn-1/iconbtn-1 ki jagah descriptive naam (jaise btn-base.css, iconbtn-svg.css) zyada maintainable hoga — 6 mahine baad "1" ka matlab yaad rakhna mushkil hota hai agar koi "2" kabhi bana hi nahi. Agar numbering intentional hai (variants ka plan hai), toh sahi hai jaisa hai.

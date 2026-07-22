@@ -9,12 +9,12 @@
 
 .mb-svg {
   pointer-events: none;
-  z-index: 99;
+  z-index: 10;
 }
 
 .mb-body {
   position: relative;
-  z-index: 10;
+  z-index: 5;
 }
 
 .mb-gs {
