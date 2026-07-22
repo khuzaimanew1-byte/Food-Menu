@@ -1,10 +1,12 @@
 @import "./bg/glass.css";
+@import "../components/btn/btn-1.css";
+@import "../components/btn/iconbtn-1.css";
 
-.ff-s    { font-family: var(--ff); }
+.ff-s { font-family: var(--ff); }
 
 .disabled {
-  opacity: 0.3;
+  opacity: 0.6;
   pointer-events: none;
   user-select: none;
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }

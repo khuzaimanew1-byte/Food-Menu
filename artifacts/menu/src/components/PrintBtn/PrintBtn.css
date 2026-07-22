@@ -1,50 +1,7 @@
-/* ── PrintBtn: fixed to viewport top-right corner ── */
-/* Glass look comes from the shared .glass class in styles/glass.css */
+/* positioning only — look comes from .glass-bg + btn-1.css + iconbtn-1.css */
 .prnt-btn {
   position: fixed;
   top: 1.2rem;
   right: 1.2rem;
   z-index: 20;
-
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  padding: 0.38em 0.78em;
-
-  /* Pill shape */
-  border-radius: 100em;
-
-  font-family: var(--ff);
-  font-size: 1rem;
-  color: var(--gold);
-  cursor: pointer;
-  outline: none;
-
-  /* full opacity — always usable */
-  opacity: 1;
-  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease, background 0.18s ease;
-}
-
-.prnt-btn:hover {
-  border-color: var(--ga9);
-  background: color-mix(in srgb, var(--chr) 62%, transparent);
-  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.28));
-}
-
-.prnt-btn:active {
-  transform: scale(0.94);
-}
-
-.prnt-ico {
-  width: 1em;
-  height: 1em;
-  flex-shrink: 0;
-}
-
-.prnt-lbl {
-  font-size: 0.9em;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1;
 }

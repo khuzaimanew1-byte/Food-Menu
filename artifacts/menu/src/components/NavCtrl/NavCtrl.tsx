@@ -82,7 +82,7 @@ function PgStrip({
 
 export function NavCtrl({ currentPage, totalPages, onPrev, onNext, onGoto }: NavCtrlProps) {
   return (
-    <div className="navc-wrap glass no-print">
+    <div className="navc-wrap glass-bg no-print">
       <NavButton
         direction="prev"
         disabled={currentPage === 0}
