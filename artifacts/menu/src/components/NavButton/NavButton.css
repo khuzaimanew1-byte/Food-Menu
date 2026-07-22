@@ -1,10 +1,16 @@
-/* nav button base */
+/* Base nav button — sizing overridden by consumer context (e.g. navc-wrap) */
 .nav-btn {
   border: none;
   background: none;
   outline: none;
   transition: filter 0.18s ease, transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
+}
+
+.nav-btn.disabled {
+  opacity: 0.22;
+  cursor: default;
+  pointer-events: none;
 }
 
 .nav-ico {
