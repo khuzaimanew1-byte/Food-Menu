@@ -1,11 +1,11 @@
 import React from "react";
-import "./Badge.css";
+import "./FrameBadge.css";
 
-interface BadgeProps {
+interface FrameBadgeProps {
   num?: number | string;
 }
 
-export function Badge({ num }: BadgeProps) {
+export function FrameBadge({ num }: FrameBadgeProps) {
   return (
     <div className="bdgi" aria-hidden={num === undefined ? true : undefined}>
       <span className="bdgi-c bdgi-tl-h" />

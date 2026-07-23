@@ -1,0 +1,46 @@
+Task: Badge naming clarify + diamond badge recover
+
+Jo badge component abhi code mein active hai (open-corner frame design) — iska naam FrameBadge karo (icons/FrameBadge.tsx).
+Project history/git se wahi original diamond-shaped number badge dhoondo jo isse pehle item cards mein use hota tha, us design ko as-is recover karo — naya design mat banao, jo pehle tha wahi restore karo. Ise icons/DiamondBadge.tsx naam se icons/ folder mein rakho.
+MenuItemCard mein abhi ke liye FrameBadge ki jagah DiamondBadge use karo (temporary swap, FrameBadge component delete mat karo, bas is card mein use nahi ho raha abhi).
+Dono badges (FrameBadge aur DiamondBadge) mein number single num prop se aaye — jo bhi component import kare, number bhi usi import ke through pass ho (<DiamondBadge num={1} />), alag se number-overlay kahin mat likho. Agar num na diya jaye, number render hi na ho.
+Baaki ye exact CSS updates as-is apply karo (paste exactly, extra interpretation mat karo, comment lines jo hain unhe bhi code se remove karo):
+css
+commented matlab wo remove karo 
+.iavt-bar {
+    bottom: 1%;
+    height: .2cqw;
+.bdgi {
+    background: rgba(var(--gl), .08);
+.mic-row {
+Remove margin-bottom
+.mic-desc {
+    font-size: 2.7cqw;
+.iavt-shp {
+    /* width: 100%;
+.mic {
+    padding-block: 2cqw;
+remove bottom-border
+.mic-name {
+font-size: 3.5cqw;
+.mic-avt {
+    /* flex: 0 0 16cqw; */
+    width: 13cqw;
+.iavt {
+    /* flex: 0 0 16cqw; */
+    /* width: 16cqw;
+.iavt-shp {
+    /* width: 100%; 
+.mic-price {
+    color: rgb(var(--gold)); 
+Rs. use karna $ nhin
+.mic-lead {
+    height: 0.4cqw;
+    background: repeating-linear-gradient(to right, rgba(var(--gmu), .85) 0, rgba(var(--gmu), .85) 1.3cqw, transparent 1.3cqw, transparent 2.8cqw);
+
+
+Padding-collision: .mic aur uske child elements agar same edge pe padding/margin dono de rahe hain, unhe overlap/collapse karo (ek hi source of truth rakho), additive/extra-gap na banaye.
+
+Avatar center button: .iavt-shp ke center mein ek round icon-only button ho (photo-upload placeholder ki tarah), Button/icon-only.css archetype se banao, naya style mat likho.
+
+Before finishing: confirm karo FrameBadge code mein intact hai (delete nahi hua), DiamondBadge history se accurately recovered hai, num prop dono mein consistent hai, PROJECT-BLUEPRINT.md update karo.

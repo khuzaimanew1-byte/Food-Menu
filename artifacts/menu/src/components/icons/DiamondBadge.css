@@ -1,0 +1,18 @@
+.dmbdg {
+  width: 100%;
+  height: 100%;
+  border: 1.3px solid rgb(var(--gmu));
+  background: linear-gradient(135deg, rgba(var(--gmu), .14), rgba(var(--gmu), .02));
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dmbdg-num {
+  transform: rotate(-45deg);
+  font-weight: 600;
+  font-size: 1.6cqw;
+  color: rgb(var(--glt));
+  line-height: 1;
+}

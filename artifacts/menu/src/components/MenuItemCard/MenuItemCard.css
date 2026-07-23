@@ -2,17 +2,15 @@
   display: flex;
   gap: 2.4cqw;
   align-items: flex-start;
-  padding-block: 2.2cqw;
-  border-bottom: 1px solid rgba(var(--gmu), .08);
+  padding-block: 2cqw;
 }
 
-/* avatar wrapper — positioned parent for badge overlay */
 .mic-avt {
   position: relative;
-  flex: 0 0 16cqw;
+  /* flex: 0 0 16cqw; */
+  width: 13cqw;
 }
 
-/* number badge — absolute over avatar top-left */
 .mic-bdg {
   position: absolute;
   top: 0;
@@ -24,7 +22,6 @@
 .mic-body {
   flex: 1;
   min-width: 0;
-  padding-top: 1.1cqw;
   display: flex;
   flex-direction: column;
   gap: 0.5cqw;
@@ -34,28 +31,26 @@
   display: flex;
   align-items: baseline;
   gap: 1.1cqw;
-  margin-bottom: 1.1cqw;
 }
 
 .mic-name {
   font-weight: 500;
   text-transform: capitalize;
-  font-size: 4cqw;
+  font-size: 3.5cqw;
   white-space: nowrap;
   color: rgb(var(--gl));
   margin: 0;
 }
 
-/* gradient-faded dotted leader */
 .mic-lead {
   flex: 1;
-  height: 0.53cqw;
+  height: 0.4cqw;
   background: repeating-linear-gradient(
     to right,
     rgba(var(--gmu), .85) 0,
     rgba(var(--gmu), .85) 1.3cqw,
     transparent 1.3cqw,
-    transparent 2.1cqw
+    transparent 2.8cqw
   );
   mask-image: linear-gradient(to right, black 0%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
@@ -64,11 +59,11 @@
 .mic-price {
   font-size: 3.2cqw;
   white-space: nowrap;
-  color: rgb(var(--gw));
+  color: rgb(var(--gold));
 }
 
 .mic-desc {
-  font-size: 2.9cqw;
+  font-size: 2.7cqw;
   line-height: 1.1;
   color: rgb(var(--mut));
   margin: 0;

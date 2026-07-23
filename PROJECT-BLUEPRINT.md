@@ -14,7 +14,8 @@ IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEA
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
 | FEAT-07 | BE | API server — NestJS 10, health route | D |
-| FEAT-14 | FE | components/icons/ SSoT: ArrowIcon, PrintIcon, BadgeIcon, DiamondIcon (each owns CSS) | D |
+| FEAT-16 | FE | icons/FrameBadge (bracket-corner frame, num prop) + icons/DiamondBadge (rotated diamond, recovered) | D |
+| FEAT-14 | FE | components/icons/ SSoT: ArrowIcon, PrintIcon, FrameBadge, DiamondBadge, DiamondIcon (each owns CSS) | D |
 | FEAT-13 | FE | Button/ system: base.css + icon-text.css + icon-only.css (no icons) | D |
 | FEAT-12 | FE | PrintBtn — angular bracket-frame float, top-right overlap | D |
 | FEAT-11 | FE | NavCtrl — full-width dock, diamond arrows + diamond page indicators | D |
@@ -75,4 +76,4 @@ No archived rows yet. Archive triggers at 25 active rows per table → BLUEPRINT
 ---
 
 ## 7. LAST TOUCHED
-07-23 — components/icons/ SSoT: ArrowIcon+CSS, PrintIcon, BadgeIcon+CSS (bracket corners), DiamondIcon+CSS (active prop replaces pg-act selector); Button/icons/ deleted; icon-only.css stripped to .btio only; MenuItemCard: crown clip-path avatar, lantern radial bg (--lntn token), gold iavt-bar accent, BadgeIcon overlay badge, gradient-masked dotted leader; pg-act class removed from NavCtrl (active prop on DiamondIcon)
+07-23 — Badge→FrameBadge+DiamondBadge (recovered original rotate-45 diamond); num prop on both (undefined→no DOM node); DiamondBadge active in MenuItemCard; FrameBadge intact; CSS patches: mic padding-block 2cqw, border-bottom removed, mic-avt width 13cqw, mic-body padding-top removed (collision fix), mic-name 3.5cqw, mic-desc 2.7cqw, mic-lead height 0.4cqw+gap 2.8cqw, mic-price --gold, iavt commented widths, iavt-bar bottom 1% height .2cqw, bdgi bg --gl .08; avatar upload button (btn btio, no new CSS); prices Rs.

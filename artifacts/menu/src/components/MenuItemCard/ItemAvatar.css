@@ -1,12 +1,11 @@
 .iavt {
-  flex: 0 0 16cqw;
-  width: 16cqw;
+  /* flex: 0 0 16cqw; */
+  /* width: 16cqw; */
   position: relative;
 }
 
-/* crown/battlements silhouette */
 .iavt-shp {
-  width: 100%;
+  /* width: 100%; */
   aspect-ratio: 1;
   background: radial-gradient(
     ellipse at 40% 60%,
@@ -29,18 +28,11 @@
   filter: sepia(0.22) saturate(1.15) contrast(1.08) brightness(0.92);
 }
 
-/* placeholder when no image */
-.iavt-ph {
-  color: rgba(var(--gmu), .4);
-  font-size: 4.5cqw;
-}
-
-/* gold accent at polygon bottom edge (96% from top) */
 .iavt-bar {
   position: absolute;
-  bottom: 4%;
+  bottom: 1%;
   left: 0;
   right: 0;
-  height: 1cqw;
+  height: .2cqw;
   background: rgba(var(--gmu), .65);
 }
