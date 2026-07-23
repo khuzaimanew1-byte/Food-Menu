@@ -1,5 +1,5 @@
-import "../Button/base.css";
-import "../Button/ico-on.css";
+import "../btn/base.css";
+import "../btn/ico-on.css";
 import type { ButtonHTMLAttributes } from "react";
 
 interface NbPr extends ButtonHTMLAttributes<HTMLButtonElement> {}
