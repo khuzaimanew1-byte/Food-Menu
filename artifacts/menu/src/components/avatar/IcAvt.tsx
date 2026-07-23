@@ -9,12 +9,12 @@ type AvtShape = "ic" | "sq";
 interface IcAvtPr {
   src?: string;
   alt?: string;
-  shape?: AvtShape;
+  shape: AvtShape;
 }
 
 const shpCls: Record<AvtShape, string> = { ic: "shp-ic", sq: "shp-sq" };
 
-export function IcAvt({ src, alt, shape = "ic" }: IcAvtPr) {
+export function IcAvt({ src, alt, shape }: IcAvtPr) {
   return (
     <div className={`icavt ${shape}`}>
       <div className={`icavt-shp avt-bg ${shpCls[shape]}`}>
