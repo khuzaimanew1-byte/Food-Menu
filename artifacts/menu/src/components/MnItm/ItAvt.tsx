@@ -10,7 +10,7 @@ interface IaPr {
 export function ItAvt({ src, alt, size = "4cqw" }: IaPr) {
   return (
     <div className="iavt">
-      <div className="iavt-shp">
+      <div className="iavt-shp bg-dk">
         {src ? (
           <img src={src} alt={alt || "Menu item"} className="iavt-img" loading="lazy" />
         ) : (

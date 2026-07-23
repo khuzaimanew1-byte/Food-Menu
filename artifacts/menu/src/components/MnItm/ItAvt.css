@@ -20,11 +20,6 @@
 
 .iavt-shp {
   aspect-ratio: 1;
-  background: radial-gradient(
-    ellipse at 40% 60%,
-    rgb(var(--lntn)) 0%,
-    rgb(var(--chrd)) 100%
-  );
   display: flex;
   align-items: center;
   justify-content: center;
