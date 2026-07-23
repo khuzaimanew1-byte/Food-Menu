@@ -1,0 +1,25 @@
+/* fills whatever positioned ancestor wraps it */
+.bdgi {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(0.27cqw);
+  background: rgba(var(--gm), .09);
+}
+
+.bdgi-c {
+  position: absolute;
+  background: rgb(var(--gw));
+}
+
+/* top-left */
+.bdgi-tl-h { top: 0; left: 0;   width: 30%; height: 5%;  }
+.bdgi-tl-v { top: 0; left: 0;   width: 5%;  height: 30%; }
+/* top-right */
+.bdgi-tr-h { top: 0; right: 0;  width: 30%; height: 5%;  }
+.bdgi-tr-v { top: 0; right: 0;  width: 5%;  height: 30%; }
+/* bottom-left */
+.bdgi-bl-h { bottom: 0; left: 0;  width: 30%; height: 5%;  }
+.bdgi-bl-v { bottom: 0; left: 0;  width: 5%;  height: 30%; }
+/* bottom-right */
+.bdgi-br-h { bottom: 0; right: 0; width: 30%; height: 5%;  }
+.bdgi-br-v { bottom: 0; right: 0; width: 5%;  height: 30%; }

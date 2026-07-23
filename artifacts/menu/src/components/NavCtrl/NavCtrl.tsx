@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { NavButton } from "../NavButton/NavButton";
-import { ArrowIcon } from "../Button/icons/ArrowIcon";
+import { ArrowIcon } from "../icons/ArrowIcon";
+import { DiamondIcon } from "../icons/DiamondIcon";
 import "./NavCtrl.css";
 
 interface NavCtrlProps {
@@ -34,14 +35,12 @@ function PgStrip({
       {Array.from({ length: total }, (_, i) => (
         <button
           key={i}
-          className={`pg-dot${i === current ? " pg-act" : ""}`}
+          className="pg-dot"
           onClick={() => onGoto(i)}
           aria-label={`Go to page ${i + 1}`}
           aria-current={i === current ? "page" : undefined}
         >
-          <svg className="dot-svg" viewBox="-7 -7 14 14" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-            <polygon className="dot-dmnd" points="0,-5 5,0 0,5 -5,0" />
-          </svg>
+          <DiamondIcon active={i === current} />
         </button>
       ))}
     </div>

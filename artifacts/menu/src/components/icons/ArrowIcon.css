@@ -1,0 +1,7 @@
+.arr-svg  { width: 100%; height: 100%; }
+.arr-flip { transform: scaleX(-1); }
+
+.arr-fill { fill: rgb(var(--gold)); }
+.arr-line { stroke: rgb(var(--gold)); fill: none; stroke-width: 1.4; }
+.arr-dot  { fill: rgb(var(--gold)); }
+.arr-brk  { stroke: rgb(var(--gold)); fill: none; stroke-width: 1; stroke-linecap: square; }

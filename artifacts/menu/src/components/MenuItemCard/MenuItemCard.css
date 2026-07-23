@@ -1,68 +1,99 @@
 .mic {
-  gap: 2.8cqw;
+  display: flex;
+  gap: 2.4cqw;
+  align-items: flex-start;
   padding-block: 2.2cqw;
   border-bottom: 1px solid rgba(var(--gmu), .08);
 }
 
+/* avatar wrapper — positioned parent for badge overlay */
+.mic-avt {
+  position: relative;
+  flex: 0 0 16cqw;
+}
+
+/* number badge — absolute over avatar top-left */
 .mic-bdg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 3.8cqw;
   height: 3.8cqw;
-  border: 1.3px solid rgb(var(--gmu));
-  background: linear-gradient(135deg, rgba(var(--gmu), .14), rgba(var(--gmu), .02));
-  transform: rotate(45deg);
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mic-num {
-  transform: rotate(-45deg);
-  font-weight: 600;
-  font-size: clamp(10px, 1.6cqw, 14px);
-  color: rgb(var(--glt));
+  position: relative;
+  z-index: 1;
+  color: rgb(var(--gl));
+  font-size: 2.9cqw;
+  font-weight: 500;
   line-height: 1;
 }
 
 .mic-body {
-  flex: 1 1 auto;
+  flex: 1;
+  min-width: 0;
+  padding-top: 1.1cqw;
+  display: flex;
+  flex-direction: column;
   gap: 0.5cqw;
 }
 
 .mic-row {
   display: flex;
   align-items: baseline;
-  gap: 1.2cqw;
+  gap: 1.1cqw;
+  margin-bottom: 1.1cqw;
 }
 
 .mic-name {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: clamp(12px, 2.15cqw, 19px);
-  letter-spacing: 0.06em;
-  color: rgb(var(--cr));
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 4cqw;
+  white-space: nowrap;
+  color: rgb(var(--gl));
   margin: 0;
 }
 
+/* gradient-faded dotted leader */
 .mic-lead {
-  flex: 1 1 0;
-  height: 1px;
-  background: linear-gradient(to right, rgba(var(--gmu), .5), rgba(var(--gmu), .08));
+  flex: 1;
+  height: 0.53cqw;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(var(--gmu), .85) 0,
+    rgba(var(--gmu), .85) 1.3cqw,
+    transparent 1.3cqw,
+    transparent 2.1cqw
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
 }
 
 .mic-price {
-  font-weight: 700;
-  font-style: italic;
-  font-size: clamp(12px, 1.95cqw, 17px);
-  background-image: linear-gradient(180deg, rgb(var(--gl)) 0%, rgb(var(--gm)) 55%, rgb(var(--gw)) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: rgb(var(--gm));
+  font-size: 3.2cqw;
   white-space: nowrap;
+  color: rgb(var(--gw));
 }
 
 .mic-desc {
-  font-weight: 300;
-  font-size: clamp(9px, 1.5cqw, 13px);
-  line-height: 1.7;
+  font-size: 2.9cqw;
+  line-height: 1.1;
   color: rgb(var(--mut));
   margin: 0;
 }

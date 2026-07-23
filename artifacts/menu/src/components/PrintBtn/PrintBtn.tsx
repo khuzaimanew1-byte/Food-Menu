@@ -1,7 +1,7 @@
 import React from "react";
 import "../Button/base.css";
 import "../Button/icon-text.css";
-import { PrintIcon } from "../Button/icons/PrintIcon";
+import { PrintIcon } from "../icons/PrintIcon";
 
 export function PrintBtn() {
   return (

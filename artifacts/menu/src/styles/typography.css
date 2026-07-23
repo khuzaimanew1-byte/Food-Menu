@@ -24,4 +24,7 @@
   /* neutrals */
   --blk:  0, 0, 0;
   --wht:  255, 255, 255;
+
+  /* lantern amber — avatar bg warm glow */
+  --lntn: 58, 36, 8;
 }

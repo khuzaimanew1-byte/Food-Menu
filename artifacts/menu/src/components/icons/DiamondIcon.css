@@ -1,0 +1,5 @@
+.dot-svg  { width: 100%; height: 100%; overflow: visible; }
+.dot-dmnd { fill: none; stroke: rgb(var(--gold)); stroke-width: 1.3; }
+
+.dot-act .dot-dmnd { fill: rgb(var(--gold)); stroke: rgb(var(--gold)); }
+.dot-act            { filter: drop-shadow(0 0 3px rgba(var(--gold), .9)); }
