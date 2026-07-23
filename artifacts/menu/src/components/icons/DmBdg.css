@@ -5,12 +5,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-width: 1px !important;
 }
 
 .dmbdg-num {
   transform: rotate(-45deg);
-  font-weight: 700;
-  font-size: 2cqw;
+  font-weight: 300;
+  font-size: 2.6cqw;
   letter-spacing: 0.03em;
   color: rgb(var(--gl));
   line-height: 1;
