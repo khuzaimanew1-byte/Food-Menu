@@ -23,7 +23,7 @@ export function IcAvt({ src, alt, shape = "ic" }: IcAvtPr) {
           : <UplBtn />
         }
       </div>
-      <div className="icavt-bar" aria-hidden />
+      {shape === "ic" && <div className="icavt-bar" aria-hidden />}
     </div>
   );
 }
