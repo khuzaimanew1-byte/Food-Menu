@@ -1,18 +1,23 @@
 import "./avt-bg.css";
 import "./IcAvt.css";
+import "./shape/ic.css";
+import "./shape/sq.css";
 import { UplBtn } from "../btn/UplBtn";
+
+type AvtShape = "ic" | "sq";
 
 interface IcAvtPr {
   src?: string;
   alt?: string;
-  shape?: "square" | "circle";
+  shape?: AvtShape;
 }
 
-export function IcAvt({ src, alt, shape = "square" }: IcAvtPr) {
-  const shpCls = `icavt-shp avt-bg${shape === "circle" ? " icavt-shp--cir" : ""}`;
+const shpCls: Record<AvtShape, string> = { ic: "shp-ic", sq: "shp-sq" };
+
+export function IcAvt({ src, alt, shape = "ic" }: IcAvtPr) {
   return (
     <div className="icavt">
-      <div className={shpCls}>
+      <div className={`icavt-shp avt-bg ${shpCls[shape]}`}>
         {src
           ? <img src={src} alt={alt || "Menu item"} className="icavt-img" loading="lazy" />
           : <UplBtn />
