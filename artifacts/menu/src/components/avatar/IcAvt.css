@@ -14,11 +14,3 @@
   filter: sepia(0.22) saturate(1.15) contrast(1.08) brightness(0.92);
 }
 
-.icavt-bar {
-  position: absolute;
-  bottom: 3%;
-  left: 0;
-  right: 0;
-  height: .2cqw;
-  background: rgba(var(--gmu), .65);
-}
