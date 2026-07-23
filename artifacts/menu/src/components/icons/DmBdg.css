@@ -1,8 +1,6 @@
 .dmbdg {
   width: 100%;
   height: 100%;
-  border: 1.3px solid rgb(var(--gmu));
-  background: linear-gradient(135deg, rgba(var(--gmu), .14), rgba(var(--gmu), .02));
   transform: rotate(45deg);
   display: flex;
   align-items: center;
@@ -11,8 +9,10 @@
 
 .dmbdg-num {
   transform: rotate(-45deg);
-  font-weight: 600;
-  font-size: 1.6cqw;
-  color: rgb(var(--glt));
+  font-weight: 700;
+  font-size: 2cqw;
+  letter-spacing: 0.03em;
+  color: rgb(var(--gl));
   line-height: 1;
+  text-shadow: 0 1px 6px rgba(var(--blk), .6);
 }

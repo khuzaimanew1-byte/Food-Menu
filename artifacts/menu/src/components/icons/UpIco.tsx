@@ -2,11 +2,11 @@ interface UpIcoPr {
   size?: string;
 }
 
-export function UpIco({ size = "1em" }: UpIcoPr) {
+export function UpIco({ size }: UpIcoPr) {
   return (
     <svg
       viewBox="0 0 24 24"
-      style={{ width: size, height: size }}
+      style={size ? { width: size, height: size } : undefined}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.5"

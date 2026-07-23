@@ -1,20 +1,16 @@
 .iavt { position: relative; }
 
 .iavt-upl {
-  box-sizing: content-box;
-  background: none;
-  border: .4cqw dashed currentColor;
-  padding: .4cqw;
-  border-radius: 9999px;
+  border: .3cqw dashed currentColor;
+  padding: .3cqw;
+  border-radius: 50%;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: rgb(var(--gold));
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease, background 0.18s ease;
+  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease;
 }
+
+.iavt-upl svg { width: 2.7cqw; aspect-ratio: 1; }
+
 .iavt-upl:hover  { filter: drop-shadow(0 0 8px rgba(var(--gold), .28)); }
 .iavt-upl:active { transform: scale(0.94); }
 

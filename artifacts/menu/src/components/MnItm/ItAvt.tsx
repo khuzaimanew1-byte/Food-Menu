@@ -4,10 +4,9 @@ import { UpIco } from "../icons/UpIco";
 interface IaPr {
   src?: string;
   alt?: string;
-  size?: string;
 }
 
-export function ItAvt({ src, alt, size = "4cqw" }: IaPr) {
+export function ItAvt({ src, alt }: IaPr) {
   return (
     <div className="iavt">
       <div className="iavt-shp bg-dk">
@@ -15,7 +14,7 @@ export function ItAvt({ src, alt, size = "4cqw" }: IaPr) {
           <img src={src} alt={alt || "Menu item"} className="iavt-img" loading="lazy" />
         ) : (
           <button className="iavt-upl" aria-label="Upload photo">
-            <UpIco size={size} />
+            <UpIco />
           </button>
         )}
       </div>
