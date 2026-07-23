@@ -1,6 +1,6 @@
 import React from "react";
 import { ItemAvatar } from "./ItemAvatar";
-import { BadgeIcon } from "../icons/BadgeIcon";
+import { Badge } from "../icons/Badge";
 import "./MenuItemCard.css";
 
 export interface MenuItemProps {
@@ -17,8 +17,7 @@ export function MenuItemCard({ id, name, description, price, image }: MenuItemPr
       <div className="mic-avt">
         <ItemAvatar src={image} alt={name} />
         <div className="mic-bdg">
-          <BadgeIcon />
-          <span className="mic-num ff-s">{id}</span>
+          <Badge num={id} />
         </div>
       </div>
       <div className="mic-body">

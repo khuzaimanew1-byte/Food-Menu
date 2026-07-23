@@ -1,9 +1,11 @@
-/* fills whatever positioned ancestor wraps it */
 .bdgi {
   position: absolute;
   inset: 0;
   backdrop-filter: blur(0.27cqw);
-  background: rgba(var(--gm), .09);
+  background: rgba(var(--ink), .85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bdgi-c {
@@ -23,3 +25,12 @@
 /* bottom-right */
 .bdgi-br-h { bottom: 0; right: 0; width: 30%; height: 5%;  }
 .bdgi-br-v { bottom: 0; right: 0; width: 5%;  height: 30%; }
+
+.bdgi-num {
+  position: relative;
+  z-index: 1;
+  color: rgb(var(--gl));
+  font-size: 2.9cqw;
+  font-weight: 500;
+  line-height: 1;
+}

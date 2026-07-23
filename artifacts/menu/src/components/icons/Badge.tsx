@@ -1,11 +1,13 @@
 import React from "react";
-import "./BadgeIcon.css";
+import "./Badge.css";
 
-/* Visual-only: bracket-corner frame + blurred backdrop.
-   Number is rendered by the consumer above this. */
-export function BadgeIcon() {
+interface BadgeProps {
+  num?: number | string;
+}
+
+export function Badge({ num }: BadgeProps) {
   return (
-    <div className="bdgi" aria-hidden>
+    <div className="bdgi" aria-hidden={num === undefined ? true : undefined}>
       <span className="bdgi-c bdgi-tl-h" />
       <span className="bdgi-c bdgi-tl-v" />
       <span className="bdgi-c bdgi-tr-h" />
@@ -14,6 +16,7 @@ export function BadgeIcon() {
       <span className="bdgi-c bdgi-bl-v" />
       <span className="bdgi-c bdgi-br-h" />
       <span className="bdgi-c bdgi-br-v" />
+      {num !== undefined && <span className="bdgi-num ff-s">{num}</span>}
     </div>
   );
 }
