@@ -5,9 +5,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  filter:
-    drop-shadow(0 0 0.6cqw rgba(var(--gold), .65))
-    drop-shadow(0 0 2.8cqw rgba(var(--gold), .18));
 }
 
 .icavt-img {
@@ -25,6 +22,3 @@
   height: .2cqw;
   background: rgba(var(--gmu), .65);
 }
-
-/* ic silhouette bottom edge replaces the bar */
-.icavt.ic .icavt-bar { display: none; }

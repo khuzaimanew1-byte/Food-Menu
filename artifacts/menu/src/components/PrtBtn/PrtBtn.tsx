@@ -1,5 +1,5 @@
-import "../btn/base.css";
-import "../btn/ico-tx.css";
+import "../Button/base.css";
+import "../Button/ico-tx.css";
 import { PrtIco } from "../icons/PrtIco";
 
 export function PrtBtn() {

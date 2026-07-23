@@ -1,5 +1,7 @@
 .avt-bg {
-  background:
-    linear-gradient(158deg, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
-    radial-gradient(ellipse at 40% 60%, rgb(var(--lntn)) 0%, rgb(var(--chrd)) 100%);
+  background: radial-gradient(
+    ellipse at 40% 60%,
+    rgb(var(--lntn)) 0%,
+    rgb(var(--chrd)) 100%
+  );
 }
