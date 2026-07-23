@@ -1,0 +1,34 @@
+:root {
+  --gold: 212, 175, 55;
+  --gl:   243, 223, 168;
+  --gm:   201, 161, 90;
+  --gw:   230, 197, 131;
+  --gmu:  201, 167, 106;
+  --glt:  237, 217, 172;
+
+  --chr:  28, 28, 28;
+  --chrd: 10, 8, 6;
+  --ink:  33, 28, 21;
+
+  --cr:   248, 242, 227;
+  --mut:  171, 160, 141;
+
+  --blk:  0, 0, 0;
+  --wht:  255, 255, 255;
+
+  --lntn: 58, 36, 8;
+
+  --ff:  'Cormorant Garamond', Georgia, serif;
+  --ff2: 'Cormorant', Georgia, serif;
+
+  --background:          0 0% 11%;
+  --foreground:          45 61% 88%;
+  --border:              45 65% 53%;
+  --card:                30 11% 6%;
+  --card-foreground:     45 61% 88%;
+  --muted:               40 18% 60%;
+  --muted-foreground:    40 18% 60%;
+  --primary:             45 65% 53%;
+  --primary-foreground:  0 0% 11%;
+  --radius:              0.5rem;
+}

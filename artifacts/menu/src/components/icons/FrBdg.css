@@ -1,0 +1,29 @@
+.bdgi {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(0.27cqw);
+  background: rgba(var(--gl), .08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bdgi-c { position: absolute; background: rgb(var(--gold)); }
+
+.bdgi-tl-h { top: 0;    left: 0;   width: 30%; height: 5%;  }
+.bdgi-tl-v { top: 0;    left: 0;   width: 5%;  height: 30%; }
+.bdgi-tr-h { top: 0;    right: 0;  width: 30%; height: 5%;  }
+.bdgi-tr-v { top: 0;    right: 0;  width: 5%;  height: 30%; }
+.bdgi-bl-h { bottom: 0; left: 0;   width: 30%; height: 5%;  }
+.bdgi-bl-v { bottom: 0; left: 0;   width: 5%;  height: 30%; }
+.bdgi-br-h { bottom: 0; right: 0;  width: 30%; height: 5%;  }
+.bdgi-br-v { bottom: 0; right: 0;  width: 5%;  height: 30%; }
+
+.bdgi-num {
+  position: relative;
+  z-index: 1;
+  color: rgb(var(--gl));
+  font-size: 2.9cqw;
+  font-weight: 500;
+  line-height: 1;
+}

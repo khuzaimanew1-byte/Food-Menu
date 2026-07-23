@@ -1,0 +1,38 @@
+.mh-wrap {
+  max-width: 100%;
+  margin: 1cqw 0;
+  position: relative;
+  font-size: 5cqw;
+}
+
+.mh-crown {
+  width: 2.7em;
+  position: absolute;
+  top: -1em;
+}
+
+.mh-row {
+  gap: .6cqw;
+  max-width: 100%;
+}
+
+.mh-div {
+  flex: 0 0 2.2em;
+  height: 0.5em;
+}
+
+.mh-div svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.mh-ttl {
+  font-weight: 700;
+  font-size: .9em;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgb(var(--gold));
+  margin: 0;
+  text-align: center;
+}

@@ -9,7 +9,7 @@
   position: relative;
 }
 
-/* cqw container — shared by page content and CtrlDock */
+/* cqw container */
 .pg-wrap {
   container-type: inline-size;
   container-name: menu-page;
@@ -27,7 +27,7 @@
   position: relative;
 }
 
-.a4-padding {
+.a4-pad {
   padding: 9cqw 9cqw 11cqw;
 }
 
@@ -72,10 +72,5 @@
   grid-template-columns: 1fr;
 }
 
-.pg-bg {
-  z-index: -5;
-}
-
-.pg-img {
-  object-fit: cover;
-}
+.pg-bg  { z-index: -5; }
+.pg-img { object-fit: cover; }

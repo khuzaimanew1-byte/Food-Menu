@@ -1,0 +1,10 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(var(--gold), .35); border-radius: 3px; }

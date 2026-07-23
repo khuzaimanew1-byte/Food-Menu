@@ -1,31 +1,23 @@
-/* Frosted-glass panel — NavCtrl and PrintBtn */
-/* Import via utils.css only; never duplicate */
 .glass {
   background:
-    /* diagonal sheen */
     linear-gradient(
       135deg,
       rgba(var(--wht), .06) 0%,
       rgba(var(--wht), .01) 45%,
       transparent 100%
     ),
-    /* gold tint wash */
     linear-gradient(
       180deg,
       rgba(var(--gold), .07) 0%,
       rgba(var(--gold), .03) 100%
     ),
-    /* dark semi-transparent base */
     color-mix(in srgb, rgb(var(--chrd)) 52%, transparent);
 
   backdrop-filter: blur(1px) saturate(6.8);
   -webkit-backdrop-filter: blur(1px) saturate(6.8);
   box-shadow:
-    /* inner top highlight */
     inset 0 1px 0 rgba(var(--wht), .08),
-    /* inner gold glow */
     inset 0 -1px 0 rgba(var(--gold), .1),
-    /* outer depth ring */
     0 0 0 1px rgba(var(--gold), .07),
     0 8px 32px rgba(var(--blk), .55);
 }

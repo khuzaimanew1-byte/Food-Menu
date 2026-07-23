@@ -33,16 +33,26 @@ Tags: [BASE-BLUEPRINT] [BASE-BEST] [BASE-SSOT] [BASE-REUSE]
 ## FRONTEND
 Tags: [NAME-LEN] [COMP-SPLIT] [COMP-STRUCT] [PAGE-CSS] [MODAL-MOUNT] [MODAL-HYBRID] [ANIM-SMOOTH] [NAV-ANIM]
 
-[NAME-LEN] All custom names (CSS vars, JS vars, functions, DB fields, files, folders) max 5-6 chars using recognizable short forms.
+[NAME-LEN] All custom names (CSS vars & classes, JS vars, functions, DB fields, files, folders) max 5-6 chars using recognizable short forms.
 [COMP-SPLIT] Every component — from smallest to largest — lives in its own dedicated UI component file.
 [COMP-STRUCT] UI, logic, styles, types, and assets in separate files; keep colocated so responsibility is obvious.
-[PAGE-CSS] Page-level CSS only in a styles/ folder; logic files in a separate logic/ folder.
-[MODAL-MOUNT] Modals mount on trigger, unmount on close.
-[MODAL-HYBRID] Specified large modals only: open=mount immediately, close=10s countdown then unmount, reopen=cancel countdown. // hybrid mount
 [ANIM-SMOOTH] Apply smooth animation throughout the entire app.
 [NAV-ANIM] Creative navigation animations on every page and component; animate relative to nav position so transition is always perceivable.
 
 ---
+
+## REFACTORING
+Tags: [FIX-UX] [COMMENT] [NO-DEAD] [NO-LOG] [MIN-CODE]
+
+[FIX-UX] Code changes must not alter visible UX/UI even slightly; internal/backend code may change freely as long as result and experience are identical or better.
+[COMMENT] Comments only at genuinely major decision points (Which needs comments badly then give it); max 3 words; no explanatory prose or unnecessary indentification comments.
+[NO-DEAD] Remove all unused, dead, duplicate (same logic/lines anywhere in project), and overriding code/styles/logic — none may exist anywhere in the codebase.
+[NO-LOG] console.log forbidden everywhere; console.error allowed only for genuine runtime errors.
+[MIN-CODE] Write minimal optimized logic; avoid redundant conditions, duplicate implementations, custom code replicating existing behavior; no two identical lines anywhere in the project; prefer simplest maintainable solution.
+[CSS-NODUP] No duplicate or overriding styles anywhere in the project; remove if found.
+
+---
+
 
 ## STYLING
 Tags: [CSS-GLOBALS] [CSS-UTIL] [CSS-NOHARD] [CSS-NODUP]
@@ -50,8 +60,6 @@ Tags: [CSS-GLOBALS] [CSS-UTIL] [CSS-NOHARD] [CSS-NODUP]
 [CSS-GLOBALS] Three global files only — globals.css (reset, body, scrollbar), variables.css (all CSS vars: colors, spacing, fonts), typography.css (all text styles).
 [CSS-UTIL] Any style used 5+ times → move to utilities.css.
 [CSS-NOHARD] font-family and color values strictly forbidden as hardcoded literals; use CSS vars only.
-[CSS-NODUP] No duplicate or overriding styles anywhere in the project; remove if found.
-
 ---
 
 ## LOGIC
@@ -62,19 +70,10 @@ Tags: [LIST-KEY] [EFFECT-DEPS] [MEMO-HEAVY] [DEBOUNCE] [MOD-ARCH]
 [MEMO-HEAVY] Heavy computation → useMemo mandatory; React.memo on pure components; useCallback on expensive callbacks.
 [DEBOUNCE] Search and input fields → 300ms debounce.
 [MOD-ARCH] One responsibility per file; colocate feature code with its owner; never merge single-purpose files; only global concerns in global files.
-
+[MODAL-MOUNT] Modals mount on trigger, unmount on close.
+[MODAL-HYBRID] Specified large modals only: open=mount immediately, close=10s countdown then unmount, reopen=cancel countdown. // hybrid mount
 ---
 
-## REFACTORING
-Tags: [FIX-UX] [COMMENT] [NO-DEAD] [NO-LOG] [MIN-CODE]
-
-[FIX-UX] Code changes must not alter visible UX/UI even slightly; internal/backend code may change freely as long as result and experience are identical or better.
-[COMMENT] Comments only at genuinely major decision points; max 3 words; no explanatory prose.
-[NO-DEAD] Remove all unused, dead, duplicate (same logic/lines anywhere in project), and overriding code/styles/logic — none may exist anywhere in the codebase.
-[NO-LOG] console.log forbidden everywhere; console.error allowed only for genuine runtime errors.
-[MIN-CODE] Write minimal optimized logic; avoid redundant conditions, duplicate implementations, custom code replicating existing behavior; no two identical lines anywhere in the project; prefer simplest maintainable solution.
-
----
 
 ## DATABASE
 Tags: [DB-SSOT] [DB-INDEX] [DB-SELECT] [DB-CACHE] [DB-POOL] [DB-TIMEOUT]

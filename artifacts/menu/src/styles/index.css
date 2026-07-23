@@ -1,43 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap');
+
+@import "./variables.css";
+@import "./globals.css";
 @import "./typography.css";
 @import "./utils.css";
 
 @import 'tailwindcss';
 
-@import "./menu-layout.css";
-
 @theme inline {
-  --color-background:        hsl(var(--background));
-  --color-foreground:        hsl(var(--foreground));
-  --color-border:            hsl(var(--border));
-  --color-card:              hsl(var(--card));
-  --color-card-foreground:   hsl(var(--card-foreground));
-  --color-muted:             hsl(var(--muted));
-  --color-muted-foreground:  hsl(var(--muted-foreground));
-  --color-primary:           hsl(var(--primary));
+  --color-background:         hsl(var(--background));
+  --color-foreground:         hsl(var(--foreground));
+  --color-border:             hsl(var(--border));
+  --color-card:               hsl(var(--card));
+  --color-card-foreground:    hsl(var(--card-foreground));
+  --color-muted:              hsl(var(--muted));
+  --color-muted-foreground:   hsl(var(--muted-foreground));
+  --color-primary:            hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
 }
 
-:root {
-  --background:         0 0% 11%;
-  --foreground:         45 61% 88%;
-  --border:             45 65% 53%;
-  --card:               30 11% 6%;
-  --card-foreground:    45 61% 88%;
-  --muted:              40 18% 60%;
-  --muted-foreground:   40 18% 60%;
-  --primary:            45 65% 53%;
-  --primary-foreground: 0 0% 11%;
-  --radius:             0.5rem;
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+@import "./menu-layout.css";
