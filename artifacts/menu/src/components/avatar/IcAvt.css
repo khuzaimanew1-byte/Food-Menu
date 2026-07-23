@@ -1,20 +1,6 @@
-.iavt { position: relative; }
+.icavt { position: relative; }
 
-.iavt-upl {
-  border: .3cqw dashed currentColor;
-  padding: .3cqw;
-  border-radius: 50%;
-  cursor: pointer;
-  color: rgb(var(--gold));
-  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease;
-}
-
-.iavt-upl svg { width: 2.7cqw; aspect-ratio: 1; }
-
-.iavt-upl:hover  { filter: drop-shadow(0 0 8px rgba(var(--gold), .28)); }
-.iavt-upl:active { transform: scale(0.94); }
-
-.iavt-shp {
+.icavt-shp {
   aspect-ratio: 1;
   display: flex;
   align-items: center;
@@ -25,14 +11,19 @@
   );
 }
 
-.iavt-img {
+.icavt-shp--cir {
+  clip-path: none;
+  border-radius: 50%;
+}
+
+.icavt-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: sepia(0.22) saturate(1.15) contrast(1.08) brightness(0.92);
 }
 
-.iavt-bar {
+.icavt-bar {
   position: absolute;
   bottom: 1%;
   left: 0;
