@@ -1,5 +1,23 @@
 .iavt { position: relative; }
 
+.iavt-upl {
+  box-sizing: content-box;
+  background: none;
+  border: .4cqw dashed currentColor;
+  padding: .4cqw;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--gold));
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease, background 0.18s ease;
+}
+.iavt-upl:hover  { filter: drop-shadow(0 0 8px rgba(var(--gold), .28)); }
+.iavt-upl:active { transform: scale(0.94); }
+
 .iavt-shp {
   aspect-ratio: 1;
   background: radial-gradient(
