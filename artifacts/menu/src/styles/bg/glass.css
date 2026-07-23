@@ -1,5 +1,11 @@
 .glass {
   background:
+    radial-gradient(
+      ellipse 90% 80% at 22% 25%,
+      rgba(var(--lntn), .13) 0%,
+      rgba(var(--lntn), .05) 45%,
+      transparent 100%
+    ),
     linear-gradient(
       135deg,
       rgba(var(--wht), .06) 0%,
