@@ -1,0 +1,13 @@
+Convert refined_menu_item_card_mobile_v2.html into the actual MenuItemCard component, replacing its current implementation. Check SSOT-Rules.md and PROJECT-BLUEPRINT.md first, silently.
+
+Colors — the main ask: The reference HTML has hardcoded hex/rgb values throughout. Don't force a rigid closest-match mapping — instead, use your judgment to pick whichever shades from the app's existing color palette (the RGB-triplet variables already defined in variables.css, look best for this card and fit the overall theme. If a genuinely new shade would serve the design better than anything currently defined, add it to variables.css as a new token rather than hardcoding it inline. The goal is a result that feels native to the app's palette, not a literal recreation of the reference's exact tones.
+
+Organize, don't redesign the layout/structure: This reference HTML represents working, intended styling — your job is to properly organize it into the existing component structure (MenuItemCard.tsx/.css and ItemAvatar.tsx/.css), not to change its layout. Where the new reference and the current component differ (numbering approach, avatar shape, price/divider styling, etc.), consolidate into one clean, non-duplicated implementation — keep whichever version is more complete/functional, don't keep both in parallel.
+
+Sizing: keep everything cqw-based as in the reference, and make sure the component renders inside a properly container-type: inline-size parent (matching the pattern already used elsewhere, e.g. .a4-box) so sizing resolves consistently. No fixed px values.
+
+Cleanup: remove commented-out dead code and any leftover experimental markup that doesn't serve a clear current purpose.
+
+Don't carry over: the standalone preview shell (body wrapper, max-width, centering) in the reference file — that's only for isolated preview, not part of the actual component.
+
+Before finishing: confirm no hardcoded hex/px values remain, confirm nothing is duplicated (e.g. only one numbering approach, one avatar shape), test that sizing scales correctly in a narrower container, update PROJECT-BLUEPRINT.md silently, and list every file changed.
