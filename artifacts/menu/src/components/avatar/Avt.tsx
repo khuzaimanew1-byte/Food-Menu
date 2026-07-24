@@ -56,7 +56,16 @@ export function Avt({
     </>
   ) : (
     <div className="avt-chk" aria-hidden>
-      <span className="avt-mk">✓</span>
+      {/* SVG checkmark — font-independent, always renders */}
+      <svg className="avt-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <polyline
+          points="20 6 9 17 4 12"
+          stroke="currentColor"
+          strokeWidth="2.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
     </div>
   );
 

@@ -1,3 +1,8 @@
+@keyframes mic-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .mic {
   display: flex;
   gap: 2.4cqw;
@@ -5,6 +10,7 @@
   position: relative;
   cursor: pointer;
   transition: opacity 0.28s ease;
+  animation: mic-in 0.28s ease both;
 }
 
 /* card-level selection effects (avatar effects are owned by Avt.css) */
