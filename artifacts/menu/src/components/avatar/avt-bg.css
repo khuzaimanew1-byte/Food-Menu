@@ -2,10 +2,14 @@
   filter: drop-shadow(0 0 0.22cqw rgba(var(--gmu), 0.88)) drop-shadow(0 0 0.65cqw rgba(var(--gold), 0.26));
 }
 
-/* Initials background — transparent overlay only; ic-inn's charcoal is the base.
-   Keeping a single colour source (ic-inn) prevents gradient clashes at the border. */
+/* Initials background — hue driven by --avt-h (set inline from name hash in Inits.tsx).
+   Each name maps to a distinct jewel-tone dark gradient; white text reads on all of them. */
 .ini-bg {
+  --avt-h: 28; /* fallback amber; overridden per-instance via inline style */
   background:
-    radial-gradient(ellipse 72% 72% at 50% 44%, rgba(var(--gmu), 0.38) 0%, transparent 62%),
-    radial-gradient(ellipse 42% 46% at 50% 36%, rgba(var(--gold), 0.18) 0%, transparent 48%);
+    radial-gradient(ellipse 68% 68% at 50% 42%,
+      hsl(var(--avt-h), 52%, 28%) 0%,
+      hsl(var(--avt-h), 42%, 14%) 50%,
+      hsl(var(--avt-h), 32%, 7%)  100%
+    );
 }

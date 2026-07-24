@@ -6,15 +6,12 @@ import "./MnItm.css";
 export function MnItm({ name, description, price, image }: MnItem) {
   const [sel, setSel] = useState(false);
   return (
-    <div className={`mic${sel ? " sel" : ""}`} onClick={() => setSel(s => !s)}>
+    <div
+      className={`mic${sel ? " sel" : ""}`}
+      onClick={() => setSel((s) => !s)}
+    >
       <div className="mic-avt">
-        <Avt
-          src={image}
-          name={name}
-          alt={name}
-          shape="ic"
-          checked={sel}
-        />
+        <Avt src={image} name={name} alt={name} shape="sq" checked={sel} />
       </div>
       <div className="mic-body">
         <div className="mic-row">
