@@ -1,0 +1,85 @@
+Follow `SSOT Rules.md` strictly.
+Perform a project-wide color theme refactor only.
+Objectives:
+- Replace the existing Infinity Castle color palette with the new approved palette.
+- Preserve the current visual hierarchy, layouts, spacing, typography, animations, and component behavior.
+- Do not redesign the UI. This is a theme migration, not a visual redesign.
+
+Rules:
+
+- Use the new color variables as the single source of truth.
+- Update every component, page, shared style, SCSS module, utility, and theme file to use the new palette.
+- Replace hardcoded colors with existing variables wherever possible.
+- If a variable's role has changed, update all references accordingly.
+- Preserve the semantic purpose of every variable (primary, muted, surface, border, text, accent, etc.).
+- Rebalance color usage to reduce the overall gold dominance while keeping the Infinity Castle aesthetic.
+- Keep gold as the hero accent only. Use charcoal, walnut, ivory, muted neutrals, and lantern tones according to their intended roles.
+- Remove obsolete or duplicate color definitions that are no longer used.
+- Do not introduce duplicate variables or alternative theme systems.
+- Keep RGB variable format unchanged.
+- Preserve backward compatibility unless a cleanup is required to maintain SSOT.
+
+Before applying changes:
+
+- Analyze the entire project and identify every location that depends on the current palette.
+- Update all affected files in a single consistent migration.
+- Do not stop after updating only the root variables.
+
+I'll provide the new palette below.
+
+:root {
+  /* Hero Accent */
+  --gold: 196, 160, 74;
+  --gl:   232, 214, 166;
+
+  /* Antique Metals */
+  --gm:   147, 117, 63;
+  --gw:   182, 149, 90;
+  --gmu:  136, 109, 67;
+  --glt:  218, 198, 154;
+
+  /* Castle Surfaces */
+  --chr:  36, 34, 32;
+  --chrd: 18, 15, 13;
+  --ink:  25, 22, 19;
+
+  /* Woods */
+  --wlt:  63, 42, 24;
+  --oak:  51, 35, 21;
+
+  /* Text */
+  --cr:   234, 227, 211;
+  --mut:  149, 140, 124;
+
+  /* Neutral */
+  --ash:  103, 94, 82;
+  --fog:  74, 72, 69;
+
+  /* Lantern */
+  --lntn: 214, 145, 54;
+
+  /* Base */
+  --blk:  0, 0, 0;
+  --wht:  255, 255, 255;
+
+  /* Fonts */
+  --ff:  'Cormorant Garamond', Georgia, serif;
+  --ff2: 'Cormorant', Georgia, serif;
+
+  /* shadcn */
+  --background:          24 8% 12%;
+  --foreground:          40 34% 90%;
+
+  --card:                28 10% 9%;
+  --card-foreground:     40 34% 90%;
+
+  --border:              39 39% 45%;
+
+  --muted:               34 10% 45%;
+  --muted-foreground:    34 10% 60%;
+
+  --primary:             41 45% 53%;
+  --primary-foreground:  24 8% 12%;
+
+  --radius:              0.5rem;
+}

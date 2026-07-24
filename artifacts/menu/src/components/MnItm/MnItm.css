@@ -13,14 +13,42 @@
   animation: mic-in 0.28s ease both;
 }
 
-/* ── Selection: fade whole item, visually restore the tick ───────────────────
-   CSS opacity cannot be "unapplied" to children, so:
-   1. Fade both text and avatar container to 0.7.
-   2. Boost .avt-chk with brightness(1.43) → 0.7 × 1.43 ≈ 1.0 visual result,
-      keeping the checkmark icon at full apparent luminance.              */
+/* ── Selection: fade body + avatar; check icon is a direct .mic child ────────
+   Because .mic-chk is a sibling of .mic-avt/.mic-body (not nested inside),
+   it is never affected by their opacity — no brightness hack needed.     */
 .sel .mic-body { opacity: 0.7; }
 .sel .mic-avt  { opacity: 0.7; }
-.sel .avt-chk  { filter: brightness(1.43); }
+
+/* ── Check icon — outside the opacity subtree ──────────────────────────── */
+.mic-chk {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 13cqw;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mic-mk {
+  color: rgb(var(--gold));
+  width: 5.5cqw;
+  height: 5.5cqw;
+  display: block;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0.3) rotate(-30deg);
+  filter: drop-shadow(0 0 0.8cqw rgba(var(--gold), 0.75));
+  transition: opacity 0.26s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sel .mic-mk {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
 
 .mic-avt {
   position: relative;

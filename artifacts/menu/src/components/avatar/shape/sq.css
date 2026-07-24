@@ -3,7 +3,7 @@
   border: 0.35cqw solid rgba(var(--gmu), 0.75);
   box-shadow:
     0 0 0 0.55cqw rgba(var(--gold), 0.12),
-    inset 0 0 1.2cqw rgba(var(--lntn), 0.35);
+    inset 0 0 1.2cqw rgba(var(--lntn), 0.14);
   overflow: hidden;
   transition: border-color 0.22s ease, box-shadow 0.22s ease;
 }
@@ -20,5 +20,5 @@
   border-color: rgba(var(--gold), 0.90);
   box-shadow:
     0 0 0 0.6cqw  rgba(var(--gold), 0.22),
-    inset 0 0 1.4cqw rgba(var(--lntn), 0.45);
+    inset 0 0 1.4cqw rgba(var(--lntn), 0.18);
 }

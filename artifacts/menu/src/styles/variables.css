@@ -1,34 +1,56 @@
 :root {
-  --gold: 212, 175, 55;
-  --gl:   243, 223, 168;
-  --gm:   201, 161, 90;
-  --gw:   230, 197, 131;
-  --gmu:  201, 167, 106;
-  --glt:  237, 217, 172;
+  /* Hero Accent */
+  --gold: 196, 160, 74;
+  --gl:   232, 214, 166;
 
-  --chr:  28, 28, 28;
-  --chrd: 10, 8, 6;
-  --ink:  33, 28, 21;
+  /* Antique Metals */
+  --gm:   147, 117, 63;
+  --gw:   182, 149, 90;
+  --gmu:  136, 109, 67;
+  --glt:  218, 198, 154;
 
-  --cr:   248, 242, 227;
-  --mut:  171, 160, 141;
+  /* Castle Surfaces */
+  --chr:  36, 34, 32;
+  --chrd: 18, 15, 13;
+  --ink:  25, 22, 19;
 
+  /* Woods */
+  --wlt:  63, 42, 24;
+  --oak:  51, 35, 21;
+
+  /* Text */
+  --cr:   234, 227, 211;
+  --mut:  149, 140, 124;
+
+  /* Neutral */
+  --ash:  103, 94, 82;
+  --fog:  74, 72, 69;
+
+  /* Lantern */
+  --lntn: 214, 145, 54;
+
+  /* Base */
   --blk:  0, 0, 0;
   --wht:  255, 255, 255;
 
-  --lntn: 58, 36, 8;
-
+  /* Fonts */
   --ff:  'Cormorant Garamond', Georgia, serif;
   --ff2: 'Cormorant', Georgia, serif;
 
-  --background:          0 0% 11%;
-  --foreground:          45 61% 88%;
-  --border:              45 65% 53%;
-  --card:                30 11% 6%;
-  --card-foreground:     45 61% 88%;
-  --muted:               40 18% 60%;
-  --muted-foreground:    40 18% 60%;
-  --primary:             45 65% 53%;
-  --primary-foreground:  0 0% 11%;
+  /* shadcn */
+  --background:          24 8% 12%;
+  --foreground:          40 34% 90%;
+
+  --card:                28 10% 9%;
+  --card-foreground:     40 34% 90%;
+
+  --border:              39 39% 45%;
+
+  --muted:               34 10% 45%;
+  --muted-foreground:    34 10% 60%;
+
+  --primary:             41 45% 53%;
+  --primary-foreground:  24 8% 12%;
+
   --radius:              0.5rem;
 }
