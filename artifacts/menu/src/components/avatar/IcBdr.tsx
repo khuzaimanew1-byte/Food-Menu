@@ -1,17 +1,11 @@
-import './shape/ic.css';
+import "./shape/ic.css";
 
-interface IcBdrPr {
-  children: React.ReactNode;
-  ovr?: React.ReactNode;
-}
+interface IcBdrPr { children: React.ReactNode; }
 
-export function IcBdr({ children, ovr }: IcBdrPr) {
+export function IcBdr({ children }: IcBdrPr) {
   return (
     <div className="ic-bdr">
-      <div className="ic-inn">
-        {children}
-        {ovr}
-      </div>
+      <div className="ic-inn">{children}</div>
       <div className="ic-bar" aria-hidden />
     </div>
   );
