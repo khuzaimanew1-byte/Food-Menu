@@ -1,0 +1,114 @@
+Ab mere paas poori picture hai. Yeh hai complete, deeply-researched workflow:
+
+Current State — Exact Issues
+Avt.tsx: 3 props only (src, alt, shape). No modes, no initials, no upload logic — just shows image OR UplBtn (which itself has no upload functionality).
+
+avt-bg.css: Sirf filter: drop-shadow() hai — koi bg nahi. Initials ke liye naya bg class yahan aayega.
+
+.ic-inn bg (in ic.css): Dark charcoal + gold-edge radial gradient — yeh container ka bg hai, image ya upload button dono ke neeche yahi hota hai. Initials ka bg ALAG hoga jo .ic-inn ke upar layer hoga, isko replace nahi karna.
+
+ChkBx.tsx: .chkbx { display: none } permanent hai — .sel .chkbx rules sirf border-color/background change karte hain, display kabhi nahi badhta. Yeh completely dead/broken component hai. Meanwhile MnItm.tsx ka inline mic-chk/mic-mk wahi kaam karta hai jo ChkBx karna chahta tha.
+
+UplBtn.css: cursor, color, transition, :hover, :active — yeh sab Button/base.css mein already hai. Pure duplicates hain.
+
+Updated Props Design
+User ke feedback ke baad:
+
+interface AvtPr {
+  src?:       string;           // both modes — image URL
+  name?:      string;           // initials source + alt default
+  alt?:       string;           // overrides name-based alt
+  shape?:     'ic' | 'sq';     // default: 'ic'
+  // Normal mode (default, no flag needed):
+  checked?:   boolean;          // selection state
+  onSelect?:  () => void;       // selection callback
+  // Upload mode (uploadable flag activates it):
+  uploadable?: boolean;         // switches to upload mode — unmounts checkbox entirely
+  onUpload?:  (file: File) => void;
+}
+
+JSX after implementation:
+
+// Normal — image + selection
+<Avt src={image} name={name} shape="ic" checked={sel} onSelect={toggle} />
+// Normal — no image (shows initials)
+<Avt name="Lamb Kofta" shape="ic" checked={sel} onSelect={toggle} />
+// Upload — replaceable existing image
+<Avt src={image} name={name} shape="ic" uploadable onUpload={handleFile} />
+// Upload — empty slot (shows UplBtn)
+<Avt name={name} shape="ic" uploadable onUpload={handleFile} />
+
+Background Architecture Decision
+.ic-bdr      ← gold polygon border ring (stays)
+  └── .ic-inn  ← dark charcoal bg, gold edge (STAYS — container bg for both image + upload)
+        ├── <img>       ← covers container naturally
+        ├── <UplBtn>    ← sits centered on dark bg (correct)
+        ├── <Inits>     ← position: absolute; inset: 0; z-index: 1
+        │     └── .ini-bg (new in avt-bg.css) — warm lantern-brown bg
+        │           shows OVER .ic-inn but UNDER image
+        └── <AvtOvr>    ← position: absolute; inset: 0; z-index: 2 (upload mode only)
+
+ini-bg CSS (in avt-bg.css):
+
+.ini-bg {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 45%, rgba(var(--gmu), 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 30%, rgba(var(--gold), 0.12) 0%, transparent 55%),
+    linear-gradient(160deg, rgb(var(--lntn)) 0%, rgb(var(--ink)) 100%);
+}
+
+Warm lantern-brown fade → dark ink. Gold initials text ke neeche perfect contrast. .ic-inn ka dark bg touched nahi hoga.
+
+Selection System Refactor
+Abhi: MnItm manages sel state → passes .sel class to mic div → CSS descendant selectors .sel .mic-mk, .sel .ic-bdr trigger effects → <ChkBx /> separately imported lekin permanently hidden.
+
+Baad mein:
+
+MnItm keeps sel state + passes checked={sel} + onSelect to Avt
+Avt normal mode mein .avt div par chkd class conditionally lagata hai
+Checkmark overlay (avt-chk/avt-mk) Avt.css mein own karta hai
+Gold glow on .ic-bdr bhi Avt.css mein move hoga (.avt.chkd .ic-bdr)
+MnItm.css mein sirf card-level effects rahenge: opacity fade (.sel), strikethrough (.sel .mic-name::after)
+MnItm.tsx se mic-chk/mic-mk block + <ChkBx /> import remove
+Upload mode mein: uploadable flag → Avt checked/onSelect completely ignore karta hai, avt-chk div mount nahi hoti.
+
+Complete File Manifest
+🆕 Create (9 files)
+File	Purpose
+src/lib/upld/upld.ts	ACPT, MXSZ, UpldSt, UpldErr, valid() — pure, no React
+src/lib/upld/dropReg.ts	Singleton global dragover/drop/enter/leave listeners; Map<id, {onFile,onEnter,onLeave}> callbacks only — no DOM mutation
+src/lib/upld/useUpld.ts	isDrg + isHov → isOn; registers in dropReg; exposes pick, inRef, onInp, hovOn, hovOff
+src/components/avatar/AvtOvr.tsx	<button class="btn avt-ovr"> with UpIco — absolute inset 0, z-index 2, inside ic-inn/avt-shp
+src/components/avatar/AvtOvr.css	opacity:0 default; .drop-on .avt-ovr { opacity:1 } — single class covers hover+drag
+src/components/avatar/Inits.tsx	Extracts ≤2 uppercase initials from name; fallback "AV"; renders with ini-bg class
+src/components/avatar/Inits.css	Initials letter sizing, centering, gold color, ff-s font
+src/components/AvtDmo/AvtDmo.tsx	Demo grid: ic+sq × image/initials/AV × normal(idle+selected)+upload(idle+hover)
+src/components/AvtDmo/AvtDmo.css	Demo page layout
+✏️ Modify (9 files)
+File	What changes
+src/components/avatar/avt-bg.css	Add .ini-bg class
+src/components/avatar/Avt.tsx	Full rework — new props, modes, initials, alt defaults, chkd class, drop-on class
+src/components/avatar/Avt.css	Add position: relative to .avt-shp; add .avt-chk/.avt-mk styles; add .avt.chkd .avt-mk + .avt.chkd .ic-bdr
+src/components/avatar/IcBdr.tsx	Add ovr?: React.ReactNode prop — renders inside .ic-inn after children
+src/components/btn/UplBtn.tsx	className="btn btio upl-btn" + import Button/base.css + ico-on.css
+src/components/btn/UplBtn.css	Remove cursor, color, transition, :hover, :active — keep dashed-circular-border + svg size only
+src/components/MnItm/MnItm.tsx	Remove mic-chk/mic-mk block + ChkBx import; pass checked={sel} + onSelect to Avt
+src/components/MnItm/MnItm.css	Remove .mic-chk, .mic-mk, .sel .mic-mk, .sel .ic-bdr blocks
+src/App.tsx	Add ?demo query-param check → renders <AvtDmo /> instead of <MnApp />
+🗑️ Delete (2 files)
+File	Reason
+src/components/ChkBx/ChkBx.tsx	Always display:none — permanently dead, selection moved to Avt
+src/components/ChkBx/ChkBx.css	Dead styles
+Verification Checklist (from prompt)
+Check	How satisfied
+Normal + Upload fully isolated	uploadable flag → mutually exclusive useUpld hook OR avt-chk div mounts
+Hover + drag-over share one class	hovOn/hovOff → isHov; dropReg → isDrg; both → isOn → single drop-on class
+Drop-zone generic	closest('[data-drop-id]') in dropReg — works on any element with the attribute
+Unique identifier targeting	useId() sanitized → data-drop-id attribute
+Content priority	src → Inits (with name) → Inits (with "AV")
+alt default	alt ?? name ?? "Item Image"
+Checkbox only in normal mode	!uploadable && gates entire avt-chk div mount
+Button files consolidated	UplBtn uses .btn .btio, duplicate styles gone
+Overlay above image, clickable	z-index: 2, position: absolute; inset: 0 inside ic-inn (natural clip-path)
+Total: 9 new + 9 modified + 2 deleted = 20 file operations.
