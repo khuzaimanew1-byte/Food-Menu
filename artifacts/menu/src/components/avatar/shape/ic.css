@@ -9,6 +9,8 @@
   background: rgba(var(--gmu), 0.85);
   padding: 0.2cqw;
   box-sizing: border-box;
+  filter: drop-shadow(0 0 0.22cqw rgba(var(--gmu), 0.88))
+          drop-shadow(0 0 0.65cqw rgba(var(--gold), 0.26));
   transition: background 0.22s ease;
 }
 
@@ -26,9 +28,10 @@
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(circle at 50% 46%, rgba(var(--gl), 0.75) 0%, transparent 26%),
-    radial-gradient(ellipse at 50% 50%, rgba(var(--gold), 0.30) 0%, transparent 48%),
-    linear-gradient(160deg, rgb(var(--lntn)) 0%, rgb(var(--ink)) 100%);
+    radial-gradient(circle  at 50% 48%, rgba(var(--gl),   0.82) 0%, transparent 28%),
+    radial-gradient(ellipse at 50% 48%, rgba(var(--gold),  0.38) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 52%, rgba(var(--gmu),   0.22) 0%, transparent 72%),
+    radial-gradient(ellipse at 50% 60%, rgb(var(--lntn))   10%,  rgb(var(--ink)) 100%);
 }
 
 .ic-inn::after {
