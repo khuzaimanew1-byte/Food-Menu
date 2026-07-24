@@ -8,7 +8,7 @@
   transition: border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
-.icavt:hover .shp-sq {
+.avt:hover .shp-sq {
   border-color: rgba(var(--gold), 0.90);
   box-shadow:
     0 0 0 0.6cqw  rgba(var(--gold), 0.22),

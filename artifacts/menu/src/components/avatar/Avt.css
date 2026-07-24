@@ -1,13 +1,13 @@
-.icavt { position: relative; }
+.avt { position: relative; }
 
-.icavt-shp {
+.avt-shp {
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.icavt-img {
+.avt-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -15,7 +15,7 @@
 }
 
 /* ic-specific bar */
-.icavt-bar {
+.avt-bar {
   position: absolute;
   bottom: 3%;
   left: 0;

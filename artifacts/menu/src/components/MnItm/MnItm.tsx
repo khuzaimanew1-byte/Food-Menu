@@ -1,4 +1,4 @@
-import { IcAvt } from "../avatar/IcAvt";
+import { Avt } from "../avatar/Avt";
 import { DmBdg } from "../icons/DmBdg";
 import type { MnItem } from "@/data/menu";
 import "./MnItm.css";
@@ -7,7 +7,7 @@ export function MnItm({ id, name, description, price, image }: MnItem) {
   return (
     <div className="mic">
       <div className="mic-avt">
-        <IcAvt src={image} alt={name} shape="ic" />
+        <Avt src={image} alt={name} shape="ic" />
         <div className="mic-bdg">
           <DmBdg num={id} />
         </div>
