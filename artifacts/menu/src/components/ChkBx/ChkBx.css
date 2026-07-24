@@ -1,18 +1,5 @@
 .chkbx {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4cqw;
-  height: 4cqw;
-  border: 0.22cqw solid rgba(var(--gmu), 0.4);
-  background: rgba(var(--chrd), 0.35);
-  backdrop-filter: blur(1px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+  display: none;
 }
 
 .sel .chkbx {
