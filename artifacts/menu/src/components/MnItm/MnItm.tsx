@@ -1,15 +1,17 @@
+import { useState } from "react";
 import { Avt } from "../avatar/Avt";
-import { DmBdg } from "../icons/DmBdg";
+import { ChkBx } from "../ChkBx/ChkBx";
 import type { MnItem } from "@/data/menu";
 import "./MnItm.css";
 
-export function MnItm({ id, name, description, price, image }: MnItem) {
+export function MnItm({ name, description, price, image }: MnItem) {
+  const [sel, setSel] = useState(false);
   return (
-    <div className="mic">
+    <div className={`mic${sel ? " sel" : ""}`} onClick={() => setSel(s => !s)}>
       <div className="mic-avt">
         <Avt src={image} alt={name} shape="ic" />
-        <div className="mic-bdg">
-          <DmBdg num={id} />
+        <div className="mic-chk" aria-hidden>
+          <span className="mic-mk">✓</span>
         </div>
       </div>
       <div className="mic-body">
@@ -20,6 +22,7 @@ export function MnItm({ id, name, description, price, image }: MnItem) {
         </div>
         <p className="mic-desc ff-s">{description}</p>
       </div>
+      <ChkBx />
     </div>
   );
 }
