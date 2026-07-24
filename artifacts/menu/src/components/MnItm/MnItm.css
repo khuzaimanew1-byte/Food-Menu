@@ -13,11 +13,14 @@
   animation: mic-in 0.28s ease both;
 }
 
-/* ── Selection: fade everything except the checkmark overlay ─────────────────
-   opacity on .mic would pull .avt-chk down too (parent opacity can't be
-   overridden on children), so we apply it per-region instead.          */
-.sel .mic-body  { opacity: 0.7; }
-.sel .ic-bdr    { opacity: 0.7; } /* fades the avatar shape; avt-chk sits above ic-bdr */
+/* ── Selection: fade whole item, visually restore the tick ───────────────────
+   CSS opacity cannot be "unapplied" to children, so:
+   1. Fade both text and avatar container to 0.7.
+   2. Boost .avt-chk with brightness(1.43) → 0.7 × 1.43 ≈ 1.0 visual result,
+      keeping the checkmark icon at full apparent luminance.              */
+.sel .mic-body { opacity: 0.7; }
+.sel .mic-avt  { opacity: 0.7; }
+.sel .avt-chk  { filter: brightness(1.43); }
 
 .mic-avt {
   position: relative;
