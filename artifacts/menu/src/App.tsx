@@ -7,6 +7,7 @@ import { ClsPg } from "./components/ClsPg";
 import { CtntPg } from "./components/CtntPg/CtntPg";
 import { PrtBtn } from "./components/PrtBtn/PrtBtn";
 import { NvCtl } from "./components/NvCtl/NvCtl";
+import { AvtDmo } from "./components/AvtDmo/AvtDmo";
 import { ARBC, TURK, GRLS, DSRT } from "./data/menu";
 
 const qClt = new QueryClient();
@@ -69,9 +70,12 @@ function MnApp() {
 }
 
 export default function App() {
+  // ?demo query-param → render Avatar demo grid instead of the menu
+  const isDemo = new URLSearchParams(window.location.search).has("demo");
+
   return (
     <QueryClientProvider client={qClt}>
-      <MnApp />
+      {isDemo ? <AvtDmo /> : <MnApp />}
     </QueryClientProvider>
   );
 }

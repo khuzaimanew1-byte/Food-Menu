@@ -1,0 +1,19 @@
+/* Initials overlay — sits above ic-inn bg, below img (z-index 1) */
+.ini {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ini-txt {
+  font-family: var(--ff);
+  color: rgb(var(--gl));
+  font-size: 7cqw;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 1.2cqw rgba(var(--gold), 0.55);
+}

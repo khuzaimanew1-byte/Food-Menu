@@ -1,13 +1,8 @@
+/* cursor, color, transition, hover, active — all inherited from .btn (Button/base.css) */
 .upl-btn {
   border: .3cqw dashed currentColor;
   padding: .3cqw;
   border-radius: 50%;
-  cursor: pointer;
-  color: rgb(var(--gold));
-  transition: border-color 0.18s ease, filter 0.18s ease, transform 0.1s ease;
 }
 
 .upl-btn svg { width: 2.7cqw; aspect-ratio: 1; }
-
-.upl-btn:hover  { filter: drop-shadow(0 0 8px rgba(var(--gold), .28)); }
-.upl-btn:active { transform: scale(0.94); }

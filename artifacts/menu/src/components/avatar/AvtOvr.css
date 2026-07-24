@@ -1,0 +1,17 @@
+/* Upload overlay — shown on hover or drag-over (drop-on class on .avt) */
+.avt-ovr {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none; /* pass clicks through when hidden */
+  transition: opacity 0.18s ease;
+}
+
+.avt-ovr svg { width: 3cqw; aspect-ratio: 1; }
+
+/* Single class covers both hover and drag-over states */
+.drop-on .avt-ovr {
+  opacity: 1;
+  pointer-events: auto;
+}
