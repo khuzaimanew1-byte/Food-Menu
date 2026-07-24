@@ -20,10 +20,9 @@ export function Avt({ src, alt, shape = "ic" }: AvtPr) {
   return (
     <div className="avt">
       {shape === "ic"
-        ? <IcBdr><div className="avt-shp avt-bg">{inner}</div></IcBdr>
+        ? <IcBdr>{inner}</IcBdr>
         : <div className="avt-shp avt-bg shp-sq">{inner}</div>
       }
-      {shape === "ic" && <div className="avt-bar" aria-hidden />}
     </div>
   );
 }

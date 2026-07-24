@@ -17,3 +17,12 @@
 .avt:hover .ic-bdr {
   background: rgba(var(--gold), 0.92);
 }
+
+.ic-bar {
+  position: absolute;
+  bottom: 3%;
+  left: 0;
+  right: 0;
+  height: .2cqw;
+  background: linear-gradient(90deg, transparent, rgba(var(--gmu), .65), transparent);
+}
