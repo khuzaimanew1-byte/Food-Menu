@@ -61,10 +61,8 @@
   }
 }
 
-.two-col .items-grid {
-  display: grid;
+.two-col {
   grid-template-columns: 1fr 1fr;
-  gap: 0 3cqw;
 }
 
 .items-grid {
@@ -73,5 +71,10 @@
   gap: 3.2cqw;
 }
 
-.pg-bg  { z-index: -5; }
-.pg-img { object-fit: cover; }
+.pg-bg {
+  z-index: -5;
+}
+
+.pg-img {
+  object-fit: cover;
+}
