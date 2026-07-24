@@ -1,0 +1,39 @@
+Task: Implement a complete, reusable Avatar system. Read SSOT-Rules.md and PROJECT-BLUEPRINT.md first and follow them silently.
+
+Support two modes:
+Normal mode: Standard avatar behavior.
+Upload mode (uploadable): Image uploading interface with click-to-upload and drag-and-drop. Upload-specific behavior must only exist in this mode.
+Extract all upload logic into a reusable framework-only module (click upload, drag-and-drop, validation, loading, success, and fallback), keeping presentation separate.
+Support click-to-upload and drag-and-drop. Any element using the shared drop-zone class must automatically work as a drop target without being tied to a specific component or hierarchy.
+Validate image files before passing them into the existing upload flow.
+Use a single shared visual-state class for both hover and active drag-over so both behaviors reuse the same styling instead of duplicate CSS.
+Identify the exact drop target with a unique identifier rather than the shared class so uploads are applied to the correct instance.
+Keep the drop-zone behavior modular and reusable so it can be applied anywhere the shared class is used in the future.
+Consolidate all upload-button files into the existing btn structure and remove any duplicate button implementations.
+Ensure the upload overlay always renders above the image with correct stacking so it remains fully clickable whenever upload mode is active.
+Do not mount mode-specific UI or logic unless that mode is active.
+Add a dedicated style/demo page covering all Avatar states and variants.
+Avatar content priority:
+Display the uploaded/provided image when available.
+Otherwise display initials generated from the name attribute.
+If name is not provided, display the default initials "AV".
+Accessibility defaults:
+alt defaults to the name value.
+If name is not provided, use the default alt text "Item Image".
+Interaction rules:
+Checkbox behavior is available only in Normal mode.
+Checkbox logic must be completely disabled and unmounted in Upload mode.
+
+Before finishing:
+
+Verify Normal and Upload modes are fully isolated with no unnecessary logic or UI mounted.
+Verify hover and drag-over share the same visual-state class.
+Verify the drop-zone works generically wherever the shared class is applied.
+Verify unique identifier targeting correctly resolves the drop destination.
+Verify avatar priority is image → initials → default "AV".
+Verify alt defaults to name → "Item Image".
+Verify checkbox logic works only in Normal mode.
+Verify all button files are consolidated into the single btn structure with no duplicates.
+Verify the overlay always remains above the image and fully interactive.
+Update PROJECT-BLUEPRINT.md silently.
+List every file created, moved, and modified.
