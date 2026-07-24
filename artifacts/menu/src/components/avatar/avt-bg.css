@@ -1,20 +1,23 @@
 .avt-bg {
   position: relative;
   isolation: isolate;
+
   background:
-    radial-gradient(ellipse at 38% 22%, rgba(var(--gl),   0.06) 0%, transparent 48%),
-    radial-gradient(ellipse at 68% 82%, rgba(var(--gmu),  0.10) 0%, transparent 44%),
-    radial-gradient(ellipse at 50% 58%, rgba(var(--lntn), 0.88) 0%, rgb(var(--chrd)) 70%);
+    /* central spark — warm creamy gold burst */
+    radial-gradient(circle  at 50% 48%, rgba(var(--gl),   0.82) 0%,  transparent 28%),
+    /* inner glow ring */
+    radial-gradient(ellipse at 50% 48%, rgba(var(--gold),  0.38) 0%,  transparent 50%),
+    /* mid ambient warmth */
+    radial-gradient(ellipse at 50% 52%, rgba(var(--gmu),   0.22) 0%,  transparent 72%),
+    /* warm base — lantern amber, not black */
+    radial-gradient(ellipse at 50% 60%, rgb(var(--lntn))   10%,  rgb(var(--ink)) 100%);
 }
 
-/* depth layer — soft inner vignette + top ambient glow */
+/* soft edge vignette — keeps it part of the card, not floating */
 .avt-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 0%,   rgba(var(--gmu), 0.08) 0%, transparent 58%),
-    radial-gradient(ellipse at 50% 110%, rgba(var(--gold), 0.05) 0%, transparent 50%);
-  box-shadow: inset 0 0 3cqw rgba(var(--chrd), 0.75);
+  box-shadow: inset 0 0 2.8cqw rgba(var(--chrd), 0.45);
   pointer-events: none;
 }
