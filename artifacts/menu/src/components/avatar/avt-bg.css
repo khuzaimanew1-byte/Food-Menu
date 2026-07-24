@@ -2,11 +2,10 @@
   filter: drop-shadow(0 0 0.22cqw rgba(var(--gmu), 0.88)) drop-shadow(0 0 0.65cqw rgba(var(--gold), 0.26));
 }
 
-/* Initials background — warm amber core, dark vignette edges
-   Sits over .ic-inn dark bg but under <img>  (z-index: 1 on .ini) */
+/* Initials background — transparent overlay only; ic-inn's charcoal is the base.
+   Keeping a single colour source (ic-inn) prevents gradient clashes at the border. */
 .ini-bg {
   background:
-    radial-gradient(ellipse 62% 68% at 50% 56%, rgba(var(--gmu), 0.60) 0%, transparent 55%),
-    radial-gradient(ellipse 90% 90% at 50% 30%, rgba(var(--gold), 0.28) 0%, transparent 50%),
-    linear-gradient(168deg, rgb(var(--lntn)) 0%, rgb(var(--chr)) 60%, rgb(var(--chrd)) 100%);
+    radial-gradient(ellipse 72% 72% at 50% 44%, rgba(var(--gmu), 0.38) 0%, transparent 62%),
+    radial-gradient(ellipse 42% 46% at 50% 36%, rgba(var(--gold), 0.18) 0%, transparent 48%);
 }
