@@ -14,6 +14,7 @@ IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEA
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
 | FEAT-07 | BE | API server — NestJS 10, health route | D |
+| FEAT-18 | FE | Upload framework: lib/upld/ (upld.ts types+validation, dropReg.ts global drop registry, useUpld.ts hook); AvtOvr overlay inside ic-inn; Avt owns drop-zn+data-drop-id+hidden input; UplBtn consolidated into .btn/.btio; drop-on = single visual-state class for hover+drag | D |
 | FEAT-17 | FE | Selection UI: ChkBx component, check overlay on avatar, gold glow, strikethrough, opacity fade | D |
 | FEAT-14 | FE | components/icons/ SSoT: ArrowIcon, PrintIcon, DiamondIcon (each owns CSS) | D |
 | FEAT-13 | FE | Button/ system: base.css + icon-text.css + icon-only.css (no icons) | D |
