@@ -14,3 +14,12 @@
   filter: sepia(0.22) saturate(1.15) contrast(1.08) brightness(0.92);
 }
 
+/* ic-specific bar */
+.icavt-bar {
+  position: absolute;
+  bottom: 3%;
+  left: 0;
+  right: 0;
+  height: .2cqw;
+  background: linear-gradient(90deg, transparent, rgba(var(--gmu), .65), transparent);
+}

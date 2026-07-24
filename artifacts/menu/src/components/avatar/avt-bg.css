@@ -1,19 +1,14 @@
 .avt-bg {
   position: relative;
   isolation: isolate;
-
   background:
-    /* central spark — warm creamy gold burst */
-    radial-gradient(circle  at 50% 48%, rgba(var(--gl),   0.82) 0%,  transparent 28%),
-    /* inner glow ring */
-    radial-gradient(ellipse at 50% 48%, rgba(var(--gold),  0.38) 0%,  transparent 50%),
-    /* mid ambient warmth */
-    radial-gradient(ellipse at 50% 52%, rgba(var(--gmu),   0.22) 0%,  transparent 72%),
-    /* warm base — lantern amber, not black */
+    radial-gradient(circle  at 50% 48%, rgba(var(--gl),   0.82) 0%, transparent 28%),
+    radial-gradient(ellipse at 50% 48%, rgba(var(--gold),  0.38) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 52%, rgba(var(--gmu),   0.22) 0%, transparent 72%),
     radial-gradient(ellipse at 50% 60%, rgb(var(--lntn))   10%,  rgb(var(--ink)) 100%);
 }
 
-/* soft edge vignette — keeps it part of the card, not floating */
+/* edge vignette */
 .avt-bg::after {
   content: '';
   position: absolute;
