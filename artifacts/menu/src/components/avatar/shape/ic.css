@@ -1,15 +1,13 @@
 .ic-bdr {
-  --ic-poly: polygon(
-    50% 0%,  58% 8%,  66% 3%,  74% 9%,
-    82% 5%,  90% 11%,
-    100% 18%, 100% 92%, 96% 100%,
-    4%  100%, 0%  92%,
-    0%  18%, 10% 11%,
-    18% 5%,  26% 9%,  34% 3%,  42% 8%
-  );
+  --ic-poly: polygon(50% 0%, 58% 8%, 66% 3%, 74% 9%,
+      82% 5%, 90% 11%,
+      100% 18%, 100% 92%, 96% 100%,
+      4% 100%, 0% 92%,
+      0% 18%, 10% 11%,
+      18% 5%, 26% 9%, 34% 3%, 42% 8%);
   clip-path: var(--ic-poly);
   background: rgba(var(--gmu), 0.85);
-  padding: 0.3cqw;
+  padding: 0.2cqw;
   box-sizing: border-box;
   transition: background 0.22s ease;
 }
@@ -28,8 +26,8 @@
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(circle  at 50% 46%, rgba(var(--gl),   0.75) 0%, transparent 26%),
-    radial-gradient(ellipse at 50% 50%, rgba(var(--gold),  0.30) 0%, transparent 48%),
+    radial-gradient(circle at 50% 46%, rgba(var(--gl), 0.75) 0%, transparent 26%),
+    radial-gradient(ellipse at 50% 50%, rgba(var(--gold), 0.30) 0%, transparent 48%),
     linear-gradient(160deg, rgb(var(--lntn)) 0%, rgb(var(--ink)) 100%);
 }
 

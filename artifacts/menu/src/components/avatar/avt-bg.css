@@ -1,11 +1,3 @@
 .avt-bg {
-  position: relative;
-  isolation: isolate;
-  background:
-    radial-gradient(circle  at 50% 48%, rgba(var(--gl),   0.82) 0%, transparent 28%),
-    radial-gradient(ellipse at 50% 48%, rgba(var(--gold),  0.38) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 52%, rgba(var(--gmu),   0.22) 0%, transparent 72%),
-    radial-gradient(ellipse at 50% 60%, rgb(var(--lntn))   10%,  rgb(var(--ink)) 100%);
-  filter: drop-shadow(0 0 0.22cqw rgba(var(--gmu), 0.88))
-          drop-shadow(0 0 0.65cqw rgba(var(--gold), 0.26));
+  filter: drop-shadow(0 0 0.22cqw rgba(var(--gmu), 0.88)) drop-shadow(0 0 0.65cqw rgba(var(--gold), 0.26));
 }
