@@ -1,15 +1,11 @@
 .shp-sq {
-  position: relative;
-  isolation: isolate;
   border-radius: 18%;
   border: 0.35cqw solid rgba(var(--gmu), 0.75);
+  box-shadow:
+    0 0 0 0.55cqw rgba(var(--gold), 0.12),
+    inset 0 0 1.2cqw rgba(var(--lntn), 0.35);
   overflow: hidden;
   transition: border-color 0.22s ease, box-shadow 0.22s ease;
-  background:
-    radial-gradient(circle  at 50% 48%, rgba(var(--gl),   0.82) 0%, transparent 28%),
-    radial-gradient(ellipse at 50% 48%, rgba(var(--gold),  0.38) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 52%, rgba(var(--gmu),   0.22) 0%, transparent 72%),
-    radial-gradient(ellipse at 50% 60%, rgb(var(--lntn))   10%,  rgb(var(--ink)) 100%);
 }
 
 .shp-sq::after {
