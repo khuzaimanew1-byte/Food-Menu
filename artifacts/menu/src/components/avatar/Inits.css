@@ -11,9 +11,11 @@
 
 .ini-txt {
   font-family: var(--ff);
+  font-weight: 600;
   color: rgb(var(--gl));
-  font-size: 7cqw;
+  font-size: 4.2cqw;
   line-height: 1;
-  letter-spacing: 0.04em;
-  text-shadow: 0 0 1.2cqw rgba(var(--gold), 0.55);
+  letter-spacing: 0.12em;
+  text-indent: 0.12em; /* compensate letter-spacing so text stays visually centred */
+  text-shadow: 0 0 0.8cqw rgba(var(--gold), 0.45);
 }
