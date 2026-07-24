@@ -1,5 +1,4 @@
-/* shared ic shape — SSoT */
-.shp-ic {
+.ic-bdr {
   clip-path: polygon(
     50% 2%,
     57% 8%,  65% 4%,  73% 9%,
@@ -9,14 +8,12 @@
     0%  19%, 11% 12%,
     19% 6%,  27% 9%,  35% 4%,  43% 8%
   );
-  filter:
-    drop-shadow(0 0 0.22cqw rgba(var(--gmu),  0.88))
-    drop-shadow(0 0 0.65cqw rgba(var(--gold), 0.26));
-  transition: filter 0.22s ease;
+  background: rgba(var(--gmu), 0.85);
+  padding: 0.3cqw;
+  box-sizing: border-box;
+  transition: background 0.22s ease;
 }
 
-.icavt:hover .shp-ic {
-  filter:
-    drop-shadow(0 0 0.28cqw rgba(var(--gmu),  0.96))
-    drop-shadow(0 0 1cqw    rgba(var(--gold), 0.40));
+.icavt:hover .ic-bdr {
+  background: rgba(var(--gold), 0.92);
 }
