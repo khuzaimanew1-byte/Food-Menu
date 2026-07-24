@@ -43,9 +43,9 @@
 
 .ic-bar {
   position: absolute;
-  bottom: 3%;
-  left: 0;
-  right: 0;
+  bottom: 7%;
+  left: 10%;
+  right: 10%;
   height: .2cqw;
   background: linear-gradient(90deg, transparent, rgba(var(--gmu), .65), transparent);
 }

@@ -1,4 +1,9 @@
-.avt { position: relative; }
+.avt {
+  position: relative;
+  box-shadow:
+    0 0 0 0.55cqw rgba(var(--gold), 0.12),
+    inset 0 0 1.2cqw rgba(var(--lntn), 0.35);
+}
 
 .avt-shp {
   aspect-ratio: 1;
