@@ -16,6 +16,20 @@
   pointer-events: none;
 }
 
+/* Depth overlay — warm-tinted vignette between bg image and content */
+.mb-ovr {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 50% 45%,
+      rgba(var(--chr), 0.30) 0%,
+      rgba(var(--ink), 0.72) 100%
+    );
+}
+
 /* Content layer */
 .mb-body {
   position: relative;
