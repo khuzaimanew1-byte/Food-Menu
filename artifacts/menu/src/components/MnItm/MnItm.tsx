@@ -6,22 +6,25 @@ import "./MnItm.css";
 export function MnItm({ name, description, price, image }: MnItem) {
   const [sel, setSel] = useState(false);
   return (
+    /* mic-wpr owns position context + click — mic-chk is its direct child,
+       a sibling of .mic, so it can NEVER be inside the opacity subtree     */
     <div
-      className={`mic${sel ? " sel" : ""}`}
+      className={`mic-wpr${sel ? " sel" : ""}`}
       onClick={() => setSel((s) => !s)}
     >
-      <div className="mic-avt">
-        <Avt src={image} name={name} alt={name} shape="sq" />
-      </div>
-      <div className="mic-body">
-        <div className="mic-row">
-          <h3 className="mic-name ff-s">{name}</h3>
-          <div className="mic-lead" />
-          <span className="mic-price ff-s">{price}</span>
+      <div className="mic">
+        <div className="mic-avt">
+          <Avt src={image} name={name} alt={name} shape="sq" />
         </div>
-        <p className="mic-desc ff-s">{description}</p>
+        <div className="mic-body">
+          <div className="mic-row">
+            <h3 className="mic-name ff-s">{name}</h3>
+            <div className="mic-lead" />
+            <span className="mic-price ff-s">{price}</span>
+          </div>
+          <p className="mic-desc ff-s">{description}</p>
+        </div>
       </div>
-      {/* Check icon lives outside opacity subtree — direct child of .mic */}
       <div className="mic-chk" aria-hidden>
         <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
           <polyline

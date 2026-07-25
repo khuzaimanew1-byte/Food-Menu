@@ -76,4 +76,4 @@ No archived rows yet. Archive triggers at 25 active rows per table → BLUEPRINT
 ---
 
 ## 7. LAST TOUCHED
-07-24 — Color theme migration: new approved palette applied to variables.css (--gold desaturated, --lntn flipped from near-black to warm amber 214,145,54; added --wlt --oak --ash --fog; shadcn vars updated). sq.css --lntn opacity scaled down (0.35→0.14, 0.45→0.18) to compensate for brighter lntn value. mic-chk check icon moved outside opacity subtree in MnItm (direct child of .mic, not inside .mic-avt); brightness(1.43) hack removed.
+07-24 — Color theme migration: new approved palette applied to variables.css (--gold desaturated, --lntn flipped from near-black to warm amber 214,145,54; added --wlt --oak --ash --fog; shadcn vars updated). sq.css --lntn opacity scaled down (0.35→0.14, 0.45→0.18). MnItm refactored: mic-wpr wrapper owns position+cursor+animation; mic-chk is sibling of .mic (not inside it) — opacity on mic-avt/mic-body can never reach it. MnHdg mh-ttl: --gold→--gl (section headings softer ivory-gold). MnBrd mb-pgn: --gold→--glt (page numbers antique ivory, reduce gold dominance).
