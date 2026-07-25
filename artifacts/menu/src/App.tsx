@@ -8,7 +8,8 @@ import { CtntPg } from "./components/CtntPg/CtntPg";
 import { PrtBtn } from "./components/PrtBtn/PrtBtn";
 import { NvCtl } from "./components/NvCtl/NvCtl";
 import { AvtDmo } from "./components/AvtDmo/AvtDmo";
-import { ARBC, TURK, GRLS, DSRT } from "./data/menu";
+import { ARBC, TURK } from "./data/menu";
+import type { MnItem, PageSect } from "./data/menu";
 
 const qClt = new QueryClient();
 
@@ -18,19 +19,101 @@ const pgVars = {
   exit:   (d: number) => ({ x: d > 0 ? "-100%" : "100%", opacity: 0 }),
 };
 
-const ttlPg = 6;
+// ── Pagination constants (all in cqw) ──────────────────────────────────────
+// A4 container: height = 297/210 * 100cqw ≈ 141.4cqw
+// Content area: 141.4 - 9 (pad-top) - 11 (pad-bottom) = 121.4cqw
+const CONTENT_H = 121;   // available content height per page
+const ITEM_H    = 13;    // height of one MnItm (avatar is a 13cqw square)
+const GAP_H     = 3.2;   // items-grid gap between consecutive items
+const HDG_H     = 7;     // MnHdg height including its 1cqw top+bottom margins
+const MIN_RATIO = 0.40;  // if remaining < 40% of page, push section to next page
 
-function rndPg(pg: number) {
-  switch (pg) {
-    case 0:  return <CvrPg />;
-    case 1:  return <CtntPg pgNum={1} hdng="Arabic Specialties"               items={ARBC} layout="single"     />;
-    case 2:  return <CtntPg pgNum={2} hdng="Turkish Specialties"              items={TURK} layout="two-column" />;
-    case 3:  return <CtntPg pgNum={3} hdng="Chef Signatures & Premium Grills" items={GRLS} layout="two-column" />;
-    case 4:  return <CtntPg pgNum={4} hdng="Desserts & Premium Selections"    items={DSRT} layout="single"     />;
-    default: return <ClsPg />;
-  }
+// ── Types ──────────────────────────────────────────────────────────────────
+interface PageData {
+  pgNum: number;
+  sections: PageSect[];
 }
 
+// ── Pagination algorithm ───────────────────────────────────────────────────
+function paginateMenuSections(
+  raw: { title: string; items: MnItem[] }[]
+): PageData[] {
+  const pages: PageData[] = [];
+  let currSects: PageSect[] = [];
+  let usedH = 0;
+  let pgNum = 1;
+
+  /** Commit the current page and reset state. */
+  const flushPage = () => {
+    if (currSects.length > 0) {
+      pages.push({ pgNum, sections: currSects });
+      pgNum++;
+    }
+    currSects = [];
+    usedH = 0;
+  };
+
+  /** True if any section on the current page has a title (heading). */
+  const pageHasHeading = () => currSects.some(s => s.title !== undefined);
+
+  /** True if any section on the current page already has items. */
+  const pageHasItems = () => currSects.some(s => s.items.length > 0);
+
+  for (const sect of raw) {
+    // ── 40% rule: if page is non-empty and less than 40% space remains,
+    //    push the new section to the next page instead.
+    if (usedH > 0) {
+      const remaining = CONTENT_H - usedH;
+      if (remaining / CONTENT_H < MIN_RATIO) {
+        flushPage();
+      }
+    }
+
+    // ── Crown goes on the first heading of each page only.
+    const showCrown = !pageHasHeading();
+    currSects.push({ title: sect.title, showCrown, items: [] });
+    usedH += HDG_H;
+
+    // ── Distribute items, overflowing onto new pages as needed.
+    for (const item of sect.items) {
+      // Cost of this item: first item on the page has no gap above it.
+      const hasItems = pageHasItems();
+      const cost = ITEM_H + (hasItems ? GAP_H : 0);
+
+      if (usedH + cost > CONTENT_H) {
+        // Item doesn't fit → flush and start a continuation section.
+        flushPage();
+        currSects.push({ title: undefined, showCrown: false, items: [] });
+      }
+
+      // Re-evaluate cost after a potential page flush (first item on new page
+      // has no gap; otherwise the earlier `hasItems` check still holds).
+      const finalCost = ITEM_H + (pageHasItems() ? GAP_H : 0);
+      currSects[currSects.length - 1].items.push(item);
+      usedH += finalCost;
+    }
+  }
+
+  flushPage(); // commit the last page
+  return pages;
+}
+
+// ── Build pages once at module level ──────────────────────────────────────
+const MENU_PAGES = paginateMenuSections([
+  { title: "Arabic Specialties",  items: ARBC },
+  { title: "Turkish Specialties", items: TURK },
+]);
+
+const ttlPg = MENU_PAGES.length + 2; // cover + content pages + closing
+
+function rndPg(pg: number) {
+  if (pg === 0)          return <CvrPg />;
+  if (pg === ttlPg - 1)  return <ClsPg />;
+  const pd = MENU_PAGES[pg - 1];
+  return <CtntPg pgNum={pd.pgNum} sections={pd.sections} />;
+}
+
+// ── Main app ───────────────────────────────────────────────────────────────
 function MnApp() {
   const [curPg, setCurPg] = useState(0);
   const dir = useRef(1);
@@ -70,9 +153,7 @@ function MnApp() {
 }
 
 export default function App() {
-  // ?demo query-param → render Avatar demo grid instead of the menu
   const isDemo = new URLSearchParams(window.location.search).has("demo");
-
   return (
     <QueryClientProvider client={qClt}>
       {isDemo ? <AvtDmo /> : <MnApp />}

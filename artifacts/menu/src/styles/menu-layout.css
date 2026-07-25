@@ -61,10 +61,6 @@
   }
 }
 
-.two-col .items-grid {
-  grid-template-columns: 1fr 1fr;
-}
-
 .items-grid {
   display: grid;
   grid-template-columns: 1fr;

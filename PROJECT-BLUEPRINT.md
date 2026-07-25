@@ -13,6 +13,7 @@ IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEA
 | FEAT-10 | BE | Neon serverless driver (neon-http) in lib/db | D |
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
+| FEAT-18 | FE | Dynamic single-col pagination: items overflow to next page; 40% rule for section start; crown on first heading per page only; 2 sections (ARBC+TURK) | D |
 | FEAT-07 | BE | API server — NestJS 10, health route | D |
 | FEAT-17 | FE | Selection UI: ChkBx component, check overlay on avatar, gold glow, strikethrough, opacity fade | D |
 | FEAT-14 | FE | components/icons/ SSoT: ArrowIcon, PrintIcon, DiamondIcon (each owns CSS) | D |

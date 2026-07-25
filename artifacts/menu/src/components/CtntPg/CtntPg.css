@@ -1,4 +1,8 @@
 .cp-grid {
-  flex: 1;
   align-content: start;
+}
+
+/* spacing between consecutive sections on the same page */
+.cp-sect + .cp-sect {
+  margin-top: 1cqw;
 }

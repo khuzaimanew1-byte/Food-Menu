@@ -1,3 +1,9 @@
+export interface PageSect {
+  title?: string;      // undefined → continuation page (no heading rendered)
+  showCrown: boolean;  // crown only on the first heading of each page
+  items: MnItem[];
+}
+
 export interface MnItem {
   id: number;
   name: string;
@@ -40,25 +46,4 @@ export const TURK: MnItem[] = [
   { id: 28, name: "Etli Ekmek",                description: "Turkish flatbread with minced meat topping.",           price: "Rs. 16.99" },
   { id: 29, name: "Karniyarik",                description: "Stuffed eggplant with spiced minced meat.",             price: "Rs. 18.99" },
   { id: 30, name: "Imam Bayildi",              description: "Stuffed eggplant with olive oil & herbs.",              price: "Rs. 17.99" },
-];
-
-export const GRLS: MnItem[] = [
-  { id: 31, name: "Chicken Shish Tawook",   description: "Marinated chicken cubes grilled to perfection.",             price: "Rs. 18.99" },
-  { id: 32, name: "Lamb Chops",             description: "Tender lamb chops seasoned & grilled.",                       price: "Rs. 28.99" },
-  { id: 33, name: "Sultan's Mixed Platter", description: "A royal platter of kebabs, lamb, chicken & sides.",           price: "Rs. 45.99" },
-  { id: 34, name: "Ottoman Royal Grill",    description: "Premium selection Ottoman-style grills.",                      price: "Rs. 49.99" },
-  { id: 35, name: "Turkish Steak Platter",  description: "Grilled steak with sides & special sauce.",                   price: "Rs. 34.99" },
-  { id: 36, name: "Arabic BBQ Platter",     description: "Mix of BBQ favorites with rice & dips.",                      price: "Rs. 39.99" },
-  { id: 37, name: "Grilled Sea Bass",       description: "Fresh sea bass grilled with herbs.",                          price: "Rs. 29.99" },
-  { id: 38, name: "Charcoal Chicken",       description: "Whole chicken grilled over charcoal.",                        price: "Rs. 22.99" },
-  { id: 39, name: "Lamb Ribs",              description: "Slow-cooked lamb ribs with BBQ glaze.",                       price: "Rs. 27.99" },
-  { id: 40, name: "Castle Feast Family Tray", description: "A grand feast for the whole family.",                       price: "Rs. 85.99" },
-];
-
-export const DSRT: MnItem[] = [
-  { id: 41, name: "Kunafa",                       description: "Crispy shredded pastry with sweet cheese & syrup.",        price: "Rs. 9.99" },
-  { id: 42, name: "Baklava",                      description: "Layers of filo pastry with nuts & honey.",                 price: "Rs. 8.99" },
-  { id: 43, name: "Turkish Delight",              description: "Traditional rose-flavored delight with powdered sugar.",    price: "Rs. 6.99" },
-  { id: 44, name: "Umm Ali",                      description: "Classic Arabic bread pudding with nuts & creamy milk.",     price: "Rs. 8.99" },
-  { id: 45, name: "Sutlac (Turkish Rice Pudding)", description: "Creamy rice pudding with cinnamon.",                      price: "Rs. 7.99" },
 ];
