@@ -37,13 +37,17 @@
   z-index: 2;
 }
 
-/* Dark backdrop — slides in with the check, guarantees contrast on any avatar */
+/* Warm walnut backdrop — slides in, castle-warm contrast on any avatar */
 .mic-chk::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 18%;
-  background: rgba(var(--ink), 0.78);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(var(--wlt), 0.92) 0%,
+    rgba(var(--oak), 0.96) 100%
+  );
   transform: scale(0);
   transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -53,7 +57,7 @@
 }
 
 .mic-mk {
-  color: rgb(var(--wht));
+  color: rgb(var(--lntn));
   width: 5.5cqw;
   height: 5.5cqw;
   display: block;
@@ -62,8 +66,8 @@
   opacity: 0;
   transform: scale(0.3) rotate(-30deg);
   filter:
-    drop-shadow(0 0 0.5cqw rgba(var(--gold), 1))
-    drop-shadow(0 0 1.4cqw rgba(var(--gold), 0.65));
+    drop-shadow(0 0 0.4cqw rgba(var(--lntn), 0.95))
+    drop-shadow(0 0 1.2cqw rgba(var(--gold), 0.7));
   transition: opacity 0.26s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
