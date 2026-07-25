@@ -14,7 +14,7 @@ export function MnItm({ name, description, price, image }: MnItem) {
     >
       <div className="mic">
         <div className="mic-avt">
-          <Avt src={image} name={name} alt={name} shape="sq" />
+          <Avt src={image} name={name} alt={name} shape="ls" />
         </div>
         <div className="mic-body">
           <div className="mic-row">

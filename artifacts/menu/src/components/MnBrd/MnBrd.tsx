@@ -44,16 +44,21 @@ function MnBrd({ pg = 1, children }: MbPr) {
         <use href={`#${crnId}`} transform="translate(1054,1492) scale(-1,-1)" x="0" y="0" />
         {pgNum !== null && (
           <g transform="translate(527,1422)">
-            <path   className="mb-gs mb-th" d="M 0,-40 C 25,-40 35,-20 45,0 C 35,20 25,40 0,40 C -25,40 -35,20 -45,0 C -35,-20 -25,-40 0,-40 Z" />
+            {/* Filled dark bg — makes number readable on any backdrop */}
+            <path   className="mb-pgn-bg"   d="M 0,-48 C 30,-48 44,-24 54,0 C 44,24 30,48 0,48 C -30,48 -44,24 -54,0 C -44,-24 -30,-48 0,-48 Z" />
+            {/* Eye outline */}
+            <path   className="mb-gs mb-th" d="M 0,-48 C 30,-48 44,-24 54,0 C 44,24 30,48 0,48 C -30,48 -44,24 -54,0 C -44,-24 -30,-48 0,-48 Z" />
             <text   x="0" y="1" textAnchor="middle" dominantBaseline="middle" className="mb-pgn">{pgNum}</text>
-            <line   className="mb-gs mb-th" x1="-45"  x2="-230" y1="0" y2="0" />
-            <circle className="mb-gf"       cx="-52"  cy="0"     r="2.5" />
-            <circle className="mb-gf"       cx="-240" cy="0"     r="3" />
-            <path   className="mb-gs mb-th" d="M -240,-10 L -250,0 L -240,10 L -230,0 Z" />
-            <line   className="mb-gs mb-th" x1="45"   x2="230"  y1="0" y2="0" />
-            <circle className="mb-gf"       cx="52"   cy="0"     r="2.5" />
-            <circle className="mb-gf"       cx="240"  cy="0"     r="3" />
-            <path   className="mb-gs mb-th" d="M 240,-10 L 250,0 L 240,10 L 230,0 Z" />
+            {/* Left arm */}
+            <line   className="mb-gs mb-th" x1="-54"  x2="-265" y1="0" y2="0" />
+            <circle className="mb-gf"       cx="-62"  cy="0"     r="3.5" />
+            <circle className="mb-gf"       cx="-275" cy="0"     r="4.5" />
+            <path   className="mb-gs mb-th" d="M -275,-15 L -292,0 L -275,15 L -258,0 Z" />
+            {/* Right arm */}
+            <line   className="mb-gs mb-th" x1="54"   x2="265"  y1="0" y2="0" />
+            <circle className="mb-gf"       cx="62"   cy="0"     r="3.5" />
+            <circle className="mb-gf"       cx="275"  cy="0"     r="4.5" />
+            <path   className="mb-gs mb-th" d="M 275,-15 L 292,0 L 275,15 L 258,0 Z" />
           </g>
         )}
       </svg>

@@ -28,8 +28,8 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 13cqw;
-  aspect-ratio: 1;
+  width: 19cqw;
+  aspect-ratio: 3 / 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,7 +42,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 18%;
+  border-radius: 5%;
   background: radial-gradient(
     ellipse at center,
     rgba(var(--wlt), 0.52) 0%,
@@ -79,7 +79,8 @@
 
 .mic-avt {
   position: relative;
-  width: 13cqw;
+  width: 19cqw;
+  flex-shrink: 0;
 }
 
 .mic-body {

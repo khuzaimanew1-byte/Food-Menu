@@ -1,13 +1,14 @@
 import './avt-bg.css';
 import './Avt.css';
 import './shape/sq.css';
+import './shape/ls.css';
 import { IcBdr } from './IcBdr';
 import { Inits } from './Inits';
 import { AvtOvr } from './AvtOvr';
 import { UplBtn } from '../btn/UplBtn';
 import { useUpld } from '../../lib/upld/useUpld';
 
-type AvtShape = 'ic' | 'sq';
+type AvtShape = 'ic' | 'sq' | 'ls';
 
 interface AvtPr {
   src?:        string;
@@ -77,12 +78,13 @@ export function Avt({
   ].filter(Boolean).join(' ');
 
   // ── Shape wrapper ────────────────────────────────────────────────────
+  const shpCls = shape === 'sq' ? 'shp-sq' : shape === 'ls' ? 'shp-ls' : '';
   const shaped = shape === 'ic'
     ? (
       <IcBdr ovr={overlay}>{mainContent}</IcBdr>
     )
     : (
-      <div className="avt-shp avt-bg shp-sq">
+      <div className={`avt-shp avt-bg ${shpCls}`}>
         {mainContent}
         {overlay}
       </div>
