@@ -32,6 +32,14 @@ function MnBrd({ pg = 1, children }: MbPr) {
         alt=""
       />
 
+      {/* Top ornament */}
+      <img
+        src={`${B}img/ornt.png`}
+        className="mb-ornt mb-ornt-t"
+        aria-hidden="true"
+        alt=""
+      />
+
       {/* Page number */}
       {pgNum !== null && (
         <span className="mb-pgn ff-s" aria-hidden="true">{pgNum}</span>

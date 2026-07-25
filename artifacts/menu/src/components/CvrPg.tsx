@@ -1,5 +1,4 @@
 import "./MnBrd/MnBrd.css";
-import "./CvrCls.css";
 
 const B = import.meta.env.BASE_URL;
 
@@ -25,7 +24,7 @@ export function CvrPg() {
       {/* Top ornament — centered on the top border edge */}
       <img
         src={`${B}img/ornt.png`}
-        className="cv-ornt cv-ornt-t"
+        className="mb-ornt mb-ornt-t"
         aria-hidden="true"
         alt=""
       />
@@ -33,7 +32,7 @@ export function CvrPg() {
       {/* Bottom ornament — vertically flipped, centered on the bottom border edge */}
       <img
         src={`${B}img/ornt.png`}
-        className="cv-ornt cv-ornt-b"
+        className="mb-ornt mb-ornt-b"
         aria-hidden="true"
         alt=""
       />

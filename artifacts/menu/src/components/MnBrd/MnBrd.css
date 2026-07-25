@@ -35,6 +35,25 @@
   pointer-events: none;
 }
 
+/* Ornament — centered on top/bottom border edge */
+.mb-ornt {
+  position: absolute;
+  left: 50%;
+  width: 27%;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.mb-ornt-t {
+  top: 2.5cqw;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.mb-ornt-b {
+  bottom: 2.5cqw;
+  transform: translateX(-50%) translateY(50%) scaleY(-1);
+}
+
 /* Page number — bottom center, above border */
 .mb-pgn {
   position: absolute;
