@@ -2,8 +2,6 @@
   position: relative;
   width: 100%;
   aspect-ratio: 210 / 297;
-  background: rgb(var(--chr));
-  box-shadow: 0 0 50px rgba(var(--blk), .8);
   overflow: hidden;
 }
 
@@ -35,7 +33,7 @@
   pointer-events: none;
 }
 
-/* Ornament — centered on top/bottom border edge */
+/* Ornament — centered on top/bottom border edge (content pages) */
 .mb-ornt {
   position: absolute;
   left: 50%;
@@ -49,21 +47,50 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
-.mb-ornt-b {
-  bottom: 2.5cqw;
+/* Cover / closing page ornaments */
+.cv-ornt {
+  position: absolute;
+  left: 50%;
+  width: 33cqw;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.cv-ornt-t {
+  top: 5.5cqw;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.cv-ornt-b {
+  bottom: 5.5cqw;
   transform: translateX(-50%) translateY(50%) scaleY(-1);
 }
 
-/* Page number — bottom center, above border */
-.mb-pgn {
+/* Page number ornament wrapper — bottom-center of content pages */
+.mb-pgn-wrap {
   position: absolute;
-  bottom: 3.8cqw;
+  bottom: -7cqw;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 3cqw;
-  letter-spacing: .5cqw;
-  color: rgb(var(--glt));
+  width: 58cqw;
   z-index: 15;
   pointer-events: none;
   user-select: none;
+}
+
+.mb-pgn-ornt {
+  width: 100%;
+  display: block;
+}
+
+/* Page number — overlaid on the hollow center of the ornament */
+.mb-pgn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.8cqw;
+  letter-spacing: .3cqw;
+  color: rgb(var(--glt));
+  line-height: 1;
 }

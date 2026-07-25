@@ -40,9 +40,12 @@ function MnBrd({ pg = 1, children }: MbPr) {
         alt=""
       />
 
-      {/* Page number */}
+      {/* Page number ornament with number overlaid in hollow center */}
       {pgNum !== null && (
-        <span className="mb-pgn ff-s" aria-hidden="true">{pgNum}</span>
+        <div className="mb-pgn-wrap" aria-hidden="true">
+          <img src={`${B}img/pgorn.png`} className="mb-pgn-ornt" alt="" />
+          <span className="mb-pgn ff-s">{pgNum}</span>
+        </div>
       )}
     </div>
   );

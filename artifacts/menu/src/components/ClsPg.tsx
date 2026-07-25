@@ -21,10 +21,10 @@ export function ClsPg() {
         alt=""
       />
 
-      {/* Top ornament — centered on the top border edge */}
+      {/* Top ornament */}
       <img
         src={`${B}img/ornt.png`}
-        className="mb-ornt mb-ornt-t"
+        className="cv-ornt cv-ornt-t"
         aria-hidden="true"
         alt=""
       />
@@ -32,7 +32,7 @@ export function ClsPg() {
       {/* Bottom ornament — vertically flipped */}
       <img
         src={`${B}img/ornt.png`}
-        className="mb-ornt mb-ornt-b"
+        className="cv-ornt cv-ornt-b"
         aria-hidden="true"
         alt=""
       />
