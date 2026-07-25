@@ -1,0 +1,171 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   ContextMenu — Infinity Castle design language
+   Fixed-position panel, mounts near cursor/touch, auto-clamps to viewport.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+.ctx-menu {
+  position: fixed;
+  z-index: 9000;
+  width: 196px;
+  padding: 8px 0;
+
+  background:
+    linear-gradient(
+      160deg,
+      rgba(var(--chr), 0.97) 0%,
+      rgba(var(--chrd), 0.98) 100%
+    );
+  border: 1px solid rgba(var(--gw), 0.32);
+  border-radius: 5px;
+
+  box-shadow:
+    0 2px  6px  rgba(var(--ink), 0.55),
+    0 8px  24px rgba(var(--ink), 0.70),
+    0 20px 48px rgba(var(--ink), 0.50),
+    inset 0 1px 0 rgba(var(--glt), 0.10),
+    inset 0 0   0 1px rgba(var(--gw),  0.06);
+
+  /* Entry animation */
+  animation: ctx-in 0.13s ease-out both;
+  transform-origin: top left;
+
+  /* Prevent text selection while interacting */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@keyframes ctx-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+/* ── Header strip ────────────────────────────────────────────────────────── */
+.ctx-header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 0 14px 6px;
+}
+
+.ctx-area {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(var(--gw), 0.70);
+  line-height: 1;
+}
+
+.ctx-id {
+  font-family: var(--ff);
+  font-size: 9px;
+  color: rgba(var(--ash), 0.55);
+  line-height: 1;
+  margin-left: auto;
+  letter-spacing: 0.04em;
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────────── */
+.ctx-divider {
+  height: 1px;
+  margin: 0 10px 6px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--gw), 0.28) 30%,
+    rgba(var(--gw), 0.28) 70%,
+    transparent
+  );
+}
+
+/* ── Options list ────────────────────────────────────────────────────────── */
+.ctx-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Option row ──────────────────────────────────────────────────────────── */
+.ctx-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 14px;
+
+  cursor: pointer;
+  color: rgba(var(--cr), 0.88);
+  outline: none;
+  transition:
+    background 0.1s ease,
+    color 0.1s ease;
+}
+
+.ctx-opt:hover,
+.ctx-opt:focus-visible {
+  background: rgba(var(--gw), 0.10);
+  color: rgba(var(--gl), 0.97);
+}
+
+.ctx-opt:active {
+  background: rgba(var(--gw), 0.17);
+}
+
+/* ── Icon ───────────────────────────────────────────────────────────────── */
+.ctx-opt__icon {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: inherit;
+  opacity: 0.75;
+  transition: opacity 0.1s ease;
+}
+
+.ctx-opt:hover .ctx-opt__icon,
+.ctx-opt:focus-visible .ctx-opt__icon {
+  opacity: 1;
+}
+
+/* ── Label ──────────────────────────────────────────────────────────────── */
+.ctx-opt__label {
+  font-family: var(--ff);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Danger variant (Delete) ─────────────────────────────────────────────── */
+.ctx-opt--danger {
+  color: rgba(204, 75, 55, 0.85);
+}
+
+.ctx-opt--danger:hover,
+.ctx-opt--danger:focus-visible {
+  background: rgba(180, 55, 38, 0.14);
+  color: rgb(228, 95, 72);
+}
+
+/* ── Disabled variant ────────────────────────────────────────────────────── */
+.ctx-opt--disabled {
+  color: rgba(var(--ash), 0.45);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.ctx-opt--disabled .ctx-opt__icon {
+  opacity: 0.35;
+}
+
+/* ── Active element highlight (target element stays lit while menu is open) ── */
+[data-ctx-active] {
+  outline: 1px solid rgba(var(--gw), 0.55) !important;
+  outline-offset: 3px;
+  border-radius: 3px;
+  transition: outline-color 0.15s ease;
+}
