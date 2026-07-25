@@ -35,7 +35,7 @@ function MnBrd({ pg = 1, children }: MbPr) {
       {/* Top ornament */}
       <img
         src={`${B}img/ornt.png`}
-        className="mb-ornt mb-ornt-t"
+        className="cv-ornt cv-ornt-t"
         aria-hidden="true"
         alt=""
       />
