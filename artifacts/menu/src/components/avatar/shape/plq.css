@@ -1,0 +1,36 @@
+/* Plaque shape — wide landscape rounded-rectangle with antique gold frame */
+.avt-shp.shp-plq {
+  aspect-ratio: 3 / 2;
+  border-radius: 3.5%;
+  border: 0.28cqw solid rgba(var(--gw), 0.78);
+  box-shadow:
+    inset 0 0 0 0.22cqw rgba(var(--gmu), 0.32),
+    inset 0 0 2.8cqw rgba(var(--chrd), 0.68),
+    inset 0 0 0.55cqw rgba(var(--lntn), 0.10),
+    0 0 0 0.15cqw rgba(var(--gold), 0.08);
+  overflow: hidden;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+/* Inner vignette — sits above the image, below content */
+.avt-shp.shp-plq::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 90% 80% at 50% 50%,
+    transparent 40%,
+    rgba(var(--chrd), 0.48) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.avt:hover .avt-shp.shp-plq {
+  border-color: rgba(var(--gold), 0.90);
+  box-shadow:
+    inset 0 0 0 0.22cqw rgba(var(--gold), 0.30),
+    inset 0 0 2.8cqw rgba(var(--chrd), 0.58),
+    inset 0 0 0.75cqw rgba(var(--lntn), 0.15),
+    0 0 0 0.15cqw rgba(var(--gold), 0.18);
+}

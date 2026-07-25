@@ -1,0 +1,19 @@
+/* Corner ornament — shared base */
+.plq-cnr {
+  position: absolute;
+  width: 2.8cqw;
+  height: 2.8cqw;
+  color: rgba(var(--gw), 0.88);
+  z-index: 10;
+  pointer-events: none;
+  display: block;
+  transition: color 0.22s ease;
+}
+
+.avt:hover .plq-cnr { color: rgba(var(--gold), 0.95); }
+
+/* Placement — each corner rotated from the top-left master */
+.plq-cnr-tl { top:    0.55cqw; left:   0.55cqw; }
+.plq-cnr-tr { top:    0.55cqw; right:  0.55cqw; transform: scaleX(-1); }
+.plq-cnr-br { bottom: 0.55cqw; right:  0.55cqw; transform: scale(-1, -1); }
+.plq-cnr-bl { bottom: 0.55cqw; left:   0.55cqw; transform: scaleY(-1); }
