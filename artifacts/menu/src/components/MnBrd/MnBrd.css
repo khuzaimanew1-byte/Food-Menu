@@ -19,11 +19,9 @@
 .mb-gf { fill: rgb(var(--gold)); }
 .mb-th { stroke-width: 2; }
 
-.mb-pgn-bg { fill: rgb(var(--chrd)); }
-
 .mb-pgn {
   font-family: var(--ff2);
   font-size: 12cqw;
   letter-spacing: .5cqw;
-  fill: rgb(var(--gold));
+  fill: rgb(var(--glt));
 }
