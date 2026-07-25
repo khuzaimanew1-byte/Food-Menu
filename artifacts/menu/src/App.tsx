@@ -53,9 +53,6 @@ function paginateMenuSections(
     usedH = 0;
   };
 
-  /** True if any section on the current page has a title (heading). */
-  const pageHasHeading = () => currSects.some(s => s.title !== undefined);
-
   /** True if any section on the current page already has items. */
   const pageHasItems = () => currSects.some(s => s.items.length > 0);
 
@@ -69,9 +66,7 @@ function paginateMenuSections(
       }
     }
 
-    // ── Crown goes on the first heading of each page only.
-    const showCrown = !pageHasHeading();
-    currSects.push({ title: sect.title, showCrown, items: [] });
+    currSects.push({ title: sect.title, items: [] });
     usedH += HDG_H;
 
     // ── Distribute items, overflowing onto new pages as needed.
@@ -83,7 +78,7 @@ function paginateMenuSections(
       if (usedH + cost > CONTENT_H) {
         // Item doesn't fit → flush and start a continuation section.
         flushPage();
-        currSects.push({ title: undefined, showCrown: false, items: [] });
+        currSects.push({ title: undefined, items: [] });
       }
 
       // Re-evaluate cost after a potential page flush (first item on new page

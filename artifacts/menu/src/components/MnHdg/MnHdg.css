@@ -5,12 +5,6 @@
   font-size: 5cqw;
 }
 
-.mh-crown {
-  width: 2.7em;
-  position: absolute;
-  top: -1em;
-}
-
 .mh-row {
   gap: .6cqw;
   max-width: 100%;

@@ -29,7 +29,7 @@ export function CtntPg({ pgNum, sections }: CtPgPr) {
           {sections.map((sect, i) => (
             <div key={i} className="cp-sect">
               {sect.title !== undefined && (
-                <MnHdg text={sect.title} shCrn={sect.showCrown} />
+                <MnHdg text={sect.title} />
               )}
               {sect.items.length > 0 && (
                 <div className="items-grid cp-grid">

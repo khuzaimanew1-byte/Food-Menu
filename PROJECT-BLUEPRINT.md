@@ -14,6 +14,7 @@ IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEA
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
 | FEAT-18 | FE | Dynamic single-col pagination: items overflow to next page; 40% rule for section start; crown on first heading per page only; 2 sections (ARBC+TURK) | D |
+| FEAT-19 | FE | Image-based decorative system: brd.png border overlay, pgbg.png content bg, ornt.png ornaments (top+bottom, flipped) on cover/closing; coded SVG border+crown removed | D |
 | FEAT-07 | BE | API server — NestJS 10, health route | D |
 | FEAT-17 | FE | Selection UI: ChkBx component, check overlay on avatar, gold glow, strikethrough, opacity fade | D |
 | FEAT-14 | FE | components/icons/ SSoT: ArrowIcon, PrintIcon, DiamondIcon (each owns CSS) | D |
@@ -54,6 +55,7 @@ Tags: STACK, FOLDER, CODEGEN, IMAGES, NAMING, STYLES, RULES
 | 07-21 | "remember this"/"from now on" → log §4 immediately, dated, one line, apply unprompted | D |
 | 07-21 | Check SSOT-Rules.md tags before every task | D |
 | 07-21 | Images: WebP in public/img/, max 5-6 char names | D |
+| 07-25 | Decorative images are aria-hidden="true"; border (brd.png) is object-fit:fill; bg (pgbg.png) is object-fit:cover; ornaments are 27% wide | D |
 | 07-21 | Controls: PrintBtn floats top-right (translateY -50%); NavCtrl spans full width bottom (translateY 50%) — both inside pg-wrap | D |
 | 07-21 | All custom names max 5-6 chars (files, vars, CSS, DB fields) | D |
 

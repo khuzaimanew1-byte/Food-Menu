@@ -3,22 +3,12 @@ import "./MnHdg.css";
 
 interface MhPr {
   text?: string;
-  shCrn?: boolean;
 }
 
-function MnHdg({ text = "Turkish Specialties", shCrn = true }: MhPr) {
+function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   const uid = useId().replace(/:/g, "");
   return (
     <div className="mh-wrap flex flex-col items-center">
-      {shCrn && (
-        <svg className="mh-crown" viewBox="0 0 100 40">
-          <path d="M50 35 C40 35,30 20,20 20 C10 20,5 30,0 25 M50 35 C60 35,70 20,80 20 C90 20,95 30,100 25" stroke="rgb(var(--gold))" fill="none" strokeWidth="1.5" />
-          <circle cx="50" cy="15" r="4" fill="rgb(var(--gold))" />
-          <path d="M43 25 Q50 15 57 25"          stroke="rgb(var(--gold))" fill="none" strokeWidth="1.5" />
-          <path d="M35 15 Q25 5 15 15 T15 25"    stroke="rgb(var(--gold))" fill="none" strokeWidth="1.5" />
-          <path d="M65 15 Q75 5 85 15 T85 25"    stroke="rgb(var(--gold))" fill="none" strokeWidth="1.5" />
-        </svg>
-      )}
       <div className="mh-row flex items-center justify-center">
         <div className="mh-div">
           <svg preserveAspectRatio="none" viewBox="0 0 100 10">

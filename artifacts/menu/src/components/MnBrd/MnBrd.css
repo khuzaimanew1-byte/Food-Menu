@@ -7,21 +7,44 @@
   overflow: hidden;
 }
 
-.mb-svg  { pointer-events: none; z-index: 10; }
-.mb-body { position: relative; z-index: 5; }
-
-.mb-gs {
-  stroke: rgb(var(--gold));
-  fill: none;
-  stroke-linecap: square;
-  stroke-linejoin: miter;
+/* Full-bleed background image */
+.mb-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
 }
-.mb-gf { fill: rgb(var(--gold)); }
-.mb-th { stroke-width: 2; }
 
+/* Content layer */
+.mb-body {
+  position: relative;
+  z-index: 5;
+}
+
+/* Border frame overlay — stretches to fill, on top of content */
+.mb-brd {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Page number — bottom center, above border */
 .mb-pgn {
-  font-family: var(--ff2);
-  font-size: 12cqw;
+  position: absolute;
+  bottom: 3.8cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3cqw;
   letter-spacing: .5cqw;
-  fill: rgb(var(--glt));
+  color: rgb(var(--glt));
+  z-index: 15;
+  pointer-events: none;
+  user-select: none;
 }

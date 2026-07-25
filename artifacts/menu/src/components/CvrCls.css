@@ -1,0 +1,22 @@
+/* Shared styles for Cover and Closing pages */
+
+/* Ornament overlaid on border edges */
+.cv-ornt {
+  position: absolute;
+  left: 50%;
+  width: 27%;          /* 25-30% of page width — proportionate, not full-width */
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* Top ornament: vertical center sits on the top border line (~2.5cqw from top) */
+.cv-ornt-t {
+  top: 2.5cqw;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+/* Bottom ornament: vertically flipped, vertical center on the bottom border line */
+.cv-ornt-b {
+  bottom: 2.5cqw;
+  transform: translateX(-50%) translateY(50%) scaleY(-1);
+}

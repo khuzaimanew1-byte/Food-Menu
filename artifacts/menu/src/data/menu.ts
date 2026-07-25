@@ -1,6 +1,5 @@
 export interface PageSect {
-  title?: string;      // undefined → continuation page (no heading rendered)
-  showCrown: boolean;  // crown only on the first heading of each page
+  title?: string;   // undefined → continuation page (no heading rendered)
   items: MnItem[];
 }
 
