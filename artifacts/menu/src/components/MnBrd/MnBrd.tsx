@@ -47,7 +47,7 @@ function MnBrd({ pg = 1, children }: MbPr) {
       {pgNum !== null && (
         <div className="mb-pgn-wrap" aria-hidden="true">
           <img src={`${B}img/pgorn.png`} className="mb-pgn-ornt" alt="" />
-          <span className="mb-pgn ff-s">{pgNum}</span>
+          <span className="mb-pgn ff-c">{pgNum}</span>
         </div>
       )}
     </div>

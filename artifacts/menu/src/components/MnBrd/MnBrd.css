@@ -16,7 +16,7 @@
   pointer-events: none;
 }
 
-/* Depth overlay — warm-tinted vignette between bg image and content */
+/* Depth overlay — warm gold-tinted vignette, behind border (z10) and content (z5) */
 .mb-ovr {
   position: absolute;
   inset: 0;
@@ -24,9 +24,14 @@
   pointer-events: none;
   background:
     radial-gradient(
+      ellipse 55% 45% at 50% 44%,
+      rgba(var(--lntn), 0.09) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
       ellipse 80% 70% at 50% 45%,
-      rgba(var(--chr), 0.30) 0%,
-      rgba(var(--ink), 0.72) 100%
+      rgba(var(--chr), 0.28) 0%,
+      rgba(var(--ink), 0.70) 100%
     );
 }
 
@@ -103,8 +108,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.8cqw;
-  letter-spacing: .3cqw;
-  color: rgb(var(--glt));
+  font-size: 3.4cqw;
+  font-weight: 700;
+  letter-spacing: .15cqw;
+  color: rgb(var(--lntn));
+  text-shadow:
+    0 0 10px rgba(var(--lntn), .55),
+    0 1px 3px rgba(0, 0, 0, .8);
   line-height: 1;
 }
