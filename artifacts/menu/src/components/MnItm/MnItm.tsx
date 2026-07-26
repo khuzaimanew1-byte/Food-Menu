@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
@@ -15,15 +15,38 @@ export function MnItm({
   id, name, description, price, image,
   shape = 'ic',
 }: MnItmPr) {
-  const [sel, setSel]             = useState(false);
+  const [sel, setSel]               = useState(false);
   const [editedName, setEditedName] = useState<string | null>(null);
   const [editedDesc, setEditedDesc] = useState<string | null>(null);
   const isActive = useEdt(String(id));
 
-  // Reset selection when entering edit mode
+  // Refs to the contentEditable DOM nodes — needed for DOM reset on discard.
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+
+  // Keep shadow refs so the reset effect can read current values without
+  // being listed as a dependency (we only want to fire on isActive changes).
+  const displayNameRef = useRef(editedName ?? name);
+  const displayDescRef = useRef(editedDesc ?? description);
+  displayNameRef.current = editedName ?? name;
+  displayDescRef.current = editedDesc ?? description;
+
+  // Reset selection when entering edit mode.
   useEffect(() => { if (isActive) setSel(false); }, [isActive]);
 
-  // Persist edited text on Save
+  // When edit mode exits (save OR discard), force the contentEditable DOM
+  // back to the current React state value. React intentionally skips diffing
+  // contentEditable content, so typed-but-discarded text would otherwise
+  // persist in the DOM and get picked up by the next saveAndDeactivate().
+  useEffect(() => {
+    if (!isActive) {
+      if (nameRef.current) nameRef.current.textContent = displayNameRef.current;
+      if (descRef.current) descRef.current.textContent = displayDescRef.current;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive]);
+
+  // Persist edited text on Save.
   useEffect(() => {
     const handler = (e: Event) => {
       const d = (e as CustomEvent<{ id: string; fields: Record<string, string> }>).detail;
@@ -78,6 +101,7 @@ export function MnItm({
         <div className="mic-body">
           <div className="mic-row">
             <h3
+              ref={nameRef}
               className="mic-name ff-s"
               data-edt-field={isActive ? "name" : undefined}
               contentEditable={isActive || undefined}
@@ -89,6 +113,7 @@ export function MnItm({
             <span className="mic-price ff-s">{price}</span>
           </div>
           <p
+            ref={descRef}
             className="mic-desc ff-s"
             data-edt-field={isActive ? "desc" : undefined}
             contentEditable={isActive || undefined}
