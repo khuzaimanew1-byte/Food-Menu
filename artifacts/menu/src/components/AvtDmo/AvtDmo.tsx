@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import './AvtDmo.css';
 import { Avt } from '../avatar/Avt';
+import { useImgUpld } from '../../lib/upld/useImgUpld';
 
 export function AvtDmo() {
   const [selA, setSelA] = useState(false);
   const [selB, setSelB] = useState(false);
   const [selC, setSelC] = useState(false);
   const [selD, setSelD] = useState(false);
+
+  // Upload slots: object-URL lifecycle managed by useImgUpld
+  const icUpld = useImgUpld();
+  const sqUpld = useImgUpld();
 
   return (
     <div className="admo">
@@ -42,22 +47,22 @@ export function AvtDmo() {
 
         {/* ── Upload mode ── */}
         <div className="admo-cell">
-          <span className="admo-lbl">Upload · Empty slot</span>
+          <span className="admo-lbl">Upload · ic · shows image after pick</span>
           <Avt
-            name="New Item"
             shape="ic"
+            src={icUpld.src}
             uploadable
-            onUpload={(f) => console.log('[AvtDmo] upload', f.name)}
+            onUpload={icUpld.onUpload}
           />
         </div>
 
         <div className="admo-cell">
-          <span className="admo-lbl">Upload · Sq · Empty</span>
+          <span className="admo-lbl">Upload · sq · shows image after pick</span>
           <Avt
-            name="New Dish"
             shape="sq"
+            src={sqUpld.src}
             uploadable
-            onUpload={(f) => console.log('[AvtDmo] upload sq', f.name)}
+            onUpload={sqUpld.onUpload}
           />
         </div>
 
@@ -65,7 +70,7 @@ export function AvtDmo() {
 
       <p className="admo-hint ff-s">
         Normal avatars: click to toggle selection.<br />
-        Upload avatars: hover to reveal overlay · drag a file or click to pick.
+        Upload avatars: tap or drag a file to pick · image shown immediately.
       </p>
     </div>
   );

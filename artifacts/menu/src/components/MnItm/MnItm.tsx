@@ -1,32 +1,27 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
+import { useImgUpld } from "@/lib/upld/useImgUpld";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
   uploadable?: boolean;
+  /** Avatar shape — drives both the Avt render and mic-avt clip-path.
+   *  Must be kept in sync: changing shape here changes both automatically. */
+  shape?: 'ic' | 'sq' | 'plq';
 }
 
 export function MnItm({
-  id,
-  name,
-  description,
-  price,
-  image,
+  id, name, description, price, image,
   uploadable,
+  shape = 'ic',
 }: MnItmPr) {
   const [sel, setSel] = useState(false);
-  const [imgSrc, setImgSrc] = useState<string | undefined>(image);
-  const objUrlRef = useRef<string | null>(null);
 
-  const handleUpload = (file: File) => {
-    if (objUrlRef.current) URL.revokeObjectURL(objUrlRef.current);
-    const url = URL.createObjectURL(file);
-    objUrlRef.current = url;
-    setImgSrc(url);
-  };
+  // Object-URL image state — revokes previous URL on each new upload
+  const { src: imgSrc, onUpload: handleUpload } = useImgUpld(image);
 
   // Drop zone for the whole card — disabled when not uploadable.
   // No per-card <input>; upldStore provides the single global file picker.
@@ -64,34 +59,31 @@ export function MnItm({
       </AnimatePresence>
 
       <div className="mic">
-        {/* mic-avt: clip-path container + tap target for upload.
-            mic-chk is a sibling of .avt inside here — clipped by mic-avt,
-            unaffected by the opacity applied to .avt on selection. */}
+        {/* data-shape and Avt shape prop share the same variable —
+            clip-path on mic-avt and avatar render are always in sync. */}
         <div
           className="mic-avt"
-          data-shape="ic"
-          onClick={
-            uploadable
-              ? (e) => {
-                  e.stopPropagation();
-                  upld.pick();
-                }
-              : undefined
-          }
+          data-shape={shape}
+          onClick={uploadable ? (e) => { e.stopPropagation(); upld.pick(); } : undefined}
         >
-          <Avt src={imgSrc} name={name} alt={name} shape="ic" />
-          <div className="mic-chk" aria-hidden>
-            <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
-              <polyline
-                points="20 6 9 17 4 12"
-                stroke="currentColor"
-                strokeWidth="2.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          <Avt src={imgSrc} name={name} alt={name} shape={shape} />
+
+          {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
+          {shape === 'ic' && (
+            <div className="mic-chk" aria-hidden>
+              <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <polyline
+                  points="20 6 9 17 4 12"
+                  stroke="currentColor"
+                  strokeWidth="2.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          )}
         </div>
+
         <div className="mic-body">
           <div className="mic-row">
             <h3 className="mic-name ff-s">{name}</h3>
