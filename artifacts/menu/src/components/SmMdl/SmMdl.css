@@ -5,19 +5,13 @@
 .sm-mdl {
   position: absolute;
   left: calc(100% + 14px);
-  top: 50%; /* fallback if anchorTop not yet computed */
-  transform: translateY(-50%);
   z-index: 300;
 
-  width: fit-content;
-  height: fit-content;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
+  gap: 2cqw;
 
-  padding: 0.9rem 0.75rem 0.75rem;
+  padding: 2.5cqw;
   border-radius: 1rem;
 
   /* dkgl surface */
@@ -43,14 +37,33 @@
 }
 
 @keyframes sm-in {
-  from { opacity: 0; transform: translateY(-50%) translateX(-8px) scale(0.95); }
-  to   { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
+  from { opacity: 0; transform: translateX(-8px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0)    scale(1);    }
 }
 
 @keyframes sm-out {
-  from { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
-  to   { opacity: 0; transform: translateY(-50%) translateX(-6px) scale(0.95); }
+  from { opacity: 1; transform: translateX(0)    scale(1);    }
+  to   { opacity: 0; transform: translateX(-6px) scale(0.95); }
 }
+
+/* ── Inside variant — when no space to the right of pg-wrap ──────────────── */
+.sm-mdl--inside {
+  left: auto;
+  right: 3cqw;
+}
+
+@keyframes sm-in-inside {
+  from { opacity: 0; transform: translateX(8px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0)   scale(1);    }
+}
+
+@keyframes sm-out-inside {
+  from { opacity: 1; transform: translateX(0)   scale(1);    }
+  to   { opacity: 0; transform: translateX(6px) scale(0.95); }
+}
+
+.sm-mdl--inside          { animation: sm-in-inside  0.11s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.sm-mdl--inside.sm-mdl--out { animation: sm-out-inside 0.07s ease both; }
 
 /* ── Header row — title + close ──────────────────────────────────────────── */
 .sm-hdr {
@@ -84,8 +97,8 @@
 /* ── Confirm button — glass style ────────────────────────────────────────── */
 .sm-cfm {
   flex: 1;
-  padding: 0.32rem 0.7rem;
-  font-size: 0.68rem;
+  padding: .7cqw 1cqw;
+  font-size: 2.5cqw;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;

@@ -113,27 +113,30 @@ function rndPg(pg: number) {
 
 // ── Edit confirmation modal ────────────────────────────────────────────────
 function EdtCnf() {
-  const [open, setOpen]         = useState(false);
+  const [open, setOpen]           = useState(false);
   const [anchorTop, setAnchorTop] = useState<number | undefined>();
+  const [inside, setInside]       = useState(false);
 
-  /** Top offset relative to pg-wrap — centres modal on the active item. */
-  function computeTop(activeId: string | null): number | undefined {
-    if (!activeId) return undefined;
+  /** Compute top offset (relative to pg-wrap) and whether space exists outside. */
+  function computeLayout(activeId: string | null) {
     const pgWrap = document.querySelector('.pg-wrap');
-    const itemEl = document.querySelector<HTMLElement>(
-      `[data-area="item"][data-id="${CSS.escape(activeId)}"]`
-    );
-    if (!pgWrap || !itemEl) return undefined;
-    const pw = pgWrap.getBoundingClientRect();
-    const it = itemEl.getBoundingClientRect();
-    return it.top - pw.top + it.height / 2;
+    const itemEl = activeId
+      ? document.querySelector<HTMLElement>(`[data-area="item"][data-id="${CSS.escape(activeId)}"]`)
+      : null;
+    const pw = pgWrap?.getBoundingClientRect();
+    const it = itemEl?.getBoundingClientRect();
+    const top    = pw && it ? it.top - pw.top + it.height / 2 : undefined;
+    const noRoom = pw ? (window.innerWidth - pw.right) < 160 : false;
+    return { top, inside: noRoom };
   }
 
   // Outside-click path → show modal
   useEffect(() => {
     const show = () => {
       const { activeId } = getActive();
-      setAnchorTop(computeTop(activeId));
+      const layout = computeLayout(activeId);
+      setAnchorTop(layout.top);
+      setInside(layout.inside);
       setOpen(true);
     };
     document.addEventListener('edt:confirm-needed', show);
@@ -160,6 +163,7 @@ function EdtCnf() {
       title="Save changes?"
       confirmLabel="Save"
       anchorTop={anchorTop}
+      inside={inside}
       onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
       onClose={() => { setOpen(false); deactivate(); }}
     />
