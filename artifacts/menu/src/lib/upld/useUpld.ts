@@ -6,9 +6,13 @@ import type { UpldErr } from './upld';
 interface UseUpldOpts {
   onUpload?: (file: File) => void;
   onError?:  (err: UpldErr) => void;
+  /** When false the drop zone is never registered and all state stays idle.
+   *  Defaults to true. Pass !!uploadable so non-uploadable components don't
+   *  create dead entries in the global dropReg map. */
+  enabled?:  boolean;
 }
 
-export function useUpld({ onUpload, onError }: UseUpldOpts = {}) {
+export function useUpld({ onUpload, onError, enabled = true }: UseUpldOpts = {}) {
   // useId produces ":r0:" style strings — sanitize for querySelector
   const rawId  = useId();
   const dropId = rawId.replace(/[^a-zA-Z0-9-]/g, '_');
@@ -30,19 +34,20 @@ export function useUpld({ onUpload, onError }: UseUpldOpts = {}) {
     [onUpload, onError],
   );
 
-  // Register / unregister drop zone
+  // Register / unregister drop zone — only when enabled
   useEffect(() => {
+    if (!enabled) return;
     dropReg.register(dropId, {
       onFile:  handleFile,
       onEnter: () => setIsDrg(true),
       onLeave: () => setIsDrg(false),
     });
     return () => dropReg.unregister(dropId);
-  }, [dropId, handleFile]);
+  }, [dropId, handleFile, enabled]);
 
   const pick   = useCallback(() => inRef.current?.click(), []);
-  const hovOn  = useCallback(() => setIsHov(true),  []);
-  const hovOff = useCallback(() => setIsHov(false), []);
+  const hovOn  = useCallback(() => { if (enabled) setIsHov(true);  }, [enabled]);
+  const hovOff = useCallback(() => { if (enabled) setIsHov(false); }, [enabled]);
 
   const onInp = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

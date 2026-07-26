@@ -28,7 +28,9 @@ export function Avt({
   checked, onSelect,
   uploadable, onUpload,
 }: AvtPr) {
-  const upld = useUpld({ onUpload });
+  // enabled only when uploadable — prevents a dead dropReg entry on every
+  // non-uploadable avatar instance
+  const upld = useUpld({ onUpload, enabled: !!uploadable });
 
   // ── Main content (inside shape) ──────────────────────────────────────
   // Priority: src → Inits(name) → Inits("AV")   [normal]

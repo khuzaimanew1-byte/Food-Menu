@@ -1,6 +1,24 @@
-// ─── Icon SVG paths (24×24, stroke-based) ───────────────────────────────────
+// ─── Types ───────────────────────────────────────────────────────────────────
 
-export const ICONS = {
+export type CtxArea = 'item' | 'section' | 'page';
+
+export interface CtxOpt {
+  id:        string;
+  label:     string;
+  icon:      string[];
+  danger?:   boolean;
+  disabled?: boolean;
+}
+
+export interface AreaHit {
+  area: CtxArea;
+  id:   string | null;
+  el:   HTMLElement;
+}
+
+// ─── Icon SVG paths (24×24, stroke-based) ────────────────────────────────────
+
+export const ICONS: Record<string, string[]> = {
   edit: [
     'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7',
     'M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z',
@@ -38,7 +56,7 @@ export const ICONS = {
 
 // ─── Area → options map ───────────────────────────────────────────────────────
 
-export const MENU_CONFIG = {
+export const MENU_CONFIG: Record<CtxArea, CtxOpt[]> = {
   item: [
     { id: 'edit',         label: 'Edit',         icon: ICONS.edit        },
     { id: 'add-item',     label: '+ Item',        icon: ICONS.addItem     },
@@ -49,25 +67,25 @@ export const MENU_CONFIG = {
   ],
   section: [
     { id: 'edit',         label: 'Edit',          icon: ICONS.edit        },
-    { id: 'add-item',     label: '+ Item',         icon: ICONS.addItem     },
-    { id: 'move-section', label: 'Move Section',   icon: ICONS.moveSection },
-    { id: 'add-section',  label: '+ Section',      icon: ICONS.addSection  },
-    { id: 'delete',       label: 'Delete',         icon: ICONS.delete, danger: true },
+    { id: 'add-item',     label: '+ Item',        icon: ICONS.addItem     },
+    { id: 'move-section', label: 'Move Section',  icon: ICONS.moveSection },
+    { id: 'add-section',  label: '+ Section',     icon: ICONS.addSection  },
+    { id: 'delete',       label: 'Delete',        icon: ICONS.delete, danger: true },
   ],
   page: [
-    { id: 'layout-toggle', label: 'Layout',        icon: ICONS.layout      },
+    { id: 'layout-toggle', label: 'Layout',       icon: ICONS.layout      },
   ],
 };
 
 // ─── Area detection ───────────────────────────────────────────────────────────
 // Walk up the DOM from `target` and find the nearest element that has
 // data-area set to a key defined in MENU_CONFIG.
-// Returns { area, id, el } or null.
+// Returns AreaHit or null.
 
-export function detectArea(target) {
-  let el = target;
+export function detectArea(target: EventTarget | null): AreaHit | null {
+  let el = target as HTMLElement | null;
   while (el && el !== document.body) {
-    const area = el.dataset?.area;
+    const area = el.dataset?.area as CtxArea | undefined;
     if (area && MENU_CONFIG[area]) {
       return { area, id: el.dataset?.id ?? null, el };
     }

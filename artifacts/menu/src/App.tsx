@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { CvrPg } from "./components/CvrPg";
@@ -11,8 +10,6 @@ import { AvtDmo } from "./components/AvtDmo/AvtDmo";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { ARBC, TURK } from "./data/menu";
 import type { MnItem, PageSect } from "./data/menu";
-
-const qClt = new QueryClient();
 
 const pgVars = {
   enter: (d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
@@ -153,9 +150,5 @@ function MnApp() {
 
 export default function App() {
   const isDemo = new URLSearchParams(window.location.search).has("demo");
-  return (
-    <QueryClientProvider client={qClt}>
-      {isDemo ? <AvtDmo /> : <MnApp />}
-    </QueryClientProvider>
-  );
+  return isDemo ? <AvtDmo /> : <MnApp />;
 }
