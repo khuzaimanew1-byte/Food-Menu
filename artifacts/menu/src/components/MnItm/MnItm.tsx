@@ -64,9 +64,12 @@ export function MnItm({
         <div
           className="mic-avt"
           data-shape={shape}
-          onClick={uploadable ? (e) => { e.stopPropagation(); upld.pick(); } : undefined}
+          onClick={uploadable ? (e) => e.stopPropagation() : undefined}
         >
-          <Avt src={imgSrc} name={name} alt={name} shape={shape} />
+          <Avt src={imgSrc} name={name} alt={name} shape={shape}
+            uploadable={uploadable}
+            onUpload={uploadable ? handleUpload : undefined}
+          />
 
           {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
           {shape === 'ic' && (
