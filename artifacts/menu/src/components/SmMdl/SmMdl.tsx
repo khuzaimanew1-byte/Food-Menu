@@ -10,10 +10,10 @@ export interface SmMdlPr {
   onConfirm:     () => void;
   /** Called on × button — discard / cancel */
   onClose:       () => void;
-  /** Top offset (px) relative to pg-wrap — aligns modal with the active item */
+  /** Top offset (px) relative to pg-wrap — centres modal on the active item */
   anchorTop?:    number;
-  /** When true, no space outside pg-wrap — modal renders inside instead */
-  inside?:       boolean;
+  /** Pixels to push modal left when it would overflow the viewport */
+  offsetX?:      number;
 }
 
 /**
@@ -28,7 +28,7 @@ export function SmMdl({
   onConfirm,
   onClose,
   anchorTop,
-  inside,
+  offsetX = 0,
 }: SmMdlPr) {
   const [show,     setShow]     = useState(open);
   const [cfmFlash, setCfmFlash] = useState(false);
@@ -57,11 +57,14 @@ export function SmMdl({
   if (!show) return null;
 
   const isExiting = !open;
+  const style: React.CSSProperties = {};
+  if (anchorTop !== undefined) style.top = anchorTop;
+  if (offsetX > 0) style.translate = `-${offsetX}px 0`;
 
   return (
     <div
-      className={`sm-mdl${inside ? ' sm-mdl--inside' : ''}${isExiting ? ' sm-mdl--out' : ''}`}
-      style={anchorTop !== undefined ? { top: anchorTop } : undefined}
+      className={`sm-mdl${isExiting ? ' sm-mdl--out' : ''}`}
+      style={style}
       role="dialog"
       aria-modal
       aria-label={title}

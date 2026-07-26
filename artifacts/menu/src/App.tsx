@@ -115,9 +115,9 @@ function rndPg(pg: number) {
 function EdtCnf() {
   const [open, setOpen]           = useState(false);
   const [anchorTop, setAnchorTop] = useState<number | undefined>();
-  const [inside, setInside]       = useState(false);
+  const [offsetX, setOffsetX]     = useState(0);
 
-  /** Compute top offset (relative to pg-wrap) and whether space exists outside. */
+  /** Top offset relative to pg-wrap + how many px the modal overflows the viewport. */
   function computeLayout(activeId: string | null) {
     const pgWrap = document.querySelector('.pg-wrap');
     const itemEl = activeId
@@ -125,9 +125,10 @@ function EdtCnf() {
       : null;
     const pw = pgWrap?.getBoundingClientRect();
     const it = itemEl?.getBoundingClientRect();
-    const top    = pw && it ? it.top - pw.top + it.height / 2 : undefined;
-    const noRoom = pw ? (window.innerWidth - pw.right) < 160 : false;
-    return { top, inside: noRoom };
+    const top = pw && it ? it.top - pw.top + it.height / 2 : undefined;
+    // Approx modal right edge in viewport: pgWrap.right + 14px gap + ~160px modal width + 12px margin
+    const overflow = pw ? Math.max(0, pw.right + 14 + 160 + 12 - window.innerWidth) : 0;
+    return { top, offsetX: overflow };
   }
 
   // Outside-click path → show modal
@@ -136,21 +137,21 @@ function EdtCnf() {
       const { activeId } = getActive();
       const layout = computeLayout(activeId);
       setAnchorTop(layout.top);
-      setInside(layout.inside);
+      setOffsetX(layout.offsetX);
       setOpen(true);
     };
     document.addEventListener('edt:confirm-needed', show);
     return () => document.removeEventListener('edt:confirm-needed', show);
   }, []);
 
-  // Recompute inside/outside on window resize while modal is open
+  // Recompute on resize while modal is open — translate updates smoothly via CSS transition
   useEffect(() => {
     if (!open) return;
     const onResize = () => {
       const { activeId } = getActive();
       const layout = computeLayout(activeId);
       setAnchorTop(layout.top);
-      setInside(layout.inside);
+      setOffsetX(layout.offsetX);
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
@@ -176,7 +177,7 @@ function EdtCnf() {
       title="Save changes?"
       confirmLabel="Save"
       anchorTop={anchorTop}
-      inside={inside}
+      offsetX={offsetX}
       onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
       onClose={() => { setOpen(false); deactivate(); }}
     />

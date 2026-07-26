@@ -29,6 +29,10 @@
     0 0 0 0.5px rgba(var(--gold), 0.10),
     0 6px 28px rgba(0, 0, 0, 0.55);
 
+  /* translate is separate from transform — animates without conflicting with entry animation */
+  translate: 0 0;
+  transition: translate 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
   animation: sm-in 0.11s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -46,25 +50,6 @@
   from { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
   to   { opacity: 0; transform: translateY(-50%) translateX(-6px) scale(0.95); }
 }
-
-/* ── Inside variant — when no space to the right of pg-wrap ──────────────── */
-.sm-mdl--inside {
-  left: auto;
-  right: 3cqw;
-}
-
-@keyframes sm-in-inside {
-  from { opacity: 0; transform: translateY(-50%) translateX(8px) scale(0.95); }
-  to   { opacity: 1; transform: translateY(-50%) translateX(0)   scale(1);    }
-}
-
-@keyframes sm-out-inside {
-  from { opacity: 1; transform: translateY(-50%) translateX(0)   scale(1);    }
-  to   { opacity: 0; transform: translateY(-50%) translateX(6px) scale(0.95); }
-}
-
-.sm-mdl--inside             { animation: sm-in-inside  0.11s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.sm-mdl--inside.sm-mdl--out { animation: sm-out-inside 0.07s ease both; }
 
 /* ── Header row — title + close ──────────────────────────────────────────── */
 .sm-hdr {
