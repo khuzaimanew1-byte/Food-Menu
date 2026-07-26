@@ -1,12 +1,11 @@
 // Global file-input singleton — one <input type="file"> for the whole app.
 //
-// Logic lives here; components only assign a callback under their ID.
-// pick(id) routes the chosen file to that callback.
-// Drag-and-drop is a separate concern handled by dropReg.ts.
+// No callbacks, no registrations.
+// pick(id) opens the picker; on change, queries img[data-img-id="${id}"]
+// and sets src directly via setImgSrc().
 
-type FileCb = (file: File) => void;
+import { ACPT, setImgSrc } from './upld';
 
-const cbs = new Map<string, FileCb>();
 let activeId: string | null = null;
 let inp:      HTMLInputElement | null = null;
 
@@ -14,7 +13,7 @@ function getInput(): HTMLInputElement {
   if (inp) return inp;
   inp = document.createElement('input');
   inp.type    = 'file';
-  inp.accept  = 'image/jpeg,image/png,image/webp,image/gif';
+  inp.accept  = ACPT.join(',');
   inp.style.cssText =
     'position:fixed;top:-999px;left:-999px;opacity:0;pointer-events:none;';
   inp.setAttribute('aria-hidden', 'true');
@@ -23,28 +22,16 @@ function getInput(): HTMLInputElement {
 
   inp.addEventListener('change', () => {
     const file = inp!.files?.[0];
-    if (file && activeId !== null) cbs.get(activeId)?.(file);
-    inp!.value = ''; // reset — same file can be re-picked
+    if (file && activeId !== null) setImgSrc(activeId, file);
+    inp!.value = ''; // reset so same file can be re-picked
     activeId   = null;
   });
   return inp;
 }
 
 export const upldStore = {
-  /** Register a file-received callback under id. */
-  register(id: string, cb: FileCb): void {
-    cbs.set(id, cb);
-  },
-
-  /** Remove the registration; cancel if this id was the active picker. */
-  unregister(id: string): void {
-    cbs.delete(id);
-    if (activeId === id) activeId = null;
-  },
-
-  /** Open the global picker; route the chosen file to id's callback. */
+  /** Open the global file picker; on choice, update img[data-img-id="${id}"].src. */
   pick(id: string): void {
-    if (!cbs.has(id)) return;
     activeId = id;
     getInput().click();
   },

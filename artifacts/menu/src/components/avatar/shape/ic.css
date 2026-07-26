@@ -10,17 +10,17 @@
 }
 
 .avt:hover .ic-bdr,
-.drop-on   .ic-bdr {
+[data-item-id].drg .ic-bdr {
   background: rgba(var(--gold), 0.75);
 }
 
 .avt:hover .ic-inn,
-.drop-on   .ic-inn {
+[data-item-id].drg .ic-inn {
   background: radial-gradient(ellipse 99% 118%, rgb(var(--chr)) 0%, rgb(var(--chr)) 36%, rgba(var(--gold), 0.42) 100%, rgb(var(--chr)) 100%);
 }
 
-/* Smooth pulsing gold glow on hover or drag-over */
-.drop-on .ic-bdr {
+/* Smooth pulsing gold glow on drag-over */
+[data-item-id].drg .ic-bdr {
   animation: ic-drop-glow 1.6s ease-in-out infinite;
 }
 

@@ -10,8 +10,8 @@
 
 .avt-ovr svg { width: 3cqw; aspect-ratio: 1; }
 
-/* Single class covers both hover and drag-over states */
-.drop-on .avt-ovr {
+/* Drag-over state: 'drg' class on ancestor [data-item-id] */
+[data-item-id].drg .avt-ovr {
   opacity: 1;
   pointer-events: auto;
 }

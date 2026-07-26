@@ -1,4 +1,9 @@
 import { useState, useRef } from "react";
+import { initUpld } from "./lib/upld/upldInit";
+
+// Initialize global upload handlers once at module load
+initUpld();
+
 import { AnimatePresence, motion } from "framer-motion";
 
 import { CvrPg } from "./components/CvrPg";
@@ -120,7 +125,7 @@ function MnApp() {
   };
 
   return (
-    <div className="stage">
+    <div className="stage edit-mode">
       <div className="pg-wrap">
         <div className="a4-box">
           <AnimatePresence initial={false} custom={dir.current} mode="sync">

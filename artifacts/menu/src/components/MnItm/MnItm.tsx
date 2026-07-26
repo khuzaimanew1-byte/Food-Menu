@@ -1,54 +1,36 @@
 import { useState } from "react";
 import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
-import { useUpld } from "@/lib/upld/useUpld";
-import { useImgUpld } from "@/lib/upld/useImgUpld";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
-  uploadable?: boolean;
-  /** Avatar shape — drives both the Avt render and mic-avt clip-path.
-   *  Must be kept in sync: changing shape here changes both automatically. */
   shape?: 'ic' | 'sq' | 'plq';
 }
 
 export function MnItm({
-  id, name, description, price, image,
-  uploadable,
+  id, name, description, price,
   shape = 'ic',
 }: MnItmPr) {
   const [sel, setSel] = useState(false);
 
-  // Object-URL image state — revokes previous URL on each new upload
-  const { src: imgSrc, onUpload: handleUpload } = useImgUpld(image);
-
-  // Card-level drop zone — covers the whole item, not just the avatar.
-  // isDrg is forwarded to Avt so the avatar highlights even when the drag
-  // cursor is over the text/price area of the card.
-  const upld = useUpld({ onUpload: handleUpload, enabled: !!uploadable });
-
   return (
     <div
       className={`mic-wpr${sel ? " sel" : ""}`}
-      data-area="item"
-      data-id={id}
-      data-drop-id={uploadable ? upld.dropId : undefined}
+      data-item-id={id}
       onClick={() => setSel((s) => !s)}
     >
       <div className="mic">
         <div
           className="mic-avt"
           data-shape={shape}
-          onClick={uploadable ? (e) => e.stopPropagation() : undefined}
+          // In edit mode: stop selection toggle when clicking the avatar area.
+          // Native event still bubbles to document where global click delegation
+          // calls upldStore.pick(). Purely DOM check — no hook, no prop.
+          onClick={(e) => { if (document.querySelector('.edit-mode')) e.stopPropagation(); }}
         >
-          <Avt
-            src={imgSrc} name={name} alt={name} shape={shape}
-            uploadable={uploadable}
-            onUpload={uploadable ? handleUpload : undefined}
-            isDragging={uploadable ? upld.isDrg : false}
-          />
+          <Avt id={String(id)} name={name} alt={name} shape={shape} />
 
-          {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
+          {/* Checkmark overlay — only for ic shape */}
           {shape === 'ic' && (
             <div className="mic-chk" aria-hidden>
               <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>

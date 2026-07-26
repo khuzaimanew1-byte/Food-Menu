@@ -1,0 +1,73 @@
+Ab Avt bhi dekh liya. Ab seedha jawab:
+
+Kya global hoga
+1. Click-to-upload — global event delegation document pe ek listener — edit mode mein [data-item-id] pe click detect karo, directly upldStore.pick(id) call karo. Avt mein useUpld ka click path hatega.
+
+2. Drag visual state — CSS class Global drag handler element pe directly el.classList.add('drg') kare. Avt mein isDragging prop aur isDrg React state dono khatam. Purely CSS.
+
+3. Edit mode — CSS class on parent .edit-mode class stage ya wrap pe lagao. CSS rules:
+
+.edit-mode [data-item-id] .avt-upl-ctrls { display: flex; }
+
+uploadable prop aur EditContext reads dono ki zarurat nahi.
+
+Avt mein class/id se kya handle hoga
+Image src — yahan asli trick hai:
+
+Avt mein <img> ka src prop undefined chhodo. React undefined prop ko touch nahi karta DOM mein. To global upload handler directly:
+
+document.querySelector(`img[data-img-id="${id}"]`).src = objectURL;
+
+Ye DOM update React ke re-renders ke through survive karta hai — kyunke React sirf wahi attributes overwrite karta hai jo uske virtual DOM mein hain. src={undefined} means React ne kabhi ownership nahi li.
+
+Object URL cleanup global store mein Map<id, url> se handle hoga — component unmount pe revoke.
+
+End state — MnItm aur Avt mein sirf yeh bachega
+MnItm:
+
+<div data-item-id={id} ...>   // bas yeh
+
+Avt:
+
+<div data-item-id={id} ...>
+  <img data-img-id={id} />    // src prop nahi, global handler set karega
+
+Koi uploadable, onUpload, isDragging, useUpld, useImgUpld — kuch nahi.
+
+Karo?
+
+
+Worked for 1 minute
+kya ye optimize ho sakta hai,
+
+7 minutes ago
+Analyzing potential optimization strategies
+
+Analyzing potential optimization strategies
+Haan, ek important optimization hai jo main nazar-andaz kar gaya tha.
+
+Redundancy jo abhi hai
+MnItm aur Avt dono useUpld call karte hain — matlab har ek item ke liye upldStore + dropReg mein 2 entries register hoti hain. N items = N×2 registrations.
+
+Global delegation ke baad: 0 registrations, 1 listener.
+
+src={undefined} wali trick — risk hai
+Maine kaha tha React undefined prop touch nahi karta — yeh mostly sach hai lekin agar item re-render ho (selection toggle, page flip) aur React img element replace kare, uploaded src kho jayega. Edge case hai lekin real hai.
+
+Better approach: querySelector at upload time — registration nahi, DOM query sirf tab jab file choose ho:
+
+const img = document.querySelector(`img[data-img-id="${id}"]`);
+if (img) img.src = objectURL;
+
+Upload ka frequency itna kam hai (user action hai) ke querySelector ka cost negligible hai. Aur element replace hone ka issue bhi nahi — query fresh element milta hai.
+
+Optimized final picture
+Kya	Kaise	Overhead
+Edit mode UI	CSS class .edit-mode on stage	Zero JS
+Drag visual	classList.add/remove by global handler	Zero React state
+Click-to-pick	Global delegation [data-item-id]	1 listener total
+Drop zone	Global delegation [data-item-id]	1 listener total
+Image src update	querySelector(img[data-img-id]) at upload time	Query only on upload
+Object URL cleanup	Global Map, revoke on next upload + beforeunload	1 global Map
+MnItm aur Avt mein sirf 2 attributes — data-item-id aur data-img-id. Koi hooks nahi, koi props nahi, koi React state nahi upload ke liye.
+

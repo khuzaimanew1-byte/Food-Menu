@@ -34,7 +34,7 @@ export function CtntPg({ pgNum, sections }: CtPgPr) {
               {sect.items.length > 0 && (
                 <div className="items-grid cp-grid">
                   {sect.items.map(item => (
-                    <MnItm key={item.id} {...item} uploadable />
+                    <MnItm key={item.id} {...item} />
                   ))}
                 </div>
               )}

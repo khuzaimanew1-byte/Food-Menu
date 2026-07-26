@@ -20,13 +20,14 @@
 .avt-upl { cursor: pointer; }
 
 /* ── Upload controls (UplBtn + hint) inside shape ───────────────────────────
-   position:absolute so they overlay the image when src is present.
-   pointer-events:none — parent avt div owns the click (upld.pick).
-   display:none on drag — fully removed from layout (not visibility:hidden).  */
+   Hidden by default; shown only when an ancestor has .edit-mode.
+   During drag (.drg on ancestor [data-item-id]) hidden again so the drop
+   overlay is visible.
+   pointer-events:none — global click delegation on document owns the click. */
 .avt-upl-ctrls {
   position: absolute;
   inset: 0;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -35,9 +36,11 @@
   pointer-events: none;
 }
 
-.avt-upl-ctrls--drag {
-  display: none;
-}
+/* Show in edit mode */
+.edit-mode [data-item-id] .avt-upl-ctrls { display: flex; }
+
+/* Hide during drag so drop overlay is visible */
+[data-item-id].drg .avt-upl-ctrls { display: none; }
 
 /* "Click or drop img" — only rendered when no src */
 .avt-upl-hint {
@@ -63,9 +66,8 @@
   z-index: 3;
 }
 
-.avt-drop-ovr--on {
-  opacity: 1;
-}
+/* Drop overlay active — driven by 'drg' class on ancestor [data-item-id] */
+[data-item-id].drg .avt-drop-ovr { opacity: 1; }
 
 .avt-drop-here {
   font-size: 2cqw;
