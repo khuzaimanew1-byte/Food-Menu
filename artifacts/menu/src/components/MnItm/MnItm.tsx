@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Avt } from "../avatar/Avt";
+import { useCtxTrg } from "../ContextMenu/CtxReg";
 import type { MnItem } from "@/data/menu";
 import "./MnItm.css";
 
 export function MnItm({ id, name, description, price, image }: MnItem) {
   const [sel, setSel] = useState(false);
+  const ctxRef = useCtxTrg('item', id);
   return (
     /* mic-wpr owns position context + click — mic-chk is its direct child,
        a sibling of .mic, so it can NEVER be inside the opacity subtree     */
     <div
+      ref={ctxRef}
       className={`mic-wpr${sel ? " sel" : ""}`}
-      data-area="item"
-      data-id={id}
       onClick={() => setSel((s) => !s)}
     >
       <div className="mic">

@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { useCtxTrg } from "../ContextMenu/CtxReg";
 import "./MnBrd.css";
 
 interface MbPr {
@@ -9,10 +10,11 @@ interface MbPr {
 const B = import.meta.env.BASE_URL;
 
 function MnBrd({ pg = 1, children }: MbPr) {
-  const pgNum = pg !== false ? String(pg).padStart(2, "0") : null;
+  const pgNum  = pg !== false ? String(pg).padStart(2, "0") : null;
+  const ctxRef = useCtxTrg('page', pg === false ? undefined : pg);
 
   return (
-    <div className="mb-wrap" data-area="page" data-id={pg === false ? undefined : pg}>
+    <div ref={ctxRef} className="mb-wrap">
       {/* Page background image — full-bleed behind content */}
       <img
         src={`${B}img/pgbg.png`}

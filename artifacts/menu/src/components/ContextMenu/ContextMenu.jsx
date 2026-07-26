@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { MENU_CONFIG, detectArea } from './contextMenuConfig';
+import { MENU_CONFIG } from './contextMenuConfig';
+import { useCtxReg } from './CtxReg';
 import './ContextMenu.css';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -37,6 +38,7 @@ function calcPos(x, y, optCount) {
  *   data-id="<any-identifier>"
  */
 export function ContextMenu({ onSelect }) {
+  const api          = useCtxReg();
   const [state, setState] = useState(null); // { left, top, area, id, options }
   const menuRef      = useRef(null);
   const activeElRef  = useRef(null);
@@ -52,7 +54,7 @@ export function ContextMenu({ onSelect }) {
 
   // ── Open ───────────────────────────────────────────────────────────────────
   const open = useCallback((x, y, target) => {
-    const hit = detectArea(target);
+    const hit = api?.find(target);
     if (!hit) return;
     const { area, id, el } = hit;
     const options = MENU_CONFIG[area];
@@ -60,7 +62,7 @@ export function ContextMenu({ onSelect }) {
 
     setActive(el);
     setState({ ...calcPos(x, y, options.length), area, id, options });
-  }, [setActive]);
+  }, [api, setActive]);
 
   // ── Close ──────────────────────────────────────────────────────────────────
   const close = useCallback(() => {

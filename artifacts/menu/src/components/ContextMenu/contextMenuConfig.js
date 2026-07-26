@@ -59,19 +59,5 @@ export const MENU_CONFIG = {
   ],
 };
 
-// ─── Area detection ───────────────────────────────────────────────────────────
-// Walk up the DOM from `target` and find the nearest element that has
-// data-area set to a key defined in MENU_CONFIG.
-// Returns { area, id, el } or null.
-
-export function detectArea(target) {
-  let el = target;
-  while (el && el !== document.body) {
-    const area = el.dataset?.area;
-    if (area && MENU_CONFIG[area]) {
-      return { area, id: el.dataset?.id ?? null, el };
-    }
-    el = el.parentElement;
-  }
-  return null;
-}
+// Area detection is handled by CtxReg (WeakMap registry, no DOM attributes).
+// Import useCtxTrg in target components, useCtxReg in ContextMenu.
