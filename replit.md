@@ -4,12 +4,11 @@ A paginated digital restaurant menu (Arabic, Turkish, Grill, Desserts) with cove
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- **Menu app (preview):** managed by the `artifacts/menu: web` workflow — run `pnpm --filter @workspace/menu run dev` (PORT=26151, BASE_PATH=/)
+- **API server:** `pnpm --filter @workspace/api-server run dev` (NestJS, port 8080)
+- `pnpm install` — install all workspace dependencies (required after a fresh clone/import)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
