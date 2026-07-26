@@ -13,8 +13,6 @@ let _activeType: EdtType | null = null;
 let _dirty = false;
 
 function _dispatch(detail: EdtDetail | null) {
-  // Toggle body class so CSS can dim non-active items without React re-renders
-  document.body.classList.toggle('has-edt', detail !== null);
   document.dispatchEvent(new CustomEvent<EdtDetail | null>('edt:change', { detail }));
 }
 

@@ -168,47 +168,6 @@
   background: rgba(var(--gold), 0.04);
 }
 
-/* ── Edit-mode isolation: glass dim on every item except the active one ───
-   body.has-edt is toggled by edtStore._dispatch() — no React re-render.
-   Active item rises above (z-index 10); others get a glass overlay.      */
-
-body.has-edt .mic-wpr {
-  transition: z-index 0s;
-}
-
-body.has-edt .mic-wpr:not(.edt-on) {
-  pointer-events: none;
-}
-
-body.has-edt .mic-wpr:not(.edt-on)::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 0.8cqw;
-  background: linear-gradient(
-    135deg,
-    rgba(var(--chrd), 0.55) 0%,
-    rgba(var(--ink),  0.44) 100%
-  );
-  backdrop-filter: blur(2px) saturate(65%);
-  -webkit-backdrop-filter: blur(2px) saturate(65%);
-  pointer-events: all;
-  z-index: 5;
-  animation: edt-glass-in 0.2s ease both;
-}
-
-@keyframes edt-glass-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-body.has-edt .mic-wpr.edt-on {
-  position: relative;
-  z-index: 10;
-  outline-color: rgba(var(--gold), 0.48);
-  background: rgba(var(--gold), 0.07);
-}
-
 /* ── Edit-mode text fields ───────────────────────────────────────────────── */
 .edt-on .mic-name,
 .edt-on .mic-desc {
