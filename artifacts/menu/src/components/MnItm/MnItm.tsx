@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avt } from "../avatar/Avt";
+import { restoreImgSrc } from "@/lib/upld/upld";
 import type { MnItem } from "@/data/menu";
 import "./MnItm.css";
 
@@ -12,6 +13,13 @@ export function MnItm({
   shape = 'ic',
 }: MnItmPr) {
   const [sel, setSel] = useState(false);
+
+  // Restore uploaded image after page remount (AnimatePresence unmounts/remounts
+  // pages on navigation, which destroys the old img element; the objUrls Map
+  // still holds the URL so we re-apply it once the new img is in the DOM).
+  useEffect(() => {
+    restoreImgSrc(String(id));
+  }, [id]);
 
   return (
     <div

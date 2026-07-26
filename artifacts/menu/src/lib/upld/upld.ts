@@ -38,3 +38,17 @@ export function revokeAll(): void {
   for (const url of objUrls.values()) URL.revokeObjectURL(url);
   objUrls.clear();
 }
+
+/** Get stored object URL for id — used by MnItm to restore src on remount. */
+export function getObjUrl(id: string): string | undefined {
+  return objUrls.get(id);
+}
+
+/** Re-apply the stored URL (if any) to img[data-img-id="${id}"] in the DOM.
+ *  Call from useEffect after mount to restore images after page flip. */
+export function restoreImgSrc(id: string): void {
+  const url = objUrls.get(id);
+  if (!url) return;
+  const img = document.querySelector<HTMLImageElement>(`img[data-img-id="${id}"]`);
+  if (img) img.src = url;
+}
