@@ -9,7 +9,14 @@ interface MnItmPr extends MnItem {
   uploadable?: boolean;
 }
 
-export function MnItm({ id, name, description, price, image, uploadable }: MnItmPr) {
+export function MnItm({
+  id,
+  name,
+  description,
+  price,
+  image,
+  uploadable,
+}: MnItmPr) {
   const [sel, setSel] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | undefined>(image);
   const objUrlRef = useRef<string | null>(null);
@@ -63,14 +70,16 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
         <div
           className="mic-avt"
           data-shape="ic"
-          onClick={uploadable ? (e) => { e.stopPropagation(); upld.pick(); } : undefined}
+          onClick={
+            uploadable
+              ? (e) => {
+                  e.stopPropagation();
+                  upld.pick();
+                }
+              : undefined
+          }
         >
-          <Avt
-            src={imgSrc}
-            name={name}
-            alt={name}
-            shape="ic"
-          />
+          <Avt src={imgSrc} name={name} alt={name} shape="ic" />
           <div className="mic-chk" aria-hidden>
             <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
               <polyline
