@@ -20,52 +20,64 @@ export function MnItm({
   const [editedDesc, setEditedDesc] = useState<string | null>(null);
   const isActive = useEdt(String(id));
 
-  // Refs to the contentEditable DOM nodes — needed for DOM reset on discard.
+  // Image upload — commit/revert integrated into the edit lifecycle below.
+  const img  = useImgUpld(image);
+  const upld = useUpld({ onUpload: (f) => { img.onUpload(f); setDirty(true); }, enabled: isActive });
+
+  // Refs to contentEditable nodes for DOM reset on exit.
   const nameRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
 
-  // Keep shadow refs so the reset effect can read current values without
-  // being listed as a dependency (we only want to fire on isActive changes).
+  // Shadow refs — always hold the latest display values so the exit effect
+  // can read them without needing them as deps (fires only on isActive change).
   const displayNameRef = useRef(editedName ?? name);
   const displayDescRef = useRef(editedDesc ?? description);
   displayNameRef.current = editedName ?? name;
   displayDescRef.current = editedDesc ?? description;
 
+  // didSaveRef: set true by the edt:save listener so the exit effect knows
+  // whether this deactivation is a Save or a Discard.
+  const didSaveRef = useRef(false);
+
   // Reset selection when entering edit mode.
   useEffect(() => { if (isActive) setSel(false); }, [isActive]);
 
-  // When edit mode exits (save OR discard), force the contentEditable DOM
-  // back to the current React state value. React intentionally skips diffing
-  // contentEditable content, so typed-but-discarded text would otherwise
-  // persist in the DOM and get picked up by the next saveAndDeactivate().
-  useEffect(() => {
-    if (!isActive) {
-      if (nameRef.current) nameRef.current.textContent = displayNameRef.current;
-      if (descRef.current) descRef.current.textContent = displayDescRef.current;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive]);
-
-  // Persist edited text on Save.
+  // ── edt:save — persist text fields and mark this exit as a Save ──────────
   useEffect(() => {
     const handler = (e: Event) => {
       const d = (e as CustomEvent<{ id: string; fields: Record<string, string> }>).detail;
       if (d?.id !== String(id)) return;
       if (d.fields['name'] !== undefined) setEditedName(d.fields['name']);
       if (d.fields['desc'] !== undefined) setEditedDesc(d.fields['desc']);
+      didSaveRef.current = true; // next isActive→false is a Save, not a Discard
     };
     document.addEventListener('edt:save', handler);
     return () => document.removeEventListener('edt:save', handler);
   }, [id]);
 
+  // ── Unified edit-exit effect ──────────────────────────────────────────────
+  // Fires whenever isActive transitions true→false (Save OR Discard).
+  // Handles both text (DOM reset) and image (commit/revert) in one place so
+  // upload is always part of the edit lifecycle — never a separate concern.
+  useEffect(() => {
+    if (!isActive) {
+      if (didSaveRef.current) {
+        img.commit();   // Save: make the pending upload permanent
+      } else {
+        img.revert();   // Discard: revoke blob URL, restore committed image
+      }
+      didSaveRef.current = false;
+
+      // contentEditable DOM reset: React doesn't diff these, so typed-but-
+      // discarded text would persist without this explicit reset.
+      if (nameRef.current) nameRef.current.textContent = displayNameRef.current;
+      if (descRef.current) descRef.current.textContent = displayDescRef.current;
+    }
+    // img.commit and img.revert are stable (useCallback with no deps) — safe in deps.
+  }, [isActive, img.commit, img.revert]);
+
   const displayName = editedName ?? name;
   const displayDesc = editedDesc ?? description;
-
-  const { src: imgSrc, onUpload: rawUpload } = useImgUpld(image);
-  // Wrap so an image swap also marks the edit as dirty — triggers confirmation
-  // modal on deactivate just like text edits do.
-  const handleUpload = (file: File) => { rawUpload(file); setDirty(true); };
-  const upld = useUpld({ onUpload: handleUpload, enabled: isActive });
 
   return (
     <div
@@ -82,9 +94,9 @@ export function MnItm({
           onClick={isActive ? (e) => e.stopPropagation() : undefined}
         >
           <Avt
-            src={imgSrc} name={displayName} alt={displayName} shape={shape}
+            src={img.src} name={displayName} alt={displayName} shape={shape}
             uploadable={isActive}
-            onUpload={isActive ? handleUpload : undefined}
+            onUpload={isActive ? (f) => { img.onUpload(f); setDirty(true); } : undefined}
             isDragging={isActive ? upld.isDrg : false}
           />
 
