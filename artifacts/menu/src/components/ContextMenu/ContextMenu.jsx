@@ -15,9 +15,12 @@ function calcPos(x, y, optCount) {
   const menuH = HEADER_H + optCount * OPT_H + PADDING_V * 2;
   const vpW   = window.innerWidth;
   const vpH   = window.innerHeight;
+  const MARGIN = 8; // minimum distance from viewport edge
+  const rawLeft = x + MENU_W  + CURSOR_OFFSET > vpW ? x - MENU_W  - CURSOR_OFFSET : x + CURSOR_OFFSET;
+  const rawTop  = y + menuH   + CURSOR_OFFSET > vpH ? y - menuH   - CURSOR_OFFSET : y + CURSOR_OFFSET;
   return {
-    left: x + MENU_W  + CURSOR_OFFSET > vpW ? x - MENU_W  - CURSOR_OFFSET : x + CURSOR_OFFSET,
-    top:  y + menuH   + CURSOR_OFFSET > vpH ? y - menuH   - CURSOR_OFFSET : y + CURSOR_OFFSET,
+    left: Math.max(MARGIN, Math.min(rawLeft, vpW - MENU_W  - MARGIN)),
+    top:  Math.max(MARGIN, Math.min(rawTop,  vpH - menuH   - MARGIN)),
   };
 }
 
