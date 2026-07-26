@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import './AvtDmo.css';
 import { Avt } from '../avatar/Avt';
+import { useImgUpld } from '../../lib/upld/useImgUpld';
 
 export function AvtDmo() {
   const [selA, setSelA] = useState(false);
   const [selB, setSelB] = useState(false);
   const [selC, setSelC] = useState(false);
   const [selD, setSelD] = useState(false);
+
+  // Upload slots: object-URL lifecycle managed by useImgUpld
+  const icUpld = useImgUpld();
+  const sqUpld = useImgUpld();
 
   return (
     <div className="admo">
@@ -40,15 +45,25 @@ export function AvtDmo() {
           <Avt name="Kunafa" shape="ic" checked={selD} onSelect={() => setSelD(s => !s)} />
         </div>
 
-        {/* ── Upload mode — wrapped in .edit-mode so global delegation works ── */}
-        <div className="admo-cell edit-mode">
-          <span className="admo-lbl">Upload · ic · click or drop</span>
-          <Avt id="demo-ic" shape="ic" />
+        {/* ── Upload mode ── */}
+        <div className="admo-cell">
+          <span className="admo-lbl">Upload · ic · shows image after pick</span>
+          <Avt
+            shape="ic"
+            src={icUpld.src}
+            uploadable
+            onUpload={icUpld.onUpload}
+          />
         </div>
 
-        <div className="admo-cell edit-mode">
-          <span className="admo-lbl">Upload · sq · click or drop</span>
-          <Avt id="demo-sq" shape="sq" />
+        <div className="admo-cell">
+          <span className="admo-lbl">Upload · sq · shows image after pick</span>
+          <Avt
+            shape="sq"
+            src={sqUpld.src}
+            uploadable
+            onUpload={sqUpld.onUpload}
+          />
         </div>
 
       </div>

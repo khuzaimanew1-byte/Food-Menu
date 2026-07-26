@@ -1,44 +1,54 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Avt } from "../avatar/Avt";
-import { restoreImgSrc } from "@/lib/upld/upld";
 import type { MnItem } from "@/data/menu";
+import { useUpld } from "@/lib/upld/useUpld";
+import { useImgUpld } from "@/lib/upld/useImgUpld";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
+  uploadable?: boolean;
+  /** Avatar shape — drives both the Avt render and mic-avt clip-path.
+   *  Must be kept in sync: changing shape here changes both automatically. */
   shape?: 'ic' | 'sq' | 'plq';
 }
 
 export function MnItm({
-  id, name, description, price,
+  id, name, description, price, image,
+  uploadable,
   shape = 'ic',
 }: MnItmPr) {
   const [sel, setSel] = useState(false);
 
-  // Restore uploaded image after page remount (AnimatePresence unmounts/remounts
-  // pages on navigation, which destroys the old img element; the objUrls Map
-  // still holds the URL so we re-apply it once the new img is in the DOM).
-  useEffect(() => {
-    restoreImgSrc(String(id));
-  }, [id]);
+  // Object-URL image state — revokes previous URL on each new upload
+  const { src: imgSrc, onUpload: handleUpload } = useImgUpld(image);
+
+  // Card-level drop zone — covers the whole item, not just the avatar.
+  // isDrg is forwarded to Avt so the avatar highlights even when the drag
+  // cursor is over the text/price area of the card.
+  const upld = useUpld({ onUpload: handleUpload, enabled: !!uploadable });
 
   return (
     <div
       className={`mic-wpr${sel ? " sel" : ""}`}
-      data-item-id={id}
+      data-area="item"
+      data-id={id}
+      data-drop-id={uploadable ? upld.dropId : undefined}
       onClick={() => setSel((s) => !s)}
     >
       <div className="mic">
         <div
           className="mic-avt"
           data-shape={shape}
-          // In edit mode: stop selection toggle when clicking the avatar area.
-          // Native event still bubbles to document where global click delegation
-          // calls upldStore.pick(). Purely DOM check — no hook, no prop.
-          onClick={(e) => { if (document.querySelector('.edit-mode')) e.stopPropagation(); }}
+          onClick={uploadable ? (e) => e.stopPropagation() : undefined}
         >
-          <Avt id={String(id)} name={name} alt={name} shape={shape} />
+          <Avt
+            src={imgSrc} name={name} alt={name} shape={shape}
+            uploadable={uploadable}
+            onUpload={uploadable ? handleUpload : undefined}
+            isDragging={uploadable ? upld.isDrg : false}
+          />
 
-          {/* Checkmark overlay — only for ic shape */}
+          {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
           {shape === 'ic' && (
             <div className="mic-chk" aria-hidden>
               <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
