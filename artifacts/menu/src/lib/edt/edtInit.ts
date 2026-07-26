@@ -1,7 +1,7 @@
 // ── Document-level edit listeners ────────────────────────────────────────
 // Call initEdt() once at app startup (main.tsx).
 
-import { getActive, requestDeactivate, setDirty } from './edtStore';
+import { getActive, saveAndDeactivate, setDirty } from './edtStore';
 
 export function initEdt() {
   // Track whether any content has changed inside the active element.
@@ -32,7 +32,7 @@ export function initEdt() {
       );
       if (activeEl?.contains(target)) return;
 
-      requestDeactivate();
+      saveAndDeactivate();
     },
     true // capture
   );

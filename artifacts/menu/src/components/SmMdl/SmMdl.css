@@ -1,20 +1,22 @@
 /* ── SmMdl — lightweight anchored confirmation panel ─────────────────────────
-   No full-screen backdrop. Floats near the bottom of the stage.
-   dkgl surface, palette-matched border, fast in/out.               */
+   No full-screen backdrop. Anchored to the right side of the viewport,
+   vertically centred. dkgl surface, palette-matched border, fast in/out. */
 
 .sm-mdl {
   position: fixed;
-  bottom: 9vh;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 300;
 
   display: flex;
-  align-items: center;
-  gap: 0.7rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.6rem;
 
-  padding: 0.45rem 0.55rem 0.45rem 0.8rem;
-  border-radius: 0.55rem;
+  width: 10rem;
+  padding: 0.75rem 0.8rem 0.7rem;
+  border-radius: 0.6rem;
   border: 1px solid rgba(var(--gold), 0.28);
 
   /* dkgl surface */
@@ -22,18 +24,16 @@
     radial-gradient(ellipse 70% 55% at 50% 0%,   rgba(var(--gold), .09) 0%, rgba(var(--gold), .03) 55%, transparent 100%),
     radial-gradient(ellipse 60% 40% at 0%   100%, rgba(var(--lntn), .06) 0%, transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 100%, rgba(var(--lntn), .06) 0%, transparent 70%),
-    linear-gradient(180deg, rgba(var(--ink), .82) 0%, rgba(var(--chrd), .70) 100%);
+    linear-gradient(180deg, rgba(var(--ink), .84) 0%, rgba(var(--chrd), .72) 100%);
   backdrop-filter: blur(14px) saturate(130%);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
 
   box-shadow:
     0 0 0 0.5px rgba(var(--gold), 0.10),
-    0 6px 28px rgba(0, 0, 0, 0.50);
+    0 8px 32px rgba(0, 0, 0, 0.55);
 
-  /* entry */
-  animation: sm-in 0.11s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  white-space: nowrap;
+  /* entry — slide in from right */
+  animation: sm-in 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* ── Exit — faster than entry ────────────────────────────────────────────── */
@@ -42,20 +42,28 @@
 }
 
 @keyframes sm-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.97); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);    }
+  from { opacity: 0; transform: translateY(-50%) translateX(12px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
 }
 
 @keyframes sm-out {
-  from { opacity: 1; transform: translateX(-50%) translateY(0)   scale(1);    }
-  to   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.97); }
+  from { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
+  to   { opacity: 0; transform: translateY(-50%) translateX(8px)  scale(0.96); }
+}
+
+/* ── Header row: title + close btn ──────────────────────────────────────── */
+.sm-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
 }
 
 /* ── Avatar thumbnail ────────────────────────────────────────────────────── */
 .sm-avt {
-  width: 1.7rem;
-  height: 1.7rem;
-  border-radius: 0.25rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.22rem;
   overflow: hidden;
   flex-shrink: 0;
   border: 1px solid rgba(var(--gold), 0.22);
@@ -72,7 +80,7 @@
 }
 
 .sm-avt-init {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: rgb(var(--gold));
@@ -81,30 +89,63 @@
 /* ── Title ───────────────────────────────────────────────────────────────── */
 .sm-ttl {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: rgba(var(--wht), 0.82);
-  flex: 1;
-  min-width: 0;
+  color: rgba(var(--wht), 0.75);
+  line-height: 1.3;
+}
+
+/* ── Close button ────────────────────────────────────────────────────────── */
+.sm-cls {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0.28rem;
+  color: rgba(var(--wht), 0.32);
+  flex-shrink: 0;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.sm-cls:hover {
+  color: rgba(var(--wht), 0.72);
+  background: rgba(var(--wht), 0.07);
+  filter: none;
+}
+
+.sm-cls .cls-ico {
+  width: 0.78rem;
+  height: 0.78rem;
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────────── */
+.sm-div {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--gold), 0.30) 30%,
+    rgba(var(--gold), 0.30) 70%,
+    transparent
+  );
+  flex-shrink: 0;
 }
 
 /* ── Action group ────────────────────────────────────────────────────────── */
 .sm-acts {
   display: flex;
-  align-items: center;
-  gap: 0.38rem;
-  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.32rem;
 }
 
 /* ── Confirm button ──────────────────────────────────────────────────────── */
 .sm-cfm {
-  padding: 0.3rem 0.7rem;
-  font-size: 0.72rem;
+  width: 100%;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  border-radius: 0.35rem;
+  border-radius: 0.32rem;
   border: 1px solid rgba(var(--gold), 0.50);
   background: rgba(var(--gold), 0.14);
   color: rgb(var(--gold));
@@ -112,8 +153,8 @@
 }
 
 .sm-cfm:hover {
-  background: rgba(var(--gold), 0.24);
-  border-color: rgba(var(--gold), 0.80);
+  background: rgba(var(--gold), 0.26);
+  border-color: rgba(var(--gold), 0.82);
 }
 
 /* Flash state — keyboard action registered */
@@ -123,35 +164,16 @@
 
 @keyframes sm-cfm-flash {
   0%   { background: rgba(var(--gold), 0.14); transform: scale(1);    }
-  45%  { background: rgba(var(--gold), 0.52); transform: scale(0.93); }
+  45%  { background: rgba(var(--gold), 0.55); transform: scale(0.93); }
   100% { background: rgba(var(--gold), 0.14); transform: scale(1);    }
 }
 
 /* ── Keyboard hint ───────────────────────────────────────────────────────── */
 .sm-hint {
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   letter-spacing: 0.04em;
-  color: rgba(var(--wht), 0.28);
+  color: rgba(var(--wht), 0.24);
+  text-align: center;
   user-select: none;
-}
-
-/* ── Close button ────────────────────────────────────────────────────────── */
-.sm-cls {
-  width: 1.55rem;
-  height: 1.55rem;
-  border-radius: 0.3rem;
-  color: rgba(var(--wht), 0.38);
-  flex-shrink: 0;
-  transition: color 0.15s ease, background 0.15s ease;
-}
-
-.sm-cls:hover {
-  color: rgba(var(--wht), 0.75);
-  background: rgba(var(--wht), 0.07);
-  filter: none; /* override btn gold drop-shadow */
-}
-
-.sm-cls .cls-ico {
-  width: 0.85rem;
-  height: 0.85rem;
+  margin-top: 0.05rem;
 }
