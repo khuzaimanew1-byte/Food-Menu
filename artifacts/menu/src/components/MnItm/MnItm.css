@@ -6,35 +6,6 @@
 /* Hidden file input at card level */
 .mic-inp { display: none; }
 
-/* ── Full-card drop overlay ──────────────────────────────────────────────── */
-.mic-drop-ovr {
-  position: absolute;
-  inset: 0;
-  z-index: 6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  border-radius: 3.5%;
-  background: radial-gradient(
-    ellipse at 30% 50%,
-    rgba(var(--gold), 0.10) 0%,
-    rgba(var(--gmu),  0.55) 100%
-  );
-  border: 0.22cqw dashed rgba(var(--gold), 0.55);
-  backdrop-filter: blur(1.5px);
-}
-
-.mic-drop-txt {
-  font-size: 3.8cqw;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgb(var(--gold));
-  text-shadow:
-    0 0 1.2cqw rgba(var(--gold), 0.75),
-    0 0 3cqw   rgba(var(--gold), 0.30);
-}
-
 /* ── Outer wrapper — owns position context, cursor, click, animation ─────── */
 .mic-wpr {
   position: relative;
@@ -42,11 +13,36 @@
   animation: mic-in 0.28s ease both;
 }
 
-/* ── Inner flex row — avatar + body only ─────────────────────────────────── */
+/* ── Inner flex row — avatar-wrap + body ─────────────────────────────────── */
 .mic {
   display: flex;
   gap: 2.4cqw;
   align-items: flex-start;
+}
+
+/* ── Avatar + label column (upload mode) ────────────────────────────────────
+   Centers avatar horizontally and stacks the hint label below it.           */
+.mic-avt-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55cqw;
+}
+
+/* "Click or drop img" hint below the avatar */
+.mic-upl-lbl {
+  font-size: 1.85cqw;
+  letter-spacing: 0.05em;
+  color: rgba(var(--mut), 0.60);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Hide label when avatar enters drag-active state (uses CSS :has so no JS needed) */
+.mic-avt-wrap:has(.avt.drop-on) .mic-upl-lbl {
+  opacity: 0;
 }
 
 /* ── Selection: fade body + avatar ──────────────────────────────────────────

@@ -19,27 +19,60 @@
 /* Upload mode — whole avatar is the tap/click target */
 .avt-upl { cursor: pointer; }
 
-/* ── Drop-here text (empty uploadable slot) ─────────────────────────── */
-.avt-drop-txt {
-  font-size: 2.1cqw;
-  font-family: inherit;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(var(--gold), 0.5);
-  pointer-events: none;
-  text-align: center;
+/* ── Upload icon (centered in shape when no src) ────────────────────── */
+.avt-upl-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.avt-upl-svg {
+  width: 4.5cqw;
+  height: 4.5cqw;
+  color: rgba(var(--gold), 0.50);
   transition: color 0.22s ease, transform 0.22s ease;
 }
 
-/* Hover: same trigger as drag-over (both set isOn → drop-on class) */
-.drop-on .avt-drop-txt {
-  color: rgb(var(--gold));
-  animation: avt-drop-float 0.9s ease-in-out infinite;
+.avt-upl:hover .avt-upl-svg {
+  color: rgba(var(--gold), 0.85);
+  transform: translateY(-0.4cqw);
 }
 
-@keyframes avt-drop-float {
-  0%, 100% { transform: translateY(0);       opacity: 1;    }
-  50%       { transform: translateY(-0.7cqw); opacity: 0.75; }
+/* Hide upload icon when drag/hover active */
+.drop-on .avt-upl-icon {
+  opacity: 0;
+}
+
+/* ── Drop overlay — lives inside shape, clipped by ic-poly / overflow:hidden ─
+   Always in DOM; opacity transition drives show/hide.                       */
+.avt-drop-ovr {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--chr), 0.38);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  z-index: 3;
+}
+
+.avt-drop-ovr--on {
+  opacity: 1;
+}
+
+.avt-drop-here {
+  font-size: 2cqw;
+  font-family: inherit;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--gold));
+  text-shadow:
+    0 0 1cqw rgba(var(--gold), 0.85),
+    0 0 2.5cqw rgba(var(--gold), 0.40);
+  pointer-events: none;
 }
 
 /* ── Checkmark overlay (normal mode) ───────────────────────────────── */
@@ -54,7 +87,6 @@
 }
 
 .avt-mk {
-  /* SVG icon — sized in container units, font-independent */
   color: rgb(var(--gold));
   width: 5.5cqw;
   height: 5.5cqw;

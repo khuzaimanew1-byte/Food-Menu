@@ -17,34 +17,58 @@ interface AvtPr {
   // Normal mode (default):
   checked?:    boolean;
   onSelect?:   () => void;
-  // Upload mode (uploadable flag activates — unmounts checkbox entirely):
+  // Upload mode:
   uploadable?: boolean;
   onUpload?:   (file: File) => void;
+  /** Card-level drag state — shows drop overlay on avatar even when the drag
+   *  is over a non-avatar part of the item card. */
+  isDragging?: boolean;
 }
 
 export function Avt({
   src, name, alt, shape = 'ic',
   checked, onSelect,
-  uploadable, onUpload,
+  uploadable, onUpload, isDragging = false,
 }: AvtPr) {
   // enabled only when uploadable — no dead store entries on display-only instances
   const upld = useUpld({ onUpload, enabled: !!uploadable });
 
+  // Active when card-level drag fires (isDragging) OR avatar hover/drag (upld.isOn)
+  const isActive = isDragging || upld.isOn;
+
   // ── Main content (inside shape) ──────────────────────────────────────
-  // Normal:   src → Inits(name) → Inits("AV")
-  // Upload:   src → "Tap / Drop" hint
+  // Upload empty: centered upload icon
+  // Upload with src: image
+  // Normal: initials
   const mainContent = src
     ? <img src={src} alt={alt ?? name ?? 'Item Image'} className="avt-img" loading="lazy" />
     : uploadable
-      ? <span className="avt-drop-txt">Tap / Drop</span>
+      ? (
+        <span className="avt-upl-icon" aria-hidden>
+          <svg
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+            className="avt-upl-svg"
+          >
+            <polyline points="16 16 12 12 8 16" />
+            <line x1="12" y1="12" x2="12" y2="21" />
+            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+          </svg>
+        </span>
+      )
       : <Inits name={name} />;
 
-  // ── Overlay inside shape ─────────────────────────────────────────────
-  // Upload mode   → no overlay; the whole avatar is the tap/click target.
-  //                 No per-avatar <input> — global upldStore handles picking.
-  // Selectable    → checkmark (CSS drives visibility via .avt.chkd).
-  // Display-only  → null; no dead DOM node inside a clipped container.
-  const overlay = !uploadable && shape === 'ic' && (onSelect !== undefined || checked !== undefined)
+  // ── Drop overlay — inside shape, clipped by ic-poly / overflow:hidden ─
+  // Always mounted; CSS transition drives visibility.
+  const dropOverlay = uploadable ? (
+    <div className={`avt-drop-ovr${isActive ? ' avt-drop-ovr--on' : ''}`} aria-hidden>
+      <span className="avt-drop-here">Drop here</span>
+    </div>
+  ) : null;
+
+  // ── Normal checkmark overlay ─────────────────────────────────────────
+  // Upload mode → no checkmark; the whole avatar is the tap/click target.
+  const checkOverlay = !uploadable && shape === 'ic' && (onSelect !== undefined || checked !== undefined)
     ? (
       <div className="avt-chk" aria-hidden>
         <svg className="avt-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -63,34 +87,34 @@ export function Avt({
   // ── Root class ───────────────────────────────────────────────────────
   const avtCls = [
     'avt',
-    uploadable            ? 'avt-upl' : '',
+    uploadable             ? 'avt-upl' : '',
     !uploadable && checked ? 'chkd'    : '',
-    uploadable && upld.isOn ? 'drop-on' : '',
+    uploadable && isActive ? 'drop-on' : '',
   ].filter(Boolean).join(' ');
 
   // ── Shape wrapper ────────────────────────────────────────────────────
   const shaped = shape === 'ic'
-    ? <IcBdr ovr={overlay}>{mainContent}</IcBdr>
+    ? <IcBdr ovr={<>{checkOverlay}{dropOverlay}</>}>{mainContent}</IcBdr>
     : shape === 'plq'
     ? (
       <div className="avt-shp avt-bg shp-plq">
         {mainContent}
         <CrnOr />
-        {overlay}
+        {checkOverlay}
+        {dropOverlay}
       </div>
     )
     : (
       <div className="avt-shp avt-bg shp-sq">
         {mainContent}
-        {overlay}
+        {checkOverlay}
+        {dropOverlay}
       </div>
     );
 
   return (
     <div
       className={avtCls}
-      // Upload: whole avatar is the tap/click target (works on mobile too).
-      // Normal: delegate to onSelect.
       onClick={uploadable ? upld.pick : onSelect}
       onMouseEnter={uploadable ? upld.hovOn  : undefined}
       onMouseLeave={uploadable ? upld.hovOff : undefined}

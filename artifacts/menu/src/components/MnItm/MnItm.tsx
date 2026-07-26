@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
@@ -23,67 +22,53 @@ export function MnItm({
   // Object-URL image state — revokes previous URL on each new upload
   const { src: imgSrc, onUpload: handleUpload } = useImgUpld(image);
 
-  // Drop zone for the whole card — disabled when not uploadable.
-  // No per-card <input>; upldStore provides the single global file picker.
+  // Card-level drop zone — covers the whole item, not just the avatar.
+  // isDrg is forwarded to Avt so the avatar highlights even when the drag
+  // cursor is over the text/price area of the card.
   const upld = useUpld({ onUpload: handleUpload, enabled: !!uploadable });
 
   return (
     <div
-      className={`mic-wpr${sel ? " sel" : ""}${uploadable && upld.isDrg ? " drop-on" : ""}`}
+      className={`mic-wpr${sel ? " sel" : ""}`}
       data-area="item"
       data-id={id}
       data-drop-id={uploadable ? upld.dropId : undefined}
       onClick={() => setSel((s) => !s)}
     >
-      {/* Full-card "Drop here" overlay — only when uploadable and dragging */}
-      <AnimatePresence>
-        {uploadable && upld.isDrg && (
-          <motion.div
-            className="mic-drop-ovr"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22, ease: "easeInOut" }}
-          >
-            <motion.span
-              className="mic-drop-txt ff-s"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 5 }}
-              transition={{ duration: 0.2, ease: "easeOut", delay: 0.04 }}
-            >
-              Drop here
-            </motion.span>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <div className="mic">
-        {/* data-shape and Avt shape prop share the same variable —
-            clip-path on mic-avt and avatar render are always in sync. */}
-        <div
-          className="mic-avt"
-          data-shape={shape}
-          onClick={uploadable ? (e) => e.stopPropagation() : undefined}
-        >
-          <Avt src={imgSrc} name={name} alt={name} shape={shape}
-            uploadable={uploadable}
-            onUpload={uploadable ? handleUpload : undefined}
-          />
+        {/* Avatar + "Click or drop img" label stacked */}
+        <div className="mic-avt-wrap">
+          <div
+            className="mic-avt"
+            data-shape={shape}
+            onClick={uploadable ? (e) => e.stopPropagation() : undefined}
+          >
+            <Avt
+              src={imgSrc} name={name} alt={name} shape={shape}
+              uploadable={uploadable}
+              onUpload={uploadable ? handleUpload : undefined}
+              isDragging={uploadable ? upld.isDrg : false}
+            />
 
-          {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
-          {shape === 'ic' && (
-            <div className="mic-chk" aria-hidden>
-              <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <polyline
-                  points="20 6 9 17 4 12"
-                  stroke="currentColor"
-                  strokeWidth="2.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+            {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
+            {shape === 'ic' && (
+              <div className="mic-chk" aria-hidden>
+                <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <polyline
+                    points="20 6 9 17 4 12"
+                    stroke="currentColor"
+                    strokeWidth="2.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            )}
+          </div>
+
+          {/* Label below avatar — hidden while drag is active (CSS :has) */}
+          {uploadable && (
+            <span className="mic-upl-lbl ff-s">Click or drop img</span>
           )}
         </div>
 
