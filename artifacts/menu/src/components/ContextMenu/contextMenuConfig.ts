@@ -73,21 +73,21 @@ export const ICONS: Record<string, string[]> = {
 export const MENU_CONFIG: Record<CtxArea, CtxOpt[]> = {
   item: [
     { id: 'edit',         label: 'Edit',        icon: ICONS.edit        },
-    { id: 'add-item',     label: '+ Item',       icon: ICONS.addItem     },
+    { id: 'add-item',     label: 'Add Item',     icon: ICONS.addItem     },
     { id: 'move-item',    label: 'Move Item',    icon: ICONS.moveItem    },
-    { id: 'add-section',  label: '+ Section',    icon: ICONS.addSection  },
+    { id: 'add-section',  label: 'Add Section',  icon: ICONS.addSection  },
     { id: 'assign',       label: 'Assign',       icon: ICONS.assign      },
     { id: 'delete',       label: 'Delete',       icon: ICONS.delete, danger: true, separator: true },
   ],
   section: [
     { id: 'edit',         label: 'Edit',         icon: ICONS.edit        },
-    { id: 'add-item',     label: '+ Item',        icon: ICONS.addItem     },
+    { id: 'add-item',     label: 'Add Item',      icon: ICONS.addItem     },
     { id: 'move-section', label: 'Move Section',  icon: ICONS.moveSection },
-    { id: 'add-section',  label: '+ Section',     icon: ICONS.addSection  },
+    { id: 'add-section',  label: 'Add Section',   icon: ICONS.addSection  },
     { id: 'delete',       label: 'Delete',        icon: ICONS.delete, danger: true, separator: true },
   ],
   page: [
-    { id: 'add-section', label: '+ Section', icon: ICONS.addSection },
+    { id: 'add-section', label: 'Add Section', icon: ICONS.addSection },
     {
       id: 'shapes', label: 'Shapes', icon: ICONS.shapes, separator: true,
       children: [
