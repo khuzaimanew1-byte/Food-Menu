@@ -50,22 +50,21 @@
 }
 
 /* ── Selection: fade body + avatar ──────────────────────────────────────────
-   .mic-chk is a sibling of .mic (NOT inside it), so opacity on .mic-avt
-   and .mic-body can NEVER reach it — no brightness hack, no workarounds. */
-.sel .mic-body { opacity: 0.55; }
-.sel .mic-avt  { opacity: 0.55; }
+   Opacity targets .avt directly (NOT .mic-avt) so .mic-chk — which is a
+   sibling of .avt inside .mic-avt — is never inside the opacity subtree.
+   clip-path on .mic-avt clips both .avt and .mic-chk; z-index keeps the
+   checkmark on top. No hacks, no workarounds. */
+.sel .mic-body       { opacity: 0.55; }
+.sel .mic-avt > .avt { opacity: 0.55; }
 
-/* ── Check icon — sibling of .mic inside .mic-wpr ───────────────────────── */
-/* Matches .ic-bdr exactly: 18cqw × 13cqw, same crown clip-path.
-   This makes the backdrop and checkmark cover the avatar shape
-   precisely — no less, no overflow — matching how .avt-img covers it. */
+/* ── Check icon — inside .mic-avt, sibling of .avt ──────────────────────── */
+/* inset:0 fills .mic-avt completely — no hardcoded size or clip-path here.
+   .mic-avt's own clip-path clips this overlay to the avatar silhouette,
+   the same way clip-path on .ic-bdr clips the image inside it.
+   Changing the avatar shape only requires a new [data-shape] rule above. */
 .mic-chk {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 18cqw;
-  height: 13cqw;
-  clip-path: var(--ic-poly);
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,7 +72,7 @@
   z-index: 2;
 }
 
-/* Warm walnut backdrop — slides in, castle-warm contrast on any avatar */
+/* Warm walnut backdrop */
 .mic-chk::before {
   content: '';
   position: absolute;
@@ -112,9 +111,17 @@
   transform: scale(1) rotate(0deg);
 }
 
+/* mic-avt is the shape container:
+   - clip-path clips both .avt AND .mic-chk to the avatar silhouette,
+     exactly like clip-path clips an img inside .ic-bdr.
+   - Each shape sets --avt-clip; default none = no clipping (sq, plq).
+   - New shapes only need to add a [data-shape="X"] rule here. */
 .mic-avt {
   position: relative;
+  clip-path: var(--avt-clip, none);
 }
+
+.mic-avt[data-shape="ic"] { --avt-clip: var(--ic-poly); }
 
 .mic-body {
   flex: 1;

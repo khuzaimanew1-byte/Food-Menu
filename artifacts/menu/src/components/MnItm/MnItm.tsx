@@ -72,9 +72,13 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
       </AnimatePresence>
 
       <div className="mic">
-        {/* Clicking the avatar slot opens the file picker */}
+        {/* mic-avt owns clip-path for the avatar shape (--avt-clip).
+            mic-chk lives here as a sibling of .avt — NOT inside it —
+            so opacity on .avt never reaches the checkmark.
+            clip-path on mic-avt clips both naturally, just like the image. */}
         <div
           className="mic-avt"
+          data-shape="ic"
           onClick={uploadable ? (e) => { e.stopPropagation(); upld.pick(); } : undefined}
         >
           <Avt
@@ -83,6 +87,18 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
             alt={name}
             shape="ic"
           />
+          {/* Inside mic-avt, after .avt — clipped by mic-avt's clip-path */}
+          <div className="mic-chk" aria-hidden>
+            <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <polyline
+                points="20 6 9 17 4 12"
+                stroke="currentColor"
+                strokeWidth="2.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
         <div className="mic-body">
           <div className="mic-row">
@@ -92,19 +108,6 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
           </div>
           <p className="mic-desc ff-s">{description}</p>
         </div>
-      </div>
-
-      {/* mic-chk is a sibling of .mic — never inside the opacity subtree */}
-      <div className="mic-chk" aria-hidden>
-        <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <polyline
-            points="20 6 9 17 4 12"
-            stroke="currentColor"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
       </div>
     </div>
   );
