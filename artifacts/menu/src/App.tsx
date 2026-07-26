@@ -10,7 +10,7 @@ import { AvtDmo } from "./components/AvtDmo/AvtDmo";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { dispatchCtxAction } from "./components/ContextMenu/actions";
 import { SmMdl } from "./components/SmMdl/SmMdl";
-import { saveAndDeactivate, deactivate, getActive } from "./lib/edt/edtStore";
+import { saveAndDeactivate, deactivate, getActive, isDirty } from "./lib/edt/edtStore";
 import { ARBC, TURK } from "./data/menu";
 import type { MnItem, PageSect } from "./data/menu";
 
@@ -113,19 +113,52 @@ function rndPg(pg: number) {
 
 // ── Edit confirmation modal ────────────────────────────────────────────────
 function EdtCnf() {
-  const [open, setOpen]         = useState(false);
-  const [avtItem, setAvtItem]   = useState<MnItem | null>(null);
+  const [open, setOpen]           = useState(false);
+  const [avtItem, setAvtItem]     = useState<MnItem | null>(null);
+  const [anchorPos, setAnchorPos] = useState<{ top: number; left: number } | undefined>();
 
+  /** Compute position: right of pg-wrap, vertically centred on the active item. */
+  function computeAnchor(activeId: string | null) {
+    if (!activeId) return undefined;
+    const pgWrap = document.querySelector('.pg-wrap');
+    const itemEl = document.querySelector<HTMLElement>(
+      `[data-area="item"][data-id="${CSS.escape(activeId)}"]`
+    );
+    if (!pgWrap || !itemEl) return undefined;
+    const pw = pgWrap.getBoundingClientRect();
+    const it = itemEl.getBoundingClientRect();
+    return {
+      top:  it.top + it.height / 2,
+      left: pw.right + 14,
+    };
+  }
+
+  // Outside-click path → show modal
   useEffect(() => {
     const show = () => {
       const { activeId } = getActive();
       const item = ALL_ITEMS.find(i => String(i.id) === activeId) ?? null;
       setAvtItem(item);
+      setAnchorPos(computeAnchor(activeId));
       setOpen(true);
     };
     document.addEventListener('edt:confirm-needed', show);
     return () => document.removeEventListener('edt:confirm-needed', show);
   }, []);
+
+  // Enter key while editing (modal NOT open) → direct save, no modal
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key !== 'Enter') return;
+      if (open) return;                       // modal handles it internally
+      const { activeId } = getActive();
+      if (!activeId || !isDirty()) return;    // nothing dirty to save
+      e.preventDefault();
+      saveAndDeactivate();
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [open]);
 
   return (
     <SmMdl
@@ -134,6 +167,7 @@ function EdtCnf() {
       confirmLabel="Save"
       avatarSrc={avtItem?.image}
       avatarName={avtItem?.name}
+      anchorPos={anchorPos}
       onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
       onClose={() => { setOpen(false); deactivate(); }}
     />

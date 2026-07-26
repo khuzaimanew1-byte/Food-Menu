@@ -14,7 +14,7 @@
   gap: 0.7rem;
 
   padding: 0.45rem 0.55rem 0.45rem 0.8rem;
-  border-radius: 0.55rem;
+  border-radius: 1rem;
   border: 1px solid rgba(var(--gold), 0.28);
 
   /* dkgl surface */
@@ -49,6 +49,28 @@
 @keyframes sm-out {
   from { opacity: 1; transform: translateX(-50%) translateY(0)   scale(1);    }
   to   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.97); }
+}
+
+/* ── Anchored variant — right of pg-wrap, vertically centred on item ─────── */
+.sm-mdl--anchored {
+  bottom: auto;
+  left: auto;
+  transform: translateY(-50%);
+  animation: sm-in-anch 0.11s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sm-mdl--anchored.sm-mdl--out {
+  animation: sm-out-anch 0.07s ease both;
+}
+
+@keyframes sm-in-anch {
+  from { opacity: 0; transform: translateY(-50%) translateX(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
+}
+
+@keyframes sm-out-anch {
+  from { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
+  to   { opacity: 0; transform: translateY(-50%) translateX(-6px) scale(0.97); }
 }
 
 /* ── Avatar thumbnail ────────────────────────────────────────────────────── */

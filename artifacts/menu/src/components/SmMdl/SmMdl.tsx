@@ -15,6 +15,8 @@ export interface SmMdlPr {
   onConfirm:     () => void;
   /** Called on × button — typically discard / cancel */
   onClose:       () => void;
+  /** When provided, modal anchors to this fixed position (right of pg-wrap) */
+  anchorPos?:    { top: number; left: number };
 }
 
 /**
@@ -30,6 +32,7 @@ export function SmMdl({
   avatarName,
   onConfirm,
   onClose,
+  anchorPos,
 }: SmMdlPr) {
   // Internal visibility tracks open with a brief exit delay
   const [show,     setShow]     = useState(open);
@@ -71,10 +74,16 @@ export function SmMdl({
   const hasAvt = avatarSrc !== undefined || avatarName !== undefined;
   const initials = avatarName ? avatarName.slice(0, 2).toUpperCase() : '';
   const isExiting = !open;
+  const isAnchored = anchorPos !== undefined;
+
+  const anchorStyle: React.CSSProperties | undefined = isAnchored
+    ? { top: anchorPos!.top, left: anchorPos!.left }
+    : undefined;
 
   return (
     <div
-      className={`sm-mdl${isExiting ? ' sm-mdl--out' : ''}`}
+      className={`sm-mdl${isAnchored ? ' sm-mdl--anchored' : ''}${isExiting ? ' sm-mdl--out' : ''}`}
+      style={anchorStyle}
       role="dialog"
       aria-modal
       aria-label={title}
