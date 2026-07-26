@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
 import "./MnItm.css";
 
 export function MnItm({ id, name, description, price, image }: MnItem) {
   const [sel, setSel] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string | undefined>(image);
+  const objUrlRef = useRef<string | null>(null);
+
+  const handleUpload = (file: File) => {
+    // Revoke previous object URL to avoid memory leak
+    if (objUrlRef.current) URL.revokeObjectURL(objUrlRef.current);
+    const url = URL.createObjectURL(file);
+    objUrlRef.current = url;
+    setImgSrc(url);
+  };
+
   return (
     /* mic-wpr owns position context + click — mic-chk is its direct child,
        a sibling of .mic, so it can NEVER be inside the opacity subtree     */
@@ -15,8 +26,16 @@ export function MnItm({ id, name, description, price, image }: MnItem) {
       onClick={() => setSel((s) => !s)}
     >
       <div className="mic">
-        <div className="mic-avt">
-          <Avt src={image} name={name} alt={name} shape="ic" />
+        {/* stopPropagation: avatar clicks (pick/drop) must not toggle selection */}
+        <div className="mic-avt" onClick={(e) => e.stopPropagation()}>
+          <Avt
+            src={imgSrc}
+            name={name}
+            alt={name}
+            shape="ic"
+            uploadable
+            onUpload={handleUpload}
+          />
         </div>
         <div className="mic-body">
           <div className="mic-row">
