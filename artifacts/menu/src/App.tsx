@@ -8,6 +8,7 @@ import { PrtBtn } from "./components/PrtBtn/PrtBtn";
 import { NvCtl } from "./components/NvCtl/NvCtl";
 import { AvtDmo } from "./components/AvtDmo/AvtDmo";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
+import { dispatchCtxAction } from "./components/ContextMenu/actions";
 import { ARBC, TURK } from "./data/menu";
 import type { MnItem, PageSect } from "./data/menu";
 
@@ -141,9 +142,7 @@ function MnApp() {
       </div>
       {/* viewport-fixed */}
       <PrtBtn />
-      <ContextMenu onSelect={(area, id, opt) => {
-        console.log('[ContextMenu]', area, id, opt);
-      }} />
+      <ContextMenu onSelect={dispatchCtxAction} />
     </div>
   );
 }

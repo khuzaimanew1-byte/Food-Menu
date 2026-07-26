@@ -155,3 +155,37 @@
   border-radius: 3px;
   transition: outline-color 0.15s ease;
 }
+
+/* ── Submenu flyout ──────────────────────────────────────────────────────── */
+.ctx-submenu {
+  transform-origin: top left;
+  animation: ctx-in 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Chevron arrow (parent option with children) ─────────────────────────── */
+.ctx-opt__chevron {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  margin-left: auto;
+  opacity: 0.40;
+  transition: opacity 0.12s ease;
+}
+
+.ctx-opt:hover .ctx-opt__chevron,
+.ctx-opt:focus-visible .ctx-opt__chevron,
+.ctx-opt--sub-open .ctx-opt__chevron {
+  opacity: 0.80;
+}
+
+/* Parent row stays highlighted while its submenu is open */
+.ctx-opt--sub-open {
+  background:   rgba(var(--gw), 0.08);
+  border-color: rgba(var(--gw), 0.18);
+  color:        rgba(var(--gl), 0.95);
+  box-shadow:   inset 0 1px 0 rgba(var(--glt), 0.08);
+}
+
+.ctx-opt--sub-open .ctx-opt__icon {
+  opacity: 0.82;
+}

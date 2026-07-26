@@ -8,7 +8,8 @@ export interface CtxOpt {
   icon:       string[];
   danger?:    boolean;
   disabled?:  boolean;
-  separator?: boolean;  // render a rule above this option
+  separator?: boolean;   // render a rule above this option
+  children?:  CtxOpt[];  // if set, renders a flyout submenu instead of firing onSelect
 }
 
 export interface AreaHit {
@@ -50,14 +51,24 @@ export const ICONS: Record<string, string[]> = {
     'M8 15l4 4 4-4',
     'M12 5v14',
   ],
-  layout: [
-    'M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z',
+  shapes: [
+    'M12 2L2 7l10 5 10-5-10-5z',
+    'M2 17l10 5 10-5',
+    'M2 12l10 5 10-5',
+  ],
+  square: [
+    'M3 3h18v18H3z',
+  ],
+  infCastle: [
+    'M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.74-8z',
+  ],
+  plaque: [
+    'M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z',
+    'M8 10h8M8 14h5',
   ],
 };
 
 // ─── Area → options map ───────────────────────────────────────────────────────
-// Labels with a plus action use "Add …" — the icon carries the + visual.
-// separator: true draws a rule above that row (used before destructive actions).
 
 export const MENU_CONFIG: Record<CtxArea, CtxOpt[]> = {
   item: [
@@ -76,7 +87,15 @@ export const MENU_CONFIG: Record<CtxArea, CtxOpt[]> = {
     { id: 'delete',       label: 'Delete',        icon: ICONS.delete, danger: true, separator: true },
   ],
   page: [
-    { id: 'layout-toggle', label: 'Layout',       icon: ICONS.layout      },
+    { id: 'add-section', label: 'Add Section', icon: ICONS.addSection },
+    {
+      id: 'shapes', label: 'Shapes', icon: ICONS.shapes, separator: true,
+      children: [
+        { id: 'shape-sq',  label: 'Square',          icon: ICONS.square    },
+        { id: 'shape-inf', label: 'Infinity Castle',  icon: ICONS.infCastle },
+        { id: 'shape-plq', label: 'Plaque',           icon: ICONS.plaque    },
+      ],
+    },
   ],
 };
 
