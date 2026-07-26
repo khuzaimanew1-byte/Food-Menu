@@ -1,5 +1,5 @@
 /* width: 100% ensures avt fills its container in both block and flex contexts */
-.avt { position: relative; width: 100%; }
+.avt { position: relative; }
 
 .avt-shp {
   position: relative; /* overlays inside sq shape */

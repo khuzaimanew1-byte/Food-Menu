@@ -9,10 +9,8 @@
   background: rgba(var(--gmu), 0.85);
   padding: 0.2cqw;
   box-sizing: border-box;
-  /* aspect-ratio ensures ic-bdr always has height even when all children
-     are position:absolute (e.g. Inits fallback) and contribute no flow size */
-  aspect-ratio: 1;
-  width: 100%;
+  width: 18cqw;
+  height: 13cqw;
   transition: background 0.22s ease, filter 0.28s ease;
 }
 
@@ -27,7 +25,6 @@
 .ic-inn {
   clip-path: var(--ic-poly);
   height: 100%;
-  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
