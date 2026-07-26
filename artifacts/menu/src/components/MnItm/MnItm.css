@@ -161,21 +161,19 @@
   margin: 0;
 }
 
+/* ── Edit mode — whole-card highlight ───────────────────────────────────── */
+.mic-wpr.edt-on {
+  outline: 0.18cqw solid rgba(var(--gold), 0.28);
+  border-radius: 0.8cqw;
+  background: rgba(var(--gold), 0.04);
+}
+
 /* ── Edit-mode text fields ───────────────────────────────────────────────── */
 .edt-on .mic-name,
 .edt-on .mic-desc {
   cursor: text;
-  border-radius: 0.6cqw;
   outline: none;
   white-space: normal;
-  background: rgba(var(--wlt), 0.12);
-  padding: 0.3cqw 0.6cqw;
-  margin: -0.3cqw -0.6cqw;
-}
-
-.edt-on .mic-name:focus,
-.edt-on .mic-desc:focus {
-  background: rgba(var(--wlt), 0.22);
 }
 
 /* Suppress strikethrough while editing */

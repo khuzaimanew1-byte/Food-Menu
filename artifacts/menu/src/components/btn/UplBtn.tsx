@@ -5,7 +5,7 @@ import { UpIco } from '../icons/UpIco';
 
 interface UplBtnPr {
   label?:   string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function UplBtn({ label = 'Upload photo', onClick }: UplBtnPr) {

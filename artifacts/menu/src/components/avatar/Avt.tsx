@@ -52,7 +52,7 @@ export function Avt({
   // hint text only rendered when no src (img state has no text).
   const uplControls = uploadable ? (
     <div className={`avt-upl-ctrls${isActive ? ' avt-upl-ctrls--drag' : ''}`}>
-      <UplBtn />
+      <UplBtn onClick={(e: React.MouseEvent) => { e.stopPropagation(); upld.pick(); }} />
       {!src && <span className="avt-upl-hint ff-s">Click or drop img</span>}
     </div>
   ) : null;

@@ -1,5 +1,4 @@
-import { useId } from "react";
-import { EdtBtn } from "../EdtBtn/EdtBtn";
+import { useId, useState, useEffect } from "react";
 import { useEdt } from "@/lib/edt/useEdt";
 import "./MnHdg.css";
 
@@ -10,6 +9,20 @@ interface MhPr {
 function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   const uid = useId().replace(/:/g, "");
   const isActive = useEdt(text);
+  const [editedText, setEditedText] = useState<string | null>(null);
+
+  // Persist edited text on Save
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const d = (e as CustomEvent<{ id: string; fields: Record<string, string> }>).detail;
+      if (d?.id !== text) return;
+      if (d.fields['title'] !== undefined) setEditedText(d.fields['title']);
+    };
+    document.addEventListener('edt:save', handler);
+    return () => document.removeEventListener('edt:save', handler);
+  }, [text]);
+
+  const displayText = editedText ?? text;
 
   return (
     <div
@@ -17,8 +30,6 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
       data-area="section"
       data-id={text}
     >
-      <EdtBtn id={text} type="section" />
-
       <div className="mh-row flex items-center justify-center">
         <div className="mh-div">
           <svg preserveAspectRatio="none" viewBox="0 0 100 10">
@@ -39,10 +50,11 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
 
         <h2
           className="mh-ttl ff-s"
+          data-edt-field={isActive ? "title" : undefined}
           contentEditable={isActive || undefined}
           suppressContentEditableWarning
         >
-          {text}
+          {displayText}
         </h2>
 
         <div className="mh-div">

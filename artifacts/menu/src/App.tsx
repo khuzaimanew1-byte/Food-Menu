@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { CvrPg } from "./components/CvrPg";
@@ -9,6 +9,8 @@ import { NvCtl } from "./components/NvCtl/NvCtl";
 import { AvtDmo } from "./components/AvtDmo/AvtDmo";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { dispatchCtxAction } from "./components/ContextMenu/actions";
+import { CnfMdl } from "./components/CnfMdl/CnfMdl";
+import { saveAndDeactivate, deactivate } from "./lib/edt/edtStore";
 import { ARBC, TURK } from "./data/menu";
 import type { MnItem, PageSect } from "./data/menu";
 
@@ -107,6 +109,29 @@ function rndPg(pg: number) {
   return <CtntPg pgNum={pd.pgNum} sections={pd.sections} />;
 }
 
+// ── Edit confirmation modal ────────────────────────────────────────────────
+function EdtCnf() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const show = () => setOpen(true);
+    document.addEventListener('edt:confirm-needed', show);
+    return () => document.removeEventListener('edt:confirm-needed', show);
+  }, []);
+
+  return (
+    <CnfMdl
+      open={open}
+      title="Save changes?"
+      message="Do you want to keep your edits to this item?"
+      confirmLabel="Save"
+      cancelLabel="Discard"
+      onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
+      onCancel={() => { setOpen(false); deactivate(); }}
+    />
+  );
+}
+
 // ── Main app ───────────────────────────────────────────────────────────────
 function MnApp() {
   const [curPg, setCurPg] = useState(0);
@@ -143,6 +168,7 @@ function MnApp() {
       {/* viewport-fixed */}
       <PrtBtn />
       <ContextMenu onSelect={dispatchCtxAction} />
+      <EdtCnf />
     </div>
   );
 }

@@ -35,6 +35,11 @@
   pointer-events: none;
 }
 
+/* UplBtn is the explicit tap target — re-enable pointer events for it only */
+.avt-upl-ctrls .upl-btn {
+  pointer-events: auto;
+}
+
 .avt-upl-ctrls--drag {
   display: none;
 }

@@ -31,15 +31,15 @@
   text-align: center;
 }
 
+/* ── Edit mode — whole-heading highlight ─────────────────────────────────── */
+.mh-wrap.edt-on {
+  outline: 0.18cqw solid rgba(var(--gold), 0.28);
+  border-radius: 0.8cqw;
+  background: rgba(var(--gold), 0.04);
+}
+
 /* ── Edit-mode title field ───────────────────────────────────────────────── */
 .edt-on .mh-ttl {
   cursor: text;
   outline: none;
-  border-radius: 0.4cqw;
-  background: rgba(var(--wlt), 0.12);
-  padding: 0.3cqw 0.8cqw;
-}
-
-.edt-on .mh-ttl:focus {
-  background: rgba(var(--wlt), 0.22);
 }

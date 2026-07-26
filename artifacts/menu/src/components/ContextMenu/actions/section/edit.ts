@@ -1,5 +1,7 @@
-/** Edit Section — open editor for the section with the given id (title). */
+import { activate } from '@/lib/edt/edtStore';
+
+/** Edit Section — activate inline edit mode for this section heading. */
 export function editSection(id: string | null): void {
-  console.log('[action] edit-section', id);
-  // TODO: open inline title editor for this section heading
+  if (id == null) return;
+  activate(id, 'section');
 }
