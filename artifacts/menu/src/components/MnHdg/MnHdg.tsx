@@ -1,5 +1,4 @@
 import { useId } from "react";
-import { useCtxTrg } from "../ContextMenu/CtxReg";
 import "./MnHdg.css";
 
 interface MhPr {
@@ -7,10 +6,9 @@ interface MhPr {
 }
 
 function MnHdg({ text = "Turkish Specialties" }: MhPr) {
-  const uid    = useId().replace(/:/g, "");
-  const ctxRef = useCtxTrg('section', text);
+  const uid = useId().replace(/:/g, "");
   return (
-    <div ref={ctxRef} className="mh-wrap flex flex-col items-center">
+    <div className="mh-wrap flex flex-col items-center" data-area="section" data-id={text}>
       <div className="mh-row flex items-center justify-center">
         <div className="mh-div">
           <svg preserveAspectRatio="none" viewBox="0 0 100 10">

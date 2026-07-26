@@ -1,7 +1,5 @@
 import { useState, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CtxPrv } from "./components/ContextMenu/CtxReg";
-import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { CvrPg } from "./components/CvrPg";
@@ -153,10 +151,7 @@ export default function App() {
   const isDemo = new URLSearchParams(window.location.search).has("demo");
   return (
     <QueryClientProvider client={qClt}>
-      <CtxPrv>
-        {isDemo ? <AvtDmo /> : <MnApp />}
-        <ContextMenu onSelect={(area, id, opt) => console.log('[ctx]', area, id, opt)} />
-      </CtxPrv>
+      {isDemo ? <AvtDmo /> : <MnApp />}
     </QueryClientProvider>
   );
 }
