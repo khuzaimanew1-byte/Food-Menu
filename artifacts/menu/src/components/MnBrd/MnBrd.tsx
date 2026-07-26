@@ -12,7 +12,7 @@ function MnBrd({ pg = 1, children }: MbPr) {
   const pgNum = pg !== false ? String(pg).padStart(2, "0") : null;
 
   return (
-    <div className="mb-wrap">
+    <div className="mb-wrap" data-area="page" data-id={pg === false ? undefined : pg}>
       {/* Page background image — full-bleed behind content */}
       <img
         src={`${B}img/pgbg.png`}

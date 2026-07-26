@@ -3,13 +3,15 @@ import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
 import "./MnItm.css";
 
-export function MnItm({ name, description, price, image }: MnItem) {
+export function MnItm({ id, name, description, price, image }: MnItem) {
   const [sel, setSel] = useState(false);
   return (
     /* mic-wpr owns position context + click — mic-chk is its direct child,
        a sibling of .mic, so it can NEVER be inside the opacity subtree     */
     <div
       className={`mic-wpr${sel ? " sel" : ""}`}
+      data-area="item"
+      data-id={id}
       onClick={() => setSel((s) => !s)}
     >
       <div className="mic">
