@@ -1,0 +1,47 @@
+Meri Samajh
+Core Mechanic — Button-triggers-element pattern
+[EdtBtn]  ──click──▶  edtStore.activate(id, type)
+ (has id)               ▼
+                  target element pe .edt-on class add hoti hai
+                  (pehle koi class nahi thi is element pe)
+
+Edit button alag entity hai — element pe koi "ready to edit" class nahi hoti. Button click ke baad hi target element live classes receive karta hai.
+
+Ek waqt mein sirf ek element active
+Agar item-3 edit mode mein hai aur user item-7 ka edit button dabaata hai → item-3 ka .edt-on remove, item-7 ko milta hai. Dono kabhi ek saath active nahi.
+
+Specific Additions — Upload + Text dono ke liye
+Upload area (currently global .edit-mode [data-item-id] → replace hoga)
+Ab	Naya
+.stage.edit-mode par sab items uploadable	Sirf .edt-on wala item uploadable
+upldInit.ts: itemEl.closest('.edit-mode') check	itemEl.closest('.edt-on') ya el.classList.contains('edt-on')
+Avt.css: .edit-mode [data-item-id] .avt-upl-ctrls	.edt-on .avt-upl-ctrls
+Upload click aur drop — dono sirf active item par kaam karenge. Baaki sab items pe avatar click → normal selection toggle (jaise abhi bina edit ke).
+
+Text editing (contentEditable, no visible inputs)
+.edt-on .mic-name  → contentEditable="true", cursor: text, subtle bg
+.edt-on .mic-desc  → contentEditable="true", cursor: text, subtle bg
+.edt-on .mh-ttl    → contentEditable="true", cursor: text, subtle bg
+
+Sirf CSS se highlight — koi border, koi input box nahi. Layout bilkul same rahega. Existing mic-name, mic-desc, mh-ttl classes reuse hongi — koi naya wrapper nahi.
+
+Files Jo Bantein/Badlein
+lib/edt/
+  edtStore.ts     — activeId, activeType, activate(), deactivate(), custom event
+  edtInit.ts      — document click: btn detect → activate; outside click → modal
+components/
+  EdtBtn/         — sirf data attrs, no logic (data-edt-id, data-edt-type)
+  CnfMdl/         — base reusable modal (open, title, onSave, onCancel)
+Modified:
+  MnItm.tsx       — EdtBtn add + edt:change subscribe + contentEditable state
+  MnHdg.tsx       — EdtBtn add + edt:change subscribe + contentEditable state
+  upldInit.ts     — .edit-mode → .edt-on check
+  Avt.css         — edit-mode selector replace
+  App.tsx         — edit-mode class hata do stage se (ab needed nahi)
+
+Ek Important Question
+Confirmation modal kab show hoga exactly?
+
+Option A: Click outside active element → immediately modal (save/cancel)
+Option B: Click outside → sirf agar koi change hua ho tab modal, warna silently deactivate.
+global edit mode aur edit btn bhi specific karna element pe donon section aur item, option b select karo. pehle batao kya samjhe kuch change nhin karna.
