@@ -22,7 +22,7 @@ function MnBrd({ pg = 1, children }: MbPr) {
       />
 
       {/* Tinted depth overlay — between bg and content */}
-      <div className="mb-ovr" aria-hidden="true" />
+      <div className="mb-ovr dkgl" aria-hidden="true" />
 
       {/* Page content */}
       <div className="mb-body flex flex-col w-full h-full">{children}</div>

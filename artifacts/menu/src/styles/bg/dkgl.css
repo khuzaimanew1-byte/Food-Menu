@@ -1,31 +1,13 @@
-/* Dark gold-tinted page background
-   Apply .dkgl to the .stage or any full-bleed container.
+/* Dark gold-tinted overlay background
+   Apply .dkgl to any element needing a dark, gold-touched surface.
    Uses only vars from variables.css — safe on all existing elements. */
 
 .dkgl {
   background:
-    /* soft gold halo — top-centre, wide spread, very faint */
-    radial-gradient(
-      ellipse 70% 45% at 50% 0%,
-      rgba(var(--gold), .08) 0%,
-      rgba(var(--gold), .03) 55%,
-      transparent 100%
-    ),
-    /* warm lantern blush — bottom corners, barely there */
-    radial-gradient(
-      ellipse 60% 35% at 0% 100%,
-      rgba(var(--lntn), .05) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 60% 35% at 100% 100%,
-      rgba(var(--lntn), .05) 0%,
-      transparent 70%
-    ),
-    /* depth gradient — slightly warmer at top, deeper at bottom */
-    linear-gradient(
-      180deg,
-      rgb(var(--ink))  0%,
-      rgb(var(--chrd)) 100%
-    );
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(var(--gold), .09) 0%, rgba(var(--gold), .03) 55%, transparent 100%),
+    radial-gradient(ellipse 60% 35% at 0% 100%, rgba(var(--lntn), .06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 35% at 100% 100%, rgba(var(--lntn), .06) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(var(--ink), .72) 0%, rgba(var(--chrd), .58) 100%);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
 }

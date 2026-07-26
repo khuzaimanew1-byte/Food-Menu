@@ -1,0 +1,6 @@
+/* Stage (viewport shell) background
+   Solid deep-dark base behind the menu page card. */
+
+.stage {
+  background: rgb(var(--chrd));
+}

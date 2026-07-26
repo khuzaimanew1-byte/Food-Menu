@@ -119,7 +119,7 @@ function MnApp() {
   };
 
   return (
-    <div className="stage dkgl">
+    <div className="stage">
       <div className="pg-wrap">
         <div className="a4-box">
           <AnimatePresence initial={false} custom={dir.current} mode="sync">
