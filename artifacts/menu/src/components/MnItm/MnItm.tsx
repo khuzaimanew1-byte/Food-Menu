@@ -24,12 +24,10 @@ export function MnItm({ id, name, description, price, image }: MnItem) {
     /* mic-wpr owns position context, click, AND the drop zone.
        drop-on class cascades down so .drop-on .ic-bdr glow still fires. */
     <div
-      className={`mic-wpr${sel ? " sel" : ""}${upld.isOn ? " drop-on" : ""}`}
+      className={`mic-wpr${sel ? " sel" : ""}${upld.isDrg ? " drop-on" : ""}`}
       data-area="item"
       data-id={id}
       data-drop-id={upld.dropId}
-      onMouseEnter={upld.hovOn}
-      onMouseLeave={upld.hovOff}
       onClick={() => setSel((s) => !s)}
     >
       {/* Hidden file input at card level */}
@@ -43,9 +41,9 @@ export function MnItm({ id, name, description, price, image }: MnItem) {
         tabIndex={-1}
       />
 
-      {/* Full-card "Drop here" overlay — shown on hover or drag-over */}
+      {/* Full-card "Drop here" overlay — shown only during active drag */}
       <AnimatePresence>
-        {upld.isOn && (
+        {upld.isDrg && (
           <motion.div
             className="mic-drop-ovr"
             initial={{ opacity: 0 }}
