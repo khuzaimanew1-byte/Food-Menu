@@ -53,4 +53,17 @@
   --primary-foreground:  24 8% 12%;
 
   --radius:              0.5rem;
+
+  /* ic shape polygon — shared by .ic-bdr, .ic-inn (ic.css) and
+     any overlay that must clip to exactly the same crown silhouette
+     (e.g. .mic-chk in MnItm.css). Centralised here so there is one
+     source of truth; both consumers reference var(--ic-poly). */
+  --ic-poly: polygon(
+    50% 0%,  58% 8%,  66% 3%,  74% 9%,
+    82% 5%,  90% 11%,
+    100% 18%, 100% 92%, 96% 100%,
+    4% 100%,  0% 92%,
+    0% 18%,  10% 11%,
+    18% 5%,  26% 9%,  34% 3%,  42% 8%
+  );
 }

@@ -45,6 +45,10 @@ export function Avt({
   // Normal mode: checkmark div (CSS drives visibility via .avt.chkd)
   // Upload mode (no src): drop hint only — no overlay button
   // Upload mode (has src): hidden input + AvtOvr replace button (shown via .drop-on)
+  // Upload mode: file input + optional replace button.
+  // Selectable mode (onSelect / checked present): checkmark overlay.
+  // Display-only (neither flag): no overlay — avoids a dead clipped DOM node
+  // inside .ic-inn whose clip-path would make it invisible anyway.
   const overlay = uploadable ? (
     <>
       <input
@@ -58,7 +62,7 @@ export function Avt({
       />
       {src && <AvtOvr onClick={upld.pick} />}
     </>
-  ) : (
+  ) : (onSelect !== undefined || checked !== undefined) ? (
     <div className="avt-chk" aria-hidden>
       {/* SVG checkmark — font-independent, always renders */}
       <svg className="avt-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -71,7 +75,7 @@ export function Avt({
         />
       </svg>
     </div>
-  );
+  ) : null;
 
   // ── Root class ───────────────────────────────────────────────────────
   const avtCls = [

@@ -1,10 +1,5 @@
 .ic-bdr {
-  --ic-poly: polygon(50% 0%, 58% 8%, 66% 3%, 74% 9%,
-      82% 5%, 90% 11%,
-      100% 18%, 100% 92%, 96% 100%,
-      4% 100%, 0% 92%,
-      0% 18%, 10% 11%,
-      18% 5%, 26% 9%, 34% 3%, 42% 8%);
+  /* --ic-poly is defined in variables.css :root — single source of truth */
   clip-path: var(--ic-poly);
   background: rgba(var(--gmu), 0.85);
   padding: 0.2cqw;

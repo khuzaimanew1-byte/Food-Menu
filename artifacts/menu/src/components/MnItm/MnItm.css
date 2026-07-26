@@ -56,12 +56,16 @@
 .sel .mic-avt  { opacity: 0.55; }
 
 /* ── Check icon — sibling of .mic inside .mic-wpr ───────────────────────── */
+/* Matches .ic-bdr exactly: 18cqw × 13cqw, same crown clip-path.
+   This makes the backdrop and checkmark cover the avatar shape
+   precisely — no less, no overflow — matching how .avt-img covers it. */
 .mic-chk {
   position: absolute;
   left: 0;
   top: 0;
   width: 18cqw;
-  aspect-ratio: 3 / 2;
+  height: 13cqw;
+  clip-path: var(--ic-poly);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,7 +78,6 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 3.5%;
   background: radial-gradient(
     ellipse at center,
     rgba(var(--wlt), 0.52) 0%,
