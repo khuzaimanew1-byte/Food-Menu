@@ -64,8 +64,13 @@ export function SmMdl({
       aria-modal
       aria-label={title}
     >
-      {/* Title */}
-      <p className="sm-ttl ff-s">{title}</p>
+      {/* Header: title + close */}
+      <div className="sm-hdr">
+        <p className="sm-ttl ff-s">{title}</p>
+        <button className="btn sm-cls" aria-label="Close" onClick={onClose}>
+          <ClsIco />
+        </button>
+      </div>
 
       {/* Confirm + keyboard hint — one row */}
       <div className="sm-acts">
@@ -78,15 +83,6 @@ export function SmMdl({
         </button>
         <span className="sm-hint ff-s" aria-hidden>↩ Enter</span>
       </div>
-
-      {/* Close */}
-      <button
-        className="btn sm-cls"
-        aria-label="Close"
-        onClick={onClose}
-      >
-        <ClsIco />
-      </button>
     </div>
   );
 }
