@@ -5,6 +5,7 @@
 .sm-mdl {
   position: absolute;
   left: calc(100% + 14px);
+  transform: translateY(-50%);
   z-index: 300;
 
   display: flex;
@@ -37,13 +38,13 @@
 }
 
 @keyframes sm-in {
-  from { opacity: 0; transform: translateX(-8px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(0)    scale(1);    }
+  from { opacity: 0; transform: translateY(-50%) translateX(-8px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
 }
 
 @keyframes sm-out {
-  from { opacity: 1; transform: translateX(0)    scale(1);    }
-  to   { opacity: 0; transform: translateX(-6px) scale(0.95); }
+  from { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
+  to   { opacity: 0; transform: translateY(-50%) translateX(-6px) scale(0.95); }
 }
 
 /* ── Inside variant — when no space to the right of pg-wrap ──────────────── */
@@ -53,16 +54,16 @@
 }
 
 @keyframes sm-in-inside {
-  from { opacity: 0; transform: translateX(8px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(0)   scale(1);    }
+  from { opacity: 0; transform: translateY(-50%) translateX(8px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0)   scale(1);    }
 }
 
 @keyframes sm-out-inside {
-  from { opacity: 1; transform: translateX(0)   scale(1);    }
-  to   { opacity: 0; transform: translateX(6px) scale(0.95); }
+  from { opacity: 1; transform: translateY(-50%) translateX(0)   scale(1);    }
+  to   { opacity: 0; transform: translateY(-50%) translateX(6px) scale(0.95); }
 }
 
-.sm-mdl--inside          { animation: sm-in-inside  0.11s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.sm-mdl--inside             { animation: sm-in-inside  0.11s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .sm-mdl--inside.sm-mdl--out { animation: sm-out-inside 0.07s ease both; }
 
 /* ── Header row — title + close ──────────────────────────────────────────── */

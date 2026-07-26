@@ -143,6 +143,19 @@ function EdtCnf() {
     return () => document.removeEventListener('edt:confirm-needed', show);
   }, []);
 
+  // Recompute inside/outside on window resize while modal is open
+  useEffect(() => {
+    if (!open) return;
+    const onResize = () => {
+      const { activeId } = getActive();
+      const layout = computeLayout(activeId);
+      setAnchorTop(layout.top);
+      setInside(layout.inside);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [open]);
+
   // Enter key while editing (modal NOT open) → direct save, no modal
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
