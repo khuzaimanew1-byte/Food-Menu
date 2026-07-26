@@ -1,6 +1,5 @@
 /* ── SmMdl — lightweight anchored confirmation panel ─────────────────────────
-   No full-screen backdrop. Floats near the bottom of the stage.
-   dkgl surface, palette-matched border, fast in/out.               */
+   Square card shape. No full-screen backdrop. Fast in/out.           */
 
 .sm-mdl {
   position: fixed;
@@ -9,20 +8,25 @@
   transform: translateX(-50%);
   z-index: 300;
 
+  /* Square card */
+  width: 9rem;
+  height: 9rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.7rem;
+  justify-content: center;
+  gap: 0.55rem;
 
-  padding: 0.45rem 0.55rem 0.45rem 0.8rem;
+  padding: 0.9rem 0.75rem 0.75rem;
   border-radius: 1rem;
   border: 1px solid rgba(var(--gold), 0.28);
 
   /* dkgl surface */
   background:
-    radial-gradient(ellipse 70% 55% at 50% 0%,   rgba(var(--gold), .09) 0%, rgba(var(--gold), .03) 55%, transparent 100%),
+    radial-gradient(ellipse 80% 50% at 50% 0%,   rgba(var(--gold), .10) 0%, rgba(var(--gold), .03) 55%, transparent 100%),
     radial-gradient(ellipse 60% 40% at 0%   100%, rgba(var(--lntn), .06) 0%, transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 100%, rgba(var(--lntn), .06) 0%, transparent 70%),
-    linear-gradient(180deg, rgba(var(--ink), .82) 0%, rgba(var(--chrd), .70) 100%);
+    linear-gradient(180deg, rgba(var(--ink), .85) 0%, rgba(var(--chrd), .72) 100%);
   backdrop-filter: blur(14px) saturate(130%);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
 
@@ -30,10 +34,11 @@
     0 0 0 0.5px rgba(var(--gold), 0.10),
     0 6px 28px rgba(0, 0, 0, 0.50);
 
+  /* relative so close btn can anchor top-right */
+  position: fixed;
+
   /* entry */
   animation: sm-in 0.11s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  white-space: nowrap;
 }
 
 /* ── Exit — faster than entry ────────────────────────────────────────────── */
@@ -42,13 +47,13 @@
 }
 
 @keyframes sm-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.97); }
+  from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.95); }
   to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);    }
 }
 
 @keyframes sm-out {
   from { opacity: 1; transform: translateX(-50%) translateY(0)   scale(1);    }
-  to   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.97); }
+  to   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.95); }
 }
 
 /* ── Anchored variant — right of pg-wrap, vertically centred on item ─────── */
@@ -64,20 +69,20 @@
 }
 
 @keyframes sm-in-anch {
-  from { opacity: 0; transform: translateY(-50%) translateX(-8px) scale(0.97); }
+  from { opacity: 0; transform: translateY(-50%) translateX(-8px) scale(0.95); }
   to   { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
 }
 
 @keyframes sm-out-anch {
   from { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
-  to   { opacity: 0; transform: translateY(-50%) translateX(-6px) scale(0.97); }
+  to   { opacity: 0; transform: translateY(-50%) translateX(-6px) scale(0.95); }
 }
 
 /* ── Avatar thumbnail ────────────────────────────────────────────────────── */
 .sm-avt {
-  width: 1.7rem;
-  height: 1.7rem;
-  border-radius: 0.25rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   flex-shrink: 0;
   border: 1px solid rgba(var(--gold), 0.22);
@@ -94,7 +99,7 @@
 }
 
 .sm-avt-init {
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: rgb(var(--gold));
@@ -103,30 +108,33 @@
 /* ── Title ───────────────────────────────────────────────────────────────── */
 .sm-ttl {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: rgba(var(--wht), 0.82);
-  flex: 1;
-  min-width: 0;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 /* ── Action group ────────────────────────────────────────────────────────── */
 .sm-acts {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.38rem;
-  flex-shrink: 0;
+  gap: 0.28rem;
+  width: 100%;
 }
 
 /* ── Confirm button ──────────────────────────────────────────────────────── */
 .sm-cfm {
-  padding: 0.3rem 0.7rem;
-  font-size: 0.72rem;
+  width: 100%;
+  padding: 0.32rem 0;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  border-radius: 0.35rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(var(--gold), 0.50);
   background: rgba(var(--gold), 0.14);
   color: rgb(var(--gold));
@@ -151,18 +159,21 @@
 
 /* ── Keyboard hint ───────────────────────────────────────────────────────── */
 .sm-hint {
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   letter-spacing: 0.04em;
   color: rgba(var(--wht), 0.28);
   user-select: none;
 }
 
-/* ── Close button ────────────────────────────────────────────────────────── */
+/* ── Close button — absolute top-right corner ────────────────────────────── */
 .sm-cls {
-  width: 1.55rem;
-  height: 1.55rem;
-  border-radius: 0.3rem;
-  color: rgba(var(--wht), 0.38);
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 0.4rem;
+  color: rgba(var(--wht), 0.35);
   flex-shrink: 0;
   transition: color 0.15s ease, background 0.15s ease;
 }
@@ -170,10 +181,10 @@
 .sm-cls:hover {
   color: rgba(var(--wht), 0.75);
   background: rgba(var(--wht), 0.07);
-  filter: none; /* override btn gold drop-shadow */
+  filter: none;
 }
 
 .sm-cls .cls-ico {
-  width: 0.85rem;
-  height: 0.85rem;
+  width: 0.75rem;
+  height: 0.75rem;
 }
