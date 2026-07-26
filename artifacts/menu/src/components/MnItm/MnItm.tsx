@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Avt } from "../avatar/Avt";
+import { UplBtn } from "../btn/UplBtn";
 import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
 import { useImgUpld } from "@/lib/upld/useImgUpld";
@@ -66,9 +67,15 @@ export function MnItm({
             )}
           </div>
 
-          {/* Label below avatar — hidden while drag is active (CSS :has) */}
+          {/* Label + UplBtn below avatar — hidden while drag is active (CSS :has) */}
           {uploadable && (
-            <span className="mic-upl-lbl ff-s">Click or drop img</span>
+            <>
+              <span className="mic-upl-lbl ff-s">Click or drop img</span>
+              {/* stopPropagation: prevent card selection toggle on btn click */}
+              <span className="mic-upl-btn-wrap" onClick={(e) => e.stopPropagation()}>
+                <UplBtn onClick={() => upld.pick()} />
+              </span>
+            </>
           )}
         </div>
 

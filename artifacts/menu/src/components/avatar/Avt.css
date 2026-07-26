@@ -19,31 +19,6 @@
 /* Upload mode — whole avatar is the tap/click target */
 .avt-upl { cursor: pointer; }
 
-/* ── Upload icon (centered in shape when no src) ────────────────────── */
-.avt-upl-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease;
-}
-
-.avt-upl-svg {
-  width: 4.5cqw;
-  height: 4.5cqw;
-  color: rgba(var(--gold), 0.50);
-  transition: color 0.22s ease, transform 0.22s ease;
-}
-
-.avt-upl:hover .avt-upl-svg {
-  color: rgba(var(--gold), 0.85);
-  transform: translateY(-0.4cqw);
-}
-
-/* Hide upload icon when drag/hover active */
-.drop-on .avt-upl-icon {
-  opacity: 0;
-}
-
 /* ── Drop overlay — lives inside shape, clipped by ic-poly / overflow:hidden ─
    Always in DOM; opacity transition drives show/hide.                       */
 .avt-drop-ovr {

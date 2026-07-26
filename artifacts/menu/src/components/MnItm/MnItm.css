@@ -40,9 +40,19 @@
   transition: opacity 0.2s ease;
 }
 
-/* Hide label when avatar enters drag-active state (uses CSS :has so no JS needed) */
-.mic-avt-wrap:has(.avt.drop-on) .mic-upl-lbl {
+/* Hide label + UplBtn when avatar enters drag-active state */
+.mic-avt-wrap:has(.avt.drop-on) .mic-upl-lbl,
+.mic-avt-wrap:has(.avt.drop-on) .mic-upl-btn-wrap {
   opacity: 0;
+  pointer-events: none;
+}
+
+/* UplBtn wrapper — centers the button */
+.mic-upl-btn-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
 }
 
 /* ── Selection: fade body + avatar ──────────────────────────────────────────
