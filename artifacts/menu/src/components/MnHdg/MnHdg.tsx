@@ -1,4 +1,6 @@
 import { useId } from "react";
+import { EdtBtn } from "../EdtBtn/EdtBtn";
+import { useEdt } from "@/lib/edt/useEdt";
 import "./MnHdg.css";
 
 interface MhPr {
@@ -7,8 +9,16 @@ interface MhPr {
 
 function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   const uid = useId().replace(/:/g, "");
+  const isActive = useEdt(text);
+
   return (
-    <div className="mh-wrap flex flex-col items-center" data-area="section" data-id={text}>
+    <div
+      className={`mh-wrap flex flex-col items-center${isActive ? " edt-on" : ""}`}
+      data-area="section"
+      data-id={text}
+    >
+      <EdtBtn id={text} type="section" />
+
       <div className="mh-row flex items-center justify-center">
         <div className="mh-div">
           <svg preserveAspectRatio="none" viewBox="0 0 100 10">
@@ -26,7 +36,15 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
             </g>
           </svg>
         </div>
-        <h2 className="mh-ttl ff-s">{text}</h2>
+
+        <h2
+          className="mh-ttl ff-s"
+          contentEditable={isActive || undefined}
+          suppressContentEditableWarning
+        >
+          {text}
+        </h2>
+
         <div className="mh-div">
           <svg preserveAspectRatio="none" viewBox="0 0 100 10">
             <defs>

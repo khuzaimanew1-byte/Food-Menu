@@ -30,3 +30,16 @@
   margin: 0;
   text-align: center;
 }
+
+/* ── Edit-mode title field ───────────────────────────────────────────────── */
+.edt-on .mh-ttl {
+  cursor: text;
+  outline: none;
+  border-radius: 0.4cqw;
+  background: rgba(var(--wlt), 0.12);
+  padding: 0.3cqw 0.8cqw;
+}
+
+.edt-on .mh-ttl:focus {
+  background: rgba(var(--wlt), 0.22);
+}

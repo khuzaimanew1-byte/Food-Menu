@@ -160,3 +160,23 @@
   color: rgb(var(--mut));
   margin: 0;
 }
+
+/* ── Edit-mode text fields ───────────────────────────────────────────────── */
+.edt-on .mic-name,
+.edt-on .mic-desc {
+  cursor: text;
+  border-radius: 0.6cqw;
+  outline: none;
+  white-space: normal;
+  background: rgba(var(--wlt), 0.12);
+  padding: 0.3cqw 0.6cqw;
+  margin: -0.3cqw -0.6cqw;
+}
+
+.edt-on .mic-name:focus,
+.edt-on .mic-desc:focus {
+  background: rgba(var(--wlt), 0.22);
+}
+
+/* Suppress strikethrough while editing */
+.edt-on .mic-name::after { display: none; }

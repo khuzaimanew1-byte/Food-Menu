@@ -1,54 +1,53 @@
 import { useState } from "react";
 import { Avt } from "../avatar/Avt";
+import { EdtBtn } from "../EdtBtn/EdtBtn";
 import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
 import { useImgUpld } from "@/lib/upld/useImgUpld";
+import { useEdt } from "@/lib/edt/useEdt";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
-  uploadable?: boolean;
-  /** Avatar shape — drives both the Avt render and mic-avt clip-path.
-   *  Must be kept in sync: changing shape here changes both automatically. */
+  /** Avatar shape — drives both the Avt render and mic-avt clip-path. */
   shape?: 'ic' | 'sq' | 'plq';
 }
 
 export function MnItm({
   id, name, description, price, image,
-  uploadable,
   shape = 'ic',
 }: MnItmPr) {
   const [sel, setSel] = useState(false);
+  const isActive = useEdt(String(id));
 
   // Object-URL image state — revokes previous URL on each new upload
   const { src: imgSrc, onUpload: handleUpload } = useImgUpld(image);
 
-  // Card-level drop zone — covers the whole item, not just the avatar.
-  // isDrg is forwarded to Avt so the avatar highlights even when the drag
-  // cursor is over the text/price area of the card.
-  const upld = useUpld({ onUpload: handleUpload, enabled: !!uploadable });
+  // Upload enabled only when this item is in edit mode
+  const upld = useUpld({ onUpload: handleUpload, enabled: isActive });
 
   return (
     <div
-      className={`mic-wpr${sel ? " sel" : ""}`}
+      className={`mic-wpr${sel ? " sel" : ""}${isActive ? " edt-on" : ""}`}
       data-area="item"
       data-id={id}
-      data-drop-id={uploadable ? upld.dropId : undefined}
-      onClick={() => setSel((s) => !s)}
+      data-drop-id={isActive ? upld.dropId : undefined}
+      onClick={isActive ? undefined : () => setSel((s) => !s)}
     >
+      <EdtBtn id={String(id)} type="item" />
+
       <div className="mic">
         <div
           className="mic-avt"
           data-shape={shape}
-          onClick={uploadable ? (e) => e.stopPropagation() : undefined}
+          onClick={isActive ? (e) => e.stopPropagation() : undefined}
         >
           <Avt
             src={imgSrc} name={name} alt={name} shape={shape}
-            uploadable={uploadable}
-            onUpload={uploadable ? handleUpload : undefined}
-            isDragging={uploadable ? upld.isDrg : false}
+            uploadable={isActive}
+            onUpload={isActive ? handleUpload : undefined}
+            isDragging={isActive ? upld.isDrg : false}
           />
 
-          {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
           {shape === 'ic' && (
             <div className="mic-chk" aria-hidden>
               <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -66,11 +65,23 @@ export function MnItm({
 
         <div className="mic-body">
           <div className="mic-row">
-            <h3 className="mic-name ff-s">{name}</h3>
+            <h3
+              className="mic-name ff-s"
+              contentEditable={isActive || undefined}
+              suppressContentEditableWarning
+            >
+              {name}
+            </h3>
             <div className="mic-lead" />
             <span className="mic-price ff-s">{price}</span>
           </div>
-          <p className="mic-desc ff-s">{description}</p>
+          <p
+            className="mic-desc ff-s"
+            contentEditable={isActive || undefined}
+            suppressContentEditableWarning
+          >
+            {description}
+          </p>
         </div>
       </div>
     </div>
