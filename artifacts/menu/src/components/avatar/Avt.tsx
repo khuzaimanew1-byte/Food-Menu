@@ -6,7 +6,6 @@ import { IcBdr } from './IcBdr';
 import { Inits } from './Inits';
 import { AvtOvr } from './AvtOvr';
 import { CrnOr } from './CrnOr';
-import { UplBtn } from '../btn/UplBtn';
 import { useUpld } from '../../lib/upld/useUpld';
 
 type AvtShape = 'ic' | 'sq' | 'plq';
@@ -33,16 +32,17 @@ export function Avt({
 
   // ── Main content (inside shape) ──────────────────────────────────────
   // Priority: src → Inits(name) → Inits("AV")   [normal]
-  //           src → UplBtn                       [upload, no src]
+  //           src → drop-hint text               [upload, no src]
   const mainContent = src
     ? <img src={src} alt={alt ?? name ?? 'Item Image'} className="avt-img" loading="lazy" />
     : uploadable
-      ? <UplBtn onClick={upld.pick} />
+      ? <span className="avt-drop-txt">Drop here</span>
       : <Inits name={name} />;
 
   // ── Overlay inside ic-inn / avt-shp ─────────────────────────────────
   // Normal mode: checkmark div (CSS drives visibility via .avt.chkd)
-  // Upload mode: hidden file input + AvtOvr button (shown via .drop-on)
+  // Upload mode (no src): drop hint only — no overlay button
+  // Upload mode (has src): hidden input + AvtOvr replace button (shown via .drop-on)
   const overlay = uploadable ? (
     <>
       <input
@@ -54,7 +54,7 @@ export function Avt({
         aria-hidden
         tabIndex={-1}
       />
-      <AvtOvr onClick={upld.pick} />
+      {src && <AvtOvr onClick={upld.pick} />}
     </>
   ) : (
     <div className="avt-chk" aria-hidden>

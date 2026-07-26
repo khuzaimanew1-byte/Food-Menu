@@ -21,6 +21,29 @@
   display: none;
 }
 
+/* ── Drop-here text (empty uploadable slot) ─────────────────────────── */
+.avt-drop-txt {
+  font-size: 2.1cqw;
+  font-family: inherit;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--gold), 0.5);
+  pointer-events: none;
+  text-align: center;
+  transition: color 0.22s ease, transform 0.22s ease;
+}
+
+/* Hover: same trigger as drag-over (both set isOn → drop-on class) */
+.drop-on .avt-drop-txt {
+  color: rgb(var(--gold));
+  animation: avt-drop-float 0.9s ease-in-out infinite;
+}
+
+@keyframes avt-drop-float {
+  0%, 100% { transform: translateY(0);       opacity: 1;    }
+  50%       { transform: translateY(-0.7cqw); opacity: 0.75; }
+}
+
 /* ── Checkmark overlay (normal mode) ───────────────────────────────── */
 .avt-chk {
   position: absolute;

@@ -14,12 +14,32 @@
   transition: background 0.22s ease, filter 0.28s ease;
 }
 
-.avt:hover .ic-bdr {
+.avt:hover .ic-bdr,
+.drop-on   .ic-bdr {
   background: rgba(var(--gold), 0.75);
 }
 
-.avt:hover .ic-inn {
+.avt:hover .ic-inn,
+.drop-on   .ic-inn {
   background: radial-gradient(ellipse 99% 118%, rgb(var(--chr)) 0%, rgb(var(--chr)) 36%, rgba(var(--gold), 0.42) 100%, rgb(var(--chr)) 100%);
+}
+
+/* Pulsing gold glow — only during active drag (not plain hover) */
+.drop-on .ic-bdr {
+  animation: ic-drop-glow 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes ic-drop-glow {
+  from {
+    filter:
+      drop-shadow(0 0 0.4cqw rgba(var(--gold), 0.55))
+      drop-shadow(0 0 0.9cqw rgba(var(--gold), 0.30));
+  }
+  to {
+    filter:
+      drop-shadow(0 0 0.85cqw rgba(var(--gold), 1))
+      drop-shadow(0 0 2cqw    rgba(var(--gold), 0.60));
+  }
 }
 
 .ic-inn {
