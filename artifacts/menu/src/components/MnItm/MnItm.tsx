@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
+import { useUpld } from "@/lib/upld/useUpld";
 import "./MnItm.css";
 
 export function MnItm({ id, name, description, price, image }: MnItem) {
@@ -9,32 +11,72 @@ export function MnItm({ id, name, description, price, image }: MnItem) {
   const objUrlRef = useRef<string | null>(null);
 
   const handleUpload = (file: File) => {
-    // Revoke previous object URL to avoid memory leak
     if (objUrlRef.current) URL.revokeObjectURL(objUrlRef.current);
     const url = URL.createObjectURL(file);
     objUrlRef.current = url;
     setImgSrc(url);
   };
 
+  // Drop zone lives on the whole card, not just the avatar
+  const upld = useUpld({ onUpload: handleUpload });
+
   return (
-    /* mic-wpr owns position context + click — mic-chk is its direct child,
-       a sibling of .mic, so it can NEVER be inside the opacity subtree     */
+    /* mic-wpr owns position context, click, AND the drop zone.
+       drop-on class cascades down so .drop-on .ic-bdr glow still fires. */
     <div
-      className={`mic-wpr${sel ? " sel" : ""}`}
+      className={`mic-wpr${sel ? " sel" : ""}${upld.isOn ? " drop-on" : ""}`}
       data-area="item"
       data-id={id}
+      data-drop-id={upld.dropId}
+      onMouseEnter={upld.hovOn}
+      onMouseLeave={upld.hovOff}
       onClick={() => setSel((s) => !s)}
     >
+      {/* Hidden file input at card level */}
+      <input
+        ref={upld.inRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        className="mic-inp"
+        onChange={upld.onInp}
+        aria-hidden
+        tabIndex={-1}
+      />
+
+      {/* Full-card "Drop here" overlay — shown on hover or drag-over */}
+      <AnimatePresence>
+        {upld.isOn && (
+          <motion.div
+            className="mic-drop-ovr"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+          >
+            <motion.span
+              className="mic-drop-txt ff-s"
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 5 }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.04 }}
+            >
+              Drop here
+            </motion.span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="mic">
-        {/* stopPropagation: avatar clicks (pick/drop) must not toggle selection */}
-        <div className="mic-avt" onClick={(e) => e.stopPropagation()}>
+        {/* Clicking the avatar slot opens the file picker */}
+        <div
+          className="mic-avt"
+          onClick={(e) => { e.stopPropagation(); upld.pick(); }}
+        >
           <Avt
             src={imgSrc}
             name={name}
             alt={name}
             shape="ic"
-            uploadable
-            onUpload={handleUpload}
           />
         </div>
         <div className="mic-body">
@@ -46,6 +88,8 @@ export function MnItm({ id, name, description, price, image }: MnItem) {
           <p className="mic-desc ff-s">{description}</p>
         </div>
       </div>
+
+      {/* mic-chk is a sibling of .mic — never inside the opacity subtree */}
       <div className="mic-chk" aria-hidden>
         <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
           <polyline

@@ -24,21 +24,21 @@
   background: radial-gradient(ellipse 99% 118%, rgb(var(--chr)) 0%, rgb(var(--chr)) 36%, rgba(var(--gold), 0.42) 100%, rgb(var(--chr)) 100%);
 }
 
-/* Pulsing gold glow — only during active drag (not plain hover) */
+/* Smooth pulsing gold glow on hover or drag-over */
 .drop-on .ic-bdr {
-  animation: ic-drop-glow 1.1s ease-in-out infinite alternate;
+  animation: ic-drop-glow 1.6s ease-in-out infinite;
 }
 
 @keyframes ic-drop-glow {
-  from {
+  0%, 100% {
     filter:
-      drop-shadow(0 0 0.4cqw rgba(var(--gold), 0.55))
-      drop-shadow(0 0 0.9cqw rgba(var(--gold), 0.30));
+      drop-shadow(0 0 0.3cqw rgba(var(--gold), 0.40))
+      drop-shadow(0 0 0.7cqw rgba(var(--gold), 0.20));
   }
-  to {
+  50% {
     filter:
-      drop-shadow(0 0 0.85cqw rgba(var(--gold), 1))
-      drop-shadow(0 0 2cqw    rgba(var(--gold), 0.60));
+      drop-shadow(0 0 0.8cqw rgba(var(--gold), 0.95))
+      drop-shadow(0 0 1.8cqw rgba(var(--gold), 0.55));
   }
 }
 
