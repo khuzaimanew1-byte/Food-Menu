@@ -1,108 +1,56 @@
-/* ── SmMdl — lightweight anchored confirmation panel ─────────────────────────
-   Square card shape. No full-screen backdrop. Fast in/out.           */
+/* ── SmMdl — square anchored confirmation panel ───────────────────────────
+   position: absolute inside pg-wrap (position:relative, overflow:visible).
+   Appears to the right of the A4 page, centred on the active item.    */
 
 .sm-mdl {
-  position: fixed;
-  bottom: 9vh;
-  left: 50%;
-  transform: translateX(-50%);
+  position: absolute;
+  left: calc(100% + 14px);
+  top: 50%; /* fallback if anchorTop not yet computed */
+  transform: translateY(-50%);
   z-index: 300;
 
   /* Square card */
-  width: 9rem;
-  height: 9rem;
+  width: 8.5rem;
+  height: 8.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.7rem;
 
   padding: 0.9rem 0.75rem 0.75rem;
   border-radius: 1rem;
-  border: 1px solid rgba(var(--gold), 0.28);
 
   /* dkgl surface */
   background:
     radial-gradient(ellipse 80% 50% at 50% 0%,   rgba(var(--gold), .10) 0%, rgba(var(--gold), .03) 55%, transparent 100%),
     radial-gradient(ellipse 60% 40% at 0%   100%, rgba(var(--lntn), .06) 0%, transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 100%, rgba(var(--lntn), .06) 0%, transparent 70%),
-    linear-gradient(180deg, rgba(var(--ink), .85) 0%, rgba(var(--chrd), .72) 100%);
+    linear-gradient(180deg, rgba(var(--ink), .88) 0%, rgba(var(--chrd), .75) 100%);
   backdrop-filter: blur(14px) saturate(130%);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
 
+  border: 1px solid rgba(var(--gold), 0.28);
   box-shadow:
     0 0 0 0.5px rgba(var(--gold), 0.10),
-    0 6px 28px rgba(0, 0, 0, 0.50);
+    0 6px 28px rgba(0, 0, 0, 0.55);
 
-  /* relative so close btn can anchor top-right */
-  position: fixed;
-
-  /* entry */
   animation: sm-in 0.11s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* ── Exit — faster than entry ────────────────────────────────────────────── */
+/* ── Exit ────────────────────────────────────────────────────────────────── */
 .sm-mdl--out {
   animation: sm-out 0.07s ease both;
 }
 
 @keyframes sm-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);    }
-}
-
-@keyframes sm-out {
-  from { opacity: 1; transform: translateX(-50%) translateY(0)   scale(1);    }
-  to   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.95); }
-}
-
-/* ── Anchored variant — right of pg-wrap, vertically centred on item ─────── */
-.sm-mdl--anchored {
-  bottom: auto;
-  left: auto;
-  transform: translateY(-50%);
-  animation: sm-in-anch 0.11s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.sm-mdl--anchored.sm-mdl--out {
-  animation: sm-out-anch 0.07s ease both;
-}
-
-@keyframes sm-in-anch {
   from { opacity: 0; transform: translateY(-50%) translateX(-8px) scale(0.95); }
   to   { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
 }
 
-@keyframes sm-out-anch {
+@keyframes sm-out {
   from { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
   to   { opacity: 0; transform: translateY(-50%) translateX(-6px) scale(0.95); }
-}
-
-/* ── Avatar thumbnail ────────────────────────────────────────────────────── */
-.sm-avt {
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  flex-shrink: 0;
-  border: 1px solid rgba(var(--gold), 0.22);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(var(--gmu), 0.5);
-}
-
-.sm-avt img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.sm-avt-init {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: rgb(var(--gold));
 }
 
 /* ── Title ───────────────────────────────────────────────────────────────── */
@@ -117,44 +65,37 @@
   line-height: 1.3;
 }
 
-/* ── Action group ────────────────────────────────────────────────────────── */
+/* ── Action row — confirm btn + Enter hint on one line ───────────────────── */
 .sm-acts {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.28rem;
+  gap: 0.4rem;
   width: 100%;
 }
 
-/* ── Confirm button ──────────────────────────────────────────────────────── */
+/* ── Confirm button — glass style ────────────────────────────────────────── */
 .sm-cfm {
-  width: 100%;
+  flex: 1;
   padding: 0.32rem 0;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   border-radius: 0.5rem;
-  border: 1px solid rgba(var(--gold), 0.50);
-  background: rgba(var(--gold), 0.14);
   color: rgb(var(--gold));
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: filter 0.15s ease;
 }
 
-.sm-cfm:hover {
-  background: rgba(var(--gold), 0.24);
-  border-color: rgba(var(--gold), 0.80);
-}
-
-/* Flash state — keyboard action registered */
+/* Flash state */
 .sm-cfm--flash {
   animation: sm-cfm-flash 0.09s ease both;
 }
 
 @keyframes sm-cfm-flash {
-  0%   { background: rgba(var(--gold), 0.14); transform: scale(1);    }
-  45%  { background: rgba(var(--gold), 0.52); transform: scale(0.93); }
-  100% { background: rgba(var(--gold), 0.14); transform: scale(1);    }
+  0%   { transform: scale(1);    opacity: 1;    }
+  45%  { transform: scale(0.93); opacity: 0.65; }
+  100% { transform: scale(1);    opacity: 1;    }
 }
 
 /* ── Keyboard hint ───────────────────────────────────────────────────────── */
@@ -163,9 +104,11 @@
   letter-spacing: 0.04em;
   color: rgba(var(--wht), 0.28);
   user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* ── Close button — absolute top-right corner ────────────────────────────── */
+/* ── Close button — absolute top-right ───────────────────────────────────── */
 .sm-cls {
   position: absolute;
   top: 0.4rem;
@@ -174,7 +117,6 @@
   height: 1.35rem;
   border-radius: 0.4rem;
   color: rgba(var(--wht), 0.35);
-  flex-shrink: 0;
   transition: color 0.15s ease, background 0.15s ease;
 }
 

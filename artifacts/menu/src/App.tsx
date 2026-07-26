@@ -113,12 +113,11 @@ function rndPg(pg: number) {
 
 // ── Edit confirmation modal ────────────────────────────────────────────────
 function EdtCnf() {
-  const [open, setOpen]           = useState(false);
-  const [avtItem, setAvtItem]     = useState<MnItem | null>(null);
-  const [anchorPos, setAnchorPos] = useState<{ top: number; left: number } | undefined>();
+  const [open, setOpen]         = useState(false);
+  const [anchorTop, setAnchorTop] = useState<number | undefined>();
 
-  /** Compute position: right of pg-wrap, vertically centred on the active item. */
-  function computeAnchor(activeId: string | null) {
+  /** Top offset relative to pg-wrap — centres modal on the active item. */
+  function computeTop(activeId: string | null): number | undefined {
     if (!activeId) return undefined;
     const pgWrap = document.querySelector('.pg-wrap');
     const itemEl = document.querySelector<HTMLElement>(
@@ -127,19 +126,14 @@ function EdtCnf() {
     if (!pgWrap || !itemEl) return undefined;
     const pw = pgWrap.getBoundingClientRect();
     const it = itemEl.getBoundingClientRect();
-    return {
-      top:  it.top + it.height / 2,
-      left: pw.right + 14,
-    };
+    return it.top - pw.top + it.height / 2;
   }
 
   // Outside-click path → show modal
   useEffect(() => {
     const show = () => {
       const { activeId } = getActive();
-      const item = ALL_ITEMS.find(i => String(i.id) === activeId) ?? null;
-      setAvtItem(item);
-      setAnchorPos(computeAnchor(activeId));
+      setAnchorTop(computeTop(activeId));
       setOpen(true);
     };
     document.addEventListener('edt:confirm-needed', show);
@@ -150,9 +144,9 @@ function EdtCnf() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key !== 'Enter') return;
-      if (open) return;                       // modal handles it internally
+      if (open) return;
       const { activeId } = getActive();
-      if (!activeId || !isDirty()) return;    // nothing dirty to save
+      if (!activeId || !isDirty()) return;
       e.preventDefault();
       saveAndDeactivate();
     };
@@ -165,9 +159,7 @@ function EdtCnf() {
       open={open}
       title="Save changes?"
       confirmLabel="Save"
-      avatarSrc={avtItem?.image}
-      avatarName={avtItem?.name}
-      anchorPos={anchorPos}
+      anchorTop={anchorTop}
       onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
       onClose={() => { setOpen(false); deactivate(); }}
     />
@@ -206,11 +198,12 @@ function MnApp() {
           </AnimatePresence>
         </div>
         <NvCtl curPg={curPg} ttlPg={ttlPg} onPrev={goPrv} onNext={goNxt} onGoto={goTo} />
+        {/* anchored outside a4-box, inside pg-wrap so it moves with layout */}
+        <EdtCnf />
       </div>
       {/* viewport-fixed */}
       <PrtBtn />
       <ContextMenu onSelect={dispatchCtxAction} />
-      <EdtCnf />
     </div>
   );
 }
