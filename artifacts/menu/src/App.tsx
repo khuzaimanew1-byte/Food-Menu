@@ -10,9 +10,11 @@ import { AvtDmo } from "./components/AvtDmo/AvtDmo";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { dispatchCtxAction } from "./components/ContextMenu/actions";
 import { CnfMdl } from "./components/CnfMdl/CnfMdl";
-import { saveAndDeactivate, deactivate } from "./lib/edt/edtStore";
+import { saveAndDeactivate, deactivate, getActive } from "./lib/edt/edtStore";
 import { ARBC, TURK } from "./data/menu";
 import type { MnItem, PageSect } from "./data/menu";
+
+const ALL_ITEMS: MnItem[] = [...ARBC, ...TURK];
 
 const pgVars = {
   enter: (d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
@@ -111,10 +113,16 @@ function rndPg(pg: number) {
 
 // ── Edit confirmation modal ────────────────────────────────────────────────
 function EdtCnf() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen]         = useState(false);
+  const [avtItem, setAvtItem]   = useState<MnItem | null>(null);
 
   useEffect(() => {
-    const show = () => setOpen(true);
+    const show = () => {
+      const { activeId } = getActive();
+      const item = ALL_ITEMS.find(i => String(i.id) === activeId) ?? null;
+      setAvtItem(item);
+      setOpen(true);
+    };
     document.addEventListener('edt:confirm-needed', show);
     return () => document.removeEventListener('edt:confirm-needed', show);
   }, []);
@@ -126,6 +134,8 @@ function EdtCnf() {
       message="Do you want to keep your edits to this item?"
       confirmLabel="Save"
       cancelLabel="Discard"
+      avatarSrc={avtItem?.image}
+      avatarName={avtItem?.name}
       onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
       onCancel={() => { setOpen(false); deactivate(); }}
     />

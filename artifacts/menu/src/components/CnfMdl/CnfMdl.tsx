@@ -1,3 +1,4 @@
+import { Avt } from '../avatar/Avt';
 import './CnfMdl.css';
 
 export interface CnfMdlPr {
@@ -6,25 +7,16 @@ export interface CnfMdlPr {
   message?:      string;
   confirmLabel?: string;
   cancelLabel?:  string;
+  /** Optional: show the item's crown avatar for context. */
+  avatarSrc?:    string;
+  avatarName?:   string;
   onConfirm:     () => void;
   onCancel:      () => void;
 }
 
 /**
  * CnfMdl — base confirmation modal.
- * All styling and behaviour lives here. Callers only provide text + callbacks.
- *
- * Usage:
- *   import { CnfMdl } from '@/components/CnfMdl/CnfMdl';
- *   <CnfMdl
- *     open={open}
- *     title="Delete item?"
- *     message="This cannot be undone."
- *     confirmLabel="Delete"
- *     cancelLabel="Cancel"
- *     onConfirm={handleConfirm}
- *     onCancel={handleCancel}
- *   />
+ * dkgl surface, palette-matched backdrop, optional item avatar for context.
  */
 export function CnfMdl({
   open,
@@ -32,10 +24,14 @@ export function CnfMdl({
   message,
   confirmLabel = 'Confirm',
   cancelLabel  = 'Cancel',
+  avatarSrc,
+  avatarName,
   onConfirm,
   onCancel,
 }: CnfMdlPr) {
   if (!open) return null;
+
+  const hasAvt = avatarSrc !== undefined || avatarName !== undefined;
 
   return (
     <div className="cnf-bkd" onClick={onCancel} aria-modal role="dialog">
@@ -43,7 +39,16 @@ export function CnfMdl({
         className="cnf-box"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Decorative top line */}
+        {/* Item crown avatar — gives the modal context */}
+        {hasAvt && (
+          <div className="cnf-avt-wrap">
+            <div className="cnf-avt-inner">
+              <Avt src={avatarSrc} name={avatarName} shape="ic" />
+            </div>
+          </div>
+        )}
+
+        {/* Decorative top rule */}
         <div className="cnf-rule" aria-hidden />
 
         <h3 className="cnf-ttl ff-s">{title}</h3>
