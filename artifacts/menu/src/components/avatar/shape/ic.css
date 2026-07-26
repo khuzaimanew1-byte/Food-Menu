@@ -2,7 +2,7 @@
   /* --ic-poly is defined in variables.css :root — single source of truth */
   clip-path: var(--ic-poly);
   background: rgba(var(--gmu), 0.85);
-  padding: 0.2cqw;
+  padding: 0.3cqw;
   box-sizing: border-box;
   width: 18cqw;
   height: 13cqw;

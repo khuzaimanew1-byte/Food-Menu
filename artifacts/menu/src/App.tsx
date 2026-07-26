@@ -9,7 +9,7 @@ import { NvCtl } from "./components/NvCtl/NvCtl";
 import { AvtDmo } from "./components/AvtDmo/AvtDmo";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { dispatchCtxAction } from "./components/ContextMenu/actions";
-import { CnfMdl } from "./components/CnfMdl/CnfMdl";
+import { SmMdl } from "./components/SmMdl/SmMdl";
 import { saveAndDeactivate, deactivate, getActive } from "./lib/edt/edtStore";
 import { ARBC, TURK } from "./data/menu";
 import type { MnItem, PageSect } from "./data/menu";
@@ -128,16 +128,14 @@ function EdtCnf() {
   }, []);
 
   return (
-    <CnfMdl
+    <SmMdl
       open={open}
       title="Save changes?"
-      message="Do you want to keep your edits to this item?"
       confirmLabel="Save"
-      cancelLabel="Discard"
       avatarSrc={avtItem?.image}
       avatarName={avtItem?.name}
       onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
-      onCancel={() => { setOpen(false); deactivate(); }}
+      onClose={() => { setOpen(false); deactivate(); }}
     />
   );
 }
