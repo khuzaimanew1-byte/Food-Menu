@@ -16,10 +16,8 @@
   filter: sepia(0.22) saturate(1.15) contrast(1.08) brightness(0.92);
 }
 
-/* Hidden file input */
-.avt-inp {
-  display: none;
-}
+/* Upload mode — whole avatar is the tap/click target */
+.avt-upl { cursor: pointer; }
 
 /* ── Drop-here text (empty uploadable slot) ─────────────────────────── */
 .avt-drop-txt {

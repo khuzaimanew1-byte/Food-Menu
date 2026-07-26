@@ -21,13 +21,11 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
     setImgSrc(url);
   };
 
-  // Drop zone lives on the whole card — disabled when not uploadable so no
-  // dead dropReg entry is created for every display-mode item card
+  // Drop zone for the whole card — disabled when not uploadable.
+  // No per-card <input>; upldStore provides the single global file picker.
   const upld = useUpld({ onUpload: handleUpload, enabled: !!uploadable });
 
   return (
-    /* mic-wpr owns position context, click, AND the drop zone.
-       drop-on class cascades down so .drop-on .ic-bdr glow still fires. */
     <div
       className={`mic-wpr${sel ? " sel" : ""}${uploadable && upld.isDrg ? " drop-on" : ""}`}
       data-area="item"
@@ -35,19 +33,6 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
       data-drop-id={uploadable ? upld.dropId : undefined}
       onClick={() => setSel((s) => !s)}
     >
-      {/* Hidden file input — only mounted when uploadable */}
-      {uploadable && (
-        <input
-          ref={upld.inRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif"
-          className="mic-inp"
-          onChange={upld.onInp}
-          aria-hidden
-          tabIndex={-1}
-        />
-      )}
-
       {/* Full-card "Drop here" overlay — only when uploadable and dragging */}
       <AnimatePresence>
         {uploadable && upld.isDrg && (
@@ -72,10 +57,9 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
       </AnimatePresence>
 
       <div className="mic">
-        {/* mic-avt owns clip-path for the avatar shape (--avt-clip).
-            mic-chk lives here as a sibling of .avt — NOT inside it —
-            so opacity on .avt never reaches the checkmark.
-            clip-path on mic-avt clips both naturally, just like the image. */}
+        {/* mic-avt: clip-path container + tap target for upload.
+            mic-chk is a sibling of .avt inside here — clipped by mic-avt,
+            unaffected by the opacity applied to .avt on selection. */}
         <div
           className="mic-avt"
           data-shape="ic"
@@ -87,7 +71,6 @@ export function MnItm({ id, name, description, price, image, uploadable }: MnItm
             alt={name}
             shape="ic"
           />
-          {/* Inside mic-avt, after .avt — clipped by mic-avt's clip-path */}
           <div className="mic-chk" aria-hidden>
             <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
               <polyline
