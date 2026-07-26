@@ -4,6 +4,7 @@ import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
 import { useImgUpld } from "@/lib/upld/useImgUpld";
 import { useEdt } from "@/lib/edt/useEdt";
+import { setDirty } from "@/lib/edt/edtStore";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
@@ -37,7 +38,10 @@ export function MnItm({
   const displayName = editedName ?? name;
   const displayDesc = editedDesc ?? description;
 
-  const { src: imgSrc, onUpload: handleUpload } = useImgUpld(image);
+  const { src: imgSrc, onUpload: rawUpload } = useImgUpld(image);
+  // Wrap so an image swap also marks the edit as dirty — triggers confirmation
+  // modal on deactivate just like text edits do.
+  const handleUpload = (file: File) => { rawUpload(file); setDirty(true); };
   const upld = useUpld({ onUpload: handleUpload, enabled: isActive });
 
   return (

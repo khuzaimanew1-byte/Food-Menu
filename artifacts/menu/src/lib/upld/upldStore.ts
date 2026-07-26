@@ -18,6 +18,9 @@ function getInput(): HTMLInputElement {
   inp.style.cssText =
     'position:fixed;top:-999px;left:-999px;opacity:0;pointer-events:none;';
   inp.setAttribute('aria-hidden', 'true');
+  // Sentinel: edtInit capture listener skips clicks on this element so
+  // programmatic .click() from pick() never triggers edit-mode deactivation.
+  inp.setAttribute('data-edt-ignore', '');
   inp.tabIndex = -1;
   document.body.appendChild(inp);
 

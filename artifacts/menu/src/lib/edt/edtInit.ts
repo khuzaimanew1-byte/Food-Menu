@@ -23,6 +23,9 @@ export function initEdt() {
       // EdtBtn click → let that button's handler manage switching.
       if (target.closest('[data-edt-id]')) return;
 
+      // Programmatic file-input click from upldStore.pick() — ignore.
+      if (target.closest('[data-edt-ignore]')) return;
+
       // Click inside the active element → keep edit mode.
       const activeEl = document.querySelector(
         `[data-area="${activeType}"][data-id="${CSS.escape(activeId)}"]`
