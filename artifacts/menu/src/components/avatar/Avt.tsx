@@ -33,29 +33,17 @@ export function Avt({
   // enabled only when uploadable — no dead store entries on display-only instances
   const upld = useUpld({ onUpload, enabled: !!uploadable });
 
-  // Active when card-level drag fires (isDragging) OR avatar hover/drag (upld.isOn)
-  const isActive = isDragging || upld.isOn;
+  // Active only on actual drag (not hover) — card-level or avatar-level
+  const isActive = isDragging || upld.isDrg;
 
   // ── Main content (inside shape) ──────────────────────────────────────
-  // Upload empty: centered upload icon
+  // Upload empty: original "Tap / Drop" hint
   // Upload with src: image
   // Normal: initials
   const mainContent = src
     ? <img src={src} alt={alt ?? name ?? 'Item Image'} className="avt-img" loading="lazy" />
     : uploadable
-      ? (
-        <span className="avt-upl-icon" aria-hidden>
-          <svg
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
-            className="avt-upl-svg"
-          >
-            <polyline points="16 16 12 12 8 16" />
-            <line x1="12" y1="12" x2="12" y2="21" />
-            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
-          </svg>
-        </span>
-      )
+      ? <span className="avt-drop-txt">Tap / Drop</span>
       : <Inits name={name} />;
 
   // ── Drop overlay — inside shape, clipped by ic-poly / overflow:hidden ─
