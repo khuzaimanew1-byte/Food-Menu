@@ -5,6 +5,7 @@ import './shape/plq.css';
 import { IcBdr } from './IcBdr';
 import { Inits } from './Inits';
 import { CrnOr } from './CrnOr';
+import { UplBtn } from '../btn/UplBtn';
 import { useUpld } from '../../lib/upld/useUpld';
 
 type AvtShape = 'ic' | 'sq' | 'plq';
@@ -37,17 +38,27 @@ export function Avt({
   const isActive = isDragging || upld.isDrg;
 
   // ── Main content (inside shape) ──────────────────────────────────────
-  // Upload empty: nothing (UplBtn lives below in MnItm, not inside shape)
-  // Upload with src: image
-  // Normal: initials
+  // Upload: always show image when src exists; nothing when empty (controls overlay handles it)
+  // Normal: src → Inits(name)
   const mainContent = src
     ? <img src={src} alt={alt ?? name ?? 'Item Image'} className="avt-img" loading="lazy" />
     : uploadable
       ? null
       : <Inits name={name} />;
 
+  // ── Upload controls — UplBtn + hint text, inside shape, clipped ───────
+  // display:none on drag (not visibility:hidden — fully removed from layout).
+  // UplBtn is pointer-events:none here; parent avt div owns the click.
+  // hint text only rendered when no src (img state has no text).
+  const uplControls = uploadable ? (
+    <div className={`avt-upl-ctrls${isActive ? ' avt-upl-ctrls--drag' : ''}`}>
+      <UplBtn />
+      {!src && <span className="avt-upl-hint ff-s">Click or drop img</span>}
+    </div>
+  ) : null;
+
   // ── Drop overlay — inside shape, clipped by ic-poly / overflow:hidden ─
-  // Always mounted; CSS transition drives visibility.
+  // CSS transition drives visibility.
   const dropOverlay = uploadable ? (
     <div className={`avt-drop-ovr${isActive ? ' avt-drop-ovr--on' : ''}`} aria-hidden>
       <span className="avt-drop-here">Drop here</span>
@@ -55,7 +66,6 @@ export function Avt({
   ) : null;
 
   // ── Normal checkmark overlay ─────────────────────────────────────────
-  // Upload mode → no checkmark; the whole avatar is the tap/click target.
   const checkOverlay = !uploadable && shape === 'ic' && (onSelect !== undefined || checked !== undefined)
     ? (
       <div className="avt-chk" aria-hidden>
@@ -82,13 +92,14 @@ export function Avt({
 
   // ── Shape wrapper ────────────────────────────────────────────────────
   const shaped = shape === 'ic'
-    ? <IcBdr ovr={<>{checkOverlay}{dropOverlay}</>}>{mainContent}</IcBdr>
+    ? <IcBdr ovr={<>{checkOverlay}{uplControls}{dropOverlay}</>}>{mainContent}</IcBdr>
     : shape === 'plq'
     ? (
       <div className="avt-shp avt-bg shp-plq">
         {mainContent}
         <CrnOr />
         {checkOverlay}
+        {uplControls}
         {dropOverlay}
       </div>
     )
@@ -96,6 +107,7 @@ export function Avt({
       <div className="avt-shp avt-bg shp-sq">
         {mainContent}
         {checkOverlay}
+        {uplControls}
         {dropOverlay}
       </div>
     );

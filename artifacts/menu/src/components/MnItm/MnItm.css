@@ -20,41 +20,6 @@
   align-items: flex-start;
 }
 
-/* ── Avatar + label column (upload mode) ────────────────────────────────────
-   Centers avatar horizontally and stacks the hint label below it.           */
-.mic-avt-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.55cqw;
-}
-
-/* "Click or drop img" hint below the avatar */
-.mic-upl-lbl {
-  font-size: 1.85cqw;
-  letter-spacing: 0.05em;
-  color: rgba(var(--mut), 0.60);
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-/* Hide label + UplBtn when avatar enters drag-active state */
-.mic-avt-wrap:has(.avt.drop-on) .mic-upl-lbl,
-.mic-avt-wrap:has(.avt.drop-on) .mic-upl-btn-wrap {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* UplBtn wrapper — centers the button */
-.mic-upl-btn-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease;
-}
-
 /* ── Selection: fade body + avatar ──────────────────────────────────────────
    Opacity targets .avt directly (NOT .mic-avt) so .mic-chk — which is a
    sibling of .avt inside .mic-avt — is never inside the opacity subtree.

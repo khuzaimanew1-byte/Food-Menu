@@ -19,6 +19,35 @@
 /* Upload mode — whole avatar is the tap/click target */
 .avt-upl { cursor: pointer; }
 
+/* ── Upload controls (UplBtn + hint) inside shape ───────────────────────────
+   position:absolute so they overlay the image when src is present.
+   pointer-events:none — parent avt div owns the click (upld.pick).
+   display:none on drag — fully removed from layout (not visibility:hidden).  */
+.avt-upl-ctrls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55cqw;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.avt-upl-ctrls--drag {
+  display: none;
+}
+
+/* "Click or drop img" — only rendered when no src */
+.avt-upl-hint {
+  font-size: 1.75cqw;
+  letter-spacing: 0.05em;
+  color: rgba(var(--mut), 0.65);
+  white-space: nowrap;
+  text-align: center;
+}
+
 /* ── Drop overlay — lives inside shape, clipped by ic-poly / overflow:hidden ─
    Always in DOM; opacity transition drives show/hide.                       */
 .avt-drop-ovr {

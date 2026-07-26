@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Avt } from "../avatar/Avt";
-import { UplBtn } from "../btn/UplBtn";
 import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
 import { useImgUpld } from "@/lib/upld/useImgUpld";
@@ -37,45 +36,31 @@ export function MnItm({
       onClick={() => setSel((s) => !s)}
     >
       <div className="mic">
-        {/* Avatar + "Click or drop img" label stacked */}
-        <div className="mic-avt-wrap">
-          <div
-            className="mic-avt"
-            data-shape={shape}
-            onClick={uploadable ? (e) => e.stopPropagation() : undefined}
-          >
-            <Avt
-              src={imgSrc} name={name} alt={name} shape={shape}
-              uploadable={uploadable}
-              onUpload={uploadable ? handleUpload : undefined}
-              isDragging={uploadable ? upld.isDrg : false}
-            />
+        <div
+          className="mic-avt"
+          data-shape={shape}
+          onClick={uploadable ? (e) => e.stopPropagation() : undefined}
+        >
+          <Avt
+            src={imgSrc} name={name} alt={name} shape={shape}
+            uploadable={uploadable}
+            onUpload={uploadable ? handleUpload : undefined}
+            isDragging={uploadable ? upld.isDrg : false}
+          />
 
-            {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
-            {shape === 'ic' && (
-              <div className="mic-chk" aria-hidden>
-                <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <polyline
-                    points="20 6 9 17 4 12"
-                    stroke="currentColor"
-                    strokeWidth="2.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            )}
-          </div>
-
-          {/* Label + UplBtn below avatar — hidden while drag is active (CSS :has) */}
-          {uploadable && (
-            <>
-              <span className="mic-upl-lbl ff-s">Click or drop img</span>
-              {/* stopPropagation: prevent card selection toggle on btn click */}
-              <span className="mic-upl-btn-wrap" onClick={(e) => e.stopPropagation()}>
-                <UplBtn onClick={() => upld.pick()} />
-              </span>
-            </>
+          {/* Checkmark overlay — only for ic shape (clip-path is the polygon) */}
+          {shape === 'ic' && (
+            <div className="mic-chk" aria-hidden>
+              <svg className="mic-mk" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <polyline
+                  points="20 6 9 17 4 12"
+                  stroke="currentColor"
+                  strokeWidth="2.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
           )}
         </div>
 
