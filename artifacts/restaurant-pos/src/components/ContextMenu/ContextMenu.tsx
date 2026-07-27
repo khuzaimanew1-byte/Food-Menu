@@ -181,14 +181,23 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
         let mvPart: 'start' | 'end' | null = null;
         options = options.map(opt => {
           if (opt.id !== 'move-item' && opt.id !== 'move-section') return opt;
-          if (!id) return { ...opt, label: 'Paste Here' };
+
+          // Disable the other type's option while a move is in progress
+          if ((opt.id === 'move-section' && movingType === 'item') ||
+              (opt.id === 'move-item'    && movingType === 'section')) {
+            return { ...opt, disabled: true };
+          }
+
+          // Matching type → simplified Paste label (Before/After decision stays in execution)
+          const pasteLabel = opt.id === 'move-item' ? 'Paste Item' : 'Paste Section';
+          if (!id) return { ...opt, label: pasteLabel };
           const targetEl = document.querySelector<HTMLElement>(
             `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
           );
-          if (!targetEl) return { ...opt, label: 'Paste Here' };
+          if (!targetEl) return { ...opt, label: pasteLabel };
           const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
           mvPart = part;
-          return { ...opt, label: part === 'start' ? 'Paste Before' : 'Paste After' };
+          return { ...opt, label: pasteLabel };
         });
         // Signal MvLabel to show Before/After tooltip while the menu is open
         if (mvPart !== null) {
