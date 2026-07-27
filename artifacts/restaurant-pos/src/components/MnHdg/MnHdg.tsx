@@ -35,7 +35,7 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   const cls = [
     'mh-wrap flex flex-col items-center',
     isActive     ? 'edt-on'    : '',
-    isMoving     ? 'mv-dim'    : '',
+    isMoving     ? 'disabled'    : '',
     isDropTarget ? 'mv-target' : '',
   ].filter(Boolean).join(' ');
 

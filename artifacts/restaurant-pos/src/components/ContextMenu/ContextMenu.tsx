@@ -173,27 +173,32 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     //   section → vertical split   (top  = Before, bottom = After)
     const { movingId, movingType } = getMoving();
     if (movingId) {
-      let mvPart: 'start' | 'end' | null = null;
-      options = options.map(opt => {
-        if (opt.id !== 'move-item' && opt.id !== 'move-section') return opt;
-        // Right-clicked the source itself → generic fallback label
-        if (!id || movingId === id) return { ...opt, label: 'Paste Here' };
-        const targetEl = document.querySelector<HTMLElement>(
-          `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
-        );
-        if (!targetEl) return { ...opt, label: 'Paste Here' };
-        const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
-        mvPart = part;
-        return { ...opt, label: part === 'start' ? 'Paste Before' : 'Paste After' };
-      });
-      // Signal MvLabel to show Before/After tooltip while the menu is open
-      if (mvPart !== null) {
-        document.dispatchEvent(
-          new CustomEvent<{ x: number; y: number; text: 'Before' | 'After' }>(
-            'ctx:mv-open',
-            { detail: { x, y, text: mvPart === 'start' ? 'Before' : 'After' } },
-          ),
-        );
+      if (id && movingId === id) {
+        // Right-clicked the source element — only offer Cancel Move
+        options = [{ id: 'cancel-move', label: 'Cancel Move', icon: ICONS.cancelMove }];
+      } else {
+        // Right-clicked a drop target — Paste Before / Paste After
+        let mvPart: 'start' | 'end' | null = null;
+        options = options.map(opt => {
+          if (opt.id !== 'move-item' && opt.id !== 'move-section') return opt;
+          if (!id) return { ...opt, label: 'Paste Here' };
+          const targetEl = document.querySelector<HTMLElement>(
+            `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
+          );
+          if (!targetEl) return { ...opt, label: 'Paste Here' };
+          const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
+          mvPart = part;
+          return { ...opt, label: part === 'start' ? 'Paste Before' : 'Paste After' };
+        });
+        // Signal MvLabel to show Before/After tooltip while the menu is open
+        if (mvPart !== null) {
+          document.dispatchEvent(
+            new CustomEvent<{ x: number; y: number; text: 'Before' | 'After' }>(
+              'ctx:mv-open',
+              { detail: { x, y, text: mvPart === 'start' ? 'Before' : 'After' } },
+            ),
+          );
+        }
       }
     }
 

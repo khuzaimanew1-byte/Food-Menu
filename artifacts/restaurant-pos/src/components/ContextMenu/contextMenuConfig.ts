@@ -51,6 +51,9 @@ export const ICONS: Record<string, string[]> = {
     'M8 15l4 4 4-4',
     'M12 5v14',
   ],
+  cancelMove: [
+    'M18 6L6 18M6 6l12 12',
+  ],
   shapes: [
     'M12 2L2 7l10 5 10-5-10-5z',
     'M2 17l10 5 10-5',

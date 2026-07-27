@@ -1,10 +1,8 @@
 @import "./bg/glass.css";
 
-/* ── mv-dim — item/section being moved appears "picked up" ───────────────
-   Applied globally via useMv(); defined here so no component owns the style.
-   pointer-events:none prevents the source from being its own paste target. */
-.mv-dim {
-  opacity:        0.35;
+/* When a section heading is disabled, the sibling items grid is also disabled.
+   Reuses the existing .disabled class (Button/base.css) — no style duplication. */
+.disabled ~ .cp-grid {
+  opacity:        0.6;
   pointer-events: none;
-  transition:     opacity 0.18s ease;
 }

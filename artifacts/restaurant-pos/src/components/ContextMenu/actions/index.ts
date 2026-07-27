@@ -38,6 +38,9 @@ export function dispatchCtxAction(
 ): void {
   const { movingId, movingType } = getMoving();
 
+  // ── Cancel move — single-option menu on the source element ───────────
+  if (optId === 'cancel-move') { mvDeactivate(); return; }
+
   // ── Paste path — move mode is active ──────────────────────────────────
   // move-item / move-section button becomes "Paste Here" while a move is
   // in progress. Vertical split: top half = insert before, bottom = after.
