@@ -1,5 +1,11 @@
+// ── Context menu dispatcher ───────────────────────────────────────────────
+// Single place that maps (area, id, optId) triples to action handlers.
+// Paste path (move mode active) is handled here before area dispatch so
+// every "Paste Here" click is caught centrally.
+
 import type { CtxArea } from '../contextMenuConfig';
 
+// ── Item actions ──────────────────────────────────────────────────────────
 import { editItem }        from './item/edit';
 import { addItem }         from './item/addItem';
 import { moveItem }        from './item/move';
@@ -7,26 +13,53 @@ import { addSectFromItem } from './item/addSect';
 import { assignItem }      from './item/assign';
 import { deleteItem }      from './item/del';
 
-import { editSection }        from './section/edit';
-import { addItemToSection }   from './section/addItem';
-import { moveSection }        from './section/move';
-import { addSectAfterSection} from './section/addSect';
-import { deleteSection }      from './section/del';
+// ── Section actions ───────────────────────────────────────────────────────
+import { editSection }         from './section/edit';
+import { addItemToSection }    from './section/addItem';
+import { moveSection }         from './section/move';
+import { addSectAfterSection } from './section/addSect';
+import { deleteSection }       from './section/del';
 
+// ── Page actions ──────────────────────────────────────────────────────────
 import { addSectToPage }  from './page/addSect';
 import { shapeSquare }    from './page/shpSq';
 import { shapeInfCastle } from './page/shpInf';
 import { shapePlaque }    from './page/shpPlq';
 
-// ── Dispatch ──────────────────────────────────────────────────────────────────
-// Called by ContextMenu's onSelect. Routes (area, id, optId) to the correct
-// action handler. Each handler lives in its own file.
+// ── Move / paste globals ───────────────────────────────────────────────────
+import { getMoving, getLastPointerPos, deactivate as mvDeactivate } from '@/lib/mv/mvStore';
+import { reorderItem, reorderSection }                               from '@/lib/menu/menuStore';
+import { getPartAtPoint }                                            from '@/lib/spl/spl';
 
 export function dispatchCtxAction(
   area:  CtxArea,
   id:    string | null,
   optId: string,
 ): void {
+  const { movingId, movingType } = getMoving();
+
+  // ── Paste path — move mode is active ──────────────────────────────────
+  // move-item / move-section button becomes "Paste Here" while a move is
+  // in progress. Vertical split: top half = insert before, bottom = after.
+  if (movingId && id && (optId === 'move-item' || optId === 'move-section')) {
+    if (movingId === id) { mvDeactivate(); return; }   // same element → cancel
+
+    const targetEl = document.querySelector<HTMLElement>(
+      `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
+    );
+    if (targetEl) {
+      const { x, y } = getLastPointerPos();
+      // Vertical split: y above midpoint → 'start' (before), below → 'end' (after)
+      const part = getPartAtPoint(targetEl, x, y, 'v');
+
+      if (movingType === 'item')    reorderItem(Number(movingId), Number(id), part);
+      else                          reorderSection(movingId, id, part);
+    }
+    mvDeactivate();
+    return;
+  }
+
+  // ── Normal action path ─────────────────────────────────────────────────
   if (area === 'item') {
     switch (optId) {
       case 'edit':        return editItem(id);

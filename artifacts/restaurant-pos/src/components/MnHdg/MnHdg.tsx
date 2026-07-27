@@ -1,6 +1,7 @@
-import { useId, useState, useEffect } from "react";
+import { useId, useState, useEffect, useRef } from "react";
 import { useEdt } from "@/lib/edt/useEdt";
 import { useMv } from "@/lib/mv/useMv";
+import { useMvActive } from "@/lib/mv/useMvActive";
 import "./MnHdg.css";
 
 interface MhPr {
@@ -13,6 +14,12 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   const isMoving = useMv(text ?? '');
   const [editedText, setEditedText] = useState<string | null>(null);
 
+  // ── Move drop-target state ─────────────────────────────────────────────
+  const mvState      = useMvActive();
+  const isDropTarget = mvState.active && mvState.movingType === 'section' && !isMoving;
+  const [splZone, setSplZone] = useState<'top' | 'bot' | null>(null);
+  const wprRef = useRef<HTMLDivElement>(null);
+
   // Persist edited text on Save
   useEffect(() => {
     const handler = (e: Event) => {
@@ -24,11 +31,41 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
     return () => document.removeEventListener('edt:save', handler);
   }, [text]);
 
+  // ── Vertical split visual — show insert-before/after indicator ─────────
+  // Tracks mousemove over this section heading while it is a valid drop target.
+  // Top half → 'top' (insert before), bottom half → 'bot' (insert after).
+  useEffect(() => {
+    if (!isDropTarget) { setSplZone(null); return; }
+    const el = wprRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      setSplZone(e.clientY < rect.top + rect.height / 2 ? 'top' : 'bot');
+    };
+    const onLeave = () => setSplZone(null);
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => {
+      el.removeEventListener('mousemove', onMove);
+      el.removeEventListener('mouseleave', onLeave);
+    };
+  }, [isDropTarget]);
+
   const displayText = editedText ?? text;
+
+  const cls = [
+    'mh-wrap flex flex-col items-center',
+    isActive     ? 'edt-on'    : '',
+    isMoving     ? 'mv-on'     : '',
+    isDropTarget ? 'mv-target' : '',
+    splZone === 'top' ? 'spl-top' : '',
+    splZone === 'bot' ? 'spl-bot' : '',
+  ].filter(Boolean).join(' ');
 
   return (
     <div
-      className={`mh-wrap flex flex-col items-center${isActive ? " edt-on" : ""}${isMoving ? " mv-on" : ""}`}
+      ref={wprRef}
+      className={cls}
       data-area="section"
       data-id={text}
     >

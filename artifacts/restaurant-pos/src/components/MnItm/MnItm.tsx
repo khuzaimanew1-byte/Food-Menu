@@ -6,6 +6,7 @@ import { useImgUpld } from "@/lib/upld/useImgUpld";
 import { useEdt } from "@/lib/edt/useEdt";
 import { setDirty } from "@/lib/edt/edtStore";
 import { useMv } from "@/lib/mv/useMv";
+import { useMvActive } from "@/lib/mv/useMvActive";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
@@ -21,6 +22,12 @@ export function MnItm({
   const [editedDesc, setEditedDesc] = useState<string | null>(null);
   const isActive  = useEdt(String(id));
   const isMoving  = useMv(String(id));
+
+  // ── Move drop-target state ─────────────────────────────────────────────
+  const mvState      = useMvActive();
+  const isDropTarget = mvState.active && mvState.movingType === 'item' && !isMoving;
+  const [splZone, setSplZone] = useState<'top' | 'bot' | null>(null);
+  const wprRef = useRef<HTMLDivElement>(null);
 
   // Image upload — commit/revert integrated into the edit lifecycle below.
   const img  = useImgUpld(image);
@@ -43,6 +50,26 @@ export function MnItm({
 
   // Reset selection when entering edit mode.
   useEffect(() => { if (isActive) setSel(false); }, [isActive]);
+
+  // ── Vertical split visual — show insert-before/after indicator ─────────
+  // Tracks mousemove over this item while it is a valid drop target.
+  // Top half → 'top' (insert before), bottom half → 'bot' (insert after).
+  useEffect(() => {
+    if (!isDropTarget) { setSplZone(null); return; }
+    const el = wprRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      setSplZone(e.clientY < rect.top + rect.height / 2 ? 'top' : 'bot');
+    };
+    const onLeave = () => setSplZone(null);
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => {
+      el.removeEventListener('mousemove', onMove);
+      el.removeEventListener('mouseleave', onLeave);
+    };
+  }, [isDropTarget]);
 
   // ── edt:save — persist text fields and mark this exit as a Save ──────────
   useEffect(() => {
@@ -81,9 +108,20 @@ export function MnItm({
   const displayName = editedName ?? name;
   const displayDesc = editedDesc ?? description;
 
+  const cls = [
+    'mic-wpr',
+    sel          ? 'sel'       : '',
+    isActive     ? 'edt-on'   : '',
+    isMoving     ? 'mv-on'    : '',
+    isDropTarget ? 'mv-target': '',
+    splZone === 'top' ? 'spl-top' : '',
+    splZone === 'bot' ? 'spl-bot' : '',
+  ].filter(Boolean).join(' ');
+
   return (
     <div
-      className={`mic-wpr${sel ? " sel" : ""}${isActive ? " edt-on" : ""}${isMoving ? " mv-on" : ""}`}
+      ref={wprRef}
+      className={cls}
       data-area="item"
       data-id={id}
       data-drop-id={isActive ? upld.dropId : undefined}

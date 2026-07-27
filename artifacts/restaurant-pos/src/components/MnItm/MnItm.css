@@ -185,3 +185,33 @@
 
 /* Suppress strikethrough while editing */
 .edt-on .mic-name::after { display: none; }
+
+/* ── Move drop-target — vertical split indicator ─────────────────────────
+   .mv-target  → item is a valid paste destination (any move active, not source)
+   .spl-top    → cursor is in top half → insert BEFORE → gold line at top
+   .spl-bot    → cursor is in bottom half → insert AFTER  → gold line at bottom
+   ───────────────────────────────────────────────────────────────────────── */
+.mic-wpr.mv-target {
+  cursor: copy;
+}
+
+.mic-wpr.mv-target::before,
+.mic-wpr.mv-target::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 0.35cqw;
+  background: rgb(var(--gold));
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 0 2cqw rgba(var(--gold), 0.6);
+}
+
+.mic-wpr.mv-target::before { top: -0.4cqw; }
+.mic-wpr.mv-target::after  { bottom: -0.4cqw; }
+
+.mic-wpr.spl-top::before { opacity: 1; }
+.mic-wpr.spl-bot::after  { opacity: 1; }
