@@ -1,9 +1,10 @@
-import { Fragment, useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { ICONS, MENU_CONFIG, detectArea } from './contextMenuConfig';
 import type { CtxArea, CtxOpt } from './contextMenuConfig';
 import { getMoving } from '@/lib/mv/mvStore';
 import { getPartAtPoint } from '@/lib/spl/spl';
-import './ContextMenu.css';
+import { DropdownPanel } from './DropdownPanel';
+import type { SubState } from './DropdownPanel';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -13,13 +14,6 @@ interface MenuState {
   area:    CtxArea;
   id:      string | null;
   options: CtxOpt[];
-}
-
-interface SubState {
-  optId:  string;
-  left:   number;
-  top:    number;
-  items:  CtxOpt[];
 }
 
 interface CtxMenuPr {
@@ -34,9 +28,9 @@ const OPT_H          = 34;
 const SEP_H          = 7;
 const PADDING_V      = 5;
 const CURSOR_OFFSET  = 10;
-const SUB_DELAY_MS   = 120;   // hover delay before submenu opens
+const SUB_DELAY_MS   = 120;
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Position helpers ─────────────────────────────────────────────────────────
 
 function calcPos(x: number, y: number, opts: CtxOpt[]) {
   const sepCount = opts.filter(o => o.separator).length;
@@ -62,83 +56,16 @@ function calcSubPos(rowEl: HTMLElement, children: CtxOpt[]): { left: number; top
   const vpH      = window.innerHeight;
   const MARGIN   = 8;
   const GAP      = 4;
-
   const left = rect.right + GAP + MENU_W > vpW
     ? rect.left - MENU_W - GAP
     : rect.right + GAP;
-
   const top = rect.top + subH > vpH
     ? Math.max(MARGIN, vpH - subH - MARGIN)
     : rect.top;
-
   return { left, top };
 }
 
-// ─── Option row (shared between main menu and submenu) ────────────────────────
-
-interface OptRowPr {
-  opt:         CtxOpt;
-  onSelect:    (opt: CtxOpt) => void;
-  onSubEnter?: (opt: CtxOpt, el: HTMLElement) => void;
-  onSubLeave?: () => void;
-  active?:     boolean;
-}
-
-function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
-  const ref = useRef<HTMLLIElement>(null);
-  const cls = [
-    'ctx-opt',
-    opt.children  ? 'ctx-opt--sub'      : '',
-    opt.danger    ? 'ctx-opt--danger'    : '',
-    opt.disabled  ? 'ctx-opt--disabled'  : '',
-    active        ? 'ctx-opt--sub-open'  : '',
-  ].filter(Boolean).join(' ');
-
-  return (
-    <Fragment>
-      {opt.separator && <li className="ctx-sep" role="separator" aria-hidden />}
-      <li
-        ref={ref}
-        className={cls}
-        role={opt.children ? 'menuitem' : 'menuitem'}
-        aria-haspopup={opt.children ? true : undefined}
-        aria-expanded={opt.children ? active : undefined}
-        aria-disabled={opt.disabled ?? false}
-        tabIndex={opt.disabled ? -1 : 0}
-        onClick={() => { if (!opt.children) onSelect(opt); }}
-        onKeyDown={(e) => {
-          if ((e.key === 'Enter' || e.key === ' ') && !opt.children) onSelect(opt);
-        }}
-        onMouseEnter={() => {
-          if (opt.children && ref.current && onSubEnter) onSubEnter(opt, ref.current);
-          else if (onSubLeave) onSubLeave(); // hovering non-sub row closes any open sub
-        }}
-      >
-        <svg
-          className="ctx-opt__icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          {opt.icon.map((d, i) => (
-            <path key={i} d={d} stroke="currentColor" strokeWidth="1.5" />
-          ))}
-        </svg>
-        <span className="ctx-opt__label ff-s">{opt.label}</span>
-        {opt.children && (
-          <svg className="ctx-opt__chevron" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="1.5"
-                  strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )}
-      </li>
-    </Fragment>
-  );
-}
-
-// ─── Component ────────────────────────────────────────────────────────────────
+// ─── ContextMenu — trigger + state controller ─────────────────────────────────
 
 export function ContextMenu({ onSelect }: CtxMenuPr) {
   const [state,    setState]    = useState<MenuState | null>(null);
@@ -166,29 +93,18 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     let options = MENU_CONFIG[area];
     if (!options?.length) return;
 
-    // When in move mode, the move action becomes "Paste Before" or
-    // "Paste After" depending on which half of the target was right-clicked.
-    // The direction mirrors the paste logic in actions/index.ts:
-    //   item    → horizontal split (left = Before, right = After)
-    //   section → vertical split   (top  = Before, bottom = After)
     const { movingId, movingType } = getMoving();
     if (movingId) {
       if (id && movingId === id) {
-        // Right-clicked the source element — only offer Cancel Move
         options = [{ id: 'cancel-move', label: 'Cancel Move', icon: ICONS.cancelMove }];
       } else {
-        // Right-clicked a drop target — Paste Before / Paste After
         let mvPart: 'start' | 'end' | null = null;
         options = options.map(opt => {
           if (opt.id !== 'move-item' && opt.id !== 'move-section') return opt;
-
-          // Disable the other type's option while a move is in progress
           if ((opt.id === 'move-section' && movingType === 'item') ||
               (opt.id === 'move-item'    && movingType === 'section')) {
             return { ...opt, disabled: true };
           }
-
-          // Matching type → simplified Paste label (Before/After decision stays in execution)
           const pasteLabel = opt.id === 'move-item' ? 'Paste Item' : 'Paste Section';
           if (!id) return { ...opt, label: pasteLabel };
           const targetEl = document.querySelector<HTMLElement>(
@@ -199,7 +115,6 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
           mvPart = part;
           return { ...opt, label: pasteLabel };
         });
-        // Signal MvLabel to show Before/After tooltip while the menu is open
         if (mvPart !== null) {
           document.dispatchEvent(
             new CustomEvent<{ x: number; y: number; text: 'Before' | 'After' }>(
@@ -298,62 +213,28 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
   }, [state, close]);
 
   // ── Option select ──────────────────────────────────────────────────────────
-  const handleSelect = (opt: CtxOpt) => {
+  const handleSelect = useCallback((opt: CtxOpt) => {
     if (opt.disabled || !state) return;
     onSelect?.(state.area, state.id, opt.id);
     close();
-  };
+  }, [state, onSelect, close]);
 
   // ── Render ─────────────────────────────────────────────────────────────────
   if (!state) return null;
 
   return (
-    <>
-      {/* Main menu */}
-      <div
-        ref={menuRef}
-        className="ctx-menu"
-        style={{ left: state.left, top: state.top }}
-        role="menu"
-        aria-label={`${state.area} options`}
-        onContextMenu={(e) => e.preventDefault()}
-      >
-        <ul className="ctx-list">
-          {state.options.map((opt) => (
-            <OptRow
-              key={opt.id}
-              opt={opt}
-              onSelect={handleSelect}
-              onSubEnter={openSub}
-              onSubLeave={closeSub}
-              active={subState?.optId === opt.id}
-            />
-          ))}
-        </ul>
-      </div>
-
-      {/* Submenu flyout */}
-      {subState && (
-        <div
-          ref={subMenuRef}
-          className="ctx-menu ctx-submenu"
-          style={{ left: subState.left, top: subState.top }}
-          role="menu"
-          onContextMenu={(e) => e.preventDefault()}
-          onMouseEnter={keepSub}
-          onMouseLeave={closeSub}
-        >
-          <ul className="ctx-list">
-            {subState.items.map((opt) => (
-              <OptRow
-                key={opt.id}
-                opt={opt}
-                onSelect={handleSelect}
-              />
-            ))}
-          </ul>
-        </div>
-      )}
-    </>
+    <DropdownPanel
+      left={state.left}
+      top={state.top}
+      ariaLabel={`${state.area} options`}
+      options={state.options}
+      onSelect={handleSelect}
+      onSubEnter={openSub}
+      onSubLeave={closeSub}
+      subState={subState}
+      onSubKeep={keepSub}
+      menuRef={menuRef}
+      subMenuRef={subMenuRef}
+    />
   );
 }
