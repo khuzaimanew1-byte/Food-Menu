@@ -1,34 +1,48 @@
 // ── useMvActive — reactive global move state ──────────────────────────────
-// Returns whether ANY move is in progress and which type (item/section).
-// Use this in drop-target components to show the split visual.
+// Two hooks: one for item-move state, one for section-move state.
+// Use in drop-target components to know when to show the copy cursor.
 
 import { useState, useEffect } from 'react';
-import { getMoving } from './mvStore';
-import type { MvType } from './mvStore';
+import { getMovingItem, getMovingSect } from './mvStore';
 
 export interface MvActiveState {
-  active:     boolean;
-  movingId:   string | null;
-  movingType: MvType | null;
+  active:   boolean;
+  movingId: string | null;
 }
 
-export function useMvActive(): MvActiveState {
+/** Returns whether any item is currently in move mode. */
+export function useMvItemActive(): MvActiveState {
   const [state, setState] = useState<MvActiveState>(() => {
-    const { movingId, movingType } = getMoving();
-    return { active: !!movingId, movingId, movingType };
+    const { movingId } = getMovingItem();
+    return { active: !!movingId, movingId };
   });
 
   useEffect(() => {
     const handler = (e: Event) => {
-      const detail = (e as CustomEvent<{ id: string; type: MvType } | null>).detail;
-      setState({
-        active:     !!detail,
-        movingId:   detail?.id   ?? null,
-        movingType: detail?.type ?? null,
-      });
+      const detail = (e as CustomEvent<{ id: string } | null>).detail;
+      setState({ active: !!detail, movingId: detail?.id ?? null });
     };
-    document.addEventListener('mv:change', handler);
-    return () => document.removeEventListener('mv:change', handler);
+    document.addEventListener('mv:item:change', handler);
+    return () => document.removeEventListener('mv:item:change', handler);
+  }, []);
+
+  return state;
+}
+
+/** Returns whether any section is currently in move mode. */
+export function useMvSectActive(): MvActiveState {
+  const [state, setState] = useState<MvActiveState>(() => {
+    const { movingId } = getMovingSect();
+    return { active: !!movingId, movingId };
+  });
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ id: string } | null>).detail;
+      setState({ active: !!detail, movingId: detail?.id ?? null });
+    };
+    document.addEventListener('mv:sect:change', handler);
+    return () => document.removeEventListener('mv:sect:change', handler);
   }, []);
 
   return state;

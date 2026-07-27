@@ -5,8 +5,8 @@
 
 import MnHdg           from '../MnHdg/MnHdg';
 import { MnItm }       from '../MnItm/MnItm';
-import { useMv }       from '@/lib/mv/useMv';
-import { useMvActive } from '@/lib/mv/useMvActive';
+import { useMvSect }       from '@/lib/mv/useMv';
+import { useMvSectActive } from '@/lib/mv/useMvActive';
 import type { MnItem } from '@/data/menu';
 import './MnSect.css';
 
@@ -18,9 +18,9 @@ interface MnSectPr {
 
 export function MnSect({ title, isContinuation, items }: MnSectPr) {
   const id           = title ?? '';
-  const isMoving     = useMv(id);
-  const mvState      = useMvActive();
-  const isDropTarget = mvState.active && mvState.movingType === 'section' && !isMoving;
+  const isMoving     = useMvSect(id);
+  const mvSectState  = useMvSectActive();
+  const isDropTarget = mvSectState.active && !isMoving;
 
   const cls = [
     'mn-sect',

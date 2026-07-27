@@ -21,11 +21,11 @@ export function MnItm({
   const [editedName, setEditedName] = useState<string | null>(null);
   const [editedDesc, setEditedDesc] = useState<string | null>(null);
   const isActive  = useEdt(String(id));
-  const isMoving  = useMv(String(id));
+  const isMoving  = useMvItem(String(id));
 
   // ── Move drop-target state ─────────────────────────────────────────────
-  const mvState      = useMvActive();
-  const isDropTarget = mvState.active && mvState.movingType === 'item' && !isMoving;
+  const mvItemState  = useMvItemActive();
+  const isDropTarget = mvItemState.active && !isMoving;
   const wprRef = useRef<HTMLDivElement>(null);
 
   // Image upload — commit/revert integrated into the edit lifecycle below.
