@@ -5,6 +5,7 @@ import { useUpld } from "@/lib/upld/useUpld";
 import { useImgUpld } from "@/lib/upld/useImgUpld";
 import { useEdt } from "@/lib/edt/useEdt";
 import { setDirty } from "@/lib/edt/edtStore";
+import { useMv } from "@/lib/mv/useMv";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
@@ -18,7 +19,8 @@ export function MnItm({
   const [sel, setSel]               = useState(false);
   const [editedName, setEditedName] = useState<string | null>(null);
   const [editedDesc, setEditedDesc] = useState<string | null>(null);
-  const isActive = useEdt(String(id));
+  const isActive  = useEdt(String(id));
+  const isMoving  = useMv(String(id));
 
   // Image upload — commit/revert integrated into the edit lifecycle below.
   const img  = useImgUpld(image);
@@ -81,7 +83,7 @@ export function MnItm({
 
   return (
     <div
-      className={`mic-wpr${sel ? " sel" : ""}${isActive ? " edt-on" : ""}`}
+      className={`mic-wpr${sel ? " sel" : ""}${isActive ? " edt-on" : ""}${isMoving ? " mv-on" : ""}`}
       data-area="item"
       data-id={id}
       data-drop-id={isActive ? upld.dropId : undefined}

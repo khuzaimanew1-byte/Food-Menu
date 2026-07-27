@@ -161,6 +161,13 @@
   margin: 0;
 }
 
+/* ── Move mode — source dims to stay identifiable ───────────────────────── */
+.mic-wpr.mv-on {
+  opacity:    0.42;
+  transition: opacity 0.2s ease;
+  cursor:     grab;
+}
+
 /* ── Edit mode — whole-card highlight ───────────────────────────────────── */
 .mic-wpr.edt-on {
   outline: 0.18cqw solid rgba(var(--gold), 0.28);

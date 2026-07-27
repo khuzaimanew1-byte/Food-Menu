@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect, useRef, useCallback } from 'react';
 import { MENU_CONFIG, detectArea } from './contextMenuConfig';
 import type { CtxArea, CtxOpt } from './contextMenuConfig';
+import { getMoving } from '@/lib/mv/mvStore';
 import './ContextMenu.css';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -161,8 +162,20 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     const hit = detectArea(target);
     if (!hit) return;
     const { area, id, el } = hit;
-    const options = MENU_CONFIG[area];
+    let options = MENU_CONFIG[area];
     if (!options?.length) return;
+
+    // When in move mode, the move action becomes "Paste Here" on every
+    // other item/section so the user knows where they can drop.
+    const { movingId } = getMoving();
+    if (movingId) {
+      options = options.map(opt =>
+        (opt.id === 'move-item' || opt.id === 'move-section')
+          ? { ...opt, label: 'Paste Here' }
+          : opt,
+      );
+    }
+
     setActive(el);
     setSubState(null);
     setState({ ...calcPos(x, y, options), area, id, options });

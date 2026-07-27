@@ -1,5 +1,6 @@
 import { useId, useState, useEffect } from "react";
 import { useEdt } from "@/lib/edt/useEdt";
+import { useMv } from "@/lib/mv/useMv";
 import "./MnHdg.css";
 
 interface MhPr {
@@ -7,8 +8,9 @@ interface MhPr {
 }
 
 function MnHdg({ text = "Turkish Specialties" }: MhPr) {
-  const uid = useId().replace(/:/g, "");
+  const uid      = useId().replace(/:/g, "");
   const isActive = useEdt(text);
+  const isMoving = useMv(text ?? '');
   const [editedText, setEditedText] = useState<string | null>(null);
 
   // Persist edited text on Save
@@ -26,7 +28,7 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
 
   return (
     <div
-      className={`mh-wrap flex flex-col items-center${isActive ? " edt-on" : ""}`}
+      className={`mh-wrap flex flex-col items-center${isActive ? " edt-on" : ""}${isMoving ? " mv-on" : ""}`}
       data-area="section"
       data-id={text}
     >

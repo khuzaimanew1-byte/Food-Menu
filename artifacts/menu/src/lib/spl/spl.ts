@@ -142,6 +142,37 @@ export function isSplit(el: HTMLElement): boolean {
   return registry.has(el);
 }
 
+/**
+ * getPartAtPoint — geometry helper for the move/paste system.
+ *
+ * Returns which split zone a pointer coordinate falls in, WITHOUT
+ * requiring the element to carry a split class. This is the single
+ * call-site for the before/after insert decision in actions.ts; the
+ * spatial formula is identical to the one inside split() so there is
+ * no duplication of logic.
+ *
+ * @param el   Target element to measure against.
+ * @param x    Pointer X in viewport px (from contextmenu / pointerdown).
+ * @param y    Pointer Y in viewport px.
+ * @param dir  Axis: 'v' top/bottom (default), 'h' left/right.
+ * @param at   Split-point fraction 0–1. Falls back to --spl-at then 0.5.
+ */
+export function getPartAtPoint(
+  el:  HTMLElement,
+  x:   number,
+  y:   number,
+  dir: SplDir = 'v',
+  at?: number,
+): SplPart {
+  const frac  = at ?? readAt(el);
+  const rect   = el.getBoundingClientRect();
+  const bound  = dir === 'v'
+    ? rect.top  + rect.height * frac
+    : rect.left + rect.width  * frac;
+  const pos = dir === 'v' ? y : x;
+  return pos < bound ? 'start' : 'end';
+}
+
 // ── Class-based activation via MutationObserver ───────────────────────────
 
 let _observer: MutationObserver | null = null;
