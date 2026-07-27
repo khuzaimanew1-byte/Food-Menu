@@ -1,11 +1,9 @@
-// ── MvLabel — floating Before / After cursor label ────────────────────────
-// Appears near the cursor while a move is in progress and the pointer is
-// over a valid drop target. No lines, no borders, no element changes.
-// Removed automatically when move mode deactivates or pointer leaves target.
+// ── MvLabel — Before / After tooltip tied to context-menu lifecycle ────────
+// Appears near the right-click position while the context menu is open during
+// a move operation. Hidden as soon as the menu closes or move mode ends.
+// Trigger: ctx:mv-open (dispatched by ContextMenu) / ctx:mv-close / mv:change.
 
-import { useState, useEffect, useRef } from 'react';
-import { getMoving } from '@/lib/mv/mvStore';
-import type { MvType } from '@/lib/mv/mvStore';
+import { useState, useEffect } from 'react';
 import './MvLabel.css';
 
 interface LabelState {
@@ -14,52 +12,33 @@ interface LabelState {
   text: 'Before' | 'After';
 }
 
-export function MvLabel() {
-  const [label, setLabel]   = useState<LabelState | null>(null);
-  const mvRef = useRef<{ active: boolean; type: MvType | null }>({
-    active: false,
-    type:   null,
-  });
+type CtxMvOpenDetail = { x: number; y: number; text: 'Before' | 'After' };
 
-  // Track move-mode on/off
+export function MvLabel() {
+  const [label, setLabel] = useState<LabelState | null>(null);
+
   useEffect(() => {
-    const handler = (e: Event) => {
-      const detail = (e as CustomEvent<{ id: string; type: MvType } | null>).detail;
-      mvRef.current = { active: !!detail, type: detail?.type ?? null };
+    const onOpen = (e: Event) => {
+      const { x, y, text } = (e as CustomEvent<CtxMvOpenDetail>).detail;
+      setLabel({ x, y, text });
+    };
+
+    const onClose = () => setLabel(null);
+
+    // Also clear when move mode deactivates entirely (e.g. Escape or paste)
+    const onMvChange = (e: Event) => {
+      const detail = (e as CustomEvent<unknown>).detail;
       if (!detail) setLabel(null);
     };
-    document.addEventListener('mv:change', handler);
-    return () => document.removeEventListener('mv:change', handler);
-  }, []);
 
-  // Track cursor position and resolve Before / After
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const { active, type } = mvRef.current;
-      if (!active || !type) { setLabel(null); return; }
-
-      const area = type === 'item' ? 'item' : 'section';
-      const hit  = document.elementFromPoint(e.clientX, e.clientY);
-      const target = hit?.closest<HTMLElement>(`[data-area="${area}"]`);
-      if (!target) { setLabel(null); return; }
-
-      // Don't label the source element itself
-      const { movingId } = getMoving();
-      if (target.dataset.id === movingId) { setLabel(null); return; }
-
-      const rect = target.getBoundingClientRect();
-
-      // Item → horizontal split (left = Before, right = After)
-      // Section → vertical split  (top  = Before, bottom = After)
-      const text: 'Before' | 'After' = type === 'item'
-        ? (e.clientX < rect.left + rect.width  / 2 ? 'Before' : 'After')
-        : (e.clientY < rect.top  + rect.height / 2 ? 'Before' : 'After');
-
-      setLabel({ x: e.clientX, y: e.clientY, text });
+    document.addEventListener('ctx:mv-open',  onOpen);
+    document.addEventListener('ctx:mv-close', onClose);
+    document.addEventListener('mv:change',    onMvChange);
+    return () => {
+      document.removeEventListener('ctx:mv-open',  onOpen);
+      document.removeEventListener('ctx:mv-close', onClose);
+      document.removeEventListener('mv:change',    onMvChange);
     };
-
-    document.addEventListener('mousemove', onMove);
-    return () => document.removeEventListener('mousemove', onMove);
   }, []);
 
   if (!label) return null;

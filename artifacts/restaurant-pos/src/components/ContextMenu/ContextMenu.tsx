@@ -173,6 +173,7 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     //   section → vertical split   (top  = Before, bottom = After)
     const { movingId, movingType } = getMoving();
     if (movingId) {
+      let mvPart: 'start' | 'end' | null = null;
       options = options.map(opt => {
         if (opt.id !== 'move-item' && opt.id !== 'move-section') return opt;
         // Right-clicked the source itself → generic fallback label
@@ -181,9 +182,19 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
           `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
         );
         if (!targetEl) return { ...opt, label: 'Paste Here' };
-        const part  = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
+        const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
+        mvPart = part;
         return { ...opt, label: part === 'start' ? 'Paste Before' : 'Paste After' };
       });
+      // Signal MvLabel to show Before/After tooltip while the menu is open
+      if (mvPart !== null) {
+        document.dispatchEvent(
+          new CustomEvent<{ x: number; y: number; text: 'Before' | 'After' }>(
+            'ctx:mv-open',
+            { detail: { x, y, text: mvPart === 'start' ? 'Before' : 'After' } },
+          ),
+        );
+      }
     }
 
     setActive(el);
@@ -196,6 +207,7 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     setActive(null);
     setState(null);
     setSubState(null);
+    document.dispatchEvent(new CustomEvent('ctx:mv-close'));
   }, [setActive]);
 
   // ── Submenu open/close ─────────────────────────────────────────────────────
