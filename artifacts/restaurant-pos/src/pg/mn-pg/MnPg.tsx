@@ -1,21 +1,20 @@
-// ── App — wiring only ──────────────────────────────────────────────────────
-// Imports, event→function wiring, and component composition.
-// No logic defined here — every function lives in its own module.
+// ── MnPg — Menu page ──────────────────────────────────────────────────────
+// Full page definition: which pages exist, in what order, pagination state.
+// App.tsx mounts this; it knows nothing about page structure itself.
 
 import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { CvrPg }        from "./components/CvrPg";
-import { ClsPg }        from "./components/ClsPg";
-import { CtntPg }       from "./components/CtntPg/CtntPg";
-import { PrtBtn }       from "./components/PrtBtn/PrtBtn";
-import { NvCtl }        from "./components/NvCtl/NvCtl";
-import { AvtDmo }       from "./components/AvtDmo/AvtDmo";
-import { ContextMenu }  from "./components/ContextMenu/ContextMenu";
-import { EdtCnf }       from "./components/EdtCnf/EdtCnf";
-import { dispatchCtxAction }        from "./components/ContextMenu/actions";
-import { paginateMenuSections }     from "./lib/menu/paginate";
-import { getSections }              from "./lib/menu/menuStore";
+import { CvrPg }   from "../../components/CvrPg";
+import { ClsPg }   from "../../components/ClsPg";
+import { CtntPg }  from "../../components/CtntPg/CtntPg";
+import { PrtBtn }  from "../../components/PrtBtn/PrtBtn";
+import { NvCtl }   from "../../components/NvCtl/NvCtl";
+import { ContextMenu } from "../../components/ContextMenu/ContextMenu";
+import { EdtCnf }  from "../../components/EdtCnf/EdtCnf";
+import { dispatchCtxAction }    from "../../components/ContextMenu/actions";
+import { paginateMenuSections } from "../../lib/menu/paginate";
+import { getSections }          from "../../lib/menu/menuStore";
 
 const pgVars = {
   enter:  (d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
@@ -23,7 +22,7 @@ const pgVars = {
   exit:   (d: number) => ({ x: d > 0 ? "-100%" : "100%", opacity: 0 }),
 };
 
-function MnApp() {
+export function MnPg() {
   const [curPg, setCurPg] = useState(0);
   const [pages,  setPages]  = useState(() => paginateMenuSections(getSections()));
   const dir = useRef(1);
@@ -33,8 +32,8 @@ function MnApp() {
   // Re-paginate whenever menu order changes (move/paste fires menu:change)
   useEffect(() => {
     const handler = () => setPages(paginateMenuSections(getSections()));
-    document.addEventListener('menu:change', handler);
-    return () => document.removeEventListener('menu:change', handler);
+    document.addEventListener("menu:change", handler);
+    return () => document.removeEventListener("menu:change", handler);
   }, []);
 
   const goPrv = () => { dir.current = -1; setCurPg(p => Math.max(0, p - 1)); };
@@ -44,9 +43,10 @@ function MnApp() {
     setCurPg(Math.max(0, Math.min(ttlPg - 1, p)));
   };
 
+  // ── Page registry — add new page types here, nowhere else ───────────────
   function rndPg(pg: number) {
-    if (pg === 0)         return <CvrPg />;
-    if (pg === ttlPg - 1) return <ClsPg />;
+    if (pg === 0)          return <CvrPg />;
+    if (pg === ttlPg - 1)  return <ClsPg />;
     const pd = pages[pg - 1];
     return <CtntPg pgNum={pd.pgNum} sections={pd.sections} />;
   }
@@ -77,9 +77,4 @@ function MnApp() {
       <ContextMenu onSelect={dispatchCtxAction} />
     </div>
   );
-}
-
-export default function App() {
-  const isDemo = new URLSearchParams(window.location.search).has("demo");
-  return isDemo ? <AvtDmo /> : <MnApp />;
 }
