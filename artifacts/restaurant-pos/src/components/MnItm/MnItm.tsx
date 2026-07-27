@@ -26,7 +26,7 @@ export function MnItm({
   // ── Move drop-target state ─────────────────────────────────────────────
   const mvState      = useMvActive();
   const isDropTarget = mvState.active && mvState.movingType === 'item' && !isMoving;
-  const [splZone, setSplZone] = useState<'top' | 'bot' | null>(null);
+  const [splZone, setSplZone] = useState<'lft' | 'rgt' | null>(null);
   const wprRef = useRef<HTMLDivElement>(null);
 
   // Image upload — commit/revert integrated into the edit lifecycle below.
@@ -60,7 +60,7 @@ export function MnItm({
     if (!el) return;
     const onMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
-      setSplZone(e.clientY < rect.top + rect.height / 2 ? 'top' : 'bot');
+      setSplZone(e.clientX < rect.left + rect.width / 2 ? 'lft' : 'rgt');
     };
     const onLeave = () => setSplZone(null);
     el.addEventListener('mousemove', onMove);
@@ -114,8 +114,8 @@ export function MnItm({
     isActive     ? 'edt-on'   : '',
     isMoving     ? 'mv-on'    : '',
     isDropTarget ? 'mv-target': '',
-    splZone === 'top' ? 'spl-top' : '',
-    splZone === 'bot' ? 'spl-bot' : '',
+    splZone === 'lft' ? 'spl-lft' : '',
+    splZone === 'rgt' ? 'spl-rgt' : '',
   ].filter(Boolean).join(' ');
 
   return (

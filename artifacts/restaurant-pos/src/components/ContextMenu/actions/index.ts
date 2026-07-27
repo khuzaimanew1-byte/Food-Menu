@@ -49,8 +49,9 @@ export function dispatchCtxAction(
     );
     if (targetEl) {
       const { x, y } = getLastPointerPos();
-      // Vertical split: y above midpoint → 'start' (before), below → 'end' (after)
-      const part = getPartAtPoint(targetEl, x, y, 'v');
+      // Item  → horizontal split ('h'): left half = before, right half = after
+      // Section → vertical split   ('v'): top  half = before, bottom half = after
+      const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
 
       if (movingType === 'item')    reorderItem(Number(movingId), Number(id), part);
       else                          reorderSection(movingId, id, part);

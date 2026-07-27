@@ -186,10 +186,11 @@
 /* Suppress strikethrough while editing */
 .edt-on .mic-name::after { display: none; }
 
-/* ── Move drop-target — vertical split indicator ─────────────────────────
+/* ── Move drop-target — horizontal split indicator ───────────────────────
+   Split: 'h' (horizontal) — left half = insert BEFORE, right half = AFTER
    .mv-target  → item is a valid paste destination (any move active, not source)
-   .spl-top    → cursor is in top half → insert BEFORE → gold line at top
-   .spl-bot    → cursor is in bottom half → insert AFTER  → gold line at bottom
+   .spl-lft    → cursor in left  half → insert BEFORE → gold line on left
+   .spl-rgt    → cursor in right half → insert AFTER  → gold line on right
    ───────────────────────────────────────────────────────────────────────── */
 .mic-wpr.mv-target {
   cursor: copy;
@@ -199,8 +200,9 @@
 .mic-wpr.mv-target::after {
   content: '';
   position: absolute;
-  left: 0; right: 0;
-  height: 0.35cqw;
+  top: 0; bottom: 0;
+  width: 0.35cqw;
+  height: auto;
   background: rgb(var(--gold));
   border-radius: 999px;
   opacity: 0;
@@ -210,8 +212,8 @@
   box-shadow: 0 0 2cqw rgba(var(--gold), 0.6);
 }
 
-.mic-wpr.mv-target::before { top: -0.4cqw; }
-.mic-wpr.mv-target::after  { bottom: -0.4cqw; }
+.mic-wpr.mv-target::before { left: -0.4cqw; }
+.mic-wpr.mv-target::after  { right: -0.4cqw; }
 
-.mic-wpr.spl-top::before { opacity: 1; }
-.mic-wpr.spl-bot::after  { opacity: 1; }
+.mic-wpr.spl-lft::before { opacity: 1; }
+.mic-wpr.spl-rgt::after  { opacity: 1; }
