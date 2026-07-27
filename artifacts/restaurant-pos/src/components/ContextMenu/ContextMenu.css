@@ -149,11 +149,11 @@
 }
 
 /* ── Active element — stays lit while menu is open ───────────────────────── */
+/* No outline — warm breath bg only, matching .hlght-xs */
 [data-ctx-active] {
-  outline: 1px solid rgba(var(--gw), 0.50) !important;
-  outline-offset: 3px;
+  background:    rgba(var(--gold), 0.03) !important;
   border-radius: 3px;
-  transition: outline-color 0.15s ease;
+  transition:    background 0.15s ease;
 }
 
 /* ── Submenu flyout ──────────────────────────────────────────────────────── */

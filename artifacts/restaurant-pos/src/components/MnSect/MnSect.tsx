@@ -11,11 +11,12 @@ import type { MnItem } from '@/data/menu';
 import './MnSect.css';
 
 interface MnSectPr {
-  title?: string;
-  items:  MnItem[];
+  title?:          string;
+  isContinuation?: boolean;
+  items:           MnItem[];
 }
 
-export function MnSect({ title, items }: MnSectPr) {
+export function MnSect({ title, isContinuation, items }: MnSectPr) {
   const id           = title ?? '';
   const isMoving     = useMv(id);
   const mvState      = useMvActive();
@@ -33,7 +34,10 @@ export function MnSect({ title, items }: MnSectPr) {
       data-area={title !== undefined ? 'section' : undefined}
       data-id={title !== undefined ? title : undefined}
     >
-      {title !== undefined && <MnHdg text={title} />}
+      {isContinuation && title !== undefined
+        ? <p className="mn-rl ff-s">{title}</p>
+        : title !== undefined && <MnHdg text={title} />
+      }
       {items.length > 0 && (
         <div className="items-grid cp-grid">
           {items.map(item => (

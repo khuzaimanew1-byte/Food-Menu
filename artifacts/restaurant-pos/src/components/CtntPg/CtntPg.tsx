@@ -26,7 +26,12 @@ export function CtntPg({ pgNum, sections }: CtPgPr) {
       <div className="a4-pad cp-in flex flex-col w-full h-full">
         <PgMnt>
           {sections.map((sect, i) => (
-            <MnSect key={sect.title ?? i} title={sect.title} items={sect.items} />
+            <MnSect
+              key={`${sect.title ?? ''}-${i}`}
+              title={sect.title}
+              isContinuation={sect.isContinuation}
+              items={sect.items}
+            />
           ))}
         </PgMnt>
       </div>

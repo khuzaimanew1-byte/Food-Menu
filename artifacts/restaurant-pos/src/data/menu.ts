@@ -1,6 +1,7 @@
 export interface PageSect {
-  title?: string;   // undefined → continuation page (no heading rendered)
-  items: MnItem[];
+  title?:          string;   // undefined only when paginator has no title yet
+  isContinuation?: boolean;  // true → same section, overflowed to next page
+  items:           MnItem[];
 }
 
 export interface MnItem {

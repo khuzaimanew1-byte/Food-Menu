@@ -170,9 +170,8 @@
 
 /* ── Edit mode — whole-card highlight ───────────────────────────────────── */
 .mic-wpr.edt-on {
-  outline: 0.18cqw solid rgba(var(--gold), 0.28);
   border-radius: 0.8cqw;
-  background: rgba(var(--gold), 0.04);
+  background:    rgba(var(--gold), 0.06);
 }
 
 /* ── Edit-mode text fields ───────────────────────────────────────────────── */

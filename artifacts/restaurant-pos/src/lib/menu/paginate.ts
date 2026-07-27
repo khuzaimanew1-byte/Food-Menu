@@ -49,7 +49,7 @@ export function paginateMenuSections(raw: RawSect[]): PageData[] {
 
       if (usedH + cost > CONTENT_H) {
         flushPage();
-        currSects.push({ title: undefined, items: [] });
+        currSects.push({ title: sect.title, isContinuation: true, items: [] });
       }
 
       const finalCost = ITEM_H + (pageHasItems() ? GAP_H : 0);
