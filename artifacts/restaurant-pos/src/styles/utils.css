@@ -1,3 +1,9 @@
 @import "./bg/glass.css";
 @import "./bg/hlght.css";
 
+/* ── Move mode — source element while a move is in progress ──────────────── */
+.disabled {
+  cursor:  grab;
+  opacity: 0.45;
+}
+

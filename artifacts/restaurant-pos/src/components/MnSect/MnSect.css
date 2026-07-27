@@ -10,8 +10,8 @@
   align-content: start;
 }
 
-/* move source: cursor + dimming signals this section is the one being moved */
-.mn-sect.disabled   { cursor: grab; opacity: 0.45; }
+/* move source: cursor only — opacity intentionally omitted (base .disabled handles items) */
+.mn-sect.disabled   { cursor: grab; }
 
 /* move drop-target: cursor signals this is a valid section drop zone */
 .mn-sect.mv-target  { cursor: copy; }
