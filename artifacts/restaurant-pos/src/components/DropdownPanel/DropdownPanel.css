@@ -189,5 +189,5 @@
   transition: opacity 0.12s ease;
 }
 
-.ctx-opt__hint--before { color: rgb(var(--gold));        opacity: 0.90; }
-.ctx-opt__hint--after  { color: rgba(var(--gold), 0.52); opacity: 0.90; }
+.ctx-opt__hint--before { color: rgb(var(--gl));   opacity: 1; }
+.ctx-opt__hint--after  { color: rgb(var(--gold)); opacity: 1; }
