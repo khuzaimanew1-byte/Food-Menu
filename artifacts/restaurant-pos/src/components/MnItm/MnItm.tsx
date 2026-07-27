@@ -5,6 +5,7 @@ import { useUpld } from "@/lib/upld/useUpld";
 import { useImgUpld } from "@/lib/upld/useImgUpld";
 import { useEdt } from "@/lib/edt/useEdt";
 import { setDirty } from "@/lib/edt/edtStore";
+import { useMvItem } from "@/lib/mv/useMv";
 import { useMvItemActive } from "@/lib/mv/useMvActive";
 import "./MnItm.css";
 
@@ -20,9 +21,11 @@ export function MnItm({
   const [editedName, setEditedName] = useState<string | null>(null);
   const [editedDesc, setEditedDesc] = useState<string | null>(null);
   const isActive  = useEdt(String(id));
+  const isMoving  = useMvItem(String(id));
+
   // ── Move drop-target state ─────────────────────────────────────────────
   const mvItemState  = useMvItemActive();
-  const isDropTarget = mvItemState.active && mvItemState.movingId !== String(id);
+  const isDropTarget = mvItemState.active && !isMoving;
   const wprRef = useRef<HTMLDivElement>(null);
 
   // Image upload — commit/revert integrated into the edit lifecycle below.
@@ -88,6 +91,7 @@ export function MnItm({
     'mic-wpr',
     sel          ? 'sel'       : '',
     isActive     ? 'edt-on'   : '',
+    isMoving     ? 'disabled'   : '',
     isDropTarget ? 'mv-target': '',
   ].filter(Boolean).join(' ');
 

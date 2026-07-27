@@ -161,6 +161,10 @@
   margin: 0;
 }
 
+/* ── Move mode — grab cursor only, no opacity ────────────────────────────── */
+.mic-wpr.disabled {
+  cursor: grab;
+}
 
 /* ── Edit mode — highlight bg with gap (padding offsets like outline-offset) */
 .mic-wpr.edt-on {
