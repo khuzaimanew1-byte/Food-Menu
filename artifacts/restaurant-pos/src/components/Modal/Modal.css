@@ -1,0 +1,176 @@
+/* ── Modal — full-screen overlay system ───────────────────────────────────
+   Portal renders into <body>, outside #root.
+   Page-blur targets #root directly so the modal itself stays sharp.      */
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+
+@keyframes mdl-ovl-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes mdl-ovl-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes mdl-dlg-in {
+  from { opacity: 0; transform: scale(0.94) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);     }
+}
+
+@keyframes mdl-dlg-out {
+  from { opacity: 1; transform: scale(1)    translateY(0);     }
+  to   { opacity: 0; transform: scale(0.94) translateY(-8px);  }
+}
+
+/* ── Page content blur — only #root, not the portal ────────────────────── */
+
+body.mdl-open #root {
+  filter: blur(3px) brightness(0.72);
+  transition: filter 0.25s ease;
+  pointer-events: none;        /* prevent interaction with blurred content */
+}
+
+/* Smooth removal on close */
+body:not(.mdl-open) #root {
+  filter: blur(0px) brightness(1);
+  transition: filter 0.2s ease;
+}
+
+/* ── Scroll lock ────────────────────────────────────────────────────────── */
+
+body.mdl-open {
+  overflow: hidden;
+}
+
+/* ── Root — full-screen positioning container ───────────────────────────── */
+
+.mdl-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ── Overlay — dark semi-transparent backdrop ───────────────────────────── */
+
+.mdl-ovl {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  animation: mdl-ovl-in 0.22s ease both;
+  cursor: pointer;
+}
+
+.mdl-root--out .mdl-ovl {
+  animation: mdl-ovl-out 0.18s ease both;
+}
+
+/* ── Dialog box ─────────────────────────────────────────────────────────── */
+
+.mdl-dlg {
+  position: relative;
+  z-index: 1;               /* above .mdl-ovl */
+  width: 100%;
+  max-height: calc(100dvh - 48px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.25rem;
+
+  /* dkgl surface — matches SmMdl aesthetic */
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,   rgba(var(--gold), .12) 0%, rgba(var(--gold), .03) 55%, transparent 100%),
+    radial-gradient(ellipse 60% 40% at 0%   100%, rgba(var(--lntn), .07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(var(--lntn), .07) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(var(--ink), .96) 0%, rgba(var(--chrd), .90) 100%);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(var(--gold), 0.28);
+  box-shadow:
+    0 0 0 0.5px rgba(var(--gold), 0.10),
+    0 10px 48px rgba(0, 0, 0, 0.70),
+    0 2px  14px rgba(0, 0, 0, 0.45);
+
+  animation: mdl-dlg-in 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+  overflow: hidden;
+}
+
+.mdl-root--out .mdl-dlg {
+  animation: mdl-dlg-out 0.18s ease both;
+}
+
+/* ── Size variants ──────────────────────────────────────────────────────── */
+
+.mdl-dlg--sm { max-width: 360px; }
+.mdl-dlg--md { max-width: 520px; }
+.mdl-dlg--lg { max-width: 720px; }
+
+/* ── Header row — title + close button ─────────────────────────────────── */
+
+.mdl-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid rgba(var(--gold), 0.14);
+  flex-shrink: 0;
+}
+
+.mdl-ttl {
+  margin: 0;
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgb(var(--gl));
+  line-height: 1.3;
+}
+
+/* ── Close button ───────────────────────────────────────────────────────── */
+
+.mdl-cls {
+  flex-shrink: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.45rem;
+  color: rgba(var(--wht), 0.35);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.mdl-cls:hover {
+  color: rgba(var(--wht), 0.80);
+  background: rgba(var(--wht), 0.07);
+}
+
+.mdl-cls .cls-ico {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+/* ── Scrollable content body ────────────────────────────────────────────── */
+
+.mdl-bdy {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 22px 24px;
+  color: rgb(var(--cr));
+  font-family: var(--ff);
+
+  /* thin gold scrollbar — consistent with globals.css */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--gold), .30) transparent;
+}
+
+.mdl-bdy::-webkit-scrollbar       { width: 4px; }
+.mdl-bdy::-webkit-scrollbar-track { background: transparent; }
+.mdl-bdy::-webkit-scrollbar-thumb {
+  background: rgba(var(--gold), .30);
+  border-radius: 2px;
+}
