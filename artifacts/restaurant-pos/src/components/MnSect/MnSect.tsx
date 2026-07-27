@@ -5,7 +5,6 @@
 
 import MnHdg           from '../MnHdg/MnHdg';
 import { MnItm }       from '../MnItm/MnItm';
-import { useMvSect }       from '@/lib/mv/useMv';
 import { useMvSectActive } from '@/lib/mv/useMvActive';
 import type { MnItem } from '@/data/menu';
 import './MnSect.css';
@@ -18,13 +17,11 @@ interface MnSectPr {
 
 export function MnSect({ title, isContinuation, items }: MnSectPr) {
   const id           = title ?? '';
-  const isMoving     = useMvSect(id);
   const mvSectState  = useMvSectActive();
-  const isDropTarget = mvSectState.active && !isMoving;
+  const isDropTarget = mvSectState.active && mvSectState.movingId !== id;
 
   const cls = [
     'mn-sect',
-    isMoving     ? 'disabled'  : '',
     isDropTarget ? 'mv-target' : '',
   ].filter(Boolean).join(' ');
 
