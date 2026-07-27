@@ -12,6 +12,7 @@ import { PrtBtn }  from "../../components/PrtBtn/PrtBtn";
 import { NvCtl }   from "../../components/NvCtl/NvCtl";
 import { ContextMenu } from "../../components/ContextMenu/ContextMenu";
 import { EdtCnf }  from "../../components/EdtCnf/EdtCnf";
+import { MvLabel } from "../../components/MvLabel/MvLabel";
 import { dispatchCtxAction }    from "../../components/ContextMenu/actions";
 import { paginateMenuSections } from "../../lib/menu/paginate";
 import { getSections }          from "../../lib/menu/menuStore";
