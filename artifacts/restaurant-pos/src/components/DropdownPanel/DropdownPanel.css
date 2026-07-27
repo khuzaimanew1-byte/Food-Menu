@@ -137,16 +137,6 @@
   background: rgba(180, 55, 38, 0.16);
 }
 
-/* ── Disabled variant ────────────────────────────────────────────────────── */
-.ctx-opt--disabled {
-  color: rgba(var(--ash), 0.38);
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.ctx-opt--disabled .ctx-opt__icon {
-  opacity: 0.28;
-}
 
 /* ── Active element — stays lit while menu is open ───────────────────────── */
 /* No outline — warm breath bg only, matching .hlght-xs */
@@ -189,3 +179,15 @@
 .ctx-opt--sub-open .ctx-opt__icon {
   opacity: 0.82;
 }
+
+/* ── Hint icon — Before / After on paste options ─────────────────────────── */
+.ctx-opt__hint {
+  flex-shrink: 0;
+  width: 11px;
+  height: 11px;
+  margin-left: auto;
+  transition: opacity 0.12s ease;
+}
+
+.ctx-opt__hint--before { color: rgb(var(--gold));        opacity: 0.90; }
+.ctx-opt__hint--after  { color: rgba(var(--gold), 0.52); opacity: 0.90; }

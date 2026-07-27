@@ -1,6 +1,6 @@
 import { Fragment, useRef } from 'react';
 import type { RefObject } from 'react';
-import type { CtxOpt } from './contextMenuConfig';
+import { ICONS, type CtxOpt } from '../ContextMenu/contextMenuConfig';
 import './DropdownPanel.css';
 
 
@@ -49,7 +49,7 @@ function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
     'ctx-opt',
     opt.children ? 'ctx-opt--sub'     : '',
     opt.danger   ? 'ctx-opt--danger'  : '',
-    opt.disabled ? 'ctx-opt--disabled': '',
+    opt.disabled ? 'disabled'          : '',
     active       ? 'ctx-opt--sub-open': '',
   ].filter(Boolean).join(' ');
 
@@ -86,6 +86,19 @@ function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
           ))}
         </svg>
         <span className="ctx-opt__label ff-s">{opt.label}</span>
+        {opt.hint && (
+          <svg
+            className={`ctx-opt__hint ctx-opt__hint--${opt.hint}`}
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden
+          >
+            {(opt.hint === 'before' ? ICONS.arwUp : ICONS.arwDn).map((d, i) => (
+              <path key={i} d={d} stroke="currentColor" strokeWidth="1.5"
+                    strokeLinecap="round" strokeLinejoin="round" />
+            ))}
+          </svg>
+        )}
         {opt.children && (
           <svg className="ctx-opt__chevron" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="1.5"

@@ -98,7 +98,6 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
       if (id && movingId === id) {
         options = [{ id: 'cancel-move', label: 'Cancel Move', icon: ICONS.cancelMove }];
       } else {
-        let mvPart: 'start' | 'end' | null = null;
         options = options.map(opt => {
           if (opt.id !== 'move-item' && opt.id !== 'move-section') return opt;
           if ((opt.id === 'move-section' && movingType === 'item') ||
@@ -112,17 +111,8 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
           );
           if (!targetEl) return { ...opt, label: pasteLabel };
           const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
-          mvPart = part;
-          return { ...opt, label: pasteLabel };
+          return { ...opt, label: pasteLabel, hint: part === 'start' ? 'before' : 'after' };
         });
-        if (mvPart !== null) {
-          document.dispatchEvent(
-            new CustomEvent<{ x: number; y: number; text: 'Before' | 'After' }>(
-              'ctx:mv-open',
-              { detail: { x, y, text: mvPart === 'start' ? 'Before' : 'After' } },
-            ),
-          );
-        }
       }
     }
 
@@ -136,7 +126,6 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     setActive(null);
     setState(null);
     setSubState(null);
-    document.dispatchEvent(new CustomEvent('ctx:mv-close'));
   }, [setActive]);
 
   // ── Submenu open/close ─────────────────────────────────────────────────────

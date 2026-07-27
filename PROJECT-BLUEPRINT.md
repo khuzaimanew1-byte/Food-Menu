@@ -58,6 +58,8 @@ Tags: STACK, FOLDER, CODEGEN, IMAGES, NAMING, STYLES, RULES
 | 07-25 | Decorative images are aria-hidden="true"; border (brd.png) is object-fit:fill; bg (pgbg.png) is object-fit:cover; ornaments are 27% wide | D |
 | 07-21 | Controls: PrintBtn floats top-right (translateY -50%); NavCtrl spans full width bottom (translateY 50%) — both inside pg-wrap | D |
 | 07-21 | All custom names max 5-6 chars (files, vars, CSS, DB fields) | D |
+| 07-27 | Tooltip base: `.tip` (layout/border/shadow/anim) + `.dkgl` (bg) — never create component-level tooltip from scratch; always compose from these two | D |
+| 07-27 | Disabled state: only `.disabled` class (Button/base.css) — no per-component custom disabled CSS | D |
 
 ---
 

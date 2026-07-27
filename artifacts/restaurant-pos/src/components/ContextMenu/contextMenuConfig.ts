@@ -8,8 +8,9 @@ export interface CtxOpt {
   icon:       string[];
   danger?:    boolean;
   disabled?:  boolean;
-  separator?: boolean;   // render a rule above this option
-  children?:  CtxOpt[];  // if set, renders a flyout submenu instead of firing onSelect
+  separator?: boolean;         // render a rule above this option
+  children?:  CtxOpt[];       // if set, renders a flyout submenu instead of firing onSelect
+  hint?:      'before' | 'after'; // inline direction indicator on paste options
 }
 
 export interface AreaHit {
@@ -53,6 +54,14 @@ export const ICONS: Record<string, string[]> = {
   ],
   cancelMove: [
     'M18 6L6 18M6 6l12 12',
+  ],
+  arwUp: [
+    'M12 19V5',
+    'M5 12l7-7 7 7',
+  ],
+  arwDn: [
+    'M12 5v14',
+    'M19 12l-7 7-7-7',
   ],
   shapes: [
     'M12 2L2 7l10 5 10-5-10-5z',
