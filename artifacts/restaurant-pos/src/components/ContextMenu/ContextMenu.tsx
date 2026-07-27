@@ -3,8 +3,8 @@ import { ICONS, MENU_CONFIG, detectArea } from './contextMenuConfig';
 import type { CtxArea, CtxOpt } from './contextMenuConfig';
 import { getMoving } from '@/lib/mv/mvStore';
 import { getPartAtPoint } from '@/lib/spl/spl';
-import { DropdownPanel } from './DropdownPanel';
-import type { SubState } from './DropdownPanel';
+import { DropdownPanel } from '../DropdownPanel/DropdownPanel';
+import type { SubState } from '../DropdownPanel/DropdownPanel';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
