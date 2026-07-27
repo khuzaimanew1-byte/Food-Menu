@@ -10,8 +10,11 @@
   align-content: start;
 }
 
+/* move source: cursor + dimming signals this section is the one being moved */
+.mn-sect.disabled   { cursor: grab; opacity: 0.45; }
+
 /* move drop-target: cursor signals this is a valid section drop zone */
-.mn-sect.mv-target { cursor: copy; }
+.mn-sect.mv-target  { cursor: copy; }
 
 /* ── Running label — continuation page only ──────────────────────────────── */
 /* Small, muted plain text — section name for context, not a heading.

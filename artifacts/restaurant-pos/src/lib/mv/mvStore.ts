@@ -26,18 +26,37 @@ function _dispatchSect(id: string | null) {
   );
 }
 
+// ── Imperative DOM class helpers ───────────────────────────────────────────
+// Apply / remove the 'disabled' class immediately on the source element
+// without waiting for a React re-render, so visual feedback is instant.
+
+function _setItemClass(id: string, active: boolean): void {
+  document
+    .querySelector(`[data-area="item"][data-id="${CSS.escape(id)}"]`)
+    ?.classList.toggle('disabled', active);
+}
+
+function _setSectClass(id: string, active: boolean): void {
+  document
+    .querySelector(`[data-area="section"][data-id="${CSS.escape(id)}"]`)
+    ?.classList.toggle('disabled', active);
+}
+
 // ── Item move ──────────────────────────────────────────────────────────────
 
 /** Enter item-move mode. Same id → toggle off. */
 export function activateItem(id: string): void {
   if (_movingItemId === id) { deactivateItem(); return; }
+  if (_movingItemId) _setItemClass(_movingItemId, false); // clear any previous
   _movingItemId = id;
+  _setItemClass(id, true);
   _dispatchItem(id);
 }
 
 /** Exit item-move mode unconditionally. */
 export function deactivateItem(): void {
   if (!_movingItemId) return;
+  _setItemClass(_movingItemId, false);
   _movingItemId = null;
   _dispatchItem(null);
 }
@@ -51,13 +70,16 @@ export function getMovingItem() {
 /** Enter section-move mode. Same id → toggle off. */
 export function activateSect(id: string): void {
   if (_movingSectId === id) { deactivateSect(); return; }
+  if (_movingSectId) _setSectClass(_movingSectId, false); // clear any previous
   _movingSectId = id;
+  _setSectClass(id, true);
   _dispatchSect(id);
 }
 
 /** Exit section-move mode unconditionally. */
 export function deactivateSect(): void {
   if (!_movingSectId) return;
+  _setSectClass(_movingSectId, false);
   _movingSectId = null;
   _dispatchSect(null);
 }

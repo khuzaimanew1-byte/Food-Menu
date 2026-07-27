@@ -42,8 +42,8 @@ export function dispatchCtxAction(
   if (optId === 'cancel-move') { mvDeactivate(); return; }
 
   // ── Paste path — move mode is active ──────────────────────────────────
-  // move-item / move-section button becomes "Paste Here" while a move is
-  // in progress. Vertical split: top half = insert before, bottom = after.
+  // move-item / move-section button becomes "Paste Item" / "Paste Section"
+  // while a move is in progress. Pointer position decides before/after.
   if (movingId && id && (optId === 'move-item' || optId === 'move-section')) {
     if (movingId === id) { mvDeactivate(); return; }   // same element → cancel
 
@@ -69,6 +69,14 @@ export function dispatchCtxAction(
       case 'edit':        return editItem(id);
       case 'add-item':    return addItem(id);
       case 'move-item':   return moveItem(id);
+      case 'move-section': {
+        // Find the section that contains this item and activate its move.
+        const itemEl = id
+          ? document.querySelector<HTMLElement>(`[data-area="item"][data-id="${CSS.escape(id)}"]`)
+          : null;
+        const sectEl = itemEl?.closest<HTMLElement>('[data-area="section"]');
+        return moveSection(sectEl?.dataset.id ?? null);
+      }
       case 'add-section': return addSectFromItem(id);
       case 'assign':      return assignItem(id);
       case 'delete':      return deleteItem(id);
@@ -79,6 +87,7 @@ export function dispatchCtxAction(
     switch (optId) {
       case 'edit':         return editSection(id);
       case 'add-item':     return addItemToSection(id);
+      case 'move-item':    return moveItem(id);   // id is section title; moveItem guards on null
       case 'move-section': return moveSection(id);
       case 'add-section':  return addSectAfterSection(id);
       case 'delete':       return deleteSection(id);

@@ -22,6 +22,6 @@
   --radius-lg: var(--radius);
 }
 
-@import "./menu-layout.css";
+@import "./mn-pg.css";
 @import "./bg/stg.css";
 @import "./bg/dkgl.css";

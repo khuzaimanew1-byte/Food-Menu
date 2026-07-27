@@ -71,25 +71,30 @@ export const ICONS: Record<string, string[]> = {
   ],
 };
 
+// ─── Shared move options — single definition, referenced in both areas ────────
+
+const OPT_MOVE_ITEM:    CtxOpt = { id: 'move-item',    label: 'Move Item',    icon: ICONS.moveItem    };
+const OPT_MOVE_SECTION: CtxOpt = { id: 'move-section', label: 'Move Section', icon: ICONS.moveSection };
+
 // ─── Area → options map ───────────────────────────────────────────────────────
 
 export const MENU_CONFIG: Record<CtxArea, CtxOpt[]> = {
   item: [
-    { id: 'edit',         label: 'Edit',         icon: ICONS.edit        },
-    { id: 'assign',       label: 'Assign',        icon: ICONS.assign      },
-    { id: 'add-item',     label: 'Add Item',      icon: ICONS.addItem     },
-    { id: 'move-item',    label: 'Move Item',     icon: ICONS.moveItem    },
-    { id: 'move-section', label: 'Move Section',  icon: ICONS.moveSection },
-    { id: 'add-section',  label: 'Add Section',   icon: ICONS.addSection  },
-    { id: 'delete',       label: 'Delete',        icon: ICONS.delete, danger: true, separator: true },
+    { id: 'edit',        label: 'Edit',        icon: ICONS.edit                                       },
+    { id: 'assign',      label: 'Assign',      icon: ICONS.assign                                     },
+    { id: 'add-item',    label: 'Add Item',    icon: ICONS.addItem                                    },
+    OPT_MOVE_ITEM,
+    OPT_MOVE_SECTION,
+    { id: 'add-section', label: 'Add Section', icon: ICONS.addSection                                 },
+    { id: 'delete',      label: 'Delete',      icon: ICONS.delete, danger: true, separator: true      },
   ],
   section: [
-    { id: 'edit',         label: 'Edit',         icon: ICONS.edit        },
-    { id: 'add-item',     label: 'Add Item',      icon: ICONS.addItem     },
-    { id: 'move-item',    label: 'Move Item',     icon: ICONS.moveItem    },
-    { id: 'move-section', label: 'Move Section',  icon: ICONS.moveSection },
-    { id: 'add-section',  label: 'Add Section',   icon: ICONS.addSection  },
-    { id: 'delete',       label: 'Delete',        icon: ICONS.delete, danger: true, separator: true },
+    { id: 'edit',        label: 'Edit',        icon: ICONS.edit                                       },
+    { id: 'add-item',    label: 'Add Item',    icon: ICONS.addItem                                    },
+    OPT_MOVE_ITEM,
+    OPT_MOVE_SECTION,
+    { id: 'add-section', label: 'Add Section', icon: ICONS.addSection                                 },
+    { id: 'delete',      label: 'Delete',      icon: ICONS.delete, danger: true, separator: true      },
   ],
   page: [
     { id: 'add-section', label: 'Add Section', icon: ICONS.addSection },

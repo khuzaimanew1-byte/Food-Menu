@@ -59,7 +59,7 @@
 .cv-ornt {
   position: absolute;
   left: 50%;
-  width: 33cqw;
+  width: 35cqw;
   z-index: 15;
   pointer-events: none;
 }

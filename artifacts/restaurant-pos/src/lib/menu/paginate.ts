@@ -13,7 +13,7 @@ export interface RawSect {
   items: MnItem[];
 }
 
-// All values in cqw — must match the A4 layout constants in menu-layout.css
+// All values in cqw — must match the A4 layout constants in mn-pg.css
 const CONTENT_H = 121;   // usable height per page
 const ITEM_H    = 13;    // one MnItm row
 const GAP_H     = 3.2;   // items-grid gap
