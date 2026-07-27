@@ -31,12 +31,6 @@
   text-align: center;
 }
 
-/* ── Move mode — source dims to stay identifiable ───────────────────────── */
-.mh-wrap.mv-on {
-  opacity:    0.42;
-  transition: opacity 0.2s ease;
-}
-
 /* ── Edit mode — whole-heading highlight ─────────────────────────────────── */
 .mh-wrap.edt-on {
   outline: 0.18cqw solid rgba(var(--gold), 0.28);

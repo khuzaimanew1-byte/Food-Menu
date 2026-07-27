@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect, useRef, useCallback } from 'react';
 import { MENU_CONFIG, detectArea } from './contextMenuConfig';
 import type { CtxArea, CtxOpt } from './contextMenuConfig';
 import { getMoving } from '@/lib/mv/mvStore';
+import { getPartAtPoint } from '@/lib/spl/spl';
 import './ContextMenu.css';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -165,15 +166,24 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     let options = MENU_CONFIG[area];
     if (!options?.length) return;
 
-    // When in move mode, the move action becomes "Paste Here" on every
-    // other item/section so the user knows where they can drop.
-    const { movingId } = getMoving();
+    // When in move mode, the move action becomes "Paste Before" or
+    // "Paste After" depending on which half of the target was right-clicked.
+    // The direction mirrors the paste logic in actions/index.ts:
+    //   item    → horizontal split (left = Before, right = After)
+    //   section → vertical split   (top  = Before, bottom = After)
+    const { movingId, movingType } = getMoving();
     if (movingId) {
-      options = options.map(opt =>
-        (opt.id === 'move-item' || opt.id === 'move-section')
-          ? { ...opt, label: 'Paste Here' }
-          : opt,
-      );
+      options = options.map(opt => {
+        if (opt.id !== 'move-item' && opt.id !== 'move-section') return opt;
+        // Right-clicked the source itself → generic fallback label
+        if (!id || movingId === id) return { ...opt, label: 'Paste Here' };
+        const targetEl = document.querySelector<HTMLElement>(
+          `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
+        );
+        if (!targetEl) return { ...opt, label: 'Paste Here' };
+        const part  = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
+        return { ...opt, label: part === 'start' ? 'Paste Before' : 'Paste After' };
+      });
     }
 
     setActive(el);
