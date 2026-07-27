@@ -5,8 +5,8 @@ import { useUpld } from "@/lib/upld/useUpld";
 import { useImgUpld } from "@/lib/upld/useImgUpld";
 import { useEdt } from "@/lib/edt/useEdt";
 import { setDirty } from "@/lib/edt/edtStore";
-import { useMv } from "@/lib/mv/useMv";
-import { useMvActive } from "@/lib/mv/useMvActive";
+import { useMvItem } from "@/lib/mv/useMv";
+import { useMvItemActive } from "@/lib/mv/useMvActive";
 import "./MnItm.css";
 
 interface MnItmPr extends MnItem {
