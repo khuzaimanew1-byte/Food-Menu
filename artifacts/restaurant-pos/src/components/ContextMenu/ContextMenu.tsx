@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect, useRef, useCallback } from 'react';
-import { MENU_CONFIG, detectArea } from './contextMenuConfig';
+import { ICONS, MENU_CONFIG, detectArea } from './contextMenuConfig';
 import type { CtxArea, CtxOpt } from './contextMenuConfig';
 import { getMoving } from '@/lib/mv/mvStore';
 import { getPartAtPoint } from '@/lib/spl/spl';

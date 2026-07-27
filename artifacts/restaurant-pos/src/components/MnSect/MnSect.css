@@ -10,12 +10,6 @@
   align-content: start;
 }
 
-/* move source: dims the whole unit (heading + items) while it is being moved */
-.mn-sect.disabled {
-  opacity:    0.42;
-  transition: opacity 0.2s ease;
-}
-
 /* move drop-target: cursor signals this is a valid section drop zone */
 .mn-sect.mv-target { cursor: copy; }
 

@@ -91,7 +91,7 @@ export function MnItm({
     'mic-wpr',
     sel          ? 'sel'       : '',
     isActive     ? 'edt-on'   : '',
-    isMoving     ? 'mv-on'      : '',
+    isMoving     ? 'disabled'   : '',
     isDropTarget ? 'mv-target': '',
   ].filter(Boolean).join(' ');
 

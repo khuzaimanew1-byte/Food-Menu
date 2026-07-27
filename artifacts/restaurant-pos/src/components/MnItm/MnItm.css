@@ -161,17 +161,17 @@
   margin: 0;
 }
 
-/* ── Move mode — source dims to stay identifiable ───────────────────────── */
-.mic-wpr.mv-on {
-  opacity:    0.42;
-  transition: opacity 0.2s ease;
-  cursor:     grab;
+/* ── Move mode — grab cursor only, no opacity ────────────────────────────── */
+.mic-wpr.disabled {
+  cursor: grab;
 }
 
-/* ── Edit mode — whole-card highlight ───────────────────────────────────── */
+/* ── Edit mode — highlight bg with gap (padding offsets like outline-offset) */
 .mic-wpr.edt-on {
-  border-radius: 0.8cqw;
+  border-radius: 1.2cqw;
   background:    rgba(var(--gold), 0.06);
+  padding:       0.6cqw;
+  margin:        -0.6cqw;
 }
 
 /* ── Edit-mode text fields ───────────────────────────────────────────────── */
