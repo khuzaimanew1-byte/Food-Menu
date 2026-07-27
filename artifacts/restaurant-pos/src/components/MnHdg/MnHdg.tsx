@@ -17,7 +17,6 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   // ── Move drop-target state ─────────────────────────────────────────────
   const mvState      = useMvActive();
   const isDropTarget = mvState.active && mvState.movingType === 'section' && !isMoving;
-  const [splZone, setSplZone] = useState<'top' | 'bot' | null>(null);
   const wprRef = useRef<HTMLDivElement>(null);
 
   // Persist edited text on Save
@@ -31,26 +30,6 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
     return () => document.removeEventListener('edt:save', handler);
   }, [text]);
 
-  // ── Vertical split visual — show insert-before/after indicator ─────────
-  // Tracks mousemove over this section heading while it is a valid drop target.
-  // Top half → 'top' (insert before), bottom half → 'bot' (insert after).
-  useEffect(() => {
-    if (!isDropTarget) { setSplZone(null); return; }
-    const el = wprRef.current;
-    if (!el) return;
-    const onMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      setSplZone(e.clientY < rect.top + rect.height / 2 ? 'top' : 'bot');
-    };
-    const onLeave = () => setSplZone(null);
-    el.addEventListener('mousemove', onMove);
-    el.addEventListener('mouseleave', onLeave);
-    return () => {
-      el.removeEventListener('mousemove', onMove);
-      el.removeEventListener('mouseleave', onLeave);
-    };
-  }, [isDropTarget]);
-
   const displayText = editedText ?? text;
 
   const cls = [
@@ -58,8 +37,6 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
     isActive     ? 'edt-on'    : '',
     isMoving     ? 'mv-on'     : '',
     isDropTarget ? 'mv-target' : '',
-    splZone === 'top' ? 'spl-top' : '',
-    splZone === 'bot' ? 'spl-bot' : '',
   ].filter(Boolean).join(' ');
 
   return (

@@ -26,7 +26,6 @@ export function MnItm({
   // ── Move drop-target state ─────────────────────────────────────────────
   const mvState      = useMvActive();
   const isDropTarget = mvState.active && mvState.movingType === 'item' && !isMoving;
-  const [splZone, setSplZone] = useState<'lft' | 'rgt' | null>(null);
   const wprRef = useRef<HTMLDivElement>(null);
 
   // Image upload — commit/revert integrated into the edit lifecycle below.
@@ -50,26 +49,6 @@ export function MnItm({
 
   // Reset selection when entering edit mode.
   useEffect(() => { if (isActive) setSel(false); }, [isActive]);
-
-  // ── Vertical split visual — show insert-before/after indicator ─────────
-  // Tracks mousemove over this item while it is a valid drop target.
-  // Top half → 'top' (insert before), bottom half → 'bot' (insert after).
-  useEffect(() => {
-    if (!isDropTarget) { setSplZone(null); return; }
-    const el = wprRef.current;
-    if (!el) return;
-    const onMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      setSplZone(e.clientX < rect.left + rect.width / 2 ? 'lft' : 'rgt');
-    };
-    const onLeave = () => setSplZone(null);
-    el.addEventListener('mousemove', onMove);
-    el.addEventListener('mouseleave', onLeave);
-    return () => {
-      el.removeEventListener('mousemove', onMove);
-      el.removeEventListener('mouseleave', onLeave);
-    };
-  }, [isDropTarget]);
 
   // ── edt:save — persist text fields and mark this exit as a Save ──────────
   useEffect(() => {
@@ -114,8 +93,6 @@ export function MnItm({
     isActive     ? 'edt-on'   : '',
     isMoving     ? 'mv-on'    : '',
     isDropTarget ? 'mv-target': '',
-    splZone === 'lft' ? 'spl-lft' : '',
-    splZone === 'rgt' ? 'spl-rgt' : '',
   ].filter(Boolean).join(' ');
 
   return (

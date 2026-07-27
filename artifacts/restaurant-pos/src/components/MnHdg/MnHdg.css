@@ -50,32 +50,7 @@
   outline: none;
 }
 
-/* ── Move drop-target — vertical split indicator ─────────────────────────
-   .mv-target  → section is a valid paste destination (any move active, not source)
-   .spl-top    → cursor is in top half → insert BEFORE → gold line at top
-   .spl-bot    → cursor is in bottom half → insert AFTER  → gold line at bottom
-   ───────────────────────────────────────────────────────────────────────── */
-.mh-wrap.mv-target {
-  cursor: copy;
-}
-
-.mh-wrap.mv-target::before,
-.mh-wrap.mv-target::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  height: 0.35cqw;
-  background: rgb(var(--gold));
-  border-radius: 999px;
-  opacity: 0;
-  transition: opacity 0.12s ease;
-  pointer-events: none;
-  z-index: 10;
-  box-shadow: 0 0 2cqw rgba(var(--gold), 0.6);
-}
-
-.mh-wrap.mv-target::before { top: 0; }
-.mh-wrap.mv-target::after  { bottom: 0; }
-
-.mh-wrap.spl-top::before { opacity: 1; }
-.mh-wrap.spl-bot::after  { opacity: 1; }
+/* ── Move drop-target — cursor only, no lines ────────────────────────────
+   Visual feedback is handled by the global <MvLabel> floating label.
+   Only the cursor changes here to signal this is a valid drop target.    */
+.mh-wrap.mv-target { cursor: copy; }

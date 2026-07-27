@@ -186,34 +186,7 @@
 /* Suppress strikethrough while editing */
 .edt-on .mic-name::after { display: none; }
 
-/* ── Move drop-target — horizontal split indicator ───────────────────────
-   Split: 'h' (horizontal) — left half = insert BEFORE, right half = AFTER
-   .mv-target  → item is a valid paste destination (any move active, not source)
-   .spl-lft    → cursor in left  half → insert BEFORE → gold line on left
-   .spl-rgt    → cursor in right half → insert AFTER  → gold line on right
-   ───────────────────────────────────────────────────────────────────────── */
-.mic-wpr.mv-target {
-  cursor: copy;
-}
-
-.mic-wpr.mv-target::before,
-.mic-wpr.mv-target::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 0.35cqw;
-  height: auto;
-  background: rgb(var(--gold));
-  border-radius: 999px;
-  opacity: 0;
-  transition: opacity 0.12s ease;
-  pointer-events: none;
-  z-index: 10;
-  box-shadow: 0 0 2cqw rgba(var(--gold), 0.6);
-}
-
-.mic-wpr.mv-target::before { left: -0.4cqw; }
-.mic-wpr.mv-target::after  { right: -0.4cqw; }
-
-.mic-wpr.spl-lft::before { opacity: 1; }
-.mic-wpr.spl-rgt::after  { opacity: 1; }
+/* ── Move drop-target — cursor only, no lines ────────────────────────────
+   Visual feedback is handled by the global <MvLabel> floating label.
+   Only the cursor changes here to signal this is a valid drop target.    */
+.mic-wpr.mv-target { cursor: copy; }

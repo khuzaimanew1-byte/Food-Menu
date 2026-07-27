@@ -1,0 +1,32 @@
+/* ── MvLabel — floating Before / After indicator ─────────────────────────── */
+
+.mv-lbl {
+  position:       fixed;
+  pointer-events: none;
+  z-index:        9999;
+
+  padding:        2px 8px;
+  border-radius:  4px;
+  font-size:      10px;
+  letter-spacing: 0.06em;
+  font-weight:    600;
+  white-space:    nowrap;
+
+  background:     rgba(12, 10, 6, 0.82);
+  border:         1px solid rgba(var(--gold), 0.28);
+  backdrop-filter: blur(6px);
+
+  /* Fade in smoothly */
+  animation: mv-lbl-in 0.1s ease both;
+}
+
+@keyframes mv-lbl-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Before → warm gold */
+.mv-lbl--before { color: rgb(var(--gold)); }
+
+/* After → slightly dimmer gold so the two states read differently at a glance */
+.mv-lbl--after  { color: rgba(var(--gold), 0.62); }
