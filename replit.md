@@ -1,44 +1,51 @@
-# Infinity Castle's Cuisine — Digital Menu
+# Infinity Castle's Cuisine Menu
 
-A paginated digital restaurant menu (Arabic, Turkish, Grill, Desserts) with cover → content → closing pages, print support, and a unified control dock.
+A rich, animated digital menu viewer for **Infinity Castle's Cuisine** — a restaurant serving Arabic, Turkish, Grill & Dessert dishes.
 
-## Run & Operate
+## What it does
 
-- **Menu app (preview):** managed by the `artifacts/menu: web` workflow — run `pnpm --filter @workspace/menu run dev` (PORT=26151, BASE_PATH=/)
-- **API server:** `pnpm --filter @workspace/api-server run dev` (NestJS, port 8080)
-- `pnpm install` — install all workspace dependencies (required after a fresh clone/import)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
+- Displays a paginated, animated menu in an A4-page format (cover → content pages → closing)
+- Right-click context menu lets you edit items, reorder sections/items via drag-style move/paste, add or delete entries, and change page shapes
+- Print button exports the current view
+- All menu data lives in `artifacts/restaurant-pos/src/data/menu.ts` and is managed in-memory via `menuStore`
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+| Layer | Tech |
+|-------|------|
+| Frontend | React 19 + Vite 7 + TypeScript |
+| Styling | Tailwind CSS v4 + custom CSS |
+| Animation | Framer Motion |
+| Routing | Wouter |
+| Monorepo | pnpm workspaces |
 
-## Where things live
+## How to run
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+The dev server starts automatically via the **"artifacts/restaurant-pos: web"** workflow:
 
-## Architecture decisions
+```
+PORT=26151 pnpm --filter @workspace/restaurant-pos run dev
+```
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+App is served at `/` (preview path).
 
-## Product
+## Project structure
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+```
+artifacts/
+  restaurant-pos/      ← main menu app
+    src/
+      components/      ← UI components (ContextMenu, NvCtl, PrtBtn, CvrPg, …)
+      data/menu.ts     ← all menu item data
+      lib/
+        menu/          ← menuStore (SSOT for section/item state)
+        mv/            ← move-mode store (drag-to-reorder)
+        spl/           ← pointer hit-test helpers
+      pg/mn-pg/        ← main page orchestrator (pagination, transitions)
+  api-server/          ← Express API server (not currently used by the menu app)
+  mockup-sandbox/      ← Vite sandbox for UI component mockups (canvas/design)
+```
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
-
-## Gotchas
-
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+_None recorded yet._

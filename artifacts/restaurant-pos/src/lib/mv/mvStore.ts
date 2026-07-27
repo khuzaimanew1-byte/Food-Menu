@@ -66,6 +66,21 @@ export function getMovingSect() {
   return { movingId: _movingSectId };
 }
 
+// ── Unified helpers ────────────────────────────────────────────────────────
+
+/** Returns whichever move is currently active (item or section), or null. */
+export function getMoving(): { movingId: string | null; movingType: 'item' | 'section' | null } {
+  if (_movingItemId) return { movingId: _movingItemId, movingType: 'item' };
+  if (_movingSectId) return { movingId: _movingSectId, movingType: 'section' };
+  return { movingId: null, movingType: null };
+}
+
+/** Deactivates whichever move is currently active. */
+export function deactivate(): void {
+  if (_movingItemId) { deactivateItem(); return; }
+  if (_movingSectId) { deactivateSect(); }
+}
+
 // ── Pointer position ───────────────────────────────────────────────────────
 
 export function setLastPointerPos(x: number, y: number): void {
