@@ -1,0 +1,51 @@
+jab move section kareinge toh heading ke neeeche jitne item hai section ke andar honge kya issmein sirf heading specify hai saare items section ke andar nhin hai new file create karo, sab kuch update karo items section contaner ke andar hon new section new heading. deeply analyze karke batao kya samjhe.
+
+10 minutes ago
+Identifying section hierarchy
+
+Identifying section hierarchy
+Let me do a deep read of the data model and all section-related logic before explaining or touching anything.
+
+
+3 actions
+What I understand:
+
+Currently, a "section" in the DOM is split across two sibling elements inside an anonymous cp-sect div:
+
+MnHdg → has data-area="section" — only the heading is the section target
+div.cp-grid → the items, completely unaffiliated with any section identity
+So the section has no container component — it's just a layout div in CtntPg. This means:
+
+The move handle is only the heading, not the whole unit
+The CSS sibling hack (.disabled ~ .cp-grid) is a workaround for the missing container
+Right-clicking an item inside the section has no knowledge it belongs to a section
+What needs to happen: Create MnSect — a proper section component that owns data-area="section" on its root, contains MnHdg + the items grid together, and handles its own move/disabled state. MnHdg becomes purely presentational. The sibling hack disappears.
+
+Let me read CtntPg.css and MnHdg.css first, then implement everything.
+
+
+2 actions
+Good. Now I'll implement everything in parallel — 7 files at once.
+
+
+16 actions
+Clean — no errors. Here's what was done and why:
+
+What I understood: The section had no real container component. data-area="section" lived only on MnHdg's div — so the "section" in the DOM was just a heading. The items grid was a plain sibling div inside an anonymous cp-sect wrapper in CtntPg. Moving a section moved the right data (title + items array), but visually and structurally they were disconnected.
+
+What changed:
+
+New MnSect/MnSect.tsx — proper section container. Owns data-area="section" and data-id on its root, contains MnHdg + the items grid together as one unit. Handles useMv() → disabled on the whole container (heading + items, no CSS hack needed), and useMvActive() → mv-target cursor.
+
+New MnSect/MnSect.css — owns section spacing (.mn-sect + .mn-sect), items grid alignment (.cp-grid), and the drop-target cursor. Absorbed what was scattered across CtntPg.css and MnHdg.css.
+
+MnHdg.tsx — stripped to purely presentational. No data-area, no data-id, no move hooks. Just renders the gold-rule + title row and handles its own edit state.
+
+MnHdg.css — removed .mh-wrap.mv-target (moved to MnSect.css).
+
+CtntPg.tsx — now just maps sections to <MnSect>, no manual div assembly.
+
+CtntPg.css — cleared (both its rules moved to MnSect.css).
+
+utils.css — .disabled ~ .cp-grid sibling hack removed entirely — no longer needed since disabled on MnSect covers everything inside it.
+Kya samjhe kya section ke andar heading aur uske neeche ke saare items hain, abhi kuch change nhin karna.
