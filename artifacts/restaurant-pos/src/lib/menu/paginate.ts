@@ -18,7 +18,6 @@ const CONTENT_H = 121;   // usable height per page
 const ITEM_H    = 13;    // one MnItm row
 const GAP_H     = 3.2;   // items-grid gap
 const HDG_H     = 7;     // MnHdg + top/bottom margins
-const MIN_RATIO = 0.40;  // push section to next page when < 40% space left
 
 export function paginateMenuSections(raw: RawSect[]): PageData[] {
   const pages: PageData[] = [];
@@ -35,10 +34,6 @@ export function paginateMenuSections(raw: RawSect[]): PageData[] {
   const pageHasItems = () => currSects.some(s => s.items.length > 0);
 
   for (const sect of raw) {
-    if (usedH > 0) {
-      const remaining = CONTENT_H - usedH;
-      if (remaining / CONTENT_H < MIN_RATIO) flushPage();
-    }
 
     currSects.push({ title: sect.title, items: [] });
     usedH += HDG_H;
