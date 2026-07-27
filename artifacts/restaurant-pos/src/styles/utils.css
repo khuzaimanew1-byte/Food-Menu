@@ -1,8 +1,2 @@
 @import "./bg/glass.css";
 
-/* When a section heading is disabled, the sibling items grid is also disabled.
-   Reuses the existing .disabled class (Button/base.css) — no style duplication. */
-.disabled ~ .cp-grid {
-  opacity:        0.6;
-  pointer-events: none;
-}

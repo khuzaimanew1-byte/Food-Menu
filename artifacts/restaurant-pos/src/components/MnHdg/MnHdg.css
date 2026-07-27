@@ -44,7 +44,3 @@
   outline: none;
 }
 
-/* ── Move drop-target — cursor only, no lines ────────────────────────────
-   Visual feedback is handled by the global <MvLabel> floating label.
-   Only the cursor changes here to signal this is a valid drop target.    */
-.mh-wrap.mv-target { cursor: copy; }

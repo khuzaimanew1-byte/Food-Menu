@@ -1,0 +1,14 @@
+/* ── MnSect — section container ──────────────────────────────────────────── */
+
+/* spacing between consecutive sections on the same page */
+.mn-sect + .mn-sect {
+  margin-top: 1cqw;
+}
+
+/* items grid — constrains item flow within the section */
+.cp-grid {
+  align-content: start;
+}
+
+/* move drop-target: cursor signals this is a valid section drop zone */
+.mn-sect.mv-target { cursor: copy; }

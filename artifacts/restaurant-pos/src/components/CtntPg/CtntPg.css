@@ -1,8 +1,1 @@
-.cp-grid {
-  align-content: start;
-}
-
-/* spacing between consecutive sections on the same page */
-.cp-sect + .cp-sect {
-  margin-top: 1cqw;
-}
+/* CtntPg — section layout now owned by MnSect/MnSect.css */

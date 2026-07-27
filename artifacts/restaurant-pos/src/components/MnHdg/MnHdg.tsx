@@ -1,7 +1,9 @@
-import { useId, useState, useEffect, useRef } from "react";
+// ── MnHdg — section heading (purely presentational) ──────────────────────
+// Renders the gold-rule + title row. No data-area, no move state —
+// those are owned by the parent MnSect container.
+
+import { useId, useState, useEffect } from "react";
 import { useEdt } from "@/lib/edt/useEdt";
-import { useMv } from "@/lib/mv/useMv";
-import { useMvActive } from "@/lib/mv/useMvActive";
 import "./MnHdg.css";
 
 interface MhPr {
@@ -11,15 +13,8 @@ interface MhPr {
 function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   const uid      = useId().replace(/:/g, "");
   const isActive = useEdt(text);
-  const isMoving = useMv(text ?? '');
   const [editedText, setEditedText] = useState<string | null>(null);
 
-  // ── Move drop-target state ─────────────────────────────────────────────
-  const mvState      = useMvActive();
-  const isDropTarget = mvState.active && mvState.movingType === 'section' && !isMoving;
-  const wprRef = useRef<HTMLDivElement>(null);
-
-  // Persist edited text on Save
   useEffect(() => {
     const handler = (e: Event) => {
       const d = (e as CustomEvent<{ id: string; fields: Record<string, string> }>).detail;
@@ -34,18 +29,11 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
 
   const cls = [
     'mh-wrap flex flex-col items-center',
-    isActive     ? 'edt-on'    : '',
-    isMoving     ? 'disabled'    : '',
-    isDropTarget ? 'mv-target' : '',
+    isActive ? 'edt-on' : '',
   ].filter(Boolean).join(' ');
 
   return (
-    <div
-      ref={wprRef}
-      className={cls}
-      data-area="section"
-      data-id={text}
-    >
+    <div className={cls}>
       <div className="mh-row flex items-center justify-center">
         <div className="mh-div">
           <svg preserveAspectRatio="none" viewBox="0 0 100 10">
@@ -54,7 +42,9 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
                 <stop offset="0%"   stopColor="rgb(var(--wht))" stopOpacity="0" />
                 <stop offset="100%" stopColor="rgb(var(--wht))" stopOpacity="1" />
               </linearGradient>
-              <mask id={`mask-l-${uid}`}><rect x="0" y="0" width="100" height="10" fill={`url(#fade-l-${uid})`} /></mask>
+              <mask id={`mask-l-${uid}`}>
+                <rect x="0" y="0" width="100" height="10" fill={`url(#fade-l-${uid})`} />
+              </mask>
             </defs>
             <g mask={`url(#mask-l-${uid})`}>
               <line    x1="0" y1="5" x2="90" y2="5" stroke="rgb(var(--gold))" strokeWidth="1" />
@@ -80,7 +70,9 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
                 <stop offset="0%"   stopColor="rgb(var(--wht))" stopOpacity="1" />
                 <stop offset="100%" stopColor="rgb(var(--wht))" stopOpacity="0" />
               </linearGradient>
-              <mask id={`mask-r-${uid}`}><rect x="0" y="0" width="100" height="10" fill={`url(#fade-r-${uid})`} /></mask>
+              <mask id={`mask-r-${uid}`}>
+                <rect x="0" y="0" width="100" height="10" fill={`url(#fade-r-${uid})`} />
+              </mask>
             </defs>
             <g mask={`url(#mask-r-${uid})`}>
               <polygon points="0,5 5,2 10,5 5,8"   fill="rgb(var(--gold))" />
