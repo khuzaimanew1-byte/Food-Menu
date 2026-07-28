@@ -1,43 +1,38 @@
 :root {
-  /* Hero Accent */
   --gold: 196, 160, 74;
   --gl:   232, 214, 166;
 
-  /* Antique Metals */
   --gm:   147, 117, 63;
   --gw:   182, 149, 90;
   --gmu:  136, 109, 67;
   --glt:  218, 198, 154;
 
-  /* Castle Surfaces */
   --chr:  36, 34, 32;
   --chrd: 18, 15, 13;
   --ink:  25, 22, 19;
+  --ctx:  10, 8, 7;
 
-  /* Woods */
   --wlt:  63, 42, 24;
   --oak:  51, 35, 21;
 
-  /* Text */
   --cr:   234, 227, 211;
   --mut:  149, 140, 124;
 
-  /* Neutral */
   --ash:  103, 94, 82;
   --fog:  74, 72, 69;
 
-  /* Lantern */
   --lntn: 214, 145, 54;
 
-  /* Base */
   --blk:  0, 0, 0;
   --wht:  255, 255, 255;
 
-  /* Fonts */
-  --ff:  'Cormorant Garamond', Georgia, serif;
-  --ff2: 'Cormorant', Georgia, serif;
+  --dng:  204, 55, 38;
+  --dngh: 228, 95, 72;
 
-  /* shadcn */
+  --ff:   'Cormorant Garamond', Georgia, serif;
+  --ff2:  'Cormorant', Georgia, serif;
+  --ffc:  'Cinzel', Georgia, serif;
+
   --background:          24 8% 12%;
   --foreground:          40 34% 90%;
 
@@ -54,10 +49,6 @@
 
   --radius:              0.5rem;
 
-  /* ic shape polygon — shared by .ic-bdr, .ic-inn (ic.css) and
-     any overlay that must clip to exactly the same crown silhouette
-     (e.g. .mic-chk in MnItm.css). Centralised here so there is one
-     source of truth; both consumers reference var(--ic-poly). */
   --ic-poly: polygon(
     50% 0%,  58% 8%,  66% 3%,  74% 9%,
     82% 5%,  90% 11%,
