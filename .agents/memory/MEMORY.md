@@ -1,1 +1,2 @@
 - [Scope Discipline Rule](scope-discipline.md) — page-specific init/destroy (initEdt, initSpl, initMv) belongs in MnPg useEffect, not main.tsx; future pages must not inherit MnPg logic.
+- [Add Item/Section Architecture](add-item-section.md) — full add flow: resolveHint → menuStore → addBase.afterAdd (double-rAF) → pg:goto → edtStore.activate; section title = data-id so must stay unique.

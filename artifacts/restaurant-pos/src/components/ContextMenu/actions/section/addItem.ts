@@ -1,6 +1,13 @@
-/** Add Item (from section context) — append a new blank item to the section
- *  with the given id (title). */
+// ── addItemToSection (from section context) ────────────────────────────────
+// Section-title right-click → always appends to end of that section.
+// No split needed; position is unambiguous.
+
+import { addItemToSection as storeAddItemToSection } from '@/lib/menu/menuStore';
+import { makeItem, afterAdd }                        from '@/lib/menu/addBase';
+
 export function addItemToSection(id: string | null): void {
-  console.log('[action] add-item to section', id);
-  // TODO: create new blank MnItem at end of this section's items list
+  if (!id) return;
+  const newItem = makeItem();
+  storeAddItemToSection(newItem, id);
+  afterAdd(String(newItem.id), 'item');
 }

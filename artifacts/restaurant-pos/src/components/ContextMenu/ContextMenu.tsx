@@ -117,6 +117,35 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
       }
     }
 
+    // ── Second pass: add-item / add-section hints ───────────────────────
+    // Always shown (move mode or not). add-item on item → horizontal split.
+    // add-section on item/section → vertical split (item auto-promotes to section).
+    // add-item on section → append-only, no split hint.
+    // add-section on page  → append-only, no split hint.
+    if (id) {
+      options = options.map(opt => {
+        if (opt.id === 'add-item' && area === 'item') {
+          const rawEl = document.querySelector<HTMLElement>(
+            `[data-area="item"][data-id="${CSS.escape(id)}"]`,
+          );
+          if (!rawEl) return opt;
+          const hint = resolveHint(area, rawEl, x, y, 'item');
+          if (!hint) return opt;
+          return { ...opt, hint: hint.part === 'start' ? 'before' : 'after' };
+        }
+        if (opt.id === 'add-section' && (area === 'item' || area === 'section')) {
+          const rawEl = document.querySelector<HTMLElement>(
+            `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
+          );
+          if (!rawEl) return opt;
+          const hint = resolveHint(area, rawEl, x, y, 'section');
+          if (!hint) return opt;
+          return { ...opt, hint: hint.part === 'start' ? 'before' : 'after' };
+        }
+        return opt;
+      });
+    }
+
     setActive(el);
     setSubState(null);
     setState({ ...calcPos(x, y, options), area, id, options });

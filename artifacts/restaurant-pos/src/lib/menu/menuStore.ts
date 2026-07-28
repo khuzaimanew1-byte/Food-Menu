@@ -1,6 +1,6 @@
 // ── Menu store — mutable source of truth for sections + items ─────────────
 // Plain TS module, no React. Dispatches 'menu:change' when order mutates.
-// App.tsx listens to that event and re-paginates.
+// MnPg listens to that event and re-paginates.
 
 import { ARBC, TURK } from '@/data/menu';
 import type { MnItem } from '@/data/menu';
@@ -67,6 +67,68 @@ export function reorderItem(
   _sections = [..._sections]; // new array ref so equality checks in consumers fire
   dispatch();
 }
+
+// ── Add functions ──────────────────────────────────────────────────────────
+
+/**
+ * Insert a new item before ('start') or after ('end') the target item.
+ * Works across section boundaries — inserts into whichever section owns targetId.
+ */
+export function addItem(newItem: MnItem, targetId: number, part: SplPart): void {
+  for (const sect of _sections) {
+    const tIdx = sect.items.findIndex(it => it.id === targetId);
+    if (tIdx !== -1) {
+      const at = part === 'start' ? tIdx : tIdx + 1;
+      sect.items.splice(at, 0, newItem);
+      _sections = [..._sections];
+      dispatch();
+      return;
+    }
+  }
+  // Fallback: append to last section
+  _sections[_sections.length - 1].items.push(newItem);
+  _sections = [..._sections];
+  dispatch();
+}
+
+/**
+ * Append a new item to the end of a named section.
+ * Used when "Add Item" is triggered from a section-title context.
+ */
+export function addItemToSection(newItem: MnItem, sectionTitle: string): void {
+  const sect = _sections.find(s => s.title === sectionTitle);
+  if (sect) {
+    sect.items.push(newItem);
+  } else {
+    _sections[_sections.length - 1].items.push(newItem);
+  }
+  _sections = [..._sections];
+  dispatch();
+}
+
+/**
+ * Insert a new section before ('start') or after ('end') the target section.
+ */
+export function addSection(newSect: MnSect, targetTitle: string, part: SplPart): void {
+  const tIdx = _sections.findIndex(s => s.title === targetTitle);
+  const at   = tIdx === -1
+    ? _sections.length
+    : part === 'start' ? tIdx : tIdx + 1;
+  _sections.splice(at, 0, newSect);
+  _sections = [..._sections];
+  dispatch();
+}
+
+/**
+ * Append a new section at the very end of the list.
+ * Used when "Add Section" is triggered from the page-area context.
+ */
+export function appendSection(newSect: MnSect): void {
+  _sections = [..._sections, newSect];
+  dispatch();
+}
+
+// ── Reorder functions ──────────────────────────────────────────────────────
 
 /**
  * Move a whole section before or after a target section.

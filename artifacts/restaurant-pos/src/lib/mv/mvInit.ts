@@ -1,23 +1,21 @@
 // ── mvInit — document-level pointer tracking for move/paste ──────────────
-// Call once at startup (main.tsx). Captures the position of every
-// contextmenu and pointerdown event so actions.ts can read the coordinates
-// when the "Paste Here" option is selected — without coupling ContextMenu
-// internals to the move store.
+// Call initMv() inside MnPg (not main.tsx) — it is page-specific logic.
+// destroyMv() removes the same listeners; call it on unmount.
 
 import { setLastPointerPos } from './mvStore';
 
+// Stable handler refs so removeEventListener can match them exactly.
+const _onCtx = (e: MouseEvent)  => setLastPointerPos(e.clientX, e.clientY);
+const _onPtr = (e: PointerEvent) => setLastPointerPos(e.clientX, e.clientY);
+
 export function initMv(): void {
   // contextmenu fires on right-click — the primary way to open the paste menu
-  document.addEventListener(
-    'contextmenu',
-    (e) => setLastPointerPos(e.clientX, e.clientY),
-    true, // capture: fires before ContextMenu's own handler
-  );
-
+  document.addEventListener('contextmenu', _onCtx, true); // capture: before ContextMenu
   // pointerdown covers touch long-press (ContextMenu's fallback trigger)
-  document.addEventListener(
-    'pointerdown',
-    (e) => setLastPointerPos(e.clientX, e.clientY),
-    true,
-  );
+  document.addEventListener('pointerdown', _onPtr, true);
+}
+
+export function destroyMv(): void {
+  document.removeEventListener('contextmenu', _onCtx, true);
+  document.removeEventListener('pointerdown', _onPtr, true);
 }
