@@ -14,7 +14,7 @@ import "./MnItm.css";
 // New items have no field values in the store — these fill in at display time.
 const DEF_NAME  = 'New Item';
 const DEF_DESC  = 'Description';
-const DEF_PRICE = '000';        // stored & displayed as whole number
+const DEF_PRICE = '10';
 
 interface MnItmPr extends MnItem {
   shape?: 'ic' | 'sq' | 'plq';

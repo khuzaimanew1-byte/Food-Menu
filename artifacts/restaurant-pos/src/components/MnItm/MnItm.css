@@ -193,7 +193,8 @@
 
 /* ── Edit-mode text fields ───────────────────────────────────────────────── */
 .edt-on .mic-name,
-.edt-on .mic-desc {
+.edt-on .mic-desc,
+.edt-on .mic-price {
   cursor: text;
   outline: none;
   white-space: normal;
