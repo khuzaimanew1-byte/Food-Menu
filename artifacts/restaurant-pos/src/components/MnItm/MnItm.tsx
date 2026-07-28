@@ -138,7 +138,7 @@ export function MnItm({
       {sel && !isActive && (
         <div className="mic-qty">
           <MinusButton onClick={(e) => { e.stopPropagation(); setQty(q => Math.max(0, q - 1)); }} />
-          <QuantityInput value={qty} />
+          <QuantityInput value={qty} onChange={(n) => setQty(Math.max(0, n))} />
         </div>
       )}
       <div className="mic">
