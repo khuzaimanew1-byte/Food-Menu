@@ -1,51 +1,58 @@
-# Infinity Castle's Cuisine Menu
+# Infinity Castle's Cuisine — Digital Restaurant Menu
 
-A rich, animated digital menu viewer for **Infinity Castle's Cuisine** — a restaurant serving Arabic, Turkish, Grill & Dessert dishes.
+## Project Overview
 
-## What it does
+A paginated digital restaurant menu for **Infinity Castle's Cuisine** featuring Arabic, Turkish, Grill, and Desserts categories. Built as a React 19 + Vite 7 SPA with print support, decorative image overlays, and a custom menu-item card system.
 
-- Displays a paginated, animated menu in an A4-page format (cover → content pages → closing)
-- Right-click context menu lets you edit items, reorder sections/items via drag-style move/paste, add or delete entries, and change page shapes
-- Print button exports the current view
-- All menu data lives in `artifacts/restaurant-pos/src/data/menu.ts` and is managed in-memory via `menuStore`
+## How to Run
+
+The dev server starts automatically via the configured workflow:
+
+```
+PORT=26151 BASE_PATH=/ pnpm --filter @workspace/restaurant-pos run dev
+```
+
+Dependencies: `pnpm install` (run from workspace root)
 
 ## Stack
 
-| Layer | Tech |
-|-------|------|
-| Frontend | React 19 + Vite 7 + TypeScript |
-| Styling | Tailwind CSS v4 + custom CSS |
-| Animation | Framer Motion |
-| Routing | Wouter |
-| Monorepo | pnpm workspaces |
+- **Frontend:** React 19, Vite 7, Tailwind CSS 4, TypeScript 5.9
+- **Backend (stub):** NestJS 10 API server in `artifacts/api-server/` — health route only
+- **DB (not active):** Drizzle ORM + Neon (neon-http) — `DATABASE_URL` secret not set, schema empty
+- **Shared libs:** `lib/api-client-react`, `lib/api-zod` (OpenAPI codegen via Orval)
 
-## How to run
-
-The dev server starts automatically via the **"artifacts/restaurant-pos: web"** workflow:
+## Project Structure
 
 ```
-PORT=26151 pnpm --filter @workspace/restaurant-pos run dev
+artifacts/restaurant-pos/   ← Main frontend app
+artifacts/api-server/       ← NestJS backend stub
+lib/                        ← Shared generated libs
+scripts/                    ← Workspace scripts
 ```
 
-App is served at `/` (preview path).
+## Key Files
 
-## Project structure
+- `artifacts/restaurant-pos/src/App.tsx` — root component, menu data (hardcoded)
+- `artifacts/restaurant-pos/src/pg/` — page components (cover, content, closing)
+- `artifacts/restaurant-pos/src/components/` — shared UI components
+- `PROJECT-BLUEPRINT.md` — feature registry, architecture decisions, standing rules
+- `SSOT-Rules.md` — naming + style rules (must be checked before any task)
 
-```
-artifacts/
-  restaurant-pos/      ← main menu app
-    src/
-      components/      ← UI components (ContextMenu, NvCtl, PrtBtn, CvrPg, …)
-      data/menu.ts     ← all menu item data
-      lib/
-        menu/          ← menuStore (SSOT for section/item state)
-        mv/            ← move-mode store (drag-to-reorder)
-        spl/           ← pointer hit-test helpers
-      pg/mn-pg/        ← main page orchestrator (pagination, transitions)
-  api-server/          ← Express API server (not currently used by the menu app)
-  mockup-sandbox/      ← Vite sandbox for UI component mockups (canvas/design)
-```
+## Architecture Rules (from SSOT-Rules.md + PROJECT-BLUEPRINT.md)
 
-## User preferences
+- All custom names max 5–6 chars (files, vars, CSS, DB fields)
+- Global styles only in `globals.css` / `variables.css` / `typography.css`
+- Images: WebP in `public/img/`, max 5–6 char filenames
+- Tooltip: always compose from `.tip` + `.dkgl` base classes
+- Disabled state: only `.disabled` class from `Button/base.css`
+- Comma/number formatting: Pakistani lakh/crore system (e.g. 1,00,000), no decimals
 
-_None recorded yet._
+## Known Watchouts
+
+- `DATABASE_URL` not provisioned — DB layer is unusable until set
+- Menu items are hardcoded in `App.tsx`, not fetched from DB
+- DB schema is empty — no tables exist
+
+## User Preferences
+
+- Analysis/planning notes are delivered before implementation confirmation — no code changes until explicitly confirmed
