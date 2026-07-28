@@ -12,22 +12,31 @@
   text-align: center;
 }
 
-/* Editable variant — shown when onChange is wired */
-.qty-inp-edt {
+/* Editable <input> variant */
+input.qty-inp-edt {
   user-select: text;
   cursor: text;
   min-width: 4cqw;
-  padding: 0 0.6cqw;
+  width: 5cqw;
+  padding: 0 0.5cqw;
+  border: none;
   border-radius: 3px;
+  background: transparent;
   outline: none;
+  text-align: center;
   transition: background 0.15s ease, box-shadow 0.15s ease;
+  /* inherit typography from .qty-inp */
+  font-size: 2.8cqw;
+  font-weight: 600;
+  font-family: var(--ff);
+  color: rgb(var(--gl));
 }
 
-.qty-inp-edt:hover {
+input.qty-inp-edt:hover {
   background: rgba(var(--gold), 0.08);
 }
 
-.qty-inp-edt:focus {
+input.qty-inp-edt:focus {
   background: rgba(var(--gold), 0.14);
   box-shadow: 0 0 0 1px rgba(var(--gold), 0.45);
 }
