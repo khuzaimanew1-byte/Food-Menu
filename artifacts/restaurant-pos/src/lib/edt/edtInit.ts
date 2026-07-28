@@ -60,7 +60,7 @@ const _onClick = (e: MouseEvent) => {
 const _onEnter = (e: KeyboardEvent) => {
   if (e.key !== 'Enter') return;
   if (isCnfOpen()) return;           // modal is open — SmMdl handles Enter
-  if (!hasAnyActive() || !isDirty()) return;
+  if (!hasAnyActive()) return;
   e.preventDefault();
   saveAndDeactivate();
 };

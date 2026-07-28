@@ -26,14 +26,16 @@ function _getEl(id: string, type: EdtType): Element | null {
 
 // ── Public API ────────────────────────────────────────────────────────────
 
-/** Activate an element. Same id → toggle off. */
+/** Activate an element. Same id → route toggle-off through requestDeactivate
+ *  so the confirmation modal always appears when leaving edit mode.          */
 export function activate(id: string, type: EdtType) {
   if (_active.has(id)) {
-    _active.delete(id);
+    const el = _getEl(id, type) as HTMLElement | null;
+    requestDeactivate([id], el ?? undefined);
   } else {
     _active.set(id, type);
+    _dispatch();
   }
-  _dispatch();
 }
 
 /** Deactivate a specific id, or all active elements when called with no arg. */
@@ -89,15 +91,10 @@ export function isActiveId(id: string) { return _active.has(id); }
  */
 export function requestDeactivate(ids: string[], anchorEl?: HTMLElement) {
   if (!ids.length) return;
-  if (_dirty) {
-    document.dispatchEvent(new CustomEvent('edt:confirm-needed', {
-      detail: { anchorEl: anchorEl ?? null },
-    }));
-  } else {
-    ids.forEach(id => _active.delete(id));
-    if (_active.size === 0) _dirty = false;
-    _dispatch();
-  }
+  // Always show the confirmation modal — whether dirty or clean.
+  document.dispatchEvent(new CustomEvent('edt:confirm-needed', {
+    detail: { anchorEl: anchorEl ?? null },
+  }));
 }
 
 // ── Confirmation modal open state ─────────────────────────────────────────
