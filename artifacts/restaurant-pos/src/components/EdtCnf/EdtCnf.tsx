@@ -1,14 +1,12 @@
 // ── EdtCnf — edit confirmation modal ─────────────────────────────────────
-// Per-component aware: confirm/discard only affect the ids that triggered
-// the modal (pending ids), not all active elements.
-// Other active components remain untouched after confirm or discard.
+// Listens for edt:confirm-needed. On confirm: saves + deactivates ALL
+// currently active elements (multi-active aware). On close: discards all.
 
 import { useState, useEffect } from 'react';
 import { SmMdl } from '../SmMdl/SmMdl';
 import {
-  confirmSave,
-  confirmDiscard,
   saveAndDeactivate,
+  deactivate,
   getActive,
   isDirty,
   hasAnyActive,
@@ -31,7 +29,7 @@ export function EdtCnf() {
   const [anchorTop, setAnchorTop] = useState<number | undefined>();
   const [offsetX,   setOffsetX]   = useState(0);
 
-  // Outside-click path → show modal (triggered by requestDeactivate when dirty)
+  // Outside-click path → show modal
   useEffect(() => {
     const show = () => {
       const { activeId } = getActive();
@@ -57,14 +55,14 @@ export function EdtCnf() {
     return () => window.removeEventListener('resize', onResize);
   }, [open]);
 
-  // Enter key while editing (modal NOT open) → save all dirty active elements
+  // Enter key while editing (modal NOT open) → direct save of all active, no modal
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key !== 'Enter') return;
       if (open) return;
       if (!hasAnyActive() || !isDirty()) return;
       e.preventDefault();
-      saveAndDeactivate(); // saves all active elements
+      saveAndDeactivate(); // saves all active
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
@@ -77,8 +75,8 @@ export function EdtCnf() {
       confirmLabel="Save"
       anchorTop={anchorTop}
       offsetX={offsetX}
-      onConfirm={() => { setOpen(false); confirmSave(); }}    // saves pending ids only
-      onClose={() => { setOpen(false); confirmDiscard(); }}  // discards pending ids only
+      onConfirm={() => { setOpen(false); saveAndDeactivate(); }}  // saves all
+      onClose={() => { setOpen(false); deactivate(); }}           // discards all
     />
   );
 }

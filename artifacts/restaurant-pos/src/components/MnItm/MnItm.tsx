@@ -38,7 +38,7 @@ export function MnItm({
 
   // Image upload — commit/revert integrated into the edit lifecycle below.
   const img  = useImgUpld(image);
-  const upld = useUpld({ onUpload: (f) => { img.onUpload(f); setDirty(String(id), true); }, enabled: isActive });
+  const upld = useUpld({ onUpload: (f) => { img.onUpload(f); setDirty(true); }, enabled: isActive });
 
   // Refs to contentEditable nodes for DOM reset on exit.
   const nameRef  = useRef<HTMLHeadingElement>(null);
@@ -126,7 +126,7 @@ export function MnItm({
       sel?.removeAllRanges();
       sel?.addRange(range);
     }
-    setDirty(String(id), true);
+    setDirty(true);
   }, []);
 
   // ── Derived display values ────────────────────────────────────────────────
@@ -162,7 +162,7 @@ export function MnItm({
           <Avt
             src={img.src} name={displayName} alt={displayName} shape={shape}
             uploadable={isActive}
-            onUpload={isActive ? (f) => { img.onUpload(f); setDirty(String(id), true); } : undefined}
+            onUpload={isActive ? (f) => { img.onUpload(f); setDirty(true); } : undefined}
             isDragging={isActive ? upld.isDrg : false}
           />
 
