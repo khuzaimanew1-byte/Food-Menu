@@ -251,11 +251,12 @@ export const BulkCreateItemsResponse = zod.array(BulkCreateItemsResponseItem)
 /**
  * @summary Fetch items for multiple sections (prevents N+1)
  */
+
 export const queryItemsBodyPgDefault = 0;
 export const queryItemsBodySzDefault = 100;
 
 export const QueryItemsBody = zod.object({
-  "sectIds": zod.array(zod.string()),
+  "sectIds": zod.array(zod.string()).min(1),
   "pg": zod.number().default(queryItemsBodyPgDefault),
   "sz": zod.number().default(queryItemsBodySzDefault)
 })

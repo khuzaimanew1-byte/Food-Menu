@@ -25,21 +25,21 @@ import type {
   HealthStatus,
   Item,
   ItemPage,
+  ItmQry,
   ListItemsParams,
   ListSectsParams,
   NewItm,
   NewSct,
   OrdItm,
   OrdReq,
-  QueryItemsBody,
   Sect,
   SectPage,
   UpdItm,
   UpdSct
-} from './api.schemas';
+} from '../schemas';
 
-import { customFetch } from '../custom-fetch';
-import type { ErrorType , BodyType } from '../custom-fetch';
+import { customFetch } from '../../custom-fetch';
+import type { ErrorType , BodyType } from '../../custom-fetch';
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -896,14 +896,14 @@ export const getQueryItemsUrl = () => {
 /**
  * @summary Fetch items for multiple sections (prevents N+1)
  */
-export const queryItems = async (queryItemsBody: QueryItemsBody, options?: RequestInit): Promise<Item[]> => {
+export const queryItems = async (itmQry: ItmQry, options?: RequestInit): Promise<Item[]> => {
 
   return customFetch<Item[]>(getQueryItemsUrl(),
   {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(queryItemsBody)
+    body: JSON.stringify(itmQry)
   }
 );}
 
@@ -912,8 +912,8 @@ export const queryItems = async (queryItemsBody: QueryItemsBody, options?: Reque
 
 
 export const getQueryItemsMutationOptions = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof queryItems>>, TError,{data: BodyType<QueryItemsBody>}, TContext>, request?: SecondParameter<typeof customFetch>}
-): UseMutationOptions<Awaited<ReturnType<typeof queryItems>>, TError,{data: BodyType<QueryItemsBody>}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof queryItems>>, TError,{data: BodyType<ItmQry>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof queryItems>>, TError,{data: BodyType<ItmQry>}, TContext> => {
 
 const mutationKey = ['queryItems'];
 const {mutation: mutationOptions, request: requestOptions} = options ?
@@ -925,7 +925,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof queryItems>>, {data: BodyType<QueryItemsBody>}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof queryItems>>, {data: BodyType<ItmQry>}> = (props) => {
           const {data} = props ?? {};
 
           return  queryItems(data,requestOptions)
@@ -939,18 +939,18 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
   return  { mutationFn, ...mutationOptions }}
 
     export type QueryItemsMutationResult = NonNullable<Awaited<ReturnType<typeof queryItems>>>
-    export type QueryItemsMutationBody = BodyType<QueryItemsBody>
+    export type QueryItemsMutationBody = BodyType<ItmQry>
     export type QueryItemsMutationError = ErrorType<unknown>
 
     /**
  * @summary Fetch items for multiple sections (prevents N+1)
  */
 export const useQueryItems = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof queryItems>>, TError,{data: BodyType<QueryItemsBody>}, TContext>, request?: SecondParameter<typeof customFetch>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof queryItems>>, TError,{data: BodyType<ItmQry>}, TContext>, request?: SecondParameter<typeof customFetch>}
  ): UseMutationResult<
         Awaited<ReturnType<typeof queryItems>>,
         TError,
-        {data: BodyType<QueryItemsBody>},
+        {data: BodyType<ItmQry>},
         TContext
       > => {
       return useMutation(getQueryItemsMutationOptions(options));

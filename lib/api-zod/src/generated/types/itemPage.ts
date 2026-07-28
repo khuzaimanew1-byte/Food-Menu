@@ -5,7 +5,11 @@
  * API specification
  * OpenAPI spec version: 0.2.0
  */
+import type { Item } from './item';
 
-export interface HealthStatus {
-  status: string;
+export interface ItemPage {
+  data: Item[];
+  pg: number;
+  sz: number;
+  tot: number;
 }

@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
-  version: 0.1.0
+  version: 0.2.0
   description: API specification
 servers:
   - url: /api
@@ -10,13 +10,17 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: sects
+    description: Menu sections
+  - name: items
+    description: Menu items
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +28,409 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # ── Sections ──────────────────────────────────────────────────────────────
+
+  /sects:
+    get:
+      operationId: listSects
+      tags: [sects]
+      summary: List sections (paginated)
+      parameters:
+        - { name: pg, in: query, schema: { type: integer, default: 0 } }
+        - { name: sz, in: query, schema: { type: integer, default: 20 } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SectPage"
+    post:
+      operationId: createSect
+      tags: [sects]
+      summary: Create a section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewSct"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sect"
+
+  /sects/bulk:
+    post:
+      operationId: bulkCreateSects
+      tags: [sects]
+      summary: Bulk-create sections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlkSct"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Sect"
+
+  /sects/reord:
+    patch:
+      operationId: reordSects
+      tags: [sects]
+      summary: Reorder sections — pass full ordered id array
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrdReq"
+      responses:
+        "204":
+          description: No content
+
+  /sects/{id}:
+    get:
+      operationId: getSect
+      tags: [sects]
+      summary: Get a section
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sect"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateSect
+      tags: [sects]
+      summary: Partial-update a section
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdSct"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sect"
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteSect
+      tags: [sects]
+      summary: Delete a section (cascades items)
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+
+  # ── Items ──────────────────────────────────────────────────────────────────
+
+  /items:
+    get:
+      operationId: listItems
+      tags: [items]
+      summary: List items in a section (paginated)
+      parameters:
+        - { name: sectId, in: query, required: true, schema: { type: string } }
+        - { name: pg, in: query, schema: { type: integer, default: 0 } }
+        - { name: sz, in: query, schema: { type: integer, default: 20 } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemPage"
+    post:
+      operationId: createItem
+      tags: [items]
+      summary: Create an item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewItm"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /items/bulk:
+    post:
+      operationId: bulkCreateItems
+      tags: [items]
+      summary: Bulk-create items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlkItm"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+
+  /items/query:
+    post:
+      operationId: queryItems
+      tags: [items]
+      summary: Fetch items for multiple sections (prevents N+1)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItmQry"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+
+  /items/reord:
+    patch:
+      operationId: reordItems
+      tags: [items]
+      summary: Reorder items — optionally move to a different section
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrdItm"
+      responses:
+        "204":
+          description: No content
+
+  /items/{id}:
+    get:
+      operationId: getItem
+      tags: [items]
+      summary: Get an item
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateItem
+      tags: [items]
+      summary: Partial-update an item
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdItm"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteItem
+      tags: [items]
+      summary: Delete an item
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+
 components:
   schemas:
     HealthStatus:
       type: object
       properties:
-        status:
-          type: string
-      required:
-        - status
+        status: { type: string }
+      required: [status]
 
+    # ── Section schemas ──────────────────────────────────────────────────────
+    Sect:
+      type: object
+      properties:
+        id:     { type: string }
+        name:   { type: string }
+        pos:    { type: integer }
+        shp:    { type: string, enum: [ic, sq, plq] }
+        crt_at: { type: string, format: date-time }
+        upd_at: { type: string, format: date-time }
+      required: [id, name, pos, shp, crt_at, upd_at]
+
+    NewSct:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        shp:  { type: string, enum: [ic, sq, plq], default: ic }
+      required: [name]
+
+    UpdSct:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        shp:  { type: string, enum: [ic, sq, plq] }
+
+    BlkSct:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewSct"
+          minItems: 1
+      required: [items]
+
+    SectPage:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sect"
+        pg:  { type: integer }
+        sz:  { type: integer }
+        tot: { type: integer }
+      required: [data, pg, sz, tot]
+
+    # ── Item schemas ─────────────────────────────────────────────────────────
+    Item:
+      type: object
+      properties:
+        id:      { type: string }
+        sect_id: { type: string }
+        pos:     { type: integer }
+        name:    { type: string }
+        dsc:     { type: string, nullable: true }
+        price:   { type: string }
+        img:     { type: string, nullable: true }
+        shp:     { type: string, enum: [ic, sq, plq] }
+        crt_at:  { type: string, format: date-time }
+        upd_at:  { type: string, format: date-time }
+      required: [id, sect_id, pos, name, price, shp, crt_at, upd_at]
+
+    NewItm:
+      type: object
+      properties:
+        sect_id: { type: string }
+        name:    { type: string, minLength: 1 }
+        dsc:     { type: string }
+        price:   { type: string, default: "0" }
+        img:     { type: string }
+        shp:     { type: string, enum: [ic, sq, plq], default: ic }
+      required: [sect_id, name]
+
+    UpdItm:
+      type: object
+      properties:
+        name:  { type: string, minLength: 1 }
+        dsc:   { type: string }
+        price: { type: string }
+        img:   { type: string }
+        shp:   { type: string, enum: [ic, sq, plq] }
+
+    BlkItm:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewItm"
+          minItems: 1
+      required: [items]
+
+    ItemPage:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+        pg:  { type: integer }
+        sz:  { type: integer }
+        tot: { type: integer }
+      required: [data, pg, sz, tot]
+
+    # ── Shared ───────────────────────────────────────────────────────────────
+    ItmQry:
+      type: object
+      properties:
+        sectIds:
+          type: array
+          items: { type: string }
+          minItems: 1
+        pg: { type: integer, default: 0 }
+        sz: { type: integer, default: 100 }
+      required: [sectIds]
+
+    OrdReq:
+      type: object
+      properties:
+        ids:
+          type: array
+          items: { type: string }
+          minItems: 1
+      required: [ids]
+
+    OrdItm:
+      type: object
+      properties:
+        ids:
+          type: array
+          items: { type: string }
+          minItems: 1
+        sectId: { type: string }
+      required: [ids]

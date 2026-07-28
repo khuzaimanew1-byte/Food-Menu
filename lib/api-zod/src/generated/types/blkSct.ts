@@ -5,7 +5,9 @@
  * API specification
  * OpenAPI spec version: 0.2.0
  */
+import type { NewSct } from './newSct';
 
-export interface HealthStatus {
-  status: string;
+export interface BlkSct {
+  /** @minItems 1 */
+  items: NewSct[];
 }

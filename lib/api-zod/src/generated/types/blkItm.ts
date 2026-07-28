@@ -5,7 +5,9 @@
  * API specification
  * OpenAPI spec version: 0.2.0
  */
+import type { NewItm } from './newItm';
 
-export interface HealthStatus {
-  status: string;
+export interface BlkItm {
+  /** @minItems 1 */
+  items: NewItm[];
 }

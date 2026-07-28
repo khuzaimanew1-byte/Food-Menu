@@ -5,7 +5,10 @@
  * API specification
  * OpenAPI spec version: 0.2.0
  */
+import type { NewSctShp } from './newSctShp';
 
-export interface HealthStatus {
-  status: string;
+export interface NewSct {
+  /** @minLength 1 */
+  name: string;
+  shp?: NewSctShp;
 }

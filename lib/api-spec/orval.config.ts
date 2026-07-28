@@ -1,15 +1,14 @@
 import { defineConfig, InputTransformerFn } from "orval";
 import path from "path";
 
-const root = path.resolve(__dirname, "..", "..");
+const root             = path.resolve(__dirname, "..", "..");
 const apiClientReactSrc = path.resolve(root, "lib", "api-client-react", "src");
-const apiZodSrc = path.resolve(root, "lib", "api-zod", "src");
+const apiZodSrc         = path.resolve(root, "lib", "api-zod", "src");
 
 // Our exports make assumptions about the title of the API being "Api" (i.e. generated output is `api.ts`).
 const titleTransformer: InputTransformerFn = (config) => {
   config.info ??= {};
   config.info.title = "Api";
-
   return config;
 };
 
@@ -17,22 +16,22 @@ export default defineConfig({
   "api-client-react": {
     input: {
       target: "./openapi.yaml",
-      override: {
-        transformer: titleTransformer,
-      },
+      override: { transformer: titleTransformer },
     },
     output: {
-      workspace: apiClientReactSrc,
-      target: "generated",
+      // No workspace — prevents orval from appending a barrel to src/index.ts
+      target: path.resolve(apiClientReactSrc, "generated", "api"),
       client: "react-query",
       mode: "split",
       baseUrl: "/api",
       clean: true,
       prettier: true,
+      schemas: {
+        path: path.resolve(apiClientReactSrc, "generated", "schemas"),
+        type: "typescript",
+      },
       override: {
-        fetch: {
-          includeHttpResponseReturnType: false,
-        },
+        fetch: { includeHttpResponseReturnType: false },
         mutator: {
           path: path.resolve(apiClientReactSrc, "custom-fetch.ts"),
           name: "customFetch",
@@ -43,28 +42,29 @@ export default defineConfig({
   zod: {
     input: {
       target: "./openapi.yaml",
-      override: {
-        transformer: titleTransformer,
-      },
+      override: { transformer: titleTransformer },
     },
     output: {
-      workspace: apiZodSrc,
+      // No workspace — prevents orval from appending a barrel to src/index.ts
+      target: path.resolve(apiZodSrc, "generated", "api"),
       client: "zod",
-      target: "generated",
-      schemas: { path: "generated/types", type: "typescript" },
       mode: "split",
       clean: true,
       prettier: true,
+      schemas: {
+        path: path.resolve(apiZodSrc, "generated", "types"),
+        type: "typescript",
+      },
       override: {
         zod: {
           coerce: {
-            query: ['boolean', 'number', 'string'],
-            param: ['boolean', 'number', 'string'],
-            body: ['bigint', 'date'],
-            response: ['bigint', 'date'],
+            query:    ["boolean", "number", "string"],
+            param:    ["boolean", "number", "string"],
+            body:     ["bigint", "date"],
+            response: ["bigint", "date"],
           },
         },
-        useDates: true,
+        useDates:  true,
         useBigInt: true,
       },
     },
