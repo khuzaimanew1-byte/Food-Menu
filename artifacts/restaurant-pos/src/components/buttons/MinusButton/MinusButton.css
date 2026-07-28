@@ -1,0 +1,26 @@
+.minus-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5cqw;
+  height: 5.5cqw;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--gold), 0.45);
+  background: rgba(var(--ink), 0.82);
+  color: rgb(var(--gold));
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.minus-btn:hover {
+  background: rgba(var(--gold), 0.15);
+  border-color: rgba(var(--gold), 0.70);
+}
+
+.minus-ico {
+  width: 2.8cqw;
+  height: 2.8cqw;
+  display: block;
+  flex-shrink: 0;
+}

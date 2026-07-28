@@ -1,75 +1,41 @@
-import { useState } from 'react';
 import './AvtDmo.css';
 import { Avt } from '../avatar/Avt';
 import { useImgUpld } from '../../lib/upld/useImgUpld';
 
 export function AvtDmo() {
-  const [selA, setSelA] = useState(false);
-  const [selB, setSelB] = useState(false);
-  const [selC, setSelC] = useState(false);
-  const [selD, setSelD] = useState(false);
-
-  // Upload slots: object-URL lifecycle managed by useImgUpld
   const icUpld = useImgUpld();
   const sqUpld = useImgUpld();
 
   return (
     <div className="admo">
       <h1 className="admo-ttl ff-s">Avatar Demo</h1>
-
       <div className="admo-grid">
-
-        {/* ── Normal mode ── */}
         <div className="admo-cell">
-          <span className="admo-lbl">Normal · Initials · Idle</span>
-          <Avt name="Lamb Kofta" shape="ic" checked={false} onSelect={() => {}} />
+          <span className="admo-lbl">Normal · Initials</span>
+          <Avt name="Lamb Kofta" shape="ic" />
         </div>
-
         <div className="admo-cell">
-          <span className="admo-lbl">Normal · Initials · Selected</span>
-          <Avt name="Lamb Kofta" shape="ic" checked={selA} onSelect={() => setSelA(s => !s)} />
+          <span className="admo-lbl">Normal · AV Fallback</span>
+          <Avt shape="ic" />
         </div>
-
         <div className="admo-cell">
-          <span className="admo-lbl">Normal · AV Fallback · Selected</span>
-          <Avt shape="ic" checked={selB} onSelect={() => setSelB(s => !s)} />
+          <span className="admo-lbl">Normal · Sq · Initials</span>
+          <Avt name="Arabic Dish" shape="sq" />
         </div>
-
-        <div className="admo-cell">
-          <span className="admo-lbl">Normal · Sq · Initials · Selected</span>
-          <Avt name="Arabic Dish" shape="sq" checked={selC} onSelect={() => setSelC(s => !s)} />
-        </div>
-
         <div className="admo-cell">
           <span className="admo-lbl">Normal · Single-word name</span>
-          <Avt name="Kunafa" shape="ic" checked={selD} onSelect={() => setSelD(s => !s)} />
+          <Avt name="Kunafa" shape="ic" />
         </div>
-
-        {/* ── Upload mode ── */}
         <div className="admo-cell">
-          <span className="admo-lbl">Upload · ic · shows image after pick</span>
-          <Avt
-            shape="ic"
-            src={icUpld.src}
-            uploadable
-            onUpload={icUpld.onUpload}
-          />
+          <span className="admo-lbl">Upload · ic</span>
+          <Avt shape="ic" src={icUpld.src} uploadable onUpload={icUpld.onUpload} />
         </div>
-
         <div className="admo-cell">
-          <span className="admo-lbl">Upload · sq · shows image after pick</span>
-          <Avt
-            shape="sq"
-            src={sqUpld.src}
-            uploadable
-            onUpload={sqUpld.onUpload}
-          />
+          <span className="admo-lbl">Upload · sq</span>
+          <Avt shape="sq" src={sqUpld.src} uploadable onUpload={sqUpld.onUpload} />
         </div>
-
       </div>
-
       <p className="admo-hint ff-s">
-        Normal avatars: click to toggle selection.<br />
         Upload avatars: tap or drag a file to pick · image shown immediately.
       </p>
     </div>

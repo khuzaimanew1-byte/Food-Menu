@@ -65,13 +65,17 @@ Tags: [LIST-KEY] [EFFECT-DEPS] [MEMO-HEAVY] [DEBOUNCE] [MOD-ARCH]
 
 
 ## DATABASE
-Tags: [DB-SSOT] [DB-INDEX] [DB-SELECT] [DB-CACHE] [DB-POOL] [DB-TIMEOUT]
-[DB-SSOT] DB schema is source of truth for data; OpenAPI spec is source of truth for all public APIs; all frontend clients, hooks, types, Zod schemas must be generated from OpenAPI spec — no manual duplicates.
-[DB-INDEX] Index on every foreign key; composite index on frequently queried field combinations.
-[DB-SELECT] SELECT * forbidden; always specify needed fields.
-[DB-CACHE] Cache static/config data; never hit DB on every request for immutable data.
-[DB-POOL] DB connection pooling mandatory; new connection per request forbidden.
-[DB-TIMEOUT] Set timeout on all DB queries.
+Tags: [DB-SSOT] [DB-ID] [DB-ASSET] [DB-INDEX] [DB-SELECT] [DB-CONSTRAINT] [DB-TX] [DB-CACHE] [DB-POOL] [DB-TIMEOUT]
+[DB-SSOT] DB schema is the source of truth for data; OpenAPI spec is the source of truth for all public APIs. Generate frontend clients, hooks, types, and Zod schemas from OpenAPI—never maintain manual duplicates.
+[DB-ID] Every table must use immutable, URL-safe primary IDs (NanoID preferred; UUIDv7 where ordering is beneficial). IDs must never be reused or changed.
+[DB-ASSET] Store immutable asset IDs or storage keys, never binary files or provider-specific URLs. Generate public URLs at runtime.
+[DB-INDEX] Index every foreign key. Add composite indexes only for proven query patterns, and remove unused indexes.
+[DB-SELECT] `SELECT *` is forbidden. Always query only the required columns.
+[DB-CONSTRAINT] Enforce data integrity with database constraints (NOT NULL, UNIQUE, CHECK, FOREIGN KEY) and appropriate ON DELETE / ON UPDATE actions. Never rely solely on application logic.
+[DB-TX] Multi-step writes must execute within database transactions. Partial writes are forbidden.
+[DB-CACHE] Cache immutable or infrequently changing data. Never query the database repeatedly for static/config data.
+[DB-POOL] Connection pooling is mandatory. Opening a new database connection per request is forbidden.
+[DB-TIMEOUT] Every database query must have an execution timeout to prevent runaway operations.
 
 ---
 
@@ -89,7 +93,7 @@ Tags: [API-PAGINATE] [API-FIELDS] [API-BULK] [TASK-QUEUE] [HTTP-COMPRESS] [HTTP-
 
 ## OPTIMIZATION
 Tags: [OPT-VSCRL] [OPT-IMG] [OPT-FIRST] [OPT-CHUNK] [OPT-IMPORT] [OPT-DEFER] [OPT-WILL] [OPT-WORKER] [OPT-PRELOAD] [OPT-SW] [OPT-INTERSECT] [REQ-STORE] [REQ-CLEAN] [REQ-TAB] [REQ-PURGE] [REQ-BATCH] [REQ-CHUNK] [REQ-DEDUP] [REQ-PRIO] [REQ-CIRCUIT] [REQ-COMPRESS] [REQ-ISOLATE] [NET-IMG] [NET-SVG] [NET-FONT] [NET-BATCH] [NET-HTTP2] [NET-DNS] [NET-CSS]
-[OPT-VSCRL] Lists with 50+ items → react-window virtual scroll mandatory.
+[OPT-VSCRL] Lists with 30+ items → react-window virtual scroll mandatory.
 [OPT-IMG] All images → loading="lazy" by default.
 [OPT-FIRST] First screen loads only essential JS/CSS; defer everything else.
 [OPT-CHUNK] Each page = its own chunk; bundle max 150kb gzipped.
