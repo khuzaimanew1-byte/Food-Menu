@@ -81,4 +81,4 @@ No archived rows yet. Archive triggers at 25 active rows per table → BLUEPRINT
 ---
 
 ## 7. LAST TOUCHED
-07-28 — PostgreSQL schema applied (sects + items tables). NestJS API server wired with full CRUD for sects+items. OpenAPI spec + Orval codegen (React Query hooks + Zod). Frontend now loads from DB on mount via fetchAll() + initSections(). MnItem.id changed from number to string (DB nanoid). edt:save listener in menuStore fires PATCH on inline edits. Add/delete/reorder ContextMenu actions wired to API. esbuild decorator metadata fix: @anatine/esbuild-decorators plugin added to build.mjs.
+07-28 — DB connected (DATABASE_URL set). Schema pushed + seeded (Arabic 15 items, Turkish 15 items). API server: added HTTP compression (compression middleware), rate limiting (@nestjs/throttler, 120 req/min), Cache-Control headers on GET endpoints (list=10s, item=30s, stale-while-revalidate). reordSects/reordItems upgraded to single CASE UPDATE (O(1) round-trips). Frontend loads live from DB, no browser errors.

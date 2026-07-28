@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import compression from "compression";
 import cookieParser from "cookie-parser";
 import { NestFactory } from "@nestjs/core";
 import { Logger } from "nestjs-pino";
@@ -14,7 +15,9 @@ async function boot() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
   app.setGlobalPrefix("api");
-  app.enableCors();
+  // [HTTP-COMPRESS] gzip/brotli on all responses
+  app.use(compression());
+  app.enableCors({ origin: process.env["NODE_ENV"] === "production" ? false : true });
   app.use(cookieParser());
   await app.listen(port, "0.0.0.0");
 }

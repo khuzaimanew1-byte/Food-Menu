@@ -84,15 +84,17 @@ export class MenuSvc {
     });
   }
 
-  // [DB-TX] reorder: accept ordered id array → assign pos 0,1,2...
+  // [DB-TX] reorder: single CASE UPDATE — O(1) round-trips regardless of count
   async reordSects(ids: string[]) {
     if (!ids.length) return;
+    const now = new Date();
     await this.db.transaction(async (tx) => {
-      for (let i = 0; i < ids.length; i++) {
-        await tx.update(sects)
-          .set({ pos: i, upd_at: new Date() })
-          .where(eq(sects.id, ids[i]));
-      }
+      await tx.execute(sql`
+        UPDATE sects SET
+          pos    = CASE id ${sql.join(ids.map((id, i) => sql`WHEN ${id} THEN ${i}`), sql` `)} END,
+          upd_at = ${now}
+        WHERE id = ANY(${ids})
+      `);
     });
   }
 
@@ -177,15 +179,19 @@ export class MenuSvc {
     });
   }
 
-  // Reorder items — optionally move to a different section
+  // Reorder items — optionally move to a different section; single CASE UPDATE
   async reordItems(ids: string[], sectId?: string) {
     if (!ids.length) return;
+    const now = new Date();
     await this.db.transaction(async (tx) => {
-      for (let i = 0; i < ids.length; i++) {
-        await tx.update(items)
-          .set({ pos: i, ...(sectId ? { sect_id: sectId } : {}), upd_at: new Date() })
-          .where(eq(items.id, ids[i]));
-      }
+      const sectClause = sectId ? sql`, sect_id = ${sectId}` : sql``;
+      await tx.execute(sql`
+        UPDATE items SET
+          pos    = CASE id ${sql.join(ids.map((id, i) => sql`WHEN ${id} THEN ${i}`), sql` `)} END,
+          upd_at = ${now}
+          ${sectClause}
+        WHERE id = ANY(${ids})
+      `);
     });
   }
 }

@@ -1,21 +1,32 @@
 import {
   Controller, Get, Post, Patch, Delete,
-  Param, Body, Query, HttpCode,
+  Param, Body, Query, HttpCode, Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { MenuSvc }  from './menu.svc';
 import type { UpdSect } from '@workspace/db';
+
+// [HTTP-CACHE] 10s shared cache for list; 30s for single-item reads
+const LIST_CC  = 'public, max-age=10, stale-while-revalidate=30';
+const ITEM_CC  = 'public, max-age=30, stale-while-revalidate=60';
 
 @Controller('sects')
 export class SectCtrl {
   constructor(private readonly svc: MenuSvc) {}
 
   @Get()
-  list(@Query('pg') pg = '0', @Query('sz') sz = '20') {
+  async list(
+    @Query('pg') pg = '0',
+    @Query('sz') sz = '20',
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    res.setHeader('Cache-Control', LIST_CC);
     return this.svc.listSects(+pg, +sz);
   }
 
   @Get(':id')
-  get(@Param('id') id: string) {
+  async get(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
+    res.setHeader('Cache-Control', ITEM_CC);
     return this.svc.getSect(id);
   }
 

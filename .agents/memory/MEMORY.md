@@ -1,3 +1,4 @@
+- [DB production setup](db-production-setup.md) — SSOT compliance table, reorder optimization rationale, what was seeded and when.
 - [Scope Discipline Rule](scope-discipline.md) — page-specific init/destroy (initEdt, initSpl, initMv) belongs in MnPg useEffect, not main.tsx; future pages must not inherit MnPg logic.
 - [Refactoring Rules](refactoring-rules.md) — recurring SSOT violations (console.log, dead code, CSS vars, index keys, React.memo, effect deps) with fix patterns and grep commands.
 - [Add Item/Section Architecture](add-item-section.md) — full add flow: resolveHint → menuStore → addBase.afterAdd (double-rAF) → pg:goto → edtStore.activate; section title = data-id so must stay unique.
