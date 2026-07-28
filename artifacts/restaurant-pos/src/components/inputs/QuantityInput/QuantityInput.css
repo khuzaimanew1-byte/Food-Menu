@@ -2,9 +2,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 4cqw;
-  height: 5.5cqw;
-  font-size: 3.2cqw;
+  min-width: 3cqw;
+  height: 4cqw;
+  font-size: 2.8cqw;
   font-weight: 600;
   font-family: var(--ff);
   color: rgb(var(--gl));

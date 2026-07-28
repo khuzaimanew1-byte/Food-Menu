@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 5.5cqw;
-  height: 5.5cqw;
+  width: 4cqw;
+  height: 4cqw;
   border-radius: 50%;
   border: 1px solid rgba(var(--gold), 0.45);
   background: rgba(var(--ink), 0.82);
@@ -19,8 +19,8 @@
 }
 
 .minus-ico {
-  width: 2.8cqw;
-  height: 2.8cqw;
+  width: 2cqw;
+  height: 2cqw;
   display: block;
   flex-shrink: 0;
 }
