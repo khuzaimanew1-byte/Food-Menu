@@ -1,0 +1,92 @@
+prompt
+Deeply analyze the SSOT Database rules and implement a production-ready PostgreSQL schema that follows them completely. Design a normalized database with separate tables for menu sections and menu items. A section represents only the heading/group, while each menu item belongs to a section and contains its own immutable ID, avatar img, name, description, price, and all required relational fields. When a menu item/sections move, its position changes, automatically update its ordering/format ID so the sequence always remains correct and consistent. Prioritize scalability, normalization, and maintainability. Optimize the schema for large datasets, efficient indexing, minimal data transfer, and partial updates. Ensure reads and writes touch only the required columns and rows, avoiding unnecessary data loading or full-record updates. Use immutable IDs, proper relationships, constraints, indexes, transactions, connection pooling, query timeouts, and asset references instead of provider-specific URLs. Generate the schema, relationships, migrations, ORM models, validation, and API contracts from the same SSOT with no duplicated definitions. The final design should minimize query cost, support efficient pagination and filtering, prevent N+1 query patterns, and remain easy to extend without breaking existing data. Database apply karo secrets mein database url daal diya hai.
+jo bhi read kar rahe ho, analyze kar rahe ho text mein likhna hai, workflow banana hai aur ye bhi likhna hai kya kya kar rahe ho kon kon se steps shoru kar rahe ho etc taake beech se bhi continue kar sakein agar disturb ho jaaye. 
+
+Database ka pichla saara logic hai use bhi deeply analyze karo taake conflict create nhin hon
+
+actions ye hai isse continue karo database
+Let me assess the current state of the codebase before continuing.
+
+
+7 actions
+Let me read the remaining key files in parallel before continuing.
+
+
+9 actions
+Good — I have the full picture. Let me now read the remaining files I need before I can continue.
+
+
+5 actions
+Let me read the remaining files I need in parallel before touching anything.
+
+
+10 actions
+I have enough context. Let me now check the DB state, read the orval config, and start the API server build all at once.
+
+
+5 actions
+The DB tables don't exist yet. Let me read the action files I need, apply the schema + seed, and build the API server all at once.
+
+
+10 actions
+Now I have everything I need. Let me execute all the work in parallel — DB schema, API server build, and all frontend file changes at once.
+
+
+3 actions
+Schema and build done. Now let me run the seed, start the API server, and write all frontend changes simultaneously.
+
+
+5 actions
+Good — seed succeeded, schema applied, API built. Now writing all remaining files simultaneously.
+
+
+5 actions
+Let me write the remaining action files and start the API server simultaneously.
+
+
+12 actions
+The API server started but the proxy is returning 502 — the api-server isn't listening on the port the proxy expects. Let me diagnose.
+
+
+3 actions
+The api-server artifact has localPort = 8080 but dev doesn't set PORT. Let me verify and fix.
+
+
+3 actions
+The API server is live at localhost:8080 — those 502s were from before it started. Let me verify the app is loading data now.
+
+
+3 actions
+500 from the API. Let me check the server error logs and the nav bar — it shows only 2 dots which means empty content pages.
+
+
+3 actions
+this.svc is undefined — NestJS DI failed. The esbuild config likely isn't handling decorator metadata. Let me check.
+
+
+4 actions
+emitDecoratorMetadata is missing — esbuild can't emit it without a plugin. Let me check what's available and fix the build.
+
+
+3 actions
+Need to install the decorator metadata plugin for esbuild + rebuild.
+
+
+2 actions
+Now update build.mjs to add the decorator plugin, fix tsconfig, and rebuild.
+
+
+13 actions
+API working, browser logs clean, nav shows ~6 pages — data is loading from DB. Let me do a quick typecheck to ensure no type regressions.
+
+
+3 actions
+Two categories of errors: unbuilt lib declarations, and any annotations in my new code. Let me fix both in parallel.
+
+
+8 actions
+API + frontend both clean — no browser errors, DB calls succeeding. Let me build the lib declarations to verify types, update docs, and present.
+
+
+3 actions
+All errors remaining are pre-existing (ContextMenu.tsx null refs, use-toast.ts missing shadcn module) — none introduced by this session. The api-server and mockup-sandbox both passed clean. Let me wrap up with a memory update.
