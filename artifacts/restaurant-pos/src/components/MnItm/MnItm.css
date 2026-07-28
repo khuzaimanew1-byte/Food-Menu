@@ -148,10 +148,27 @@
   -webkit-mask-image: linear-gradient(to right, rgb(var(--blk)) 0%, transparent 130%);
 }
 
-.mic-price {
-  font-size: 3.2cqw;
+/* Price row: prefix ("Rs.") + number, always inline */
+.mic-prow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4cqw;
   white-space: nowrap;
   color: rgb(var(--gold));
+  font-size: 3.2cqw;
+}
+
+/* "Rs." — static, never editable, visually slightly dimmer */
+.mic-pfx {
+  opacity: 0.72;
+  font-size: 2.6cqw;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Number part — same gold, same size as original .mic-price */
+.mic-price {
+  font-size: 3.2cqw;
 }
 
 .mic-desc {

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { getActive } from './edtStore';
+import { isActiveId } from './edtStore';
 
-/** Returns true when the given id is the currently active edit target. */
+/** Returns true when the given id is currently active in the edit store. */
 export function useEdt(id: string) {
-  const [isActive, setIsActive] = useState(() => getActive().activeId === id);
+  const [isActive, setIsActive] = useState(() => isActiveId(id));
 
   useEffect(() => {
     const handler = (e: Event) => {
-      const detail = (e as CustomEvent<{ id: string } | null>).detail;
-      setIsActive(detail?.id === id);
+      const detail = (e as CustomEvent<{ active: Array<{ id: string }> }>).detail;
+      setIsActive(detail?.active?.some(a => a.id === id) ?? false);
     };
     document.addEventListener('edt:change', handler);
     return () => document.removeEventListener('edt:change', handler);

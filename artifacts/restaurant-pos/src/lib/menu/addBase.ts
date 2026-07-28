@@ -2,6 +2,10 @@
 // All add actions call makeItem / makeSection to get default objects, then
 // call afterAdd to navigate and activate edit mode.
 // Nothing here touches the DOM directly; it dispatches events.
+//
+// Default field values live in each component (MnItm, MnHdg), NOT here.
+// makeItem only generates a unique ID; makeSection adds a title for uniqueness
+// (title is used as data-id so must stay unique across all sections).
 
 import type { MnItem } from '@/data/menu';
 import { getSections }            from './menuStore';
@@ -16,14 +20,12 @@ function nextId(): number { return ++_uid; }
 
 // ── Default object factories ──────────────────────────────────────────────
 
-/** Create a new MnItem with placeholder text. */
+/**
+ * Create a new MnItem with only an id.
+ * All display defaults (name, description, price) are defined in MnItm component.
+ */
 export function makeItem(): MnItem {
-  return {
-    id:          nextId(),
-    name:        'New Item',
-    description: 'Description',
-    price:       '0.00',
-  };
+  return { id: nextId() };
 }
 
 /**
@@ -50,6 +52,8 @@ export function makeSection(): MnSect {
  *      React has processed the 'menu:change' state update first).
  *   3. Activate edit mode on the new element (deferred a second rAF so
  *      the DOM node exists before edtStore queries it).
+ *      For sections: also activates the default item simultaneously,
+ *      so both title and first item enter edit mode together.
  *
  * @param id    String form of the item id (numeric) or section title.
  * @param type  'item' | 'section'
@@ -64,7 +68,7 @@ export function afterAdd(id: string, type: 'item' | 'section'): void {
     outer: for (const page of pages) {
       for (const sect of page.sections) {
         if (sect.items.some(it => it.id === numId)) {
-          targetPg = page.pgNum; // pgNum is 1-based; cover is curPg=0 → matches directly
+          targetPg = page.pgNum;
           break outer;
         }
       }
@@ -87,6 +91,15 @@ export function afterAdd(id: string, type: 'item' | 'section'): void {
     // rAF 2: let the navigation render complete, then activate edit mode.
     requestAnimationFrame(() => {
       activate(id, type);
+
+      // For sections: also activate the default item so both enter edit mode.
+      if (type === 'section') {
+        const sect     = getSections().find(s => s.title === id);
+        const firstItem = sect?.items[0];
+        if (firstItem) {
+          activate(String(firstItem.id), 'item');
+        }
+      }
     });
   });
 }

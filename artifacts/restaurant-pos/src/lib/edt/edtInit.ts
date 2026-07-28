@@ -1,17 +1,21 @@
 // ── Document-level edit listeners ────────────────────────────────────────
 // Call initEdt() inside MnPg (not main.tsx) — it is page-specific logic.
 // destroyEdt() removes the same listeners; call it on unmount.
+//
+// Outside-click deactivation is per-component: each active element
+// independently detects whether the click was outside itself, and
+// only that element deactivates. Other active components are unaffected.
 
 import { getActive, requestDeactivate, setDirty } from './edtStore';
 
 // Stable handler refs so removeEventListener can match them exactly.
 const _onInput = () => {
-  if (getActive().activeId) setDirty(true);
+  if (getActive().all.length) setDirty(true);
 };
 
 const _onClick = (e: MouseEvent) => {
-  const { activeId, activeType } = getActive();
-  if (!activeId) return;
+  const { all } = getActive();
+  if (!all.length) return;
 
   const target = e.target as Element | null;
   if (!target) return;
@@ -22,13 +26,20 @@ const _onClick = (e: MouseEvent) => {
   // Programmatic file-input click from upldStore.pick() — ignore.
   if (target.closest('[data-edt-ignore]')) return;
 
-  // Click inside the active element → keep edit mode.
-  const activeEl = document.querySelector(
-    `[data-area="${activeType}"][data-id="${CSS.escape(activeId)}"]`
-  );
-  if (activeEl?.contains(target)) return;
+  // Per-component outside-click: collect IDs where the click landed outside.
+  const outsideIds: string[] = [];
+  for (const { id, type } of all) {
+    const el = document.querySelector(
+      `[data-area="${type}"][data-id="${CSS.escape(id)}"]`,
+    );
+    if (!el?.contains(target)) {
+      outsideIds.push(id);
+    }
+  }
 
-  requestDeactivate();
+  if (outsideIds.length > 0) {
+    requestDeactivate(outsideIds);
+  }
 };
 
 export function initEdt(): void {

@@ -5,11 +5,11 @@ export interface PageSect {
 }
 
 export interface MnItem {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  image?: string;
+  id:           number;
+  name?:        string;   // optional — defaults defined in MnItm component
+  description?: string;   // optional — defaults defined in MnItm component
+  price?:       string;   // optional — defaults defined in MnItm component; stores number part only for new items
+  image?:       string;
 }
 
 export const ARBC: MnItem[] = [
