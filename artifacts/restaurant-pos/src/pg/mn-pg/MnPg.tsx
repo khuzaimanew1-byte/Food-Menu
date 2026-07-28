@@ -7,7 +7,10 @@ import { ContextMenu }   from "../../components/ContextMenu/ContextMenu";
 import { EdtCnf }        from "../../components/EdtCnf/EdtCnf";
 import { dispatchCtxAction }    from "../../components/ContextMenu/actions";
 import { paginateMenuSections } from "../../lib/menu/paginate";
-import { getSections }          from "../../lib/menu/menuStore";
+import { getSections, initSections } from "../../lib/menu/menuStore";
+import { fetchAll }               from "../../lib/menu/apiSync";
+
+import { ARBC, TURK } from "../../data/menu";
 
 import { initSpl, destroySpl } from "../../lib/spl/spl";
 import { initEdt, destroyEdt } from "../../lib/edt/edtInit";
@@ -23,17 +26,37 @@ export function MnPg() {
 
   const ttlPg = pages.length + 2;
 
+  // ── Lifecycle ──────────────────────────────────────────────────────────
   useEffect(() => {
     initSpl(); initEdt(); initMv();
     return () => { destroySpl(); destroyEdt(); destroyMv(); };
   }, []);
 
+  // ── Repaginate on store change ─────────────────────────────────────────
   useEffect(() => {
     const handler = () => setPages(paginateMenuSections(getSections()));
     document.addEventListener("menu:change", handler);
     return () => document.removeEventListener("menu:change", handler);
   }, []);
 
+  // ── Load data from DB on mount ─────────────────────────────────────────
+  useEffect(() => {
+    fetchAll().then(sects => {
+      if (sects && sects.length > 0) {
+        initSections(sects);
+      } else if (sects !== null) {
+        // DB is empty — fall back to hardcoded seed data (dev convenience)
+        initSections([
+          { title: 'Arabic Specialties',  items: [...ARBC] },
+          { title: 'Turkish Specialties', items: [...TURK] },
+        ]);
+      }
+      // sects === null means network error — keep current store state
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ── Navigation ────────────────────────────────────────────────────────
   const goPrv = () => { dir.current = -1; setCurPg(p => Math.max(0, p - 1)); };
   const goNxt = () => { dir.current =  1; setCurPg(p => Math.min(ttlPg - 1, p + 1)); };
   const goTo  = (p: number) => {

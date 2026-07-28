@@ -4,8 +4,9 @@
 
 import { getLastPointerPos }              from '@/lib/mv/mvStore';
 import { resolveHint }                    from '@/lib/spl/splHint';
-import { addItem as storeAddItem }        from '@/lib/menu/menuStore';
+import { addItem as storeAddItem, getSections, updItemId } from '@/lib/menu/menuStore';
 import { makeItem, afterAdd }             from '@/lib/menu/addBase';
+import { apiCreateItem }                  from '@/lib/menu/apiSync';
 
 export function addItem(id: string | null): void {
   if (!id) return;
@@ -15,11 +16,19 @@ export function addItem(id: string | null): void {
   if (!itemEl) return;
 
   const { x, y } = getLastPointerPos();
-  const hint      = resolveHint('item', itemEl, x, y, 'item'); // 'h' horizontal split
+  const hint      = resolveHint('item', itemEl, x, y, 'item');
   const part      = hint?.part     ?? 'end';
   const targetId  = hint?.targetId ?? id;
 
   const newItem = makeItem();
-  storeAddItem(newItem, Number(targetId), part);
-  afterAdd(String(newItem.id), 'item');
+  storeAddItem(newItem, targetId, part);
+  afterAdd(newItem.id, 'item');
+
+  // Persist to DB: find which section now owns the new item
+  const sect = getSections().find(s => s.items.some(it => it.id === newItem.id));
+  if (sect?.dbId) {
+    apiCreateItem(sect.dbId, {}).then(realId => {
+      if (realId) updItemId(newItem.id, realId);
+    });
+  }
 }

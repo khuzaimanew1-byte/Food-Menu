@@ -4,8 +4,10 @@
 // Nothing here touches the DOM directly; it dispatches events.
 //
 // Default field values live in each component (MnItm, MnHdg), NOT here.
-// makeItem only generates a unique ID; makeSection adds a title for uniqueness
-// (title is used as data-id so must stay unique across all sections).
+// makeItem generates a temporary client-side ID ("tmp-N"); the real DB ID
+// is assigned after the API create call resolves and replaces it via updItemId.
+// makeSection adds a title for uniqueness (title is used as data-id so must
+// stay unique across all sections).
 
 import type { MnItem } from '@/data/menu';
 import { getSections }            from './menuStore';
@@ -13,15 +15,16 @@ import type { MnSect }            from './menuStore';
 import { paginateMenuSections }   from './paginate';
 import { activate }               from '@/lib/edt/edtStore';
 
-// ── Unique ID counter ─────────────────────────────────────────────────────
-// Starts above the seed data range (1–30) and increments monotonically.
-let _uid = 1000;
-function nextId(): number { return ++_uid; }
+// ── Temporary ID counter ───────────────────────────────────────────────────
+// Returns "tmp-N" strings for items not yet persisted to the DB.
+// Replaced with the real DB nanoid once the API POST resolves.
+let _uid = 0;
+function nextId(): string { return `tmp-${++_uid}`; }
 
 // ── Default object factories ──────────────────────────────────────────────
 
 /**
- * Create a new MnItem with only an id.
+ * Create a new MnItem with a temporary local id.
  * All display defaults (name, description, price) are defined in MnItm component.
  */
 export function makeItem(): MnItem {
@@ -55,7 +58,7 @@ export function makeSection(): MnSect {
  *      For sections: also activates the default item simultaneously,
  *      so both title and first item enter edit mode together.
  *
- * @param id    String form of the item id (numeric) or section title.
+ * @param id    The item id (string) or section title.
  * @param type  'item' | 'section'
  */
 export function afterAdd(id: string, type: 'item' | 'section'): void {
@@ -64,10 +67,9 @@ export function afterAdd(id: string, type: 'item' | 'section'): void {
   let targetPg = 1;
 
   if (type === 'item') {
-    const numId = Number(id);
     outer: for (const page of pages) {
       for (const sect of page.sections) {
-        if (sect.items.some(it => it.id === numId)) {
+        if (sect.items.some(it => it.id === id)) {
           targetPg = page.pgNum;
           break outer;
         }

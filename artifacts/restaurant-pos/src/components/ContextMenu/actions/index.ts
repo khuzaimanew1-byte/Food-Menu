@@ -42,7 +42,7 @@ export function dispatchCtxAction(
       const result = resolveHint(area, rawEl, x, y, movingType);
       if (result) {
         const { part, targetId } = result;
-        if (movingType === 'item') reorderItem(Number(movingId), Number(targetId), part);
+        if (movingType === 'item') reorderItem(movingId, targetId, part);
         else                       reorderSection(movingId, targetId, part);
       }
     }
