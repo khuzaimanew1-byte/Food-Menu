@@ -1,0 +1,72 @@
+Yeh raha effective prompt:
+
+---
+
+**Add Logic — Completeness Analysis + SSOT Scope Rule**
+
+Deeply analyze karo — pehle sirf samjho, koi change mat karo.
+
+**Task 1 — Completeness check:**
+Add-item/add-section logic aur uske baad jitni bhi updates discuss hui hain (hint icons, component reuse, base add action, split logic, split-collision bug, global-vs-page-level scope bug, `pg:goto`, `menuStore` functions, edit-mode timing, `resolveHint` registry aur parameter naming, open question) — un sab ko cross-check karo. Confirm karo ke **koi point miss toh nahi hai**. Agar kuch miss hai (chahe add-logic se ho ya baad ki updates se), usko explicitly **list out** karo.
+
+Reference ke liye, yeh saara final understanding hai jo ab tak confirm ho chuka hai:
+
+**Complete Updated Understanding — Final Merged Version**
+
+**1. Hint icons (context menu):**
+- Add-item aur add-section options pe bhi hint icon (before/after) aana chahiye — pehle sirf move/paste pe tha, ab yeh bhi cover hoga
+- Icon **right side** pe aayega option label ke
+- `open()` mein isko move block se alag, **separate pass** mein handle karna hai
+
+**2. Item/Section component reuse:**
+- Add action pe naya component nahi banega — existing item/section component hi import/reuse hoga
+- Sirf default values (name, description, price / title) us existing component ko pass honge
+- Base component mein hi default placeholder text ho, taaki add ke baad sirf edit mode trigger karna ho — extra logic na likhni pade
+
+**3. "Base add action" concept:**
+- Ek **shared/base add action** bhi ho jo sirf "append with default values" ka **common kaam** kare
+- Item add aur section add dono is common base logic ko reuse karein — har jagah alag se append logic na likhi jaye
+- Individual add actions is base function ko call karein, duplicate logic nahi
+
+**4. Split logic reuse:**
+- Naya split mechanism nahi banega — jo `getPartAtPoint`/`resolveHint` pehle se hai, wahi reuse hoga
+- Item add → horizontal split (`'h'`)
+- Section add → vertical split (`'v'`)
+- Yeh dono directions abhi sirf move/paste ke liye wire hain — add ke liye bhi same function call hona chahiye, bas type parameter sahi pass ho
+
+**5. Critical Bug — Split Collision:**
+- Abhi saare data-area pe same split apply ho raha hai — item aur section ka split logic collide kar raha hai, separate nahi hai
+- Isko fix karna hai: item vs section ka split direction clearly alag/independent ho
+
+**6. Critical Bug — Global vs Page-level scope:**
+- `initEdt()`, `initSpl()`, `initMv()` abhi globally (`main.tsx`) boot ho rahe hain — yeh galat hai
+- Yeh page-level (MnPg) logic hai, global nahi honi chahiye — future pages ke elements pe unnecessarily fire hone se bachne ke liye
+- Fix: in teeno ko `MnPg` ke `useEffect` mein move karna hai (init on mount, destroy on unmount) — `main.tsx` sirf app render karega
+- `destroyMv()` aur `destroyEdt()` banane padenge (`destroySpl()` jaisa)
+
+**7. pg:goto event:**
+- Abhi exist nahi karta — banana hai, MnPg-scoped hoga (global nahi)
+
+**8. menuStore mein naye functions chahiye:**
+- `addItem`, `addItemToSection`, `addSection`, `appendSection`
+
+**9. Edit mode timing (rAF defer):**
+- `edtStore.activate()` ko `requestAnimationFrame` ke andar defer karna hoga
+
+**10. `resolveHint` registry (spl.ts) — global singleton Map:**
+- Acceptable hai, bas `initSpl`/`destroySpl` ka scope MnPg-level pe fix ho jaye
+
+**11. `resolveHint` ka parameter naam:**
+- `movingType` → `opType: 'item' | 'section'` rename karna zyada accurate hoga
+
+**12. Open question (unconfirmed):**
+- Section-title pe "Add Item" click karne par hint chahiye ya hamesha append-only?
+
+---
+
+**Task 2 — SSOT rule addition:**
+Project ke SSOT (single source of truth) rules mein yeh naya standing rule **add** karo:
+
+> **Scope discipline rule:** Jo logic **page-specific** hai (kisi specific page/component ke context mein hi valid hai — jaise `initEdt`, `initSpl`, `initMv`), woh us **page-level** (jaise `MnPg`) mein hi define/init/destroy honi chahiye — global (`main.tsx`) mein nahi, **chahe abhi app mein sirf ek hi page kyun na ho**. Jo logic genuinely **app-wide/global** hai, wahi global scope mein rahe. Yeh isliye zaroori hai taake **future mein naye pages add karte waqt** existing page-specific logic unintentionally un naye pages ke elements pe bhi fire na ho — architecture **flexible aur scalable** rahe.
+
+Sirf analysis aur rule-addition karo abhi — implementation baad mein karni hai.

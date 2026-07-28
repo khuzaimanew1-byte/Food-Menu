@@ -1,0 +1,1 @@
+- [Scope Discipline Rule](scope-discipline.md) — page-specific init/destroy (initEdt, initSpl, initMv) belongs in MnPg useEffect, not main.tsx; future pages must not inherit MnPg logic.
