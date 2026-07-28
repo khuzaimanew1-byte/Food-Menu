@@ -15,9 +15,6 @@ export function EdtCnf() {
   const [offsetX,   setOffsetX]   = useState(0);
   const anchorRef = useRef<HTMLElement | null>(null);
 
-  // Keep edtStore cnfOpen flag in sync so edtInit Enter handler knows.
-  useEffect(() => { setCnfOpen(open); }, [open]);
-
   const applyLayout = useCallback((anchorEl: HTMLElement | null) => {
     const containerEl = document.querySelector<HTMLElement>('.pg-wrap');
     const { top, offsetX: ox } = anchorRight(anchorEl, containerEl);
@@ -26,12 +23,15 @@ export function EdtCnf() {
   }, []);
 
   // edt:confirm-needed → anchorEl from event detail → position + open
+  // setCnfOpen called synchronously here (not via useEffect) so edtInit
+  // _onEnter reads the correct flag in the same event loop tick.
   useEffect(() => {
     const show = (e: Event) => {
       const { anchorEl = null } =
         (e as CustomEvent<{ anchorEl: HTMLElement | null }>).detail ?? {};
       anchorRef.current = anchorEl;
       applyLayout(anchorEl);
+      setCnfOpen(true);
       setOpen(true);
     };
     document.addEventListener('edt:confirm-needed', show);
@@ -53,8 +53,8 @@ export function EdtCnf() {
       confirmLabel="Save"
       anchorTop={anchorTop}
       offsetX={offsetX}
-      onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
-      onClose={() => { setOpen(false); deactivate(); }}
+      onConfirm={() => { setCnfOpen(false); setOpen(false); saveAndDeactivate(); }}
+      onClose={() => { setCnfOpen(false); setOpen(false); deactivate(); }}
     />
   );
 }
