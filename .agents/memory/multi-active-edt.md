@@ -4,7 +4,7 @@ description: edtStore now supports multiple simultaneously active elements (Map<
 ---
 
 ## The rule
-`edtStore` holds a `Map<string, EdtType>` for multi-active; `_dirty` is global (any active element dirty → confirm modal).
+`edtStore` holds a `Map<string, EdtType>` for multi-active; `_dirtyIds: Set<string>` tracks dirty **per element** (NOT global). Confirm modal only fires for the specific ids being deactivated that are dirty — other active elements are unaffected.
 
 **Why:** Section-add must activate section title + default item simultaneously. Per-component outside-click deactivates only the element whose area was clicked outside of.
 
@@ -12,11 +12,13 @@ description: edtStore now supports multiple simultaneously active elements (Map<
 - `activate(id, type)` — toggles off if already present, adds if not.
 - `deactivate(id?)` — removes specific id, or clears all.
 - `saveAndDeactivate(id?)` — saves specific or all; dispatches `edt:save` per element.
-- `requestDeactivate(ids[])` — if dirty, fires `edt:confirm-needed`; else removes those ids.
+- `requestDeactivate(ids[])` — checks dirty only for those specific ids; if any dirty → stores as `_pendingIds`, fires `edt:confirm-needed`; else removes only those ids.
+- `confirmSave()` / `confirmDiscard()` — operate on `_pendingIds` only, not all active.
+- `setDirty(id, v?)` — per-element; components pass their own id. `edtInit._onInput` detects which active element contains the input node.
 - `getActive()` returns `{ activeId, activeType, all[] }` — `activeId` = first item-type or first overall (for EdtCnf positioning).
 - `useEdt(id)` checks `detail.active.some(a => a.id === id)` on `edt:change`.
 - `edtInit` click handler iterates all active elements, collects outside-clicked ids, calls `requestDeactivate(ids)`.
-- `EdtCnf` confirm → `saveAndDeactivate()` (all), close → `deactivate()` (all).
+- `EdtCnf` confirm → `confirmSave()` (pending only), close → `confirmDiscard()` (pending only). Enter key → `saveAndDeactivate()` (all active).
 
 ## pkFmt — Pakistani number formatter
 - Lives in `src/lib/fmt/fmt.ts`. Import `{ pkFmt }` everywhere — never format numbers inline.
