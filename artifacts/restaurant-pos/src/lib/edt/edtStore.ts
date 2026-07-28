@@ -83,19 +83,29 @@ export function isActiveId(id: string) { return _active.has(id); }
 
 /**
  * Deactivate the given ids:
- * - If global dirty → dispatch edt:confirm-needed (modal saves ALL active).
+ * - If global dirty → dispatch edt:confirm-needed with anchorEl so EdtCnf
+ *   can position SmMdl without querying the DOM itself.
  * - If clean → deactivate only those ids immediately.
  */
-export function requestDeactivate(ids: string[]) {
+export function requestDeactivate(ids: string[], anchorEl?: HTMLElement) {
   if (!ids.length) return;
   if (_dirty) {
-    document.dispatchEvent(new CustomEvent('edt:confirm-needed'));
+    document.dispatchEvent(new CustomEvent('edt:confirm-needed', {
+      detail: { anchorEl: anchorEl ?? null },
+    }));
   } else {
     ids.forEach(id => _active.delete(id));
     if (_active.size === 0) _dirty = false;
     _dispatch();
   }
 }
+
+// ── Confirmation modal open state ─────────────────────────────────────────
+// Set by EdtCnf so edtInit's Enter handler knows not to fire direct-save
+// while the modal is already visible.
+let _cnfOpen = false;
+export function setCnfOpen(v: boolean) { _cnfOpen = v; }
+export function isCnfOpen()            { return _cnfOpen; }
 
 /**
  * Backward-compat accessor used by EdtCnf for modal positioning.

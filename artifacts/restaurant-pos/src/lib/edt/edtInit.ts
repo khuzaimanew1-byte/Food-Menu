@@ -5,8 +5,18 @@
 // Outside-click deactivation is per-component: each active element
 // independently detects whether the click was outside itself, and
 // only that element deactivates. Other active components are unaffected.
+//
+// Enter key: direct save (no modal) when modal is not open + edit is dirty.
 
-import { getActive, requestDeactivate, setDirty } from './edtStore';
+import {
+  getActive,
+  requestDeactivate,
+  setDirty,
+  hasAnyActive,
+  isDirty,
+  saveAndDeactivate,
+  isCnfOpen,
+} from './edtStore';
 
 // Stable handler refs so removeEventListener can match them exactly.
 const _onInput = () => {
@@ -27,27 +37,42 @@ const _onClick = (e: MouseEvent) => {
   if (target.closest('[data-edt-ignore]')) return;
 
   // Per-component outside-click: collect IDs where the click landed outside.
+  // First outside element becomes the anchor for modal positioning.
   const outsideIds: string[] = [];
+  let anchorEl: HTMLElement | null = null;
+
   for (const { id, type } of all) {
-    const el = document.querySelector(
+    const el = document.querySelector<HTMLElement>(
       `[data-area="${type}"][data-id="${CSS.escape(id)}"]`,
     );
     if (!el?.contains(target)) {
       outsideIds.push(id);
+      if (!anchorEl) anchorEl = el; // first outside element → anchor
     }
   }
 
   if (outsideIds.length > 0) {
-    requestDeactivate(outsideIds);
+    requestDeactivate(outsideIds, anchorEl ?? undefined);
   }
 };
 
+// Enter while editing + modal NOT open → direct save, no modal.
+const _onEnter = (e: KeyboardEvent) => {
+  if (e.key !== 'Enter') return;
+  if (isCnfOpen()) return;           // modal is open — SmMdl handles Enter
+  if (!hasAnyActive() || !isDirty()) return;
+  e.preventDefault();
+  saveAndDeactivate();
+};
+
 export function initEdt(): void {
-  document.addEventListener('input', _onInput);
-  document.addEventListener('click', _onClick, true); // capture
+  document.addEventListener('input',   _onInput);
+  document.addEventListener('click',   _onClick, true); // capture
+  document.addEventListener('keydown', _onEnter);
 }
 
 export function destroyEdt(): void {
-  document.removeEventListener('input', _onInput);
-  document.removeEventListener('click', _onClick, true);
+  document.removeEventListener('input',   _onInput);
+  document.removeEventListener('click',   _onClick, true);
+  document.removeEventListener('keydown', _onEnter);
 }

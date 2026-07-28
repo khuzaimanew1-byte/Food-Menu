@@ -1,72 +1,50 @@
-// ── EdtCnf — edit confirmation modal ─────────────────────────────────────
-// Listens for edt:confirm-needed. On confirm: saves + deactivates ALL
-// currently active elements (multi-active aware). On close: discards all.
+// ── EdtCnf — edit confirmation wiring ────────────────────────────────────
+// Listens for edt:confirm-needed (dispatched by edtStore.requestDeactivate
+// when dirty). Positions SmMdl via anchorPos using the anchorEl passed in
+// the event detail — no item/section type knowledge here.
+// Enter direct-save (no modal) lives in edtInit.ts.
 
-import { useState, useEffect } from 'react';
-import { SmMdl } from '../SmMdl/SmMdl';
-import {
-  saveAndDeactivate,
-  deactivate,
-  getActive,
-  isDirty,
-  hasAnyActive,
-} from '@/lib/edt/edtStore';
-
-function computeLayout(activeId: string | null) {
-  const pgWrap = document.querySelector('.pg-wrap');
-  const itemEl = activeId
-    ? document.querySelector<HTMLElement>(`[data-area="item"][data-id="${CSS.escape(activeId)}"]`)
-    : null;
-  const pw  = pgWrap?.getBoundingClientRect();
-  const it  = itemEl?.getBoundingClientRect();
-  const top = pw && it ? it.top - pw.top + it.height / 2 : undefined;
-  const overflow = pw ? Math.max(0, pw.right + 14 + 160 + 12 - window.innerWidth) : 0;
-  return { top, offsetX: overflow };
-}
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { SmMdl }                from '../SmMdl/SmMdl';
+import { saveAndDeactivate, deactivate, setCnfOpen } from '@/lib/edt/edtStore';
+import { anchorRight }          from '@/lib/pos/anchorPos';
 
 export function EdtCnf() {
   const [open,      setOpen]      = useState(false);
   const [anchorTop, setAnchorTop] = useState<number | undefined>();
   const [offsetX,   setOffsetX]   = useState(0);
+  const anchorRef = useRef<HTMLElement | null>(null);
 
-  // Outside-click path → show modal
+  // Keep edtStore cnfOpen flag in sync so edtInit Enter handler knows.
+  useEffect(() => { setCnfOpen(open); }, [open]);
+
+  const applyLayout = useCallback((anchorEl: HTMLElement | null) => {
+    const containerEl = document.querySelector<HTMLElement>('.pg-wrap');
+    const { top, offsetX: ox } = anchorRight(anchorEl, containerEl);
+    setAnchorTop(top);
+    setOffsetX(ox);
+  }, []);
+
+  // edt:confirm-needed → anchorEl from event detail → position + open
   useEffect(() => {
-    const show = () => {
-      const { activeId } = getActive();
-      const layout = computeLayout(activeId);
-      setAnchorTop(layout.top);
-      setOffsetX(layout.offsetX);
+    const show = (e: Event) => {
+      const { anchorEl = null } =
+        (e as CustomEvent<{ anchorEl: HTMLElement | null }>).detail ?? {};
+      anchorRef.current = anchorEl;
+      applyLayout(anchorEl);
       setOpen(true);
     };
     document.addEventListener('edt:confirm-needed', show);
     return () => document.removeEventListener('edt:confirm-needed', show);
-  }, []);
+  }, [applyLayout]);
 
-  // Recompute on resize while modal is open
+  // Recompute on resize while open.
   useEffect(() => {
     if (!open) return;
-    const onResize = () => {
-      const { activeId } = getActive();
-      const layout = computeLayout(activeId);
-      setAnchorTop(layout.top);
-      setOffsetX(layout.offsetX);
-    };
+    const onResize = () => applyLayout(anchorRef.current);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, [open]);
-
-  // Enter key while editing (modal NOT open) → direct save of all active, no modal
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key !== 'Enter') return;
-      if (open) return;
-      if (!hasAnyActive() || !isDirty()) return;
-      e.preventDefault();
-      saveAndDeactivate(); // saves all active
-    };
-    document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
-  }, [open]);
+  }, [open, applyLayout]);
 
   return (
     <SmMdl
@@ -75,8 +53,8 @@ export function EdtCnf() {
       confirmLabel="Save"
       anchorTop={anchorTop}
       offsetX={offsetX}
-      onConfirm={() => { setOpen(false); saveAndDeactivate(); }}  // saves all
-      onClose={() => { setOpen(false); deactivate(); }}           // discards all
+      onConfirm={() => { setOpen(false); saveAndDeactivate(); }}
+      onClose={() => { setOpen(false); deactivate(); }}
     />
   );
 }

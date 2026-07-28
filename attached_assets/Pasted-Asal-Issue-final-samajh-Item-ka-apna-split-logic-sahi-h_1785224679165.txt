@@ -1,0 +1,14 @@
+Asal Issue (final samajh)
+Item ka apna split logic sahi hai — left/right ('h') independently kaam karta hai jab area 'item' detect ho.
+Section ka apna split logic bhi sahi hai — top/bottom ('v'), poore section (title + items) ko ek block treat karke.
+Lekin dono ek dusre se isolated nahi hain — jab aap item area pe ho (jo section ke andar hi hota hai), to item ka 'h' split chalta hai, saath hi section ka 'v' split bhi apply ho jata hai us item ke upar — jab ke usay bilkul fire hi nahi hona chahiye tha kyunki detected area 'item' hai, 'section' nahi.
+
+Yani ye do independent logics nahi hain jo galat calculate kar rahe — ye do correct logics hain jo collide kar rahe hain kyunki inke beech mutual exclusivity (gating) missing hai. Jab area = 'item' resolve ho jata hai, section-level hint calculation ko completely skip ho jana chahiye — lekin abhi wo bhi chal raha hai parallel mein, isliye dono ka effect ek saath item pe dikh raha hai (collision/overlap).
+
+Fix Solution Prompt
+
+"Hint/split calculation ko strictly mutually exclusive banao based on detected area. Jab detectArea() ya equivalent logic se area === 'item' resolve ho jaye, tab section-level hint calculation (jo poore section ki bounding box pe 'v' split karta hai) bilkul bhi trigger/execute nahi hona chahiye — na parallel mein, na fallback ke tor pe. Sirf item ka apna 'h' split hint calculate aur apply ho.
+
+Isi tarah jab area === 'section' resolve ho (heading ya section-background pe), tab item-level 'h' split logic bilkul bhi involve nahi hona chahiye — sirf section ka 'v' split (poori section ki span, jaisa move mein hota hai) chalna chahiye.
+
+Dhoondo ke code mein aisi kaunsi jagah hai jahan dono hint calculations ek saath ya conditionally-leaky tareeqe se call ho rahe hain (jaise koi shared hover/mousemove listener jo section aur item dono ke liye hint compute kar raha ho bina area-based early-return/gate ke), aur wahan ek explicit early-return/branch lagao: agar area !== 'item' to item-hint calculation skip, agar area !== 'section' to section-hint calculation skip. Ye ensure karega ke ek waqt mein sirf ek hi split-logic active rahe, depending on jahan cursor/click hua hai."
