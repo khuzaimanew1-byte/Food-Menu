@@ -29,7 +29,7 @@ export function makeItem(): MnItem {
 }
 
 /**
- * Create a new MnSect with a unique title and one placeholder item.
+ * Create a new MnSect with a unique title and no items (heading only).
  * Title uniqueness prevents collisions in menuStore (title is used as data-id).
  */
 export function makeSection(): MnSect {
@@ -40,7 +40,7 @@ export function makeSection(): MnSect {
     while (existing.includes(`New Section ${n}`)) n++;
     title = `New Section ${n}`;
   }
-  return { title, items: [makeItem()] };
+  return { title, items: [] };
 }
 
 // ── Post-add navigation + edit activation ─────────────────────────────────
@@ -91,15 +91,6 @@ export function afterAdd(id: string, type: 'item' | 'section'): void {
     // rAF 2: let the navigation render complete, then activate edit mode.
     requestAnimationFrame(() => {
       activate(id, type);
-
-      // For sections: also activate the default item so both enter edit mode.
-      if (type === 'section') {
-        const sect     = getSections().find(s => s.title === id);
-        const firstItem = sect?.items[0];
-        if (firstItem) {
-          activate(String(firstItem.id), 'item');
-        }
-      }
     });
   });
 }
