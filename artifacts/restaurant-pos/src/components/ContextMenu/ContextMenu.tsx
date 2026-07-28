@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { ICONS, MENU_CONFIG, detectArea } from './contextMenuConfig';
 import type { CtxArea, CtxOpt } from './contextMenuConfig';
 import { getMoving } from '@/lib/mv/mvStore';
-import { getPartAtPoint } from '@/lib/spl/spl';
+import { resolveHint } from '@/lib/spl/splHint';
 import { DropdownPanel } from '../DropdownPanel/DropdownPanel';
 import type { SubState } from '../DropdownPanel/DropdownPanel';
 
@@ -106,12 +106,13 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
           }
           const pasteLabel = opt.id === 'move-item' ? 'Paste Item' : 'Paste Section';
           if (!id) return { ...opt, label: pasteLabel };
-          const targetEl = document.querySelector<HTMLElement>(
+          const rawEl = document.querySelector<HTMLElement>(
             `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
           );
-          if (!targetEl) return { ...opt, label: pasteLabel };
-          const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
-          return { ...opt, label: pasteLabel, hint: part === 'start' ? 'before' : 'after' };
+          if (!rawEl) return { ...opt, label: pasteLabel };
+          const hint = resolveHint(area, rawEl, x, y, movingType);
+          if (!hint) return { ...opt, label: pasteLabel };
+          return { ...opt, label: pasteLabel, hint: hint.part === 'start' ? 'before' : 'after' };
         });
       }
     }

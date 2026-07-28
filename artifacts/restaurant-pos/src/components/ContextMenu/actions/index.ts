@@ -29,7 +29,7 @@ import { shapePlaque }    from './page/shpPlq';
 // ── Move / paste globals ───────────────────────────────────────────────────
 import { getMoving, getLastPointerPos, deactivate as mvDeactivate } from '@/lib/mv/mvStore';
 import { reorderItem, reorderSection }                               from '@/lib/menu/menuStore';
-import { getPartAtPoint }                                            from '@/lib/spl/spl';
+import { resolveHint }                                               from '@/lib/spl/splHint';
 
 export function dispatchCtxAction(
   area:  CtxArea,
@@ -47,17 +47,17 @@ export function dispatchCtxAction(
   if (movingId && id && (optId === 'move-item' || optId === 'move-section')) {
     if (movingId === id) { mvDeactivate(); return; }   // same element → cancel
 
-    const targetEl = document.querySelector<HTMLElement>(
+    const rawEl = document.querySelector<HTMLElement>(
       `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
     );
-    if (targetEl) {
+    if (rawEl) {
       const { x, y } = getLastPointerPos();
-      // Item  → horizontal split ('h'): left half = before, right half = after
-      // Section → vertical split   ('v'): top  half = before, bottom half = after
-      const part = getPartAtPoint(targetEl, x, y, movingType === 'item' ? 'h' : 'v');
-
-      if (movingType === 'item')    reorderItem(Number(movingId), Number(id), part);
-      else                          reorderSection(movingId, id, part);
+      const result = resolveHint(area, rawEl, x, y, movingType);
+      if (result) {
+        const { part, targetId } = result;
+        if (movingType === 'item') reorderItem(Number(movingId), Number(targetId), part);
+        else                       reorderSection(movingId, targetId, part);
+      }
     }
     mvDeactivate();
     return;
