@@ -22,7 +22,6 @@ On every task: identify keywords → check Tier 1 for section(s) → scan that s
 
 ## BASE
 Tags: [BASE-BLUEPRINT] [BASE-BEST] [BASE-SSOT] [BASE-REUSE]
-
 [BASE-BLUEPRINT] One blueprint file in project root; every addition/change must be recorded in it.
 [BASE-BEST] Auto-apply best practice for performance, security, maintainability — even when not explicitly asked; mediocre/working-only is forbidden.
 [BASE-SSOT] All SSOT rules apply to every existing and new line; any violation must be refactored until compliant.
@@ -32,7 +31,6 @@ Tags: [BASE-BLUEPRINT] [BASE-BEST] [BASE-SSOT] [BASE-REUSE]
 
 ## FRONTEND
 Tags: [NAME-LEN] [COMP-SPLIT] [COMP-STRUCT] [PAGE-CSS] [MODAL-MOUNT] [MODAL-HYBRID] [ANIM-SMOOTH] [NAV-ANIM]
-
 [NAME-LEN] All custom names (CSS vars & classes, JS vars, functions, DB fields, files, folders) max 5-6 chars using recognizable short forms.
 [COMP-SPLIT] Every component — from smallest to largest — lives in its own dedicated UI component file.
 [COMP-STRUCT] UI, logic, styles, types, and assets in separate files; keep colocated so responsibility is obvious.
@@ -43,28 +41,19 @@ Tags: [NAME-LEN] [COMP-SPLIT] [COMP-STRUCT] [PAGE-CSS] [MODAL-MOUNT] [MODAL-HYBR
 
 ## REFACTORING
 Tags: [FIX-UX] [COMMENT] [NO-DEAD] [NO-LOG] [MIN-CODE]
-
 [FIX-UX] Code changes must not alter visible UX/UI even slightly; internal/backend code may change freely as long as result and experience are identical or better.
 [COMMENT] Comments only at genuinely major decision points (Which needs comments badly then give it); max 3 words; no explanatory prose or unnecessary indentification comments.
 [NO-DEAD] Remove all unused, dead, duplicate (same logic/lines anywhere in project), and overriding code/styles/logic — none may exist anywhere in the codebase.
 [NO-LOG] console.log forbidden everywhere; console.error allowed only for genuine runtime errors.
 [MIN-CODE] Write minimal optimized logic; avoid redundant conditions, duplicate implementations, custom code replicating existing behavior; no two identical lines anywhere in the project; prefer simplest maintainable solution.
 [CSS-NODUP] No duplicate or overriding styles anywhere in the project; remove if found.
-
----
-
-
-## STYLING
-Tags: [CSS-GLOBALS] [CSS-UTIL] [CSS-NOHARD] [CSS-NODUP]
-
-[CSS-GLOBALS] Three global files only — globals.css (reset, body, scrollbar), variables.css (all CSS vars: colors, spacing, fonts), typography.css (all text styles).
-[CSS-UTIL] Any style used 5+ times → move to utilities.css.
 [CSS-NOHARD] font-family and color values strictly forbidden as hardcoded literals; use CSS vars only.
+[JS-NOINLINE] Any logic or code that is separate/distinct from the component's core markup — whether reusable or specific/one-off — must be written in its own separate file, written in a reusable way. Code size (however small) is not a valid reason to keep it inline; if separation is needed, it always goes in its own file. This rule applies project-wide, with no exceptions.
+[SSOT-MAXREUSE] Try to make even the smallest piece of code reusable.
 ---
 
 ## LOGIC
 Tags: [LIST-KEY] [EFFECT-DEPS] [MEMO-HEAVY] [DEBOUNCE] [MOD-ARCH]
-
 [LIST-KEY] List rendering key = unique ID always; array index forbidden.
 [EFFECT-DEPS] useEffect dependencies array must be clean; no unnecessary entries.
 [MEMO-HEAVY] Heavy computation → useMemo mandatory; React.memo on pure components; useCallback on expensive callbacks.
@@ -77,7 +66,6 @@ Tags: [LIST-KEY] [EFFECT-DEPS] [MEMO-HEAVY] [DEBOUNCE] [MOD-ARCH]
 
 ## DATABASE
 Tags: [DB-SSOT] [DB-INDEX] [DB-SELECT] [DB-CACHE] [DB-POOL] [DB-TIMEOUT]
-
 [DB-SSOT] DB schema is source of truth for data; OpenAPI spec is source of truth for all public APIs; all frontend clients, hooks, types, Zod schemas must be generated from OpenAPI spec — no manual duplicates.
 [DB-INDEX] Index on every foreign key; composite index on frequently queried field combinations.
 [DB-SELECT] SELECT * forbidden; always specify needed fields.
@@ -89,7 +77,6 @@ Tags: [DB-SSOT] [DB-INDEX] [DB-SELECT] [DB-CACHE] [DB-POOL] [DB-TIMEOUT]
 
 ## BACKEND
 Tags: [API-PAGINATE] [API-FIELDS] [API-BULK] [TASK-QUEUE] [HTTP-COMPRESS] [HTTP-CACHE] [LOG-SECURE]
-
 [API-PAGINATE] Every list API must be paginated; default page size 20.
 [API-FIELDS] Response contains only needed fields; N+1 queries forbidden.
 [API-BULK] All mutation endpoints must support bulk operations.
@@ -102,7 +89,6 @@ Tags: [API-PAGINATE] [API-FIELDS] [API-BULK] [TASK-QUEUE] [HTTP-COMPRESS] [HTTP-
 
 ## OPTIMIZATION
 Tags: [OPT-VSCRL] [OPT-IMG] [OPT-FIRST] [OPT-CHUNK] [OPT-IMPORT] [OPT-DEFER] [OPT-WILL] [OPT-WORKER] [OPT-PRELOAD] [OPT-SW] [OPT-INTERSECT] [REQ-STORE] [REQ-CLEAN] [REQ-TAB] [REQ-PURGE] [REQ-BATCH] [REQ-CHUNK] [REQ-DEDUP] [REQ-PRIO] [REQ-CIRCUIT] [REQ-COMPRESS] [REQ-ISOLATE] [NET-IMG] [NET-SVG] [NET-FONT] [NET-BATCH] [NET-HTTP2] [NET-DNS] [NET-CSS]
-
 [OPT-VSCRL] Lists with 50+ items → react-window virtual scroll mandatory.
 [OPT-IMG] All images → loading="lazy" by default.
 [OPT-FIRST] First screen loads only essential JS/CSS; defer everything else.
@@ -137,7 +123,6 @@ Tags: [OPT-VSCRL] [OPT-IMG] [OPT-FIRST] [OPT-CHUNK] [OPT-IMPORT] [OPT-DEFER] [OP
 
 ## SECURITY
 Tags: [SEC-INPUT] [SEC-RATE] [SEC-HTTPS] [SEC-JWT] [SEC-CORS]
-
 [SEC-INPUT] Sanitize all user input on the frontend as well as backend.
 [SEC-RATE] Rate limiting mandatory on all API endpoints.
 [SEC-HTTPS] HTTPS only; HTTP requests must redirect to HTTPS.
