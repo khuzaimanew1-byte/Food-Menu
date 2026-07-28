@@ -10,7 +10,6 @@ import { paginateMenuSections } from "../../lib/menu/paginate";
 import { getSections, initSections } from "../../lib/menu/menuStore";
 import { fetchAll }               from "../../lib/menu/apiSync";
 
-import { ARBC, TURK } from "../../data/menu";
 
 import { initSpl, destroySpl } from "../../lib/spl/spl";
 import { initEdt, destroyEdt } from "../../lib/edt/edtInit";
@@ -45,11 +44,8 @@ export function MnPg() {
       if (sects && sects.length > 0) {
         initSections(sects);
       } else if (sects !== null) {
-        // DB is empty — fall back to hardcoded seed data (dev convenience)
-        initSections([
-          { title: 'Arabic Specialties',  items: [...ARBC] },
-          { title: 'Turkish Specialties', items: [...TURK] },
-        ]);
+        // DB is empty — show one default section so the page isn't blank
+        initSections([{ title: 'New Section', items: [] }]);
       }
       // sects === null means network error — keep current store state
     });
