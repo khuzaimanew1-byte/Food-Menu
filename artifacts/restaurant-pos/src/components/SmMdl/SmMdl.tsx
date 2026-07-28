@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ClsIco } from '../icons/ClsIco';
 import '../Button/base.css';
 import './SmMdl.css';
@@ -8,19 +8,11 @@ export interface SmMdlPr {
   title:         string;
   confirmLabel?: string;
   onConfirm:     () => void;
-  /** Called on × button — discard / cancel */
   onClose:       () => void;
-  /** Top offset (px) relative to pg-wrap — centres modal on the active item */
   anchorTop?:    number;
-  /** Pixels to push modal left when it would overflow the viewport */
   offsetX?:      number;
 }
 
-/**
- * SmMdl — square anchored confirmation panel.
- * Absolutely positioned to the right of pg-wrap.
- * Enter → confirm flash → action (when open).
- */
 export function SmMdl({
   open,
   title,
@@ -39,7 +31,11 @@ export function SmMdl({
     return () => clearTimeout(t);
   }, [open]);
 
-  // Enter → confirm while modal is open
+  const triggerConfirm = useCallback(() => {
+    setCfmFlash(true);
+    setTimeout(() => { setCfmFlash(false); onConfirm(); }, 90);
+  }, [onConfirm]);
+
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
@@ -47,12 +43,7 @@ export function SmMdl({
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  function triggerConfirm() {
-    setCfmFlash(true);
-    setTimeout(() => { setCfmFlash(false); onConfirm(); }, 90);
-  }
+  }, [open, triggerConfirm]);
 
   if (!show) return null;
 
@@ -69,15 +60,12 @@ export function SmMdl({
       aria-modal
       aria-label={title}
     >
-      {/* Header: title + close */}
       <div className="sm-hdr">
         <p className="sm-ttl ff-s">{title}</p>
         <button className="btn sm-cls" aria-label="Close" onClick={onClose}>
           <ClsIco />
         </button>
       </div>
-
-      {/* Confirm + keyboard hint — one row */}
       <div className="sm-acts">
         <button
           className={`btn glass sm-cfm ff-s${cfmFlash ? ' sm-cfm--flash' : ''}`}

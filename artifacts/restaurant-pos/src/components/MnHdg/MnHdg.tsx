@@ -1,8 +1,4 @@
-// ── MnHdg — section heading (purely presentational) ──────────────────────
-// Renders the gold-rule + title row. No data-area, no move state —
-// those are owned by the parent MnSect container.
-
-import { useId, useState, useEffect } from "react";
+import { memo, useId, useState, useEffect } from "react";
 import { useEdt } from "@/lib/edt/useEdt";
 import "./MnHdg.css";
 
@@ -10,7 +6,7 @@ interface MhPr {
   text?: string;
 }
 
-function MnHdg({ text = "Turkish Specialties" }: MhPr) {
+const MnHdg = memo(function MnHdg({ text = "Turkish Specialties" }: MhPr) {
   const uid      = useId().replace(/:/g, "");
   const isActive = useEdt(text);
   const [editedText, setEditedText] = useState<string | null>(null);
@@ -75,8 +71,8 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
               </mask>
             </defs>
             <g mask={`url(#mask-r-${uid})`}>
-              <polygon points="0,5 5,2 10,5 5,8"   fill="rgb(var(--gold))" />
-              <polygon points="80,5 85,2 90,5 85,8" fill="rgb(var(--gold))" />
+              <polygon points="0,5 5,2 10,5 5,8"    fill="rgb(var(--gold))" />
+              <polygon points="80,5 85,2 90,5 85,8"  fill="rgb(var(--gold))" />
               <line    x1="10" y1="5" x2="100" y2="5" stroke="rgb(var(--gold))" strokeWidth="1" />
             </g>
           </svg>
@@ -84,6 +80,6 @@ function MnHdg({ text = "Turkish Specialties" }: MhPr) {
       </div>
     </div>
   );
-}
+});
 
 export default MnHdg;

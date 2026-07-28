@@ -5,18 +5,14 @@
   overflow: hidden;
 }
 
-/* Full-bleed background image */
 .mb-bg {
   position: absolute;
   inset: 0;
-  /* width: 100%; */
-  /* height: 100%; */
   object-fit: cover;
   z-index: 0;
   pointer-events: none;
 }
 
-/* Depth overlay — warm gold-tinted vignette, behind border (z10) and content (z5) */
 .mb-ovr {
   position: absolute;
   inset: 0;
@@ -24,13 +20,11 @@
   pointer-events: none;
 }
 
-/* Content layer */
 .mb-body {
   position: relative;
   z-index: 5;
 }
 
-/* Border frame overlay — stretches to fill, on top of content */
 .mb-brd {
   position: absolute;
   inset: 0;
@@ -41,21 +35,6 @@
   pointer-events: none;
 }
 
-/* Ornament — centered on top/bottom border edge (content pages) */
-.mb-ornt {
-  position: absolute;
-  left: 50%;
-  width: 27%;
-  z-index: 15;
-  pointer-events: none;
-}
-
-.mb-ornt-t {
-  top: 2.5cqw;
-  transform: translateX(-50%) translateY(-50%);
-}
-
-/* Cover / closing page ornaments */
 .cv-ornt {
   position: absolute;
   left: 50%;
@@ -74,7 +53,6 @@
   transform: translateX(-50%) translateY(50%) scaleY(-1);
 }
 
-/* Page number ornament wrapper — bottom-center of content pages */
 .mb-pgn-wrap {
   position: absolute;
   bottom: -7cqw;
@@ -91,7 +69,6 @@
   display: block;
 }
 
-/* Page number — overlaid on the hollow center of the ornament */
 .mb-pgn {
   position: absolute;
   top: 50%;
@@ -103,6 +80,6 @@
   color: rgb(var(--lntn));
   text-shadow:
     0 0 10px rgba(var(--lntn), .55),
-    0 1px 3px rgba(0, 0, 0, .8);
+    0 1px 3px rgba(var(--blk), .8);
   line-height: 1;
 }

@@ -1,0 +1,53 @@
+main chahta hoon ke tum ssot rules mein se refactoring ko deeply analyze karo aur uske saare rules jahaan zaroorat hai apply karo aik line of code bhi rules ko override nhin kare. very imp note yaad rahe ke output ux/ui aur logic ka output thoda sa bhi change nhin ho.
+Pehle workflow banao aur likhte jaana kya kya kar rahe ho. kya kya hoga plan bhi.
+record daalte rehna taake agli baar pata chale kahaan se shuru karna hai.
+
+ye action huwa hai continue karo, 
+8 actions
+Pehle saari files ka full content padhta hoon parallel mein taake violations clearly dikh sakein.
+
+
+33 actions
+Abhi bhi kuch important files baaki hain. Parallel padh leta hoon.
+
+
+11 actions
+Baaki files bhi padh leta hoon parallel mein.
+
+
+22 actions
+Remaining files padhta hoon quickly.
+
+
+11 actions
+Pehle baaki files check karta hoon — dead code, console.log, hardcoded colors verify karne ke liye.
+
+
+7 actions
+Remaining style files bhi quickly check karta hoon.
+
+
+11 actions
+Ab maine poora codebase deeply analyze kar liya. Saare violations clearly identify ho gaye. Ab main systematic tarike se fix karta hoon.
+
+Violations found:
+
+[NO-LOG] — 7 files mein console.log/warn
+[NO-DEAD] — AvtOvr (unused), .mb-ornt/.mb-ornt-t (dead CSS), commented-out CSS
+[CSS-NOHARD] — DropdownPanel.css (6 hardcoded colors), Modal.css (3), MnBrd.css (1), typography.css (1 font)
+[JS-NOINLINE] — calcPos/calcSubPos in ContextMenu, pgVars in MnPg
+[LIST-KEY] — index keys in DropdownPanel icons, CtntPg sections
+[MEMO-HEAVY] — MnSect, MnHdg, MnBrd, OptRow, PgMnt missing React.memo
+[COMMENT] — har file mein prose comments
+[EFFECT-DEPS] — SmMdl eslint-disable, Modal eslint-disable
+Sab ek saath apply karta hoon batches mein:
+
+
+5 actions
+Ab poori picture clear hai. Saari violations identified. Ab systematically fix karta hoon — batches mein parallel writes.
+
+Batch 1: Naye files create karo + CSS vars + no-log fixes
+
+
+8 actions
+You've reached your monthly free quota limit. It will reset on August 2, 2026.

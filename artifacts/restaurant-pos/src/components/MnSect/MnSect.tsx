@@ -1,13 +1,9 @@
-// ── MnSect — section container ─────────────────────────────────────────────
-// Single source of truth for a menu section. Owns data-area="section" on its
-// root so the whole unit (heading + items) is the context-menu and move target.
-// MnHdg is purely presentational; move / disabled state lives here.
-
-import MnHdg           from '../MnHdg/MnHdg';
-import { MnItm }       from '../MnItm/MnItm';
+import { memo } from 'react';
+import MnHdg               from '../MnHdg/MnHdg';
+import { MnItm }           from '../MnItm/MnItm';
 import { useMvSect }       from '@/lib/mv/useMv';
 import { useMvSectActive } from '@/lib/mv/useMvActive';
-import type { MnItem } from '@/data/menu';
+import type { MnItem }     from '@/data/menu';
 import './MnSect.css';
 
 interface MnSectPr {
@@ -16,7 +12,7 @@ interface MnSectPr {
   items:           MnItem[];
 }
 
-export function MnSect({ title, isContinuation, items }: MnSectPr) {
+export const MnSect = memo(function MnSect({ title, isContinuation, items }: MnSectPr) {
   const id           = title ?? '';
   const isMoving     = useMvSect(id);
   const mvSectState  = useMvSectActive();
@@ -47,4 +43,4 @@ export function MnSect({ title, isContinuation, items }: MnSectPr) {
       )}
     </div>
   );
-}
+});

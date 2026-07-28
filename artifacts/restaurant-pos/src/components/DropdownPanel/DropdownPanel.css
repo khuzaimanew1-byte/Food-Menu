@@ -1,31 +1,17 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   ContextMenu — refined, dark-luxury surface
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* ── Panel ───────────────────────────────────────────────────────────────── */
 .ctx-menu {
   position: fixed;
   z-index: 9000;
   width: 200px;
-
-  /* 5 px inner tray — options sit inside with breathing room */
   padding: 5px;
-
-  /* Near-black base — darker than --chrd to read as its own surface */
-  background: rgb(10, 8, 7);
-
-  /* Slightly lighter border so it feels lifted, not heavy */
+  background: rgb(var(--ctx));
   border: 1px solid rgba(var(--gw), 0.32);
   border-radius: 10px;
-
-  /* Layered depth: tight contact shadow + soft ambient + inner top gleam */
   box-shadow:
-    0 1px  4px  rgba(0, 0, 0, 0.65),
-    0 6px  18px rgba(0, 0, 0, 0.50),
-    0 18px 44px rgba(0, 0, 0, 0.30),
+    0 1px  4px  rgba(var(--blk), 0.65),
+    0 6px  18px rgba(var(--blk), 0.50),
+    0 18px 44px rgba(var(--blk), 0.30),
     inset 0 1px 0 rgba(var(--glt), 0.11),
     inset 0 0   0 1px rgba(var(--gw), 0.04);
-
   animation: ctx-in 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
   transform-origin: top left;
   user-select: none;
@@ -37,14 +23,12 @@
   to   { opacity: 1; transform: scale(1)    translateY(0);    }
 }
 
-/* ── Options list ────────────────────────────────────────────────────────── */
 .ctx-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* ── Separator ───────────────────────────────────────────────────────────── */
 .ctx-sep {
   height: 1px;
   margin: 3px 4px;
@@ -57,7 +41,6 @@
   );
 }
 
-/* ── Option row ──────────────────────────────────────────────────────────── */
 .ctx-opt {
   display: flex;
   align-items: center;
@@ -65,14 +48,10 @@
   height: 34px;
   padding: 0 10px;
   border-radius: 6px;
-
   cursor: pointer;
   color: rgba(var(--cr), 0.75);
-
-  /* Transparent border — becomes visible on hover for the "lifted" frame */
   border: 1px solid transparent;
   outline: none;
-
   transition:
     background    0.12s ease,
     color         0.12s ease,
@@ -80,7 +59,6 @@
     box-shadow    0.12s ease;
 }
 
-/* Hover / focus — slightly lifted: tinted bg + delicate border + top gleam */
 .ctx-opt:hover,
 .ctx-opt:focus-visible {
   background:   rgba(var(--gw), 0.08);
@@ -93,7 +71,6 @@
   background: rgba(var(--gw), 0.13);
 }
 
-/* ── Icon ────────────────────────────────────────────────────────────────── */
 .ctx-opt__icon {
   flex-shrink: 0;
   width: 14px;
@@ -108,7 +85,6 @@
   opacity: 0.82;
 }
 
-/* ── Label ───────────────────────────────────────────────────────────────── */
 .ctx-opt__label {
   font-family: var(--ff);
   font-size: 12.5px;
@@ -120,39 +96,33 @@
   text-overflow: ellipsis;
 }
 
-/* ── Danger variant ──────────────────────────────────────────────────────── */
 .ctx-opt--danger {
-  color: rgba(204, 75, 55, 0.78);
+  color: rgba(var(--dnga), 0.78);
 }
 
 .ctx-opt--danger:hover,
 .ctx-opt--danger:focus-visible {
-  background:   rgba(180, 55, 38, 0.10);
-  border-color: rgba(180, 55, 38, 0.22);
-  color:        rgb(228, 95, 72);
+  background:   rgba(var(--dngb), 0.10);
+  border-color: rgba(var(--dngb), 0.22);
+  color:        rgb(var(--dngh));
   box-shadow:   none;
 }
 
 .ctx-opt--danger:active {
-  background: rgba(180, 55, 38, 0.16);
+  background: rgba(var(--dngb), 0.16);
 }
 
-
-/* ── Active element — stays lit while menu is open ───────────────────────── */
-/* No outline — warm breath bg only, matching .hlght-xs */
 [data-ctx-active] {
   background:    rgba(var(--gold), 0.03) !important;
   border-radius: 3px;
   transition:    background 0.15s ease;
 }
 
-/* ── Submenu flyout ──────────────────────────────────────────────────────── */
 .ctx-submenu {
   transform-origin: top left;
   animation: ctx-in 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* ── Chevron arrow (parent option with children) ─────────────────────────── */
 .ctx-opt__chevron {
   flex-shrink: 0;
   width: 12px;
@@ -168,7 +138,6 @@
   opacity: 0.80;
 }
 
-/* Parent row stays highlighted while its submenu is open */
 .ctx-opt--sub-open {
   background:   rgba(var(--gw), 0.08);
   border-color: rgba(var(--gw), 0.18);
@@ -180,7 +149,6 @@
   opacity: 0.82;
 }
 
-/* ── Hint icon — Before / After on paste options ─────────────────────────── */
 .ctx-opt__hint {
   flex-shrink: 0;
   width: 11px;

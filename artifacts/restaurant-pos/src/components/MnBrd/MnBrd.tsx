@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import "./MnBrd.css";
 
 interface MbPr {
@@ -8,42 +8,16 @@ interface MbPr {
 
 const B = import.meta.env.BASE_URL;
 
-function MnBrd({ pg = 1, children }: MbPr) {
+const MnBrd = memo(function MnBrd({ pg = 1, children }: MbPr) {
   const pgNum = pg !== false ? String(pg).padStart(2, "0") : null;
 
   return (
     <div className="mb-wrap" data-area="page" data-id={pg === false ? undefined : pg}>
-      {/* Page background image — full-bleed behind content */}
-      <img
-        src={`${B}img/pgbg.png`}
-        className="mb-bg"
-        aria-hidden="true"
-        alt=""
-      />
-
-      {/* Tinted depth overlay — between bg and content */}
+      <img src={`${B}img/pgbg.png`} className="mb-bg" aria-hidden="true" alt="" />
       <div className="mb-ovr dkgl" aria-hidden="true" />
-
-      {/* Page content */}
       <div className="mb-body flex flex-col w-full h-full">{children}</div>
-
-      {/* Border frame overlay — sits above content */}
-      <img
-        src={`${B}img/brd.png`}
-        className="mb-brd"
-        aria-hidden="true"
-        alt=""
-      />
-
-      {/* Top ornament */}
-      <img
-        src={`${B}img/ornt.png`}
-        className="cv-ornt cv-ornt-t"
-        aria-hidden="true"
-        alt=""
-      />
-
-      {/* Page number ornament with number overlaid in hollow center */}
+      <img src={`${B}img/brd.png`} className="mb-brd" aria-hidden="true" alt="" />
+      <img src={`${B}img/ornt.png`} className="cv-ornt cv-ornt-t" aria-hidden="true" alt="" />
       {pgNum !== null && (
         <div className="mb-pgn-wrap" aria-hidden="true">
           <img src={`${B}img/pgorn.png`} className="mb-pgn-ornt" alt="" />
@@ -52,6 +26,6 @@ function MnBrd({ pg = 1, children }: MbPr) {
       )}
     </div>
   );
-}
+});
 
 export default MnBrd;

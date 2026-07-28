@@ -5,8 +5,7 @@ import { getMoving } from '@/lib/mv/mvStore';
 import { resolveHint } from '@/lib/spl/splHint';
 import { DropdownPanel } from '../DropdownPanel/DropdownPanel';
 import type { SubState } from '../DropdownPanel/DropdownPanel';
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { LONG_PRESS_MS, SUB_DELAY_MS, calcPos, calcSubPos } from './menuPos';
 
 interface MenuState {
   left:    number;
@@ -20,53 +19,6 @@ interface CtxMenuPr {
   onSelect?: (area: CtxArea, id: string | null, optId: string) => void;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-const LONG_PRESS_MS  = 500;
-const MENU_W         = 200;
-const OPT_H          = 34;
-const SEP_H          = 7;
-const PADDING_V      = 5;
-const CURSOR_OFFSET  = 10;
-const SUB_DELAY_MS   = 120;
-
-// ─── Position helpers ─────────────────────────────────────────────────────────
-
-function calcPos(x: number, y: number, opts: CtxOpt[]) {
-  const sepCount = opts.filter(o => o.separator).length;
-  const menuH    = opts.length * OPT_H + sepCount * SEP_H + PADDING_V * 2;
-  const vpW      = window.innerWidth;
-  const vpH      = window.innerHeight;
-  const MARGIN   = 8;
-  const rawLeft  = x + MENU_W + CURSOR_OFFSET > vpW
-    ? x - MENU_W - CURSOR_OFFSET : x + CURSOR_OFFSET;
-  const rawTop   = y + menuH + CURSOR_OFFSET > vpH
-    ? y - menuH - CURSOR_OFFSET : y + CURSOR_OFFSET;
-  return {
-    left: Math.max(MARGIN, Math.min(rawLeft, vpW - MENU_W - MARGIN)),
-    top:  Math.max(MARGIN, Math.min(rawTop,  vpH - menuH  - MARGIN)),
-  };
-}
-
-function calcSubPos(rowEl: HTMLElement, children: CtxOpt[]): { left: number; top: number } {
-  const sepCount = children.filter(o => o.separator).length;
-  const subH     = children.length * OPT_H + sepCount * SEP_H + PADDING_V * 2;
-  const rect     = rowEl.getBoundingClientRect();
-  const vpW      = window.innerWidth;
-  const vpH      = window.innerHeight;
-  const MARGIN   = 8;
-  const GAP      = 4;
-  const left = rect.right + GAP + MENU_W > vpW
-    ? rect.left - MENU_W - GAP
-    : rect.right + GAP;
-  const top = rect.top + subH > vpH
-    ? Math.max(MARGIN, vpH - subH - MARGIN)
-    : rect.top;
-  return { left, top };
-}
-
-// ─── ContextMenu — trigger + state controller ─────────────────────────────────
-
 export function ContextMenu({ onSelect }: CtxMenuPr) {
   const [state,    setState]    = useState<MenuState | null>(null);
   const [subState, setSubState] = useState<SubState  | null>(null);
@@ -78,14 +30,12 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
   const lpOriginRef = useRef({ x: 0, y: 0 });
   const subTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── Highlight helpers ──────────────────────────────────────────────────────
   const setActive = useCallback((el: HTMLElement | null) => {
     activeElRef.current?.removeAttribute('data-ctx-active');
     el?.setAttribute('data-ctx-active', '');
     activeElRef.current = el;
   }, []);
 
-  // ── Open ───────────────────────────────────────────────────────────────────
   const open = useCallback((x: number, y: number, target: EventTarget | null) => {
     const hit = detectArea(target);
     if (!hit) return;
@@ -117,11 +67,6 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
       }
     }
 
-    // ── Second pass: add-item / add-section hints ───────────────────────
-    // Always shown (move mode or not). add-item on item → horizontal split.
-    // add-section on item/section → vertical split (item auto-promotes to section).
-    // add-item on section → append-only, no split hint.
-    // add-section on page  → append-only, no split hint.
     if (id) {
       options = options.map(opt => {
         if (opt.id === 'add-item' && area === 'item') {
@@ -151,14 +96,12 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     setState({ ...calcPos(x, y, options), area, id, options });
   }, [setActive]);
 
-  // ── Close ──────────────────────────────────────────────────────────────────
   const close = useCallback(() => {
     setActive(null);
     setState(null);
     setSubState(null);
   }, [setActive]);
 
-  // ── Submenu open/close ─────────────────────────────────────────────────────
   const openSub = useCallback((opt: CtxOpt, rowEl: HTMLElement) => {
     if (subTimerRef.current) clearTimeout(subTimerRef.current);
     subTimerRef.current = setTimeout(() => {
@@ -177,14 +120,12 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     if (subTimerRef.current) clearTimeout(subTimerRef.current);
   }, []);
 
-  // ── Right-click ────────────────────────────────────────────────────────────
   useEffect(() => {
     const handler = (e: MouseEvent) => { e.preventDefault(); open(e.clientX, e.clientY, e.target); };
     document.addEventListener('contextmenu', handler);
     return () => document.removeEventListener('contextmenu', handler);
   }, [open]);
 
-  // ── Long-press (touch / stylus) ────────────────────────────────────────────
   useEffect(() => {
     const onDown = (e: PointerEvent) => {
       if (e.pointerType === 'mouse') return;
@@ -198,7 +139,6 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
         if (lpTimerRef.current) clearTimeout(lpTimerRef.current);
     };
     const onUp = () => { if (lpTimerRef.current) clearTimeout(lpTimerRef.current); };
-
     document.addEventListener('pointerdown',   onDown);
     document.addEventListener('pointermove',   onMove);
     document.addEventListener('pointerup',     onUp);
@@ -212,7 +152,6 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     };
   }, [open]);
 
-  // ── Outside click + Escape ─────────────────────────────────────────────────
   useEffect(() => {
     if (!state) return;
     const onPointer = (e: PointerEvent) => {
@@ -231,14 +170,12 @@ export function ContextMenu({ onSelect }: CtxMenuPr) {
     };
   }, [state, close]);
 
-  // ── Option select ──────────────────────────────────────────────────────────
   const handleSelect = useCallback((opt: CtxOpt) => {
     if (opt.disabled || !state) return;
     onSelect?.(state.area, state.id, opt.id);
     close();
   }, [state, onSelect, close]);
 
-  // ── Render ─────────────────────────────────────────────────────────────────
   if (!state) return null;
 
   return (

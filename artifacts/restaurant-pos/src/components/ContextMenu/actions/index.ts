@@ -1,11 +1,5 @@
-// ── Context menu dispatcher ───────────────────────────────────────────────
-// Single place that maps (area, id, optId) triples to action handlers.
-// Paste path (move mode active) is handled here before area dispatch so
-// every "Paste Here" click is caught centrally.
-
 import type { CtxArea } from '../contextMenuConfig';
 
-// ── Item actions ──────────────────────────────────────────────────────────
 import { editItem }        from './item/edit';
 import { addItem }         from './item/addItem';
 import { moveItem }        from './item/move';
@@ -13,20 +7,17 @@ import { addSectFromItem } from './item/addSect';
 import { assignItem }      from './item/assign';
 import { deleteItem }      from './item/del';
 
-// ── Section actions ───────────────────────────────────────────────────────
 import { editSection }         from './section/edit';
 import { addItemToSection }    from './section/addItem';
 import { moveSection }         from './section/move';
 import { addSectAfterSection } from './section/addSect';
 import { deleteSection }       from './section/del';
 
-// ── Page actions ──────────────────────────────────────────────────────────
 import { addSectToPage }  from './page/addSect';
 import { shapeSquare }    from './page/shpSq';
 import { shapeInfCastle } from './page/shpInf';
 import { shapePlaque }    from './page/shpPlq';
 
-// ── Move / paste globals ───────────────────────────────────────────────────
 import { getMoving, getLastPointerPos, deactivate as mvDeactivate } from '@/lib/mv/mvStore';
 import { reorderItem, reorderSection }                               from '@/lib/menu/menuStore';
 import { resolveHint }                                               from '@/lib/spl/splHint';
@@ -38,14 +29,10 @@ export function dispatchCtxAction(
 ): void {
   const { movingId, movingType } = getMoving();
 
-  // ── Cancel move — single-option menu on the source element ───────────
   if (optId === 'cancel-move') { mvDeactivate(); return; }
 
-  // ── Paste path — move mode is active ──────────────────────────────────
-  // move-item / move-section button becomes "Paste Item" / "Paste Section"
-  // while a move is in progress. Pointer position decides before/after.
   if (movingId && id && (optId === 'move-item' || optId === 'move-section')) {
-    if (movingId === id) { mvDeactivate(); return; }   // same element → cancel
+    if (movingId === id) { mvDeactivate(); return; }
 
     const rawEl = document.querySelector<HTMLElement>(
       `[data-area="${area}"][data-id="${CSS.escape(id)}"]`,
@@ -63,14 +50,12 @@ export function dispatchCtxAction(
     return;
   }
 
-  // ── Normal action path ─────────────────────────────────────────────────
   if (area === 'item') {
     switch (optId) {
       case 'edit':        return editItem(id);
       case 'add-item':    return addItem(id);
       case 'move-item':   return moveItem(id);
       case 'move-section': {
-        // Find the section that contains this item and activate its move.
         const itemEl = id
           ? document.querySelector<HTMLElement>(`[data-area="item"][data-id="${CSS.escape(id)}"]`)
           : null;
@@ -87,7 +72,7 @@ export function dispatchCtxAction(
     switch (optId) {
       case 'edit':         return editSection(id);
       case 'add-item':     return addItemToSection(id);
-      case 'move-item':    return moveItem(id);   // id is section title; moveItem guards on null
+      case 'move-item':    return moveItem(id);
       case 'move-section': return moveSection(id);
       case 'add-section':  return addSectAfterSection(id);
       case 'delete':       return deleteSection(id);
@@ -103,5 +88,4 @@ export function dispatchCtxAction(
     }
   }
 
-  console.warn('[ctx] unhandled action', area, optId, id);
 }

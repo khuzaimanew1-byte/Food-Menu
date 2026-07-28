@@ -1,10 +1,7 @@
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef, memo } from 'react';
 import type { RefObject } from 'react';
 import { ICONS, type CtxOpt } from '../ContextMenu/contextMenuConfig';
 import './DropdownPanel.css';
-
-
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface SubState {
   optId:  string;
@@ -14,26 +11,18 @@ export interface SubState {
 }
 
 export interface DropdownPanelPr {
-  // Main menu
-  left:      number;
-  top:       number;
-  ariaLabel: string;
-  options:   CtxOpt[];
-  onSelect:  (opt: CtxOpt) => void;
-  onSubEnter:(opt: CtxOpt, el: HTMLElement) => void;
-  onSubLeave:() => void;
-
-  // Submenu
+  left:       number;
+  top:        number;
+  ariaLabel:  string;
+  options:    CtxOpt[];
+  onSelect:   (opt: CtxOpt) => void;
+  onSubEnter: (opt: CtxOpt, el: HTMLElement) => void;
+  onSubLeave: () => void;
   subState:   SubState | null;
   onSubKeep:  () => void;
-
-  // Refs — created in ContextMenu, forwarded here so the controller
-  // can do outside-click detection against both panels.
   menuRef:    RefObject<HTMLDivElement>;
   subMenuRef: RefObject<HTMLDivElement>;
 }
-
-// ─── Option row ───────────────────────────────────────────────────────────────
 
 interface OptRowPr {
   opt:         CtxOpt;
@@ -43,14 +32,14 @@ interface OptRowPr {
   active?:     boolean;
 }
 
-function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
+const OptRow = memo(function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
   const ref = useRef<HTMLLIElement>(null);
   const cls = [
     'ctx-opt',
-    opt.children ? 'ctx-opt--sub'     : '',
-    opt.danger   ? 'ctx-opt--danger'  : '',
-    opt.disabled ? 'disabled'          : '',
-    active       ? 'ctx-opt--sub-open': '',
+    opt.children ? 'ctx-opt--sub'      : '',
+    opt.danger   ? 'ctx-opt--danger'   : '',
+    opt.disabled ? 'disabled'           : '',
+    active       ? 'ctx-opt--sub-open' : '',
   ].filter(Boolean).join(' ');
 
   return (
@@ -73,28 +62,18 @@ function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
           else if (onSubLeave) onSubLeave();
         }}
       >
-        <svg
-          className="ctx-opt__icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          {opt.icon.map((d, i) => (
-            <path key={i} d={d} stroke="currentColor" strokeWidth="1.5" />
+        <svg className="ctx-opt__icon" viewBox="0 0 24 24" fill="none"
+             strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          {opt.icon.map((d) => (
+            <path key={d} d={d} stroke="currentColor" strokeWidth="1.5" />
           ))}
         </svg>
         <span className="ctx-opt__label ff-s">{opt.label}</span>
         {opt.hint && (
-          <svg
-            className={`ctx-opt__hint ctx-opt__hint--${opt.hint}`}
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden
-          >
-            {(opt.hint === 'before' ? ICONS.arwUp : ICONS.arwDn).map((d, i) => (
-              <path key={i} d={d} stroke="currentColor" strokeWidth="1.5"
+          <svg className={`ctx-opt__hint ctx-opt__hint--${opt.hint}`}
+               viewBox="0 0 24 24" fill="none" aria-hidden>
+            {(opt.hint === 'before' ? ICONS.arwUp : ICONS.arwDn).map((d) => (
+              <path key={d} d={d} stroke="currentColor" strokeWidth="1.5"
                     strokeLinecap="round" strokeLinejoin="round" />
             ))}
           </svg>
@@ -108,9 +87,7 @@ function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
       </li>
     </Fragment>
   );
-}
-
-// ─── DropdownPanel ────────────────────────────────────────────────────────────
+});
 
 export function DropdownPanel({
   left, top, ariaLabel, options,
@@ -120,7 +97,6 @@ export function DropdownPanel({
 }: DropdownPanelPr) {
   return (
     <>
-      {/* Main menu */}
       <div
         ref={menuRef}
         className="ctx-menu"
@@ -143,7 +119,6 @@ export function DropdownPanel({
         </ul>
       </div>
 
-      {/* Submenu flyout */}
       {subState && (
         <div
           ref={subMenuRef}
@@ -156,11 +131,7 @@ export function DropdownPanel({
         >
           <ul className="ctx-list">
             {subState.items.map((opt) => (
-              <OptRow
-                key={opt.id}
-                opt={opt}
-                onSelect={onSelect}
-              />
+              <OptRow key={opt.id} opt={opt} onSelect={onSelect} />
             ))}
           </ul>
         </div>
