@@ -1,2 +1,20 @@
-.ff-s { font-family: var(--ff); }
-.ff-c { font-family: var(--ffc); }
+/* ── Font-family utilities ────────────────────────────────────────────────── */
+.ff-s { font-family: var(--ff);  }   /* Cormorant Garamond — body, labels   */
+.ff-c { font-family: var(--ffc); }   /* Cinzel — headings, values, UI caps  */
+
+/* ── Text-colour hierarchy ────────────────────────────────────────────────── */
+.tx-pri  { color: rgb(var(--cr));             }   /* warm cream — primary body  */
+.tx-sec  { color: rgba(var(--cr),  0.55);     }   /* muted — secondary labels   */
+.tx-gold { color: rgb(var(--gl));             }   /* light gold — accents       */
+.tx-mut  { color: rgb(var(--mut));            }   /* slate — de-emphasised      */
+
+/* ── Display-value — Cinzel numerics with gold glow (prices, margins) ──────── */
+.tx-disp {
+  font-family:  var(--ffc);
+  font-weight:  700;
+  letter-spacing: 0.05em;
+  color: rgb(var(--gl));
+  text-shadow:
+    0 0 10px rgba(var(--gold), 0.50),
+    0 0 22px rgba(var(--gold), 0.22);
+}
