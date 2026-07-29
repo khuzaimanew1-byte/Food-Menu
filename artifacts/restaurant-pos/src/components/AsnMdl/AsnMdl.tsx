@@ -82,12 +82,19 @@ export function AsnMdl() {
       <div className="asn-sec">
         <span className="sec-lbl">Resources</span>
         <div className="asn-gd">
-          {SAMPLE_RES.map(r => (
-            <div key={r.name} className="kv-rw">
-              <span className="kv-key ff-s">{r.name}</span>
-              <span className="kv-val ff-s">{r.qty}</span>
-            </div>
-          ))}
+          {SAMPLE_RES.map(r => {
+            const m = r.qty.match(/^([\d.]+)\s*([a-zA-Z]+)$/);
+            return (
+              <div key={r.name} className="kv-rw">
+                <span className="kv-key ff-s">{r.name}</span>
+                <span className="kv-val ff-s">
+                  {m ? (
+                    <>{m[1]}<span className="asn-unit">{m[2]}</span></>
+                  ) : r.qty}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 

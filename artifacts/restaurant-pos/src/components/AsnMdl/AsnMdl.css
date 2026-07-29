@@ -56,6 +56,16 @@
   color: rgb(var(--gl));
 }
 
+/* ── Unit label — distinct colour + left gap from qty number ─────────────── */
+.asn-unit {
+  margin-left: 3px;
+  color: rgba(var(--cr), 0.45);
+  font-style: normal;
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
 /* ── Edit title-action button ─────────────────────────────────────────────── */
 .asn-edt {
   flex-shrink: 0;
