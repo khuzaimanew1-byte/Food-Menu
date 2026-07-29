@@ -17,7 +17,12 @@ export function EdtCnf() {
 
   const applyLayout = useCallback((anchorEl: HTMLElement | null) => {
     const containerEl = document.querySelector<HTMLElement>('.pg-wrap');
-    const { top, offsetX: ox } = anchorRight(anchorEl, containerEl);
+    // For section headings, anchorEl is the whole section container.
+    // Use the actual contenteditable child so the confirm button aligns
+    // with the heading element, not the vertical centre of the section.
+    const targetEl =
+      anchorEl?.querySelector<HTMLElement>('[contenteditable]') ?? anchorEl;
+    const { top, offsetX: ox } = anchorRight(targetEl, containerEl);
     setAnchorTop(top);
     setOffsetX(ox);
   }, []);

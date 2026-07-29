@@ -4,7 +4,7 @@
 // Actual delete runs only on confirm → execDel (trash + api + store).
 
 import { useState, useEffect, useCallback } from 'react';
-import { SmMdl }                             from '../SmMdl/SmMdl';
+import { Modal }                             from '../Modal/Modal';
 import { execDel, type DelType }             from '@/lib/del/delExec';
 import './DelCnf.css';
 
@@ -16,9 +16,9 @@ export function DelCnf() {
 
   useEffect(() => {
     const handler = (e: Event) => {
-      const { id, type } = (e as CustomEvent<Pending>).detail ?? {};
+      const { id, type, name } = (e as CustomEvent<Pending>).detail ?? {};
       if (!id || !type) return;
-      setPending({ id, type });
+      setPending({ id, type, name: name ?? '' });
       setOpen(true);
     };
     document.addEventListener('del:cnf', handler);
@@ -27,31 +27,30 @@ export function DelCnf() {
 
   const close = useCallback(() => {
     setOpen(false);
-    setTimeout(() => setPending(null), 80);
+    setTimeout(() => setPending(null), 200);
   }, []);
 
   const confirm = useCallback(() => {
     if (pending) execDel(pending.id, pending.type);
-    setOpen(false);
-    setTimeout(() => setPending(null), 80);
-  }, [pending]);
-
-  if (!pending && !open) return null;
+    close();
+  }, [pending, close]);
 
   const kind  = pending?.type === 'section' ? 'Section' : 'Item';
-  const label = pending ? `Delete ${kind}: "${pending.name}"?` : `Delete ${kind}?`;
+  const label = pending?.name
+    ? `"${pending.name}" delete ho jayega`
+    : `Yeh ${kind.toLowerCase()} delete ho jayega`;
 
   return (
-    <>
-      {open && <div className="del-bg" onClick={close} aria-hidden />}
-      <SmMdl
-        centered
-        open={open}
-        title={label}
-        confirmLabel="Delete"
-        onConfirm={confirm}
-        onClose={close}
-      />
-    </>
+    <Modal open={open} onClose={close} title={`${kind} Delete Karein?`} size="sm">
+      <p className="del-msg ff-s">{label}</p>
+      <div className="del-acts">
+        <button className="btn del-cancel ff-s" onClick={close}>
+          Cancel
+        </button>
+        <button className="btn del-cfm ff-s" onClick={confirm}>
+          Delete
+        </button>
+      </div>
+    </Modal>
   );
 }
