@@ -90,6 +90,9 @@ export function AsnMdl() {
         </div>
       </div>
 
+      {/* ── Divider ─────────────────────────────────────────────────── */}
+      <div className="asn-div" aria-hidden />
+
       {/* ── Resources ───────────────────────────────────────────────── */}
       <div className="asn-sec">
         <span className="asn-lbl ff-c">Resources</span>

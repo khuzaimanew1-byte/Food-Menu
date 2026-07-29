@@ -1,12 +1,14 @@
 import { Global, Module } from '@nestjs/common';
-import { db }             from '@workspace/db';
+import { getDb }          from '@workspace/db';
 
-// [DB-POOL] exports the singleton drizzle instance backed by pg.Pool
+// [DB-LAZY] useFactory defers pool creation to DI time (not import time).
+// If DATABASE_URL is absent the factory returns null — the server boots fine
+// and MenuSvc will re-try getDb() on every request until the URL appears.
 export const DB_TOKEN = Symbol('DB');
 
 @Global()
 @Module({
-  providers: [{ provide: DB_TOKEN, useValue: db }],
+  providers: [{ provide: DB_TOKEN, useFactory: () => getDb() }],
   exports:   [DB_TOKEN],
 })
 export class DbMod {}

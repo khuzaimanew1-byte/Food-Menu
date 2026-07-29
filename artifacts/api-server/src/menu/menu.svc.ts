@@ -1,8 +1,8 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
 import { eq, asc, sql, inArray }                 from 'drizzle-orm';
 import type { NodePgDatabase }                   from 'drizzle-orm/node-postgres';
 import {
-  sects, items, mkId,
+  sects, items, mkId, getDb,
   type NewSect, type UpdSect,
   type NewItem, type UpdItem,
 } from '@workspace/db';
@@ -24,30 +24,43 @@ const ITEM_COLS = {
 
 @Injectable()
 export class MenuSvc {
-  constructor(@Inject(DB_TOKEN) private readonly db: Db) {}
+  // [DB-LAZY] db may be null at startup if DATABASE_URL was absent.
+  // requireDb() re-checks getDb() on every call so the service heals
+  // automatically once the env var is set — no server restart needed.
+  constructor(@Inject(DB_TOKEN) private db: Db | null) {}
+
+  private requireDb(): Db {
+    if (!this.db) this.db = getDb() as Db | null;
+    if (!this.db) {
+      throw new ServiceUnavailableException(
+        'Database not available — set DATABASE_URL and the service will reconnect automatically',
+      );
+    }
+    return this.db;
+  }
 
   // ── Sections ──────────────────────────────────────────────────────────────
 
   async listSects(pg = 0, sz = 20) {
     const [rows, [{ tot }]] = await Promise.all([
-      this.db.select(SECT_COLS).from(sects)
+      this.requireDb().select(SECT_COLS).from(sects)
         .orderBy(asc(sects.pos)).limit(sz).offset(pg * sz),
-      this.db.select({ tot: sql<number>`count(*)::int` }).from(sects),
+      this.requireDb().select({ tot: sql<number>`count(*)::int` }).from(sects),
     ]);
     return { data: rows, pg, sz, tot: tot ?? 0 };
   }
 
   async getSect(id: string) {
-    const [row] = await this.db.select(SECT_COLS).from(sects)
+    const [row] = await this.requireDb().select(SECT_COLS).from(sects)
       .where(eq(sects.id, id)).limit(1);
     if (!row) throw new NotFoundException(`Section ${id} not found`);
     return row;
   }
 
   async createSect(dto: Omit<NewSect, 'id'>) {
-    const [{ maxPos }] = await this.db
+    const [{ maxPos }] = await this.requireDb()
       .select({ maxPos: sql<number>`coalesce(max(pos), -1)::int` }).from(sects);
-    const [row] = await this.db.insert(sects)
+    const [row] = await this.requireDb().insert(sects)
       .values({ ...dto, id: mkId(), pos: (maxPos ?? -1) + 1 })
       .returning(SECT_COLS);
     return row;
@@ -55,7 +68,7 @@ export class MenuSvc {
 
   // [API-BULK] bulk create in one transaction [DB-TX]
   async bulkNewSect(dtos: Omit<NewSect, 'id'>[]) {
-    return this.db.transaction(async (tx) => {
+    return this.requireDb().transaction(async (tx) => {
       const [{ base }] = await tx
         .select({ base: sql<number>`coalesce(max(pos), -1)::int` }).from(sects);
       const rows = dtos.map((d, i) => ({ ...d, id: mkId(), pos: (base ?? -1) + 1 + i }));
@@ -64,7 +77,7 @@ export class MenuSvc {
   }
 
   async updSect(id: string, dto: UpdSect) {
-    const [row] = await this.db.update(sects)
+    const [row] = await this.requireDb().update(sects)
       .set({ ...dto, upd_at: new Date() })
       .where(eq(sects.id, id))
       .returning(SECT_COLS);
@@ -74,7 +87,7 @@ export class MenuSvc {
 
   async delSect(id: string) {
     // [DB-TX] delete + resequence remaining positions atomically
-    await this.db.transaction(async (tx) => {
+    await this.requireDb().transaction(async (tx) => {
       const [row] = await tx.delete(sects).where(eq(sects.id, id)).returning({ pos: sects.pos });
       if (!row) throw new NotFoundException(`Section ${id} not found`);
       await tx.execute(sql`
@@ -88,7 +101,7 @@ export class MenuSvc {
   async reordSects(ids: string[]) {
     if (!ids.length) return;
     const now = new Date();
-    await this.db.transaction(async (tx) => {
+    await this.requireDb().transaction(async (tx) => {
       await tx.execute(sql`
         UPDATE sects SET
           pos    = CASE id ${sql.join(ids.map((id, i) => sql`WHEN ${id} THEN ${i}`), sql` `)} END,
@@ -103,10 +116,10 @@ export class MenuSvc {
   async listItems(sectId: string, pg = 0, sz = 20) {
     // [API-FIELDS] N+1 prevented — single query with section filter
     const [rows, [{ tot }]] = await Promise.all([
-      this.db.select(ITEM_COLS).from(items)
+      this.requireDb().select(ITEM_COLS).from(items)
         .where(eq(items.sect_id, sectId))
         .orderBy(asc(items.pos)).limit(sz).offset(pg * sz),
-      this.db.select({ tot: sql<number>`count(*)::int` }).from(items)
+      this.requireDb().select({ tot: sql<number>`count(*)::int` }).from(items)
         .where(eq(items.sect_id, sectId)),
     ]);
     return { data: rows, pg, sz, tot: tot ?? 0 };
@@ -114,7 +127,7 @@ export class MenuSvc {
 
   // [API-FIELDS] list items for multiple sections — no N+1
   async listItemsBulk(sectIds: string[], pg = 0, sz = 20) {
-    const rows = await this.db.select(ITEM_COLS).from(items)
+    const rows = await this.requireDb().select(ITEM_COLS).from(items)
       .where(inArray(items.sect_id, sectIds))
       .orderBy(asc(items.sect_id), asc(items.pos))
       .limit(sz).offset(pg * sz);
@@ -122,24 +135,24 @@ export class MenuSvc {
   }
 
   async getItem(id: string) {
-    const [row] = await this.db.select(ITEM_COLS).from(items)
+    const [row] = await this.requireDb().select(ITEM_COLS).from(items)
       .where(eq(items.id, id)).limit(1);
     if (!row) throw new NotFoundException(`Item ${id} not found`);
     return row;
   }
 
   async createItem(dto: Omit<NewItem, 'id'>) {
-    const [{ maxPos }] = await this.db
+    const [{ maxPos }] = await this.requireDb()
       .select({ maxPos: sql<number>`coalesce(max(pos), -1)::int` })
       .from(items).where(eq(items.sect_id, dto.sect_id));
-    const [row] = await this.db.insert(items)
+    const [row] = await this.requireDb().insert(items)
       .values({ ...dto, id: mkId(), pos: (maxPos ?? -1) + 1 })
       .returning(ITEM_COLS);
     return row;
   }
 
   async bulkNewItem(dtos: Omit<NewItem, 'id'>[]) {
-    return this.db.transaction(async (tx) => {
+    return this.requireDb().transaction(async (tx) => {
       // group by sect_id to compute correct pos offsets per section
       const bySection = new Map<string, typeof dtos>();
       for (const d of dtos) {
@@ -159,7 +172,7 @@ export class MenuSvc {
   }
 
   async updItem(id: string, dto: UpdItem) {
-    const [row] = await this.db.update(items)
+    const [row] = await this.requireDb().update(items)
       .set({ ...dto, upd_at: new Date() })
       .where(eq(items.id, id))
       .returning(ITEM_COLS);
@@ -168,7 +181,7 @@ export class MenuSvc {
   }
 
   async delItem(id: string) {
-    await this.db.transaction(async (tx) => {
+    await this.requireDb().transaction(async (tx) => {
       const [row] = await tx.delete(items).where(eq(items.id, id))
         .returning({ pos: items.pos, sect_id: items.sect_id });
       if (!row) throw new NotFoundException(`Item ${id} not found`);
@@ -183,7 +196,7 @@ export class MenuSvc {
   async reordItems(ids: string[], sectId?: string) {
     if (!ids.length) return;
     const now = new Date();
-    await this.db.transaction(async (tx) => {
+    await this.requireDb().transaction(async (tx) => {
       const sectClause = sectId ? sql`, sect_id = ${sectId}` : sql``;
       await tx.execute(sql`
         UPDATE items SET

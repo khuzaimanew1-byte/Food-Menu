@@ -2,21 +2,20 @@
 
 /* ── Section block ────────────────────────────────────────────────────────── */
 .asn-sec {
-  margin-bottom: 14px;
+  margin-bottom: 0;
 }
-.asn-sec:last-of-type { margin-bottom: 0; }
 
 /* ── Section label: "ASSIGN" / "RESOURCES" ─────────────────────────────── */
 .asn-lbl {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.56rem;
+  font-size: 0.60rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.20em;
   text-transform: uppercase;
-  color: rgba(var(--gold), 0.52);
-  margin-bottom: 8px;
+  color: rgba(var(--gold), 0.72);
+  margin-bottom: 9px;
 }
 /* decorative rule after the label */
 .asn-lbl::after {
@@ -25,7 +24,7 @@
   height: 1px;
   background: linear-gradient(
     90deg,
-    rgba(var(--gold), 0.22) 0%,
+    rgba(var(--gold), 0.28) 0%,
     transparent 100%
   );
 }
@@ -34,52 +33,55 @@
 .asn-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px 10px;
+  gap: 6px 14px;
 }
 
-/* ── One name + role pair ────────────────────────────────────────────────── */
+/* ── One name + role/qty pair ────────────────────────────────────────────── */
 .asn-chip {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
-/* Person / ingredient name */
+/* Person / ingredient name — primary, most prominent element */
 .asn-name {
   font-family: var(--ff);
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: rgb(var(--cr));
+  font-size: 0.90rem;
+  font-weight: 600;
+  color: rgb(var(--wht));
   line-height: 1;
+  letter-spacing: 0.01em;
 }
 
-/* Role badge — gold tint */
+/* Role badge — gold pill: communicates "staff title" */
 .asn-role {
   font-family: var(--ff);
-  font-size: 0.62rem;
-  font-weight: 400;
+  font-size: 0.60rem;
+  font-weight: 500;
   line-height: 1;
-  padding: 3px 7px;
-  border-radius: 0.35rem;
-  background: rgba(var(--gold), 0.11);
-  border: 1px solid rgba(var(--gold), 0.28);
+  padding: 3px 9px;
+  border-radius: 2rem;
+  background: rgba(var(--gold), 0.14);
+  border: 1px solid rgba(var(--gold), 0.40);
   color: rgb(var(--gl));
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  text-transform: capitalize;
   white-space: nowrap;
+  box-shadow: 0 0 6px rgba(var(--gold), 0.10) inset;
 }
 
-/* Quantity badge — lantern amber tint */
+/* Quantity badge — amber square: communicates "measurement/amount" */
 .asn-qty {
-  font-family: var(--ff);
+  font-family: var(--ffc);
   font-size: 0.62rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1;
   padding: 3px 7px;
-  border-radius: 0.35rem;
-  background: rgba(var(--lntn), 0.10);
-  border: 1px solid rgba(var(--lntn), 0.24);
-  color: rgba(var(--gl), 0.85);
-  letter-spacing: 0.03em;
+  border-radius: 0.28rem;
+  background: rgba(var(--lntn), 0.16);
+  border: 1px solid rgba(var(--lntn), 0.38);
+  color: rgba(255, 200, 120, 0.92);
+  letter-spacing: 0.05em;
   white-space: nowrap;
 }
 
@@ -89,11 +91,11 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(var(--gold), 0.14) 25%,
-    rgba(var(--gold), 0.14) 75%,
+    rgba(var(--gold), 0.18) 30%,
+    rgba(var(--gold), 0.18) 70%,
     transparent 100%
   );
-  margin: 12px 0;
+  margin: 13px 0;
 }
 
 /* ── Margin row ──────────────────────────────────────────────────────────── */
@@ -101,27 +103,29 @@
   display: flex;
   align-items: baseline;
   justify-content: flex-end;
-  gap: 6px;
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(var(--gold), 0.10);
+  gap: 7px;
+  margin-top: 13px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(var(--gold), 0.14);
 }
 
 .asn-mlbl {
   font-family: var(--ff);
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
+  font-size: 0.64rem;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgba(var(--cr), 0.40);
+  color: rgba(var(--cr), 0.45);
 }
 
 .asn-mval {
   font-family: var(--ffc);
-  font-size: 0.90rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-size: 1.00rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   color: rgb(var(--gl));
-  text-shadow: 0 0 12px rgba(var(--gold), 0.35);
+  text-shadow:
+    0 0 10px rgba(var(--gold), 0.50),
+    0 0 22px rgba(var(--gold), 0.22);
 }
 
 /* ── Edit title-action button ────────────────────────────────────────────── */
