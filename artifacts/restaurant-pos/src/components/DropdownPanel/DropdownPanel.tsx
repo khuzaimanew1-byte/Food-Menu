@@ -32,7 +32,7 @@ interface OptRowPr {
   active?:     boolean;
 }
 
-const OptRow = memo(function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
+export const OptRow = memo(function OptRow({ opt, onSelect, onSubEnter, onSubLeave, active }: OptRowPr) {
   const ref = useRef<HTMLLIElement>(null);
   const cls = [
     'ctx-opt',

@@ -1,0 +1,54 @@
+/* ── DelBtn — sits absolute top-right of its parent ─────────────────────
+   Parent must be position:relative (mic-wpr, mh-wrap already are).
+   Builds on the .btn base from Button/base.css.                         */
+
+.del-btn {
+  position: absolute;
+  top:   0.8cqw;
+  right: 0.6cqw;
+  z-index: 10;
+
+  width:  5.5cqw;
+  height: 5.5cqw;
+  padding: 0;
+
+  background:    rgba(var(--chr),  0.55);
+  border:        0.15cqw solid rgba(var(--dngb), 0.22);
+  border-radius: 50%;
+  color:         rgba(var(--dnga), 0.58);
+
+  /* override .btn defaults that don't fit danger style */
+  filter: none;
+
+  opacity:    0;
+  transition: opacity 0.18s ease, color 0.18s ease,
+              background 0.18s ease, border-color 0.18s ease;
+}
+
+.del-btn svg {
+  width:  2.4cqw;
+  height: 2.4cqw;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Show on parent hover */
+.mic-wpr:hover > .del-btn,
+.mh-wrap:hover   .del-btn {
+  opacity: 1;
+}
+
+/* Hover / focus state */
+.del-btn:hover,
+.del-btn:focus-visible {
+  color:        rgb(var(--dngh));
+  background:   rgba(var(--dngb), 0.18);
+  border-color: rgba(var(--dngb), 0.45);
+  filter:       none;
+}
+
+/* Active press — override .btn scale */
+.del-btn:active {
+  background:   rgba(var(--dngb), 0.26);
+  transform:    scale(0.94);
+}
