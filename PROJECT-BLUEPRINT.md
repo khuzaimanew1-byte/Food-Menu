@@ -6,10 +6,13 @@ Infinity Castle's Cuisine — digital restaurant menu (Arabic, Turkish, Grill, D
 ---
 
 ## 2. FEATURES
-IDs: FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEAT-01
+IDs: FEAT-22, FEAT-21, FEAT-20, FEAT-09, FEAT-08, FEAT-07, FEAT-06, FEAT-05, FEAT-04, FEAT-03, FEAT-02, FEAT-01
 
 | ID | Area | Name | Status |
 |---|---|---|---|
+| FEAT-22 | FE | Trash cache (trshStr.ts): 7-day localStorage snapshot on item/section delete; auto-prune on push | D |
+| FEAT-21 | FE | DelBtn: reusable danger delete button (.btn base); wired in MnItm; type=item\|section | D |
+| FEAT-20 | FE | OptRow exported from DropdownPanel — context-menu base option row reusable | D |
 | FEAT-10 | BE | Neon serverless driver (neon-http) in lib/db | D |
 | FEAT-09 | BE | OpenAPI codegen (Orval → hooks + Zod) | D |
 | FEAT-08 | DB | DB layer (Drizzle + neon-http) — no schema yet | X |
