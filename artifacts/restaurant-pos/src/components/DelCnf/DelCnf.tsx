@@ -8,7 +8,7 @@ import { SmMdl }                             from '../SmMdl/SmMdl';
 import { execDel, type DelType }             from '@/lib/del/delExec';
 import './DelCnf.css';
 
-interface Pending { id: string; type: DelType }
+interface Pending { id: string; type: DelType; name: string }
 
 export function DelCnf() {
   const [open,    setOpen]    = useState(false);
@@ -38,7 +38,8 @@ export function DelCnf() {
 
   if (!pending && !open) return null;
 
-  const label = pending?.type === 'section' ? 'Delete Section?' : 'Delete Item?';
+  const kind  = pending?.type === 'section' ? 'Section' : 'Item';
+  const label = pending ? `Delete ${kind}: "${pending.name}"?` : `Delete ${kind}?`;
 
   return (
     <>

@@ -10,7 +10,6 @@ import { useMvItemActive } from "@/lib/mv/useMvActive";
 import { pkFmt } from "@/lib/fmt/fmt";
 import { MinusButton } from "../buttons/MinusButton/MinusButton";
 import { QuantityInput } from "../inputs/QuantityInput/QuantityInput";
-import { DelBtn } from "../DelBtn/DelBtn";
 import "./MnItm.css";
 
 const DEF_NAME  = 'New Item';
@@ -136,7 +135,6 @@ export function MnItm({
       data-drop-id={isActive ? upld.dropId : undefined}
       onClick={isActive ? undefined : () => setQty(q => q + 1)}
     >
-      {!isActive && <DelBtn id={String(id)} type="item" />}
       {sel && !isActive && (
         <div className="mic-qty">
           <MinusButton onClick={(e) => { e.stopPropagation(); setQty(q => Math.max(0, q - 1)); }} />
