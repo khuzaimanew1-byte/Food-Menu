@@ -1,0 +1,145 @@
+/* ── BsMdl — Infinity Castle base modal ──────────────────────────────────── */
+
+/* ── Root wrapper (provides stacking context + entry/exit fade) ────────── */
+.bs-root {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bs-bg-in 0.16s ease both;
+}
+.bs-root--out { animation: bs-bg-out 0.13s ease both; }
+
+/* ── Backdrop ──────────────────────────────────────────────────────────── */
+.bs-ovl {
+  position: absolute;
+  inset: 0;
+  background: rgba(var(--blk), 0.58);
+  backdrop-filter: blur(4px) saturate(80%);
+  -webkit-backdrop-filter: blur(4px) saturate(80%);
+}
+
+/* ── Dialog box ────────────────────────────────────────────────────────── */
+.bs-dlg {
+  position: relative;
+  z-index: 1;
+  width: min(268px, 92vw);
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  overflow: visible;
+
+  /* Infinity surface: dark ink + gold top glow + lantern corner glows */
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 0%,
+      rgba(var(--gold), .16) 0%,
+      rgba(var(--gold), .05) 45%,
+      transparent 100%),
+    radial-gradient(ellipse 55% 45% at 0%   100%,
+      rgba(var(--lntn), .08) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 45% at 100% 100%,
+      rgba(var(--lntn), .08) 0%, transparent 70%),
+    linear-gradient(175deg,
+      rgba(var(--ink),  .94) 0%,
+      rgba(var(--chrd), .90) 100%);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  border: 1px solid rgba(var(--gold), 0.32);
+  box-shadow:
+    0 0 0 0.5px rgba(var(--gold), 0.10),
+    0 0 20px rgba(var(--gold), 0.07),
+    0 16px 48px rgba(var(--blk), 0.70);
+
+  animation: bs-dlg-in 0.20s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.bs-root--out .bs-dlg { animation: bs-dlg-out 0.13s ease both; }
+
+/* Gold shimmer line along top edge */
+.bs-dlg::before {
+  content: '';
+  position: absolute;
+  top: -0.5px;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--gold), 0.65) 25%,
+    rgba(var(--gl),   0.95) 50%,
+    rgba(var(--gold), 0.65) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Crown ornament — ic-poly clip, sits on top border ─────────────────── */
+.bs-crown {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 15px;
+  clip-path: var(--ic-poly);
+  background: linear-gradient(
+    175deg,
+    rgba(var(--gl),   0.95) 0%,
+    rgba(var(--gold), 0.80) 55%,
+    rgba(var(--gm),   0.55) 100%
+  );
+  filter: drop-shadow(0 0 5px rgba(var(--gold), 0.45));
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.bs-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 14px 12px 11px 18px;
+  border-bottom: 1px solid rgba(var(--gold), 0.12);
+}
+
+.bs-ttl {
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--gl));
+  line-height: 1.3;
+}
+
+.bs-cls {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.4rem;
+  color: rgba(var(--wht), 0.28);
+  transition: color 0.14s, background 0.14s;
+}
+.bs-cls:hover {
+  color: rgba(var(--wht), 0.75);
+  background: rgba(var(--wht), 0.07);
+}
+.bs-cls .cls-ico { width: 0.7rem; height: 0.7rem; }
+
+/* ── Body ──────────────────────────────────────────────────────────────── */
+.bs-bdy { padding: 16px 18px 18px; }
+
+/* ── Animations ────────────────────────────────────────────────────────── */
+@keyframes bs-bg-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bs-bg-out { from { opacity: 1; } to { opacity: 0; } }
+
+@keyframes bs-dlg-in {
+  from { opacity: 0; transform: scale(0.88) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);   }
+}
+@keyframes bs-dlg-out {
+  from { opacity: 1; transform: scale(1)    translateY(0);   }
+  to   { opacity: 0; transform: scale(0.92) translateY(5px); }
+}

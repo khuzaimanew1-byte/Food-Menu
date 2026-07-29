@@ -1,0 +1,55 @@
+/* ── CnfMdl — confirm modal content ──────────────────────────────────────── */
+
+/* Message */
+.cm-msg {
+  margin: 0 0 14px;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: rgba(var(--cr), 0.68);
+}
+
+/* Action row: confirm button + keyboard hint */
+.cm-acts {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Confirm button — default: gold accent */
+.cm-cfm {
+  flex: 1;
+  padding: 0.46rem 1rem;
+  border-radius: 0.55rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgb(var(--gl));
+  background: rgba(var(--gold), 0.12);
+  border: 1px solid rgba(var(--gold), 0.32);
+  transition: background 0.14s, border-color 0.14s;
+}
+.cm-cfm:hover {
+  background: rgba(var(--gold), 0.20);
+  border-color: rgba(var(--gold), 0.48);
+}
+
+/* Danger variant — red for destructive actions */
+.cm-cfm--dng {
+  color: rgb(var(--dngh));
+  background: rgba(var(--dng), 0.12);
+  border-color: rgba(var(--dng), 0.35);
+}
+.cm-cfm--dng:hover {
+  background: rgba(var(--dng), 0.22);
+  border-color: rgba(var(--dng), 0.52);
+}
+
+/* Keyboard hint */
+.cm-hint {
+  font-size: 0.68rem;
+  color: rgba(var(--wht), 0.26);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
