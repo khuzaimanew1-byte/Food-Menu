@@ -74,29 +74,40 @@
   letter-spacing: 0.05em;
 }
 
-/* ── Info row — shared name + badge pair, used inside columnar sections ──
-   Usage: <div class="inf-rw"><span class="inf-nm ff-s">Ahmad</span>
-            <span class="bdg bdg--role">Chef</span></div>               */
-.inf-rw {
+/* ── Key-value row — text-only data pair, reusable across modal sections ─
+   No badges. Name is dominant; secondary value is smaller + muted.
+   Usage: <div class="kv-rw">
+            <span class="kv-key ff-s">Ahmad</span>
+            <span class="kv-val ff-c">Chef</span>
+          </div>                                                           */
+.kv-rw {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
   padding: 5px 0;
-  border-bottom: 1px solid rgba(var(--gold), 0.07);
+  border-bottom: 1px solid rgba(var(--gold), 0.06);
 }
-.inf-rw:last-child { border-bottom: none; }
+.kv-rw:last-child { border-bottom: none; }
 
-/* Primary text — name, ingredient; visually dominant */
-.inf-nm {
-  font-size: 0.94rem;
+/* Primary — name or label; visually dominant */
+.kv-key {
+  font-size: 0.92rem;
   font-weight: 500;
   color: rgb(var(--cr));
-  line-height: 1.2;
   letter-spacing: 0.01em;
+  line-height: 1.3;
   flex: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+/* Secondary — role, quantity, or supporting value */
+.kv-val {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  color: rgba(var(--gold), 0.68);
   white-space: nowrap;
+  flex-shrink: 0;
+  text-align: right;
 }
