@@ -8,6 +8,7 @@ import { setDirty } from "@/lib/edt/edtStore";
 import { useMvItem } from "@/lib/mv/useMv";
 import { useMvItemActive } from "@/lib/mv/useMvActive";
 import { pkFmt } from "@/lib/fmt/fmt";
+import { PRICE_SYMBOL, stripCurrency } from "@/lib/currency";
 import { MinusButton } from "../buttons/MinusButton/MinusButton";
 import { QuantityInput } from "../inputs/QuantityInput/QuantityInput";
 import "./MnItm.css";
@@ -44,11 +45,11 @@ export function MnItm({
 
   const displayNameRef  = useRef(editedName  ?? name  ?? DEF_NAME);
   const displayDescRef  = useRef(editedDesc  ?? description ?? DEF_DESC);
-  const rawPriceRef     = useRef((editedPrice ?? (price ?? DEF_PRICE).replace(/^Rs\.\s*/i, '').replace(/\D/g, '')) || '0');
+  const rawPriceRef     = useRef((editedPrice ?? stripCurrency(price ?? DEF_PRICE).replace(/\D/g, '')) || '0');
 
   displayNameRef.current  = editedName  ?? name  ?? DEF_NAME;
   displayDescRef.current  = editedDesc  ?? description ?? DEF_DESC;
-  rawPriceRef.current     = (editedPrice ?? (price ?? DEF_PRICE).replace(/^Rs\.\s*/i, '').replace(/\D/g, '')) || '0';
+  rawPriceRef.current     = (editedPrice ?? stripCurrency(price ?? DEF_PRICE).replace(/\D/g, '')) || '0';
 
   const didSaveRef = useRef(false);
 
@@ -115,7 +116,7 @@ export function MnItm({
 
   const displayName  = editedName  ?? name  ?? DEF_NAME;
   const displayDesc  = editedDesc  ?? description ?? DEF_DESC;
-  const rawPrice     = editedPrice ?? (price ?? DEF_PRICE).replace(/^Rs\.\s*/i, '');
+  const rawPrice     = editedPrice ?? stripCurrency(price ?? DEF_PRICE);
   const displayPrice = pkFmt(rawPrice);
 
   const cls = [
@@ -167,7 +168,7 @@ export function MnItm({
             </h3>
             <div className="mic-lead" />
             <span className="mic-prow ff-s">
-              <span className="mic-pfx" aria-label="Rs." aria-hidden>Rs.</span>
+              <span className="mic-pfx" aria-label={PRICE_SYMBOL} aria-hidden>{PRICE_SYMBOL}</span>
               <span
                 ref={priceRef}
                 className="mic-price"

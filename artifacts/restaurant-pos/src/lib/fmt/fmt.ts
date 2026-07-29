@@ -4,7 +4,7 @@
 
 /**
  * Format a whole number using the Pakistani lakh/crore comma system.
- * Strips any non-numeric prefix (e.g. "Rs. "), removes decimals (floor),
+ * Strips any non-numeric prefix (e.g. the currency symbol + space), removes decimals (floor),
  * then applies grouping: last 3 digits, then pairs from the right.
  *
  *   pkFmt(1000)         → "1,000"
