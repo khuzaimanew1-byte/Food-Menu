@@ -1,39 +1,54 @@
 /* ── AsnMdl — assign modal body ───────────────────────────────────────────
-   Shared primitives (SSOT — never re-invent here):
-     Section labels   → .sec-lbl              (src/styles/ui.css)
-     Key-value rows   → .kv-rw .kv-key .kv-val (src/styles/ui.css)
-     Font families    → .ff-s / .ff-c          (src/styles/typography.css) */
+   SSOT primitives — never re-declare here:
+     .sec-lbl               → src/styles/ui.css
+     .kv-rw  .kv-key .kv-val → src/styles/ui.css
+     .ff-s   .ff-c          → src/styles/typography.css               */
 
-/* ── Section block — full width; spacing creates separation, no dividers ─── */
+/* ── Section block — full width ──────────────────────────────────────────── */
 .asn-sec {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 .asn-sec:last-of-type {
   margin-bottom: 0;
 }
 
-/* ── Margin summary row ─────────────────────────────────────────────────── */
+/* ── 2-col grid — shared by both sections (SSOT) ────────────────────────── */
+/* Each cell is a .kv-rw (name + value inline). Odd items fill col-1 only.  */
+.asn-gd {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 14px;
+}
+
+/* Override .kv-rw border to span only within its column cell */
+.asn-gd .kv-rw {
+  border-bottom: 1px solid rgba(var(--gold), 0.06);
+}
+.asn-gd .kv-rw:last-child,
+.asn-gd .kv-rw:nth-last-child(2):nth-child(odd) {
+  border-bottom: none;
+}
+
+/* ── Margin — bottom-right footer summary ────────────────────────────────── */
 .asn-mrow {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 15px;
-  padding-top: 11px;
+  justify-content: flex-end;
+  gap: 7px;
+  margin-top: 14px;
+  padding-top: 10px;
   border-top: 1px solid rgba(var(--gold), 0.12);
 }
 
-/* "MARGIN" — tiny Cinzel caps, ultra-muted metadata label */
 .asn-mlbl {
   font-size: 0.57rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(var(--cr), 0.36);
 }
 
-/* "Rs. 50" — Cormorant Garamond, medium, light gold; intentional not oversized */
 .asn-mval {
-  font-size: 1.02rem;
+  font-size: 1.00rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: rgb(var(--gl));

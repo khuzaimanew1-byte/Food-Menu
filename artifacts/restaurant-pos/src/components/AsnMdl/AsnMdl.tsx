@@ -1,7 +1,7 @@
 // ── AsnMdl — assign modal ──────────────────────────────────────────────────
-// Listens for 'assign:open' → resolves item name from menuStore → shows
-// staff / resources / margin. Built on BsMdl (wide variant).
-// Each section is full-width; rows reuse .kv-rw / .kv-key / .kv-val (SSOT).
+// Each section is full-width; content inside is a 2-col grid of kv-rw pairs.
+// Odd items flow into col-1 of the next row naturally (grid auto-placement).
+// Row/col layout reused for both sections (SSOT via .asn-gd + .kv-rw).
 
 import { useState, useEffect, useCallback } from 'react';
 import { BsMdl }       from '../BsMdl/BsMdl';
@@ -9,7 +9,6 @@ import { PenIco }      from '../icons/PenIco';
 import { getSections } from '@/lib/menu/menuStore';
 import './AsnMdl.css';
 
-// ── Static sample data (placeholder until DB stores assignments) ────────────
 interface StfRow { name: string; role: string; }
 interface ResRow { name: string; qty:  string; }
 
@@ -27,7 +26,6 @@ const SAMPLE_RES: ResRow[] = [
 
 const SAMPLE_MRGN = 'Rs. 50';
 
-// ── Component ───────────────────────────────────────────────────────────────
 export function AsnMdl() {
   const [open,     setOpen]     = useState(false);
   const [itemName, setItemName] = useState('');
@@ -67,29 +65,33 @@ export function AsnMdl() {
       wide
     >
 
-      {/* ── Assign — full-width section ─────────────────────────────────── */}
+      {/* ── Assign ──────────────────────────────────────────────────────── */}
       <div className="asn-sec">
         <span className="sec-lbl">Assign</span>
-        {SAMPLE_STF.map(s => (
-          <div key={s.name} className="kv-rw">
-            <span className="kv-key ff-s">{s.name}</span>
-            <span className="kv-val ff-c">{s.role}</span>
-          </div>
-        ))}
+        <div className="asn-gd">
+          {SAMPLE_STF.map(s => (
+            <div key={s.name} className="kv-rw">
+              <span className="kv-key ff-s">{s.name}</span>
+              <span className="kv-val ff-c">{s.role}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* ── Resources — full-width section ──────────────────────────────── */}
+      {/* ── Resources ───────────────────────────────────────────────────── */}
       <div className="asn-sec">
         <span className="sec-lbl">Resources</span>
-        {SAMPLE_RES.map(r => (
-          <div key={r.name} className="kv-rw">
-            <span className="kv-key ff-s">{r.name}</span>
-            <span className="kv-val ff-c">{r.qty}</span>
-          </div>
-        ))}
+        <div className="asn-gd">
+          {SAMPLE_RES.map(r => (
+            <div key={r.name} className="kv-rw">
+              <span className="kv-key ff-s">{r.name}</span>
+              <span className="kv-val ff-c">{r.qty}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* ── Margin summary ───────────────────────────────────────────────── */}
+      {/* ── Margin — bottom-right footer summary ────────────────────────── */}
       <div className="asn-mrow">
         <span className="asn-mlbl ff-c">Margin</span>
         <span className="asn-mval ff-s">{SAMPLE_MRGN}</span>
