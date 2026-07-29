@@ -54,5 +54,13 @@ export function paginateMenuSections(raw: RawSect[]): PageData[] {
   }
 
   flushPage();
+
+  // Frontend guarantee — no DB check needed:
+  // if pagination produced 0 content pages, show one default section so the
+  // content page is never blank regardless of store or network state.
+  if (pages.length === 0) {
+    pages.push({ pgNum: 1, sections: [{ title: 'New Section', items: [] }] });
+  }
+
   return pages;
 }
