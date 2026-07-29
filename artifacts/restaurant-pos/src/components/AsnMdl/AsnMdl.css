@@ -1,38 +1,25 @@
 /* ── AsnMdl — assign modal body ───────────────────────────────────────────
-   Section labels   → .sec-lbl   (src/styles/ui.css)
-   Divider          → .sec-div   (src/styles/ui.css)
-   Badges           → .bdg .bdg--role / .bdg--qty  (src/styles/ui.css)
-   Font families    → .ff-s / .ff-c  (src/styles/typography.css)           */
+   Shared primitives (SSOT):
+     Section labels   → .sec-lbl          (src/styles/ui.css)
+     Info rows        → .inf-rw .inf-nm   (src/styles/ui.css)
+     Badges           → .bdg .bdg--role / .bdg--qty  (src/styles/ui.css)
+     Display value    → .tx-disp          (src/styles/typography.css)
+     Font families    → .ff-s / .ff-c     (src/styles/typography.css)    */
 
-/* ── Section block ────────────────────────────────────────────────────────── */
-.asn-sec {
-  margin-bottom: 0;
+/* ── 2-col grid: Assign (left) | Resources (right) ──────────────────────── */
+.asn-gd {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+  margin-bottom: 2px;
 }
 
-/* ── Chip list ───────────────────────────────────────────────────────────── */
-.asn-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
+/* Each column — no extra padding; sec-lbl + inf-rw rows stack naturally */
+.asn-cl {
+  min-width: 0; /* prevent grid blowout */
 }
 
-/* ── Single name + badge pair ────────────────────────────────────────────── */
-.asn-chip {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-/* Primary label — person / ingredient name */
-.asn-name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: rgb(var(--cr));
-  line-height: 1;
-  letter-spacing: 0.01em;
-}
-
-/* ── Margin row ──────────────────────────────────────────────────────────── */
+/* ── Margin row — spans full width below both columns ───────────────────── */
 .asn-mrow {
   display: flex;
   align-items: baseline;
@@ -52,12 +39,6 @@
 
 .asn-mval {
   font-size: 1.00rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: rgb(var(--gl));
-  text-shadow:
-    0 0 10px rgba(var(--gold), 0.50),
-    0 0 22px rgba(var(--gold), 0.22);
 }
 
 /* ── Edit title-action button ─────────────────────────────────────────────── */

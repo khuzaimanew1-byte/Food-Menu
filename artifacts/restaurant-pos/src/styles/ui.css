@@ -73,3 +73,30 @@
   color: rgba(255, 200, 120, 0.92);
   letter-spacing: 0.05em;
 }
+
+/* ── Info row — shared name + badge pair, used inside columnar sections ──
+   Usage: <div class="inf-rw"><span class="inf-nm ff-s">Ahmad</span>
+            <span class="bdg bdg--role">Chef</span></div>               */
+.inf-rw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(var(--gold), 0.07);
+}
+.inf-rw:last-child { border-bottom: none; }
+
+/* Primary text — name, ingredient; visually dominant */
+.inf-nm {
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: rgb(var(--cr));
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

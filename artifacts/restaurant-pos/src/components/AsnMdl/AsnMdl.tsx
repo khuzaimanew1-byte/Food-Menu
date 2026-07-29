@@ -1,6 +1,8 @@
 // ── AsnMdl — assign modal ──────────────────────────────────────────────────
 // Listens for 'assign:open' → resolves item name from menuStore → shows
 // staff / resources / margin. Built on BsMdl (wide variant).
+// Layout: 2-col grid — Assign (left) | Resources (right).
+// Rows reuse .inf-rw / .inf-nm from ui.css (SSOT).
 
 import { useState, useEffect, useCallback } from 'react';
 import { BsMdl }       from '../BsMdl/BsMdl';
@@ -65,39 +67,37 @@ export function AsnMdl() {
       titleActions={editBtn}
       wide
     >
-      {/* ── Assign ──────────────────────────────────────────────────── */}
-      <div className="asn-sec">
-        <span className="sec-lbl">Assign</span>
-        <div className="asn-chips">
+      {/* ── 2-col grid: Assign | Resources ─────────────────────────────── */}
+      <div className="asn-gd">
+
+        {/* ── Assign column ─────────────────────────────────────────────── */}
+        <div className="asn-cl">
+          <span className="sec-lbl">Assign</span>
           {SAMPLE_STF.map(s => (
-            <span key={s.name} className="asn-chip">
-              <span className="asn-name ff-s">{s.name}</span>
+            <div key={s.name} className="inf-rw">
+              <span className="inf-nm ff-s">{s.name}</span>
               <span className="bdg bdg--role">{s.role}</span>
-            </span>
+            </div>
           ))}
         </div>
-      </div>
 
-      {/* ── Divider ─────────────────────────────────────────────────── */}
-      <div className="sec-div" aria-hidden />
-
-      {/* ── Resources ───────────────────────────────────────────────── */}
-      <div className="asn-sec">
-        <span className="sec-lbl">Resources</span>
-        <div className="asn-chips">
+        {/* ── Resources column ──────────────────────────────────────────── */}
+        <div className="asn-cl">
+          <span className="sec-lbl">Resources</span>
           {SAMPLE_RES.map(r => (
-            <span key={r.name} className="asn-chip">
-              <span className="asn-name ff-s">{r.name}</span>
+            <div key={r.name} className="inf-rw">
+              <span className="inf-nm ff-s">{r.name}</span>
               <span className="bdg bdg--qty">{r.qty}</span>
-            </span>
+            </div>
           ))}
         </div>
+
       </div>
 
-      {/* ── Margin ──────────────────────────────────────────────────── */}
+      {/* ── Margin row — full-width, bottom ────────────────────────────── */}
       <div className="asn-mrow">
         <span className="asn-mlbl ff-s">Margin</span>
-        <span className="asn-mval ff-c">{SAMPLE_MRGN}</span>
+        <span className="asn-mval ff-c tx-disp">{SAMPLE_MRGN}</span>
       </div>
     </BsMdl>
   );
