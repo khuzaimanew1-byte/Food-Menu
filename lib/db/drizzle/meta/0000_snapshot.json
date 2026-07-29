@@ -1,0 +1,237 @@
+{
+  "id": "cdbfdce8-4039-4a45-9208-d1a837967c69",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.sects": {
+      "name": "sects",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pos": {
+          "name": "pos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shp": {
+          "name": "shp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'ic'"
+        },
+        "crt_at": {
+          "name": "crt_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "upd_at": {
+          "name": "upd_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "sects_pos_idx": {
+          "name": "sects_pos_idx",
+          "columns": [
+            {
+              "expression": "pos",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "sects_shp_chk": {
+          "name": "sects_shp_chk",
+          "value": "\"sects\".\"shp\" IN ('ic', 'sq', 'plq')"
+        },
+        "sects_pos_chk": {
+          "name": "sects_pos_chk",
+          "value": "\"sects\".\"pos\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.items": {
+      "name": "items",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "sect_id": {
+          "name": "sect_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pos": {
+          "name": "pos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dsc": {
+          "name": "dsc",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "img": {
+          "name": "img",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "shp": {
+          "name": "shp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'ic'"
+        },
+        "crt_at": {
+          "name": "crt_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "upd_at": {
+          "name": "upd_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "items_sect_idx": {
+          "name": "items_sect_idx",
+          "columns": [
+            {
+              "expression": "sect_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "items_ord_idx": {
+          "name": "items_ord_idx",
+          "columns": [
+            {
+              "expression": "sect_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "pos",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "items_sect_id_sects_id_fk": {
+          "name": "items_sect_id_sects_id_fk",
+          "tableFrom": "items",
+          "tableTo": "sects",
+          "columnsFrom": [
+            "sect_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "items_shp_chk": {
+          "name": "items_shp_chk",
+          "value": "\"items\".\"shp\"   IN ('ic', 'sq', 'plq')"
+        },
+        "items_pos_chk": {
+          "name": "items_pos_chk",
+          "value": "\"items\".\"pos\"   >= 0"
+        },
+        "items_price_chk": {
+          "name": "items_price_chk",
+          "value": "\"items\".\"price\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

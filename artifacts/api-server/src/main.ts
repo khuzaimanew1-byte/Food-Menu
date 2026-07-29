@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import { NestFactory } from "@nestjs/core";
 import { Logger } from "nestjs-pino";
 import { AppModule } from "./app.mod";
+import { runMigrations } from "@workspace/db";
 
 async function boot() {
   const rawPort = process.env["PORT"];
@@ -11,6 +12,10 @@ async function boot() {
   const port = Number(rawPort);
   if (Number.isNaN(port) || port <= 0)
     throw new Error(`Invalid PORT: "${rawPort}"`);
+
+  // [DB-MIGRATE] Run pending migrations before accepting traffic.
+  // No-op when DATABASE_URL is absent — server still boots without a DB.
+  await runMigrations();
 
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));

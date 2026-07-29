@@ -1,5 +1,7 @@
+import path    from 'path';
 import { Pool }   from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
+import { migrate }  from 'drizzle-orm/node-postgres/migrator';
 import * as schema  from './schema';
 
 // [DB-LAZY] Pool & drizzle instance are created on first use, not at import
@@ -35,6 +37,20 @@ export function getDb(): DrizzleDb | null {
   }
 
   return _db;
+}
+
+/**
+ * Runs pending Drizzle migrations against the database.
+ * No-op when DATABASE_URL is absent — safe to call unconditionally on startup.
+ * Migrations folder: lib/db/drizzle/ (resolved from workspace root via cwd).
+ */
+export async function runMigrations(): Promise<void> {
+  const db = getDb();
+  if (!db) return; // DATABASE_URL not set — skip silently
+
+  // process.cwd() = artifacts/api-server/ at runtime; go up to workspace root
+  const migrationsFolder = path.resolve(process.cwd(), '../../lib/db/drizzle');
+  await migrate(db, { migrationsFolder });
 }
 
 export function getPool(): Pool | null { return _pool; }
