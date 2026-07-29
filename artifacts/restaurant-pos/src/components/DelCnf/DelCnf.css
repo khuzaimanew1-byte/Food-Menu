@@ -1,0 +1,17 @@
+/* ── del-bg — full-screen backdrop for delete confirmation ───────────────
+   gl-tinted translucent overlay; click to dismiss.                       */
+
+.del-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 290;
+  background: rgba(var(--gl), 0.06);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  animation: del-bg-in 0.18s ease both;
+}
+
+@keyframes del-bg-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

@@ -11,6 +11,7 @@ export interface SmMdlPr {
   onClose:       () => void;
   anchorTop?:    number;
   offsetX?:      number;
+  centered?:     boolean;   // fixed-center mode (delete confirm); ignores anchorTop/offsetX
 }
 
 export function SmMdl({
@@ -21,6 +22,7 @@ export function SmMdl({
   onClose,
   anchorTop,
   offsetX = 0,
+  centered = false,
 }: SmMdlPr) {
   const [show,     setShow]     = useState(open);
   const [cfmFlash, setCfmFlash] = useState(false);
@@ -49,12 +51,20 @@ export function SmMdl({
 
   const isExiting = !open;
   const style: React.CSSProperties = {};
-  if (anchorTop !== undefined) style.top = anchorTop;
-  if (offsetX > 0) style.translate = `-${offsetX}px 0`;
+  if (!centered) {
+    if (anchorTop !== undefined) style.top = anchorTop;
+    if (offsetX > 0) style.translate = `-${offsetX}px 0`;
+  }
+
+  const cls = [
+    'sm-mdl',
+    centered   ? 'sm-mdl--ctr' : '',
+    isExiting  ? 'sm-mdl--out' : '',
+  ].filter(Boolean).join(' ');
 
   return (
     <div
-      className={`sm-mdl${isExiting ? ' sm-mdl--out' : ''}`}
+      className={cls}
       style={style}
       role="dialog"
       aria-modal

@@ -41,6 +41,32 @@
   animation: sm-out 0.07s ease both;
 }
 
+/* ── Centered variant — fixed, viewport-center (delete confirm) ──────────── */
+.sm-mdl--ctr {
+  position:  fixed;
+  top:       50%;
+  left:      50%;
+  transform: translate(-50%, -50%);
+  /* reset anchored-panel props */
+  translate: none;
+  transition: none;
+  animation: sm-ctr-in 0.14s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sm-mdl--ctr.sm-mdl--out {
+  animation: sm-ctr-out 0.08s ease both;
+}
+
+@keyframes sm-ctr-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.91); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1);    }
+}
+
+@keyframes sm-ctr-out {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1);    }
+  to   { opacity: 0; transform: translate(-50%, -50%) scale(0.91); }
+}
+
 @keyframes sm-in {
   from { opacity: 0; transform: translateY(-50%) translateX(-8px) scale(0.95); }
   to   { opacity: 1; transform: translateY(-50%) translateX(0)    scale(1);    }
