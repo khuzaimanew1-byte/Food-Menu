@@ -103,10 +103,11 @@
 
 /* Secondary — role, quantity, or supporting value */
 .kv-val {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  color: rgba(var(--gold), 0.68);
+  font-size: 0.72rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: rgb(var(--gl));
   white-space: nowrap;
   flex-shrink: 0;
   text-align: right;

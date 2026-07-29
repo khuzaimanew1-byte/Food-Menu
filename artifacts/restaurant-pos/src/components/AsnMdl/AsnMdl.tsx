@@ -72,7 +72,7 @@ export function AsnMdl() {
           {SAMPLE_STF.map(s => (
             <div key={s.name} className="kv-rw">
               <span className="kv-key ff-s">{s.name}</span>
-              <span className="kv-val ff-c">{s.role}</span>
+              <span className="kv-val ff-s">{s.role}</span>
             </div>
           ))}
         </div>
@@ -85,7 +85,7 @@ export function AsnMdl() {
           {SAMPLE_RES.map(r => (
             <div key={r.name} className="kv-rw">
               <span className="kv-key ff-s">{r.name}</span>
-              <span className="kv-val ff-c">{r.qty}</span>
+              <span className="kv-val ff-s">{r.qty}</span>
             </div>
           ))}
         </div>
@@ -93,7 +93,7 @@ export function AsnMdl() {
 
       {/* ── Margin — bottom-right footer summary ────────────────────────── */}
       <div className="asn-mrow">
-        <span className="asn-mlbl ff-c">Margin</span>
+        <span className="asn-mlbl ff-s">Margin</span>
         <span className="asn-mval ff-s">{SAMPLE_MRGN}</span>
       </div>
 
