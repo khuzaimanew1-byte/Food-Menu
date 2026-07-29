@@ -5,7 +5,6 @@ import { LoggerModule } from 'nestjs-pino';
 import { HealthModule } from './health/health.mod';
 import { DbMod }        from './db/db.mod';
 import { MenuMod }      from './menu/menu.mod';
-import { AssignMod }    from './assign/assign.mod';
 
 @Module({
   imports: [
@@ -35,7 +34,6 @@ import { AssignMod }    from './assign/assign.mod';
     DbMod,
     HealthModule,
     MenuMod,
-    AssignMod,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

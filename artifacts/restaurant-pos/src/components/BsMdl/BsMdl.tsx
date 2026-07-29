@@ -8,15 +8,13 @@ import '../Button/base.css';
 import './BsMdl.css';
 
 export interface BsMdlPr {
-  open:           boolean;
-  onClose:        () => void;
-  title:          string;
-  headerActions?: React.ReactNode;   // renders between title and ✕ (e.g. ✎ or ✓)
-  dlgClass?:      string;            // extra class on bs-dlg (e.g. edit-mode glow)
-  children:       React.ReactNode;
+  open:     boolean;
+  onClose:  () => void;
+  title:    string;
+  children: React.ReactNode;
 }
 
-export function BsMdl({ open, onClose, title, headerActions, dlgClass, children }: BsMdlPr) {
+export function BsMdl({ open, onClose, title, children }: BsMdlPr) {
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
 
@@ -48,11 +46,10 @@ export function BsMdl({ open, onClose, title, headerActions, dlgClass, children 
   return createPortal(
     <div className={rootCls} role="dialog" aria-modal aria-label={title}>
       <div className="bs-ovl" onClick={onClose} aria-hidden />
-      <div className={dlgClass ? `bs-dlg ${dlgClass}` : 'bs-dlg'}>
+      <div className="bs-dlg">
         <div className="bs-crown" aria-hidden />
         <div className="bs-hdr">
           <span className="bs-ttl ff-c">{title}</span>
-          {headerActions}
           <button className="btn bs-cls" aria-label="Close" onClick={onClose}>
             <ClsIco />
           </button>

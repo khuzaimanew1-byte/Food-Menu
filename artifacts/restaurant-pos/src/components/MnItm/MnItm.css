@@ -27,12 +27,6 @@
   filter: brightness(0.82);
 }
 
-/* Wrapper: position:relative so AsgDot can use position:absolute outside clip-path */
-.mic-avt-wrap {
-  position: relative;
-  flex-shrink: 0;
-}
-
 .mic-avt {
   position: relative;
   clip-path: var(--avt-clip, none);
