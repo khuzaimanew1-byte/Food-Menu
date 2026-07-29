@@ -95,6 +95,9 @@
   filter: drop-shadow(0 0 5px rgba(var(--gold), 0.45));
 }
 
+/* ── Wide variant ──────────────────────────────────────────────────────── */
+.bs-dlg--wide { width: min(340px, 92vw); }
+
 /* ── Header ────────────────────────────────────────────────────────────── */
 .bs-hdr {
   display: flex;
@@ -103,6 +106,14 @@
   gap: 0.5rem;
   padding: 14px 12px 11px 18px;
   border-bottom: 1px solid rgba(var(--gold), 0.12);
+}
+
+/* Groups any titleActions + close button together on the right */
+.bs-hdr-acts {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
 }
 
 .bs-ttl {

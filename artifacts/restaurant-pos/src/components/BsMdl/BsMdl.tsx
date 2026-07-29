@@ -8,13 +8,15 @@ import '../Button/base.css';
 import './BsMdl.css';
 
 export interface BsMdlPr {
-  open:     boolean;
-  onClose:  () => void;
-  title:    string;
-  children: React.ReactNode;
+  open:         boolean;
+  onClose:      () => void;
+  title:        string;
+  children:     React.ReactNode;
+  titleActions?: React.ReactNode;  // slot before the ✕ button
+  wide?:         boolean;          // 340px variant for richer modals
 }
 
-export function BsMdl({ open, onClose, title, children }: BsMdlPr) {
+export function BsMdl({ open, onClose, title, children, titleActions, wide }: BsMdlPr) {
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
 
@@ -42,17 +44,21 @@ export function BsMdl({ open, onClose, title, children }: BsMdlPr) {
   if (!visible) return null;
 
   const rootCls = `bs-root${exiting ? ' bs-root--out' : ''}`;
+  const dlgCls  = `bs-dlg${wide ? ' bs-dlg--wide' : ''}`;
 
   return createPortal(
     <div className={rootCls} role="dialog" aria-modal aria-label={title}>
       <div className="bs-ovl" onClick={onClose} aria-hidden />
-      <div className="bs-dlg">
+      <div className={dlgCls}>
         <div className="bs-crown" aria-hidden />
         <div className="bs-hdr">
           <span className="bs-ttl ff-c">{title}</span>
-          <button className="btn bs-cls" aria-label="Close" onClick={onClose}>
-            <ClsIco />
-          </button>
+          <div className="bs-hdr-acts">
+            {titleActions}
+            <button className="btn bs-cls" aria-label="Close" onClick={onClose}>
+              <ClsIco />
+            </button>
+          </div>
         </div>
         <div className="bs-bdy">
           {children}

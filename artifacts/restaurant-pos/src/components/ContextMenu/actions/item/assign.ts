@@ -1,3 +1,5 @@
 export function assignItem(id: string | null): void {
-  void id;
+  document.dispatchEvent(
+    new CustomEvent('assign:open', { detail: { id } }),
+  );
 }

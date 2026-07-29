@@ -1,0 +1,146 @@
+/* ── AsnMdl — assign modal body ───────────────────────────────────────────── */
+
+/* ── Section block ────────────────────────────────────────────────────────── */
+.asn-sec {
+  margin-bottom: 14px;
+}
+.asn-sec:last-of-type { margin-bottom: 0; }
+
+/* ── Section label: "ASSIGN" / "RESOURCES" ─────────────────────────────── */
+.asn-lbl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(var(--gold), 0.52);
+  margin-bottom: 8px;
+}
+/* decorative rule after the label */
+.asn-lbl::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--gold), 0.22) 0%,
+    transparent 100%
+  );
+}
+
+/* ── Chips wrap ─────────────────────────────────────────────────────────── */
+.asn-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+}
+
+/* ── One name + role pair ────────────────────────────────────────────────── */
+.asn-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Person / ingredient name */
+.asn-name {
+  font-family: var(--ff);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgb(var(--cr));
+  line-height: 1;
+}
+
+/* Role badge — gold tint */
+.asn-role {
+  font-family: var(--ff);
+  font-size: 0.62rem;
+  font-weight: 400;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 0.35rem;
+  background: rgba(var(--gold), 0.11);
+  border: 1px solid rgba(var(--gold), 0.28);
+  color: rgb(var(--gl));
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Quantity badge — lantern amber tint */
+.asn-qty {
+  font-family: var(--ff);
+  font-size: 0.62rem;
+  font-weight: 400;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 0.35rem;
+  background: rgba(var(--lntn), 0.10);
+  border: 1px solid rgba(var(--lntn), 0.24);
+  color: rgba(var(--gl), 0.85);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* ── Divider between sections ─────────────────────────────────────────────── */
+.asn-div {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--gold), 0.14) 25%,
+    rgba(var(--gold), 0.14) 75%,
+    transparent 100%
+  );
+  margin: 12px 0;
+}
+
+/* ── Margin row ──────────────────────────────────────────────────────────── */
+.asn-mrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(var(--gold), 0.10);
+}
+
+.asn-mlbl {
+  font-family: var(--ff);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(var(--cr), 0.40);
+}
+
+.asn-mval {
+  font-family: var(--ffc);
+  font-size: 0.90rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgb(var(--gl));
+  text-shadow: 0 0 12px rgba(var(--gold), 0.35);
+}
+
+/* ── Edit title-action button ────────────────────────────────────────────── */
+.asn-edt {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.4rem;
+  color: rgba(var(--wht), 0.28);
+  transition: color 0.14s, background 0.14s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.asn-edt:hover {
+  color: rgb(var(--gl));
+  background: rgba(var(--gold), 0.09);
+}
+.asn-edt svg {
+  width: 0.72rem;
+  height: 0.72rem;
+}

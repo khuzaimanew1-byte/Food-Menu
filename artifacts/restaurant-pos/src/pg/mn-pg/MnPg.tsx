@@ -6,6 +6,7 @@ import { NvCtl }         from "../../components/NvCtl/NvCtl";
 import { ContextMenu }   from "../../components/ContextMenu/ContextMenu";
 import { EdtCnf }        from "../../components/EdtCnf/EdtCnf";
 import { DelCnf }        from "../../components/DelCnf/DelCnf";
+import { AsnMdl }        from "../../components/AsnMdl/AsnMdl";
 import { dispatchCtxAction }    from "../../components/ContextMenu/actions";
 import { paginateMenuSections } from "../../lib/menu/paginate";
 import { getSections, initSections } from "../../lib/menu/menuStore";
@@ -95,6 +96,7 @@ export function MnPg() {
         <NvCtl curPg={curPg} ttlPg={ttlPg} onPrev={goPrv} onNext={goNxt} onGoto={goTo} />
         <EdtCnf />
         <DelCnf />
+        <AsnMdl />
       </div>
       <PrtBtn />
       <ContextMenu onSelect={dispatchCtxAction} />
