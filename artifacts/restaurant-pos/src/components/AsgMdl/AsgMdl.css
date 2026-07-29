@@ -1,0 +1,199 @@
+/* ── AsgMdl — Assign Modal body styles ───────────────────────────────────── */
+
+/* ── Edit-mode glow on the dialog ────────────────────────────────────────── */
+.bs-dlg--edt {
+  border-color: rgba(var(--gold), 0.60);
+  box-shadow:
+    0 0 0 1px rgba(var(--gold), 0.20),
+    0 0 14px 2px rgba(var(--gold), 0.12),
+    0 16px 48px rgba(var(--blk), 0.70);
+}
+
+/* ── Header action buttons (✎ ✓) ─────────────────────────────────────────── */
+.asg-hdr-act {
+  display:     flex;
+  align-items: center;
+  gap:         4px;
+  margin-left: auto;
+  margin-right: 6px;
+}
+
+.asg-hdr-btn {
+  display:     inline-flex;
+  align-items: center;
+  justify-content: center;
+  width:       28px;
+  height:      28px;
+  padding:     0;
+  background:  none;
+  border:      1px solid rgba(var(--gold), 0.30);
+  border-radius: 5px;
+  color:       rgb(var(--gold));
+  cursor:      pointer;
+  transition:  background 0.12s, border-color 0.12s;
+  flex-shrink: 0;
+}
+.asg-hdr-btn:hover:not(:disabled) {
+  background:   rgba(var(--gold), 0.12);
+  border-color: rgba(var(--gold), 0.55);
+}
+.asg-hdr-btn:disabled {
+  opacity: 0.35;
+  cursor:  not-allowed;
+}
+.asg-hdr-btn svg { width: 14px; height: 14px; }
+
+/* ── Body layout ──────────────────────────────────────────────────────────── */
+.asg-bdy {
+  display:        flex;
+  flex-direction: column;
+  gap:            10px;
+  padding:        4px 0 2px;
+}
+
+/* ── Section label ───────────────────────────────────────────────────────── */
+.asg-lbl {
+  font-size:      0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color:          rgb(var(--mut));
+  margin-bottom:  2px;
+}
+
+/* ── Rows wrap area ──────────────────────────────────────────────────────── */
+.asg-rows {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       5px 10px;
+  min-height: 22px;
+}
+
+/* ── Normal mode: paired name+role / name+qty+unit tags ──────────────────── */
+.asg-tag {
+  display:     inline-flex;
+  align-items: center;
+  gap:         4px;
+  font-size:   0.74rem;
+  color:       rgb(var(--gl));
+  background:  rgba(var(--gold), 0.06);
+  border:      1px solid rgba(var(--gold), 0.14);
+  border-radius: 4px;
+  padding:     2px 7px;
+}
+.asg-tag__role,
+.asg-tag__unit { color: rgb(var(--mut)); font-size: 0.68rem; }
+.asg-tag__qty  { color: rgb(var(--gold)); font-size: 0.68rem; }
+
+/* ── Empty states ────────────────────────────────────────────────────────── */
+.asg-none {
+  font-size: 0.74rem;
+  color:     rgb(var(--mut));
+  font-style: italic;
+}
+
+.asg-add-emp {
+  display:     inline-flex;
+  align-items: center;
+  gap:         4px;
+  padding:     2px 7px;
+  background:  rgba(var(--gold), 0.04);
+  border:      1px dashed rgba(var(--gold), 0.28);
+  border-radius: 4px;
+  cursor:      pointer;
+  color:       rgb(var(--mut));
+  font-size:   0.72rem;
+  transition:  color 0.12s, border-color 0.12s;
+}
+.asg-add-emp:hover { color: rgb(var(--gold)); border-color: rgba(var(--gold), 0.5); }
+.asg-add-emp svg   { width: 10px; height: 10px; }
+
+/* ── Edit mode: input rows ───────────────────────────────────────────────── */
+.asg-edit-rows {
+  display:        flex;
+  flex-direction: column;
+  gap:            5px;
+}
+
+.asg-row {
+  display:     flex;
+  align-items: center;
+  gap:         5px;
+}
+
+/* Text inputs */
+.asg-inp {
+  flex:        1;
+  min-width:   0;
+  background:  rgba(var(--gold), 0.05);
+  border:      1px solid rgba(var(--gold), 0.22);
+  border-radius: 4px;
+  padding:     4px 7px;
+  font-size:   0.74rem;
+  color:       rgb(var(--gl));
+  outline:     none;
+  font-family: inherit;
+  transition:  border-color 0.12s;
+}
+.asg-inp:focus { border-color: rgba(var(--gold), 0.55); }
+.asg-inp::placeholder { color: rgb(var(--mut)); opacity: 0.7; }
+
+/* Qty input (narrow) */
+.asg-qty {
+  width:      52px;
+  flex:       none;
+  text-align: right;
+}
+
+/* Delete row button */
+.asg-del {
+  display:     inline-flex;
+  align-items: center;
+  justify-content: center;
+  width:       22px;
+  height:      22px;
+  padding:     0;
+  flex-shrink: 0;
+  background:  none;
+  border:      none;
+  border-radius: 4px;
+  cursor:      pointer;
+  color:       rgba(var(--dng), 0.6);
+  transition:  color 0.12s, background 0.12s;
+}
+.asg-del:hover { color: rgb(var(--dng)); background: rgba(var(--dng), 0.08); }
+.asg-del svg   { width: 12px; height: 12px; }
+
+/* ── Add row button ──────────────────────────────────────────────────────── */
+.asg-add-row {
+  align-self:  flex-start;
+  display:     inline-flex;
+  align-items: center;
+  gap:         4px;
+  padding:     3px 8px;
+  background:  rgba(var(--gold), 0.04);
+  border:      1px dashed rgba(var(--gold), 0.25);
+  border-radius: 4px;
+  cursor:      pointer;
+  color:       rgb(var(--mut));
+  font-size:   0.7rem;
+  transition:  color 0.12s, border-color 0.12s;
+}
+.asg-add-row:hover { color: rgb(var(--gold)); border-color: rgba(var(--gold), 0.45); }
+.asg-add-row svg   { width: 10px; height: 10px; }
+
+/* ── Margin row ──────────────────────────────────────────────────────────── */
+.asg-margin {
+  display:     flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap:         5px;
+  font-size:   0.72rem;
+  color:       rgb(var(--mut));
+  padding-top: 4px;
+  border-top:  1px solid rgba(var(--gold), 0.08);
+}
+.asg-margin__val { color: rgb(var(--gold)); }
+.asg-margin__inp {
+  width:      60px;
+  text-align: right;
+}

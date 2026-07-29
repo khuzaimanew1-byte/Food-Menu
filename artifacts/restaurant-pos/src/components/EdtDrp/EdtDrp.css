@@ -1,0 +1,168 @@
+/* ── EdtDrp — editable dropdown ──────────────────────────────────────────── */
+
+/* ── Trigger ─────────────────────────────────────────────────────────────── */
+.edt-drp { display: inline-flex; }
+
+.edt-drp__trig {
+  display:     inline-flex;
+  align-items: center;
+  gap:         0.2em;
+  padding:     0;
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  color:       rgb(var(--gl));
+  font-size:   inherit;
+  line-height: 1;
+}
+.edt-drp__trig:focus-visible { outline: 1px solid rgba(var(--gold), 0.6); border-radius: 2px; }
+
+.edt-drp__val { color: rgb(var(--gl)); white-space: nowrap; }
+.edt-drp__ph  { color: rgb(var(--mut)); }
+
+.edt-drp__caret {
+  font-size:   0.75em;
+  color:       rgb(var(--gold));
+  line-height: 1;
+  user-select: none;
+}
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+.edt-drp__panel {
+  position:   fixed;
+  z-index:    450;
+  min-width:  110px;
+  max-height: 220px;
+  overflow-y: auto;
+  display:    flex;
+  flex-direction: column;
+
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 0%,
+      rgba(var(--gold), .12) 0%,
+      transparent 100%),
+    linear-gradient(170deg,
+      rgba(var(--ink),  .96) 0%,
+      rgba(var(--chrd), .94) 100%);
+  border:        1px solid rgba(var(--gold), 0.28);
+  border-radius: 0.6rem;
+  box-shadow:    0 8px 28px rgba(var(--blk), 0.55), 0 0 0 0.5px rgba(var(--gold), 0.08);
+  backdrop-filter: blur(14px);
+}
+
+/* ── Option list ─────────────────────────────────────────────────────────── */
+.edt-drp__list {
+  list-style: none;
+  margin:     0;
+  padding:    4px 0;
+  flex:       1;
+  overflow-y: auto;
+}
+
+.edt-drp__opt {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  padding:     6px 12px;
+  cursor:      pointer;
+  font-size:   0.75rem;
+  color:       rgb(var(--gl));
+  white-space: nowrap;
+  user-select: none;
+  transition:  background 0.1s;
+}
+.edt-drp__opt:hover         { background: rgba(var(--gold), 0.08); }
+.edt-drp__opt--sel          { color: rgb(var(--gold)); }
+.edt-drp__opt--sel:hover    { background: rgba(var(--gold), 0.12); }
+
+.edt-drp__lbl { flex: 1; }
+
+.edt-drp__chk {
+  width:  12px;
+  height: 12px;
+  color:  rgb(var(--gold));
+  flex-shrink: 0;
+}
+
+.edt-drp__inp {
+  flex:       1;
+  background: rgba(var(--gold), 0.06);
+  border:     1px solid rgba(var(--gold), 0.4);
+  border-radius: 3px;
+  color:      rgb(var(--gl));
+  font-size:  0.75rem;
+  padding:    1px 4px;
+  outline:    none;
+  font-family: inherit;
+  min-width: 0;
+  width: 100%;
+}
+
+.edt-drp__empty {
+  padding:   8px 12px;
+  font-size: 0.72rem;
+  color:     rgb(var(--mut));
+}
+
+/* ── Add new button ──────────────────────────────────────────────────────── */
+.edt-drp__add {
+  display:     flex;
+  align-items: center;
+  gap:         5px;
+  padding:     6px 12px;
+  border:      none;
+  border-top:  1px solid rgba(var(--gold), 0.12);
+  background:  none;
+  cursor:      pointer;
+  color:       rgb(var(--mut));
+  font-size:   0.72rem;
+  width:       100%;
+  text-align:  left;
+  transition:  color 0.12s;
+}
+.edt-drp__add:hover { color: rgb(var(--gold)); }
+.edt-drp__add svg   { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ── Per-option context menu ─────────────────────────────────────────────── */
+.edt-drp__ctx {
+  position: fixed;
+  z-index:  460;
+  min-width: 100px;
+
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%,
+      rgba(var(--gold), .10) 0%, transparent 100%),
+    linear-gradient(168deg,
+      rgba(var(--ink), .97) 0%,
+      rgba(var(--chrd),.95) 100%);
+  border:        1px solid rgba(var(--gold), 0.28);
+  border-radius: 0.5rem;
+  box-shadow:    0 6px 20px rgba(var(--blk), 0.5);
+  padding:       4px 0;
+}
+
+.edt-drp__ctx-opt {
+  display:     flex;
+  align-items: center;
+  gap:         7px;
+  padding:     6px 12px;
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  color:       rgb(var(--gl));
+  font-size:   0.74rem;
+  width:       100%;
+  text-align:  left;
+  white-space: nowrap;
+  transition:  background 0.1s;
+}
+.edt-drp__ctx-opt:hover         { background: rgba(var(--gold), 0.08); }
+.edt-drp__ctx-opt--dng          { color: rgb(var(--dng)); }
+.edt-drp__ctx-opt--dng:hover    { background: rgba(var(--dng), 0.08); }
+.edt-drp__ctx-opt svg           { width: 14px; height: 14px; flex-shrink: 0; }
+
+.edt-drp__ctx-sep {
+  height:     1px;
+  background: rgba(var(--gold), 0.10);
+  margin:     3px 0;
+}

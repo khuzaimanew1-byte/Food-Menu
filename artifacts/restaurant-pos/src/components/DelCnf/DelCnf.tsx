@@ -32,7 +32,10 @@ export function DelCnf() {
     if (pending) execDel(pending.id, pending.type);
   }, [pending]);
 
-  const kind    = pending?.type === 'section' ? 'Section' : 'Item';
+  const kind = pending?.type === 'section' ? 'Section'
+             : pending?.type === 'role'    ? 'Role'
+             : pending?.type === 'unit'    ? 'Unit'
+             : 'Item';
   const title   = `Delete ${kind}`;
   const message = pending?.name
     ? `"${pending.name}" will be permanently deleted.`

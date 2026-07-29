@@ -11,6 +11,7 @@ import { pkFmt } from "@/lib/fmt/fmt";
 import { PRICE_SYMBOL, stripCurrency } from "@/lib/currency";
 import { MinusButton } from "../buttons/MinusButton/MinusButton";
 import { QuantityInput } from "../inputs/QuantityInput/QuantityInput";
+import { AsgDot } from "../AsgDot/AsgDot";
 import "./MnItm.css";
 
 const DEF_NAME  = 'New Item';
@@ -143,17 +144,20 @@ export function MnItm({
         </div>
       )}
       <div className="mic">
-        <div
-          className="mic-avt"
-          data-shape={shape}
-          onClick={isActive ? (e) => e.stopPropagation() : undefined}
-        >
-          <Avt
-            src={img.src} name={displayName} alt={displayName} shape={shape}
-            uploadable={isActive}
-            onUpload={isActive ? (f) => { img.onUpload(f); setDirty(true); } : undefined}
-            isDragging={isActive ? upld.isDrg : false}
-          />
+        <div className="mic-avt-wrap">
+          <div
+            className="mic-avt"
+            data-shape={shape}
+            onClick={isActive ? (e) => e.stopPropagation() : undefined}
+          >
+            <Avt
+              src={img.src} name={displayName} alt={displayName} shape={shape}
+              uploadable={isActive}
+              onUpload={isActive ? (f) => { img.onUpload(f); setDirty(true); } : undefined}
+              isDragging={isActive ? upld.isDrg : false}
+            />
+          </div>
+          <AsgDot itemId={String(id)} />
         </div>
         <div className="mic-body">
           <div className="mic-row">
