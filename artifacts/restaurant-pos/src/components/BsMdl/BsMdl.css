@@ -117,12 +117,12 @@
 }
 
 .bs-ttl {
-  font-size: 0.76rem;
+  font-size: var(--tx-sz-sec);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgb(var(--gl));
-  line-height: 1.3;
+  color: var(--tx-c-title);
+  line-height: var(--tx-lh-sec);
 }
 
 .bs-cls {

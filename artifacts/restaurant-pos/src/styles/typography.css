@@ -1,65 +1,64 @@
-/* ── Typography — single source of truth for all text styles ─────────────
-   Sizes use clamp() for fluid scaling across viewport widths.
-   Compose freely: <h3 class="ff-c tx-pri fw-bld tx-title tx-caps">        */
+/* ── Typography — utility classes for font-family, size, weight, colour ──────
+   Compose freely: <h3 class="ff-c tx-pri fw-bld tx-title tx-caps">
+   Use var(--tx-sz-*) / var(--tx-c-*) directly in component CSS.
 
-/* ── Size + colour tokens — reference via var() in any component CSS ──────── */
+   Scale uses a ~1.30× ratio (near Perfect Fourth) between each step:
+     pri  →  1.30rem  (20.8px)  primary labels, modal titles
+     sec  →  1.00rem  (16.0px)  body text, list keys, readable labels
+     ter  →  0.78rem  (12.5px)  captions, hints, badges, micro text     */
+
+/* ── Tokens ───────────────────────────────────────────────────────────────── */
 :root {
-  /* Sizes */
-  --tx-sz-pri: clamp(0.95rem, 2.6vw, 1.10rem);  /* item names, headings, modal titles   */
-  --tx-sz-sec: clamp(0.78rem, 2.1vw, 0.92rem);  /* labels, descriptions, body text      */
-  --tx-sz-ter: clamp(0.58rem, 1.5vw, 0.72rem);  /* captions, hints, badges, micro text  */
+  /* Sizes — fluid via clamp(min, preferred-vw, max) */
+  --tx-sz-pri: clamp(1.10rem, 3.0vw, 1.30rem);
+  --tx-sz-sec: clamp(0.88rem, 2.4vw, 1.00rem);
+  --tx-sz-ter: clamp(0.68rem, 1.8vw, 0.78rem);
+
+  /* Line-heights per level */
+  --tx-lh-pri: 1.25;
+  --tx-lh-sec: 1.40;
+  --tx-lh-ter: 1.30;
 
   /* Colours */
-  --tx-c-normal: rgb(var(--cr));                 /* warm cream — primary reading text    */
-  --tx-c-title:  rgb(var(--gl));                 /* light gold — headings, emphasis      */
-  --tx-c-muted:  rgb(var(--mut));                /* slate grey — hints, de-emphasized    */
+  --tx-c-normal: rgb(var(--cr));      /* warm cream  */
+  --tx-c-title:  rgb(var(--gl));      /* light gold  */
+  --tx-c-muted:  rgb(var(--mut));     /* slate grey  */
+  --tx-c-gold:   rgb(var(--gold));    /* bright gold */
 }
 
 /* ── Font-family ──────────────────────────────────────────────────────────── */
-.ff-s { font-family: var(--ff);  }   /* Cormorant Garamond — body, labels, descriptions */
-.ff-c { font-family: var(--ffc); }   /* Cinzel              — headings, prices, UI caps  */
+.ff-s { font-family: var(--ff);  }   /* Cormorant Garamond */
+.ff-c { font-family: var(--ffc); }   /* Cinzel             */
 
 /* ── Size ─────────────────────────────────────────────────────────────────── */
-.tx-pri { font-size: var(--tx-sz-pri); }
-.tx-sec { font-size: var(--tx-sz-sec); }
-.tx-ter { font-size: var(--tx-sz-ter); }
+.tx-pri { font-size: var(--tx-sz-pri); line-height: var(--tx-lh-pri); }
+.tx-sec { font-size: var(--tx-sz-sec); line-height: var(--tx-lh-sec); }
+.tx-ter { font-size: var(--tx-sz-ter); line-height: var(--tx-lh-ter); }
 
 /* ── Weight ───────────────────────────────────────────────────────────────── */
-.fw-thin { font-weight: 300; }   /* thin        — delicate ornamental text            */
-.fw-reg  { font-weight: 400; }   /* regular     — default body weight                 */
-.fw-med  { font-weight: 500; }   /* medium      — labels, slightly emphasised          */
-.fw-mbd  { font-weight: 600; }   /* medium-bold — section titles, UI labels           */
-.fw-bld  { font-weight: 700; }   /* bold        — headings, display values            */
+.fw-thin { font-weight: 300; }
+.fw-reg  { font-weight: 400; }
+.fw-med  { font-weight: 500; }
+.fw-mbd  { font-weight: 600; }
+.fw-bld  { font-weight: 700; }
 
 /* ── Colour ───────────────────────────────────────────────────────────────── */
-.tx-normal { color: var(--tx-c-normal); }   /* warm cream — primary reading text    */
-.tx-title  { color: var(--tx-c-title);  }   /* light gold — headings, emphasis      */
-.tx-muted  { color: var(--tx-c-muted);  }   /* slate grey — captions, hints         */
-.tx-gold   { color: rgb(var(--gold));   }   /* bright gold — prices, highlights     */
+.tx-normal { color: var(--tx-c-normal); }
+.tx-title  { color: var(--tx-c-title);  }
+.tx-muted  { color: var(--tx-c-muted);  }
+.tx-gold   { color: var(--tx-c-gold);   }
 
 /* ── Repeating combos ─────────────────────────────────────────────────────── */
+.tx-caps   { text-transform: uppercase; letter-spacing: 0.12em; }
+.tx-caps-w { text-transform: uppercase; letter-spacing: 0.20em; }
+.tx-ital   { font-style: italic; }
 
-/* Standard caps — buttons, section labels (0.12em tracking) */
-.tx-caps {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-/* Wide caps — micro labels, very small badge text (0.20em tracking) */
-.tx-caps-w {
-  text-transform: uppercase;
-  letter-spacing: 0.20em;
-}
-
-/* Italic — descriptions, supporting values */
-.tx-ital { font-style: italic; }
-
-/* Gold glow — display values: prices, key numerics */
+/* Gold glow — display numerics (prices, key figures) */
 .tx-disp {
   font-family:    var(--ffc);
   font-weight:    700;
   letter-spacing: 0.05em;
-  color:          rgb(var(--gl));
+  color:          var(--tx-c-title);
   text-shadow:
     0 0 10px rgba(var(--gold), 0.50),
     0 0 22px rgba(var(--gold), 0.22);

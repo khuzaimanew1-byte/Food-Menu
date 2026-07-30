@@ -51,9 +51,9 @@
 .mic-name {
   font-weight: 500;
   text-transform: capitalize;
-  font-size: 3.5cqw;
+  font-size: 3.5cqw;           /* cqw override — scales with menu card */
   white-space: nowrap;
-  color: rgb(var(--gl));
+  color: var(--tx-c-title);
   margin: 0;
 }
 
@@ -76,8 +76,8 @@
   align-items: baseline;
   gap: 0.4cqw;
   white-space: nowrap;
-  color: rgb(var(--gold));
-  font-size: 3.2cqw;
+  color: var(--tx-c-gold);
+  font-size: 3.2cqw;           /* cqw override */
 }
 
 .mic-pfx {
@@ -90,9 +90,9 @@
 .mic-price { font-size: 3.2cqw; }
 
 .mic-desc {
-  font-size: 2.7cqw;
+  font-size: 2.7cqw;           /* cqw override */
   line-height: 1.1;
-  color: rgb(var(--mut));
+  color: var(--tx-c-muted);
   margin: 0;
 }
 

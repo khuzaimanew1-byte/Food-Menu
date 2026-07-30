@@ -100,10 +100,10 @@ body.mdl-open {
 .mdl-ttl {
   margin: 0;
   flex: 1;
-  font-size: 1.05rem;
+  font-size: var(--tx-sz-pri);
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: rgb(var(--gl));
+  color: var(--tx-c-title);
   line-height: 1.3;
 }
 
@@ -131,7 +131,7 @@ body.mdl-open {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 20px 22px 24px;
-  color: rgb(var(--cr));
+  color: var(--tx-c-normal);
   font-family: var(--ff);
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--gold), .30) transparent;

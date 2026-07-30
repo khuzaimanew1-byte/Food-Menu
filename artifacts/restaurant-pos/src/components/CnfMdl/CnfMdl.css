@@ -3,7 +3,7 @@
 /* Message */
 .cm-msg {
   margin: 0 0 14px;
-  font-size: 0.84rem;
+  font-size: var(--tx-sz-sec);
   line-height: 1.55;
   color: rgba(var(--cr), 0.68);
 }
@@ -20,11 +20,11 @@
   flex: 1;
   padding: 0.46rem 1rem;
   border-radius: 0.55rem;
-  font-size: 0.76rem;
+  font-size: var(--tx-sz-sec);
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: rgb(var(--gl));
+  color: var(--tx-c-title);
   background: rgba(var(--gold), 0.12);
   border: 1px solid rgba(var(--gold), 0.32);
   transition: background 0.14s, border-color 0.14s;
@@ -47,7 +47,7 @@
 
 /* Keyboard hint */
 .cm-hint {
-  font-size: 0.68rem;
+  font-size: var(--tx-sz-ter);
   color: rgba(var(--wht), 0.26);
   letter-spacing: 0.04em;
   white-space: nowrap;
