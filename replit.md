@@ -6,13 +6,25 @@ A paginated digital restaurant menu for **Infinity Castle's Cuisine** featuring 
 
 ## How to Run
 
-The dev server starts automatically via the configured workflow:
+Two workflows must both be running:
 
+**Frontend** (auto-starts):
 ```
-PORT=26151 BASE_PATH=/ pnpm --filter @workspace/restaurant-pos run dev
+pnpm --filter @workspace/restaurant-pos run dev
 ```
+
+**API Server** (start via workflow `artifacts/api-server: API Server`):
+```
+pnpm --filter @workspace/api-server run dev
+```
+Runs on port 8080. Automatically runs DB migrations on boot.
 
 Dependencies: `pnpm install` (run from workspace root)
+
+**To seed the database** (run once if DB is empty):
+```
+pnpm --filter @workspace/db run seed
+```
 
 ## Stack
 
