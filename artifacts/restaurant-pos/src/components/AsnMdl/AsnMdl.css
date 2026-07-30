@@ -2,7 +2,8 @@
    SSOT primitives — never re-declare here:
      .sec-lbl               → src/styles/ui.css
      .kv-rw  .kv-key .kv-val → src/styles/ui.css
-     .ff-s   .ff-c          → src/styles/typography.css               */
+     .ff-s   .ff-c          → src/styles/typography.css
+     txr-inp tokens         → src/styles/typography.css               */
 
 /* ── Section block — full width ──────────────────────────────────────────── */
 .asn-sec {
@@ -101,4 +102,66 @@
 .asn-edt svg {
   width: 0.72rem;
   height: 0.72rem;
+}
+
+/* Active / edit-on state — pen icon glows gold */
+.asn-edt--on,
+.asn-edt--on:hover {
+  color: rgb(var(--gl));
+  background: rgba(var(--gold), 0.16);
+  box-shadow: 0 0 0 1px rgba(var(--gold), 0.30) inset;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EDIT MODE — body wrapper, field highlights, contenteditable styles
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Body wrapper — transparent in view mode; gold tint in edit mode ─────── */
+.asn-body {
+  /* no visual change in view mode */
+}
+
+.asn-body.edt-on {
+  background:    rgba(var(--gold), 0.04);
+  border-radius: 0.65rem;
+  padding:       8px;
+  margin:        -8px;
+  outline:       1px solid rgba(var(--gold), 0.16);
+  outline-offset: -1px;
+  transition:    background 0.18s, outline-color 0.18s;
+}
+
+/* ── All contentEditable spans in edit mode ──────────────────────────────── */
+.edt-on [contenteditable] {
+  cursor:  text;
+  outline: none;
+}
+
+/* ── Text-editable field (name) — focus glow ────────────────────────────── */
+.asn-edtxt[contenteditable]:focus {
+  background:    rgba(var(--gold), 0.10);
+  border-radius: 0.22rem;
+  color:         var(--txr-inp-c);      /* rgb(--gl) light gold — txr-inp SSOT */
+}
+
+/* ── Number-editable span (qty, margin) ─────────────────────────────────── */
+.asn-ednum {
+  display: inline;
+}
+
+/* Amber underline hint in edit mode — matches bdg--qty amber palette */
+.asn-ednum--on {
+  display:       inline-block;
+  min-width:     1.2ch;
+  border-bottom: 1px solid rgba(var(--lntn), 0.55);
+  padding:       0 1px 1px;
+  border-radius: 0.15rem 0.15rem 0 0;
+  transition:    background 0.14s, border-color 0.14s;
+}
+
+.asn-ednum--on:focus {
+  background:    rgba(var(--lntn), 0.14);
+  border-bottom-color: rgba(var(--lntn), 0.85);
+  color:         rgba(255, 200, 120, 0.96);   /* txr-qty-c — amber numerals */
+  outline:       none;
 }
