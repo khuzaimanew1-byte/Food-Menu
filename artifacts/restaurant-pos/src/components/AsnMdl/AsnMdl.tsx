@@ -100,8 +100,17 @@ export function AsnMdl() {
 
       {/* ── Margin — bottom-right footer summary ────────────────────────── */}
       <div className="asn-mrow">
-        <span className="asn-mlbl ff-s">Margin</span>
-        <span className="asn-mval ff-s">{SAMPLE_MRGN}</span>
+        <span className="asn-mlbl ff-c">Margin</span>
+        {(() => {
+          const m = SAMPLE_MRGN.match(/^(Rs\.)\s*([\d,]+(?:\.\d+)?)$/);
+          return m ? (
+            <span className="asn-mval ff-s">
+              <span className="asn-mcur">{m[1]}</span>{' '}{m[2]}
+            </span>
+          ) : (
+            <span className="asn-mval ff-s">{SAMPLE_MRGN}</span>
+          );
+        })()}
       </div>
 
     </BsMdl>

@@ -2,17 +2,20 @@
    Compose freely: <h3 class="ff-c tx-pri fw-bld tx-title tx-caps">
    Use var(--tx-sz-*) / var(--tx-c-*) directly in component CSS.
 
-   Scale uses a ~1.30× ratio (near Perfect Fourth) between each step:
-     pri  →  1.30rem  (20.8px)  primary labels, modal titles
-     sec  →  1.00rem  (16.0px)  body text, list keys, readable labels
-     ter  →  0.78rem  (12.5px)  captions, hints, badges, micro text     */
+   Scale uses a ~1.40× ratio (near √2) between each step:
+     pri  →  1.50rem  (24.0px)  modal titles, page headings
+     sec  →  1.05rem  (16.8px)  body text, list keys, readable labels
+     ter  →  0.75rem  (12.0px)  captions, hints, badges, micro text
+
+   Inside .a4-box (MnPg), the container query below overrides these
+   vars with cqw values so they scale with the A4 card, not the viewport. */
 
 /* ── Tokens ───────────────────────────────────────────────────────────────── */
 :root {
   /* Sizes — fluid via clamp(min, preferred-vw, max) */
-  --tx-sz-pri: clamp(1.10rem, 3.0vw, 1.30rem);
-  --tx-sz-sec: clamp(0.88rem, 2.4vw, 1.00rem);
-  --tx-sz-ter: clamp(0.68rem, 1.8vw, 0.78rem);
+  --tx-sz-pri: clamp(1.25rem, 3.5vw, 1.50rem);
+  --tx-sz-sec: clamp(0.92rem, 2.5vw, 1.05rem);
+  --tx-sz-ter: clamp(0.63rem, 1.7vw, 0.75rem);
 
   /* Line-heights per level */
   --tx-lh-pri: 1.25;
@@ -52,6 +55,18 @@
 .tx-caps   { text-transform: uppercase; letter-spacing: 0.12em; }
 .tx-caps-w { text-transform: uppercase; letter-spacing: 0.20em; }
 .tx-ital   { font-style: italic; }
+
+/* ── cqw overrides inside MnPg ────────────────────────────────────────────
+   When inside the menu-page container (.pg-wrap), override --tx-sz-* with
+   cqw values so all typography scales with the A4 card width, not the
+   viewport. Components with their own explicit cqw sizes are unaffected.   */
+@container menu-page (min-width: 0px) {
+  .a4-box {
+    --tx-sz-pri: 5.0cqw;   /* ~25px at 500px card  — ~1.39× ratio */
+    --tx-sz-sec: 3.6cqw;   /* ~18px at 500px card                  */
+    --tx-sz-ter: 2.6cqw;   /* ~13px at 500px card  — ~1.38× ratio  */
+  }
+}
 
 /* Gold glow — display numerics (prices, key figures) */
 .tx-disp {

@@ -103,9 +103,9 @@
 
 /* Secondary — role, quantity, or supporting value */
 .kv-val {
-  font-size: var(--tx-sz-ter);
-  font-weight: 400;
-  font-style: italic;
+  font-size: var(--tx-sz-sec);
+  font-weight: 500;
+  font-style: normal;
   letter-spacing: 0.01em;
   color: var(--tx-c-title);
   white-space: nowrap;

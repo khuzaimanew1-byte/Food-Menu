@@ -43,9 +43,10 @@
 .asn-mlbl {
   font-size: var(--tx-sz-ter);
   font-weight: 400;
-  font-style: italic;
-  letter-spacing: 0.01em;
-  color: rgba(var(--cr), 0.50);
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(var(--cr), 0.45);
 }
 
 /* Value matches kv-val colour — unified gold across roles, qty, margin */
@@ -54,6 +55,15 @@
   font-weight: 600;
   letter-spacing: 0.01em;
   color: var(--tx-c-title);
+}
+
+/* ── Currency prefix — "Rs." smaller + muted vs the bold number ─────────── */
+.asn-mcur {
+  font-size: var(--tx-sz-ter);
+  font-weight: 400;
+  color: rgba(var(--cr), 0.45);
+  letter-spacing: 0.04em;
+  margin-right: 1px;
 }
 
 /* ── Unit label — distinct colour + left gap from qty number ─────────────── */
