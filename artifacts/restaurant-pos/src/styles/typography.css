@@ -1,19 +1,65 @@
-/* ── Font-family utilities ────────────────────────────────────────────────── */
-.ff-s { font-family: var(--ff);  }   /* Cormorant Garamond — body, labels   */
-.ff-c { font-family: var(--ffc); }   /* Cinzel — headings, values, UI caps  */
+/* ── Typography — single source of truth for all text styles ─────────────
+   Sizes use clamp() for fluid scaling across viewport widths.
+   Compose freely: <h3 class="ff-c tx-pri fw-bld tx-title tx-caps">        */
 
-/* ── Text-colour hierarchy ────────────────────────────────────────────────── */
-.tx-pri  { color: rgb(var(--cr));             }   /* warm cream — primary body  */
-.tx-sec  { color: rgba(var(--cr),  0.55);     }   /* muted — secondary labels   */
-.tx-gold { color: rgb(var(--gl));             }   /* light gold — accents       */
-.tx-mut  { color: rgb(var(--mut));            }   /* slate — de-emphasised      */
+/* ── Size + colour tokens — reference via var() in any component CSS ──────── */
+:root {
+  /* Sizes */
+  --tx-sz-pri: clamp(0.95rem, 2.6vw, 1.10rem);  /* item names, headings, modal titles   */
+  --tx-sz-sec: clamp(0.78rem, 2.1vw, 0.92rem);  /* labels, descriptions, body text      */
+  --tx-sz-ter: clamp(0.58rem, 1.5vw, 0.72rem);  /* captions, hints, badges, micro text  */
 
-/* ── Display-value — Cinzel numerics with gold glow (prices, margins) ──────── */
+  /* Colours */
+  --tx-c-normal: rgb(var(--cr));                 /* warm cream — primary reading text    */
+  --tx-c-title:  rgb(var(--gl));                 /* light gold — headings, emphasis      */
+  --tx-c-muted:  rgb(var(--mut));                /* slate grey — hints, de-emphasized    */
+}
+
+/* ── Font-family ──────────────────────────────────────────────────────────── */
+.ff-s { font-family: var(--ff);  }   /* Cormorant Garamond — body, labels, descriptions */
+.ff-c { font-family: var(--ffc); }   /* Cinzel              — headings, prices, UI caps  */
+
+/* ── Size ─────────────────────────────────────────────────────────────────── */
+.tx-pri { font-size: var(--tx-sz-pri); }
+.tx-sec { font-size: var(--tx-sz-sec); }
+.tx-ter { font-size: var(--tx-sz-ter); }
+
+/* ── Weight ───────────────────────────────────────────────────────────────── */
+.fw-thin { font-weight: 300; }   /* thin        — delicate ornamental text            */
+.fw-reg  { font-weight: 400; }   /* regular     — default body weight                 */
+.fw-med  { font-weight: 500; }   /* medium      — labels, slightly emphasised          */
+.fw-mbd  { font-weight: 600; }   /* medium-bold — section titles, UI labels           */
+.fw-bld  { font-weight: 700; }   /* bold        — headings, display values            */
+
+/* ── Colour ───────────────────────────────────────────────────────────────── */
+.tx-normal { color: var(--tx-c-normal); }   /* warm cream — primary reading text    */
+.tx-title  { color: var(--tx-c-title);  }   /* light gold — headings, emphasis      */
+.tx-muted  { color: var(--tx-c-muted);  }   /* slate grey — captions, hints         */
+.tx-gold   { color: rgb(var(--gold));   }   /* bright gold — prices, highlights     */
+
+/* ── Repeating combos ─────────────────────────────────────────────────────── */
+
+/* Standard caps — buttons, section labels (0.12em tracking) */
+.tx-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* Wide caps — micro labels, very small badge text (0.20em tracking) */
+.tx-caps-w {
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+}
+
+/* Italic — descriptions, supporting values */
+.tx-ital { font-style: italic; }
+
+/* Gold glow — display values: prices, key numerics */
 .tx-disp {
-  font-family:  var(--ffc);
-  font-weight:  700;
+  font-family:    var(--ffc);
+  font-weight:    700;
   letter-spacing: 0.05em;
-  color: rgb(var(--gl));
+  color:          rgb(var(--gl));
   text-shadow:
     0 0 10px rgba(var(--gold), 0.50),
     0 0 22px rgba(var(--gold), 0.22);
