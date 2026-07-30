@@ -2,13 +2,32 @@
    Compose freely: <h3 class="ff-c tx-pri fw-bld tx-title tx-caps">
    Use var(--tx-sz-*) / var(--tx-c-*) directly in component CSS.
 
-   Scale uses a ~1.40× ratio (near √2) between each step:
-     pri  →  1.50rem  (24.0px)  modal titles, page headings
-     sec  →  1.05rem  (16.8px)  body text, list keys, readable labels
-     ter  →  0.75rem  (12.0px)  captions, hints, badges, micro text
+   ── Role → token mapping (SSOT — change here, not per component) ──────────
 
-   Inside .a4-box (MnPg), the container query below overrides these
-   vars with cqw values so they scale with the A4 card, not the viewport. */
+   OUTSIDE A4 card (fixed/overlay modals — rem/vw):
+     pri  →  ~20–24px   reserved: future display-level headings only
+     sec  →  ~15–17px   bs-ttl · cm-msg · cm-cfm · kv-key · asn-mval
+     ter  →  ~11–13px   sec-lbl · bdg · kv-val · asn-mlbl · cm-hint · tooltip
+
+   INSIDE A4 card (.a4-box — @container overrides to cqw):
+     pri  →  5.0cqw     (unused — explicit cqw per component preferred)
+     sec  →  3.6cqw     (unused — explicit cqw per component preferred)
+     ter  →  2.6cqw     sec-lbl inside page
+
+   SmMdl lives inside pg-wrap (cqw context) — sizes are EXPLICIT cqw in SmMdl.css:
+     sm-ttl  3.0cqw     panel title
+     sm-cfm  2.5cqw     confirm button
+     sm-hint 2.0cqw     keyboard hint
+
+   MnPg card elements use explicit cqw per component (not these tokens):
+     mh-ttl  4.5cqw     section heading
+     mic-name 3.5cqw    item name
+     mic-price 3.2cqw   price number
+     mic-pfx  2.6cqw    price prefix (Rs.)
+     mic-desc 2.7cqw    item description
+
+   Scale ratio: pri/sec ≈ 1.43×, sec/ter ≈ 1.40× (near √2 — clearly distinct)
+   Inside .a4-box, the @container query overrides these vars with cqw values.  */
 
 /* ── Tokens ───────────────────────────────────────────────────────────────── */
 :root {
