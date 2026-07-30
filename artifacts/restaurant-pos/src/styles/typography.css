@@ -163,12 +163,13 @@
   --txr-unt-c:  rgba(var(--gold), 0.85);
 
   /* txr-sts — status / role / category badges ─────────────────────────── */
-  --txr-sts-ff: var(--ffc);
-  --txr-sts-fw: 600;
-  --txr-sts-ls: 0.12em;
-  --txr-sts-lh: 1;
-  --txr-sts-tt: uppercase;
-  --txr-sts-c:  rgb(var(--gl));
+  --txr-sts-ff:  var(--ffc);
+  --txr-sts-fw:  600;
+  --txr-sts-ls:  0.12em;
+  --txr-sts-lh:  1;
+  --txr-sts-tt:  uppercase;
+  --txr-sts-fst: italic;
+  --txr-sts-c:   rgb(var(--gl));
 
   /* txr-btn — action button text (Cinzel, uppercase) ──────────────────── */
   --txr-btn-ff: var(--ffc);
@@ -282,7 +283,8 @@
 .txr-sts {
   font-family: var(--txr-sts-ff); font-weight: var(--txr-sts-fw);
   letter-spacing: var(--txr-sts-ls); line-height: var(--txr-sts-lh);
-  text-transform: var(--txr-sts-tt); color: var(--txr-sts-c);
+  text-transform: var(--txr-sts-tt); font-style: var(--txr-sts-fst);
+  color: var(--txr-sts-c);
 }
 .txr-btn {
   font-family: var(--txr-btn-ff); font-weight: var(--txr-btn-fw);

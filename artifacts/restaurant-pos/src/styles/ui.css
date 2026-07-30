@@ -57,11 +57,16 @@
 
 /* Gold pill — staff roles, categories, status labels */
 .bdg--role {
-  font-family: var(--txr-sts-ff);
-  color:       var(--txr-sts-c);
-  background:  rgba(var(--gold), 0.14);
-  border:      1px solid rgba(var(--gold), 0.40);
-  box-shadow:  inset 0 0 6px rgba(var(--gold), 0.10);
+  font-family:    var(--txr-sts-ff);
+  font-weight:    var(--txr-sts-fw);
+  letter-spacing: var(--txr-sts-ls);
+  text-transform: var(--txr-sts-tt);
+  font-style:     var(--txr-sts-fst);
+  color:          var(--txr-sts-c);
+  font-size:      calc(var(--tx-sz-ter) * 0.85);
+  background:     rgba(var(--gold), 0.14);
+  border:         1px solid rgba(var(--gold), 0.40);
+  box-shadow:     inset 0 0 6px rgba(var(--gold), 0.10);
 }
 
 /* Amber square — quantities, measurements, numeric tags */
