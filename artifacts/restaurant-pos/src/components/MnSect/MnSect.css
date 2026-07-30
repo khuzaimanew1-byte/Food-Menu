@@ -17,13 +17,15 @@
 .mn-sect.mv-target  { cursor: copy; }
 
 /* ── Running label — continuation page only ──────────────────────────────── */
-/* Small, muted plain text — section name for context, not a heading.
-   No gold rule, no crown, no ornament. ff-s font via the utility class. */
+/* Small, muted — section name for context, not a heading.
+   Uses label (Cinzel) family but de-emphasised: light weight, muted colour. */
 .mn-rl {
+  font-family:    var(--txr-lbl-ff);
+  font-weight:    400;                 /* lighter than txr-lbl — not a heading */
+  letter-spacing: 0.08em;             /* tighter than txr-lbl (0.20em) at this size */
+  text-transform: var(--txr-lbl-tt);
+  line-height:    var(--txr-lbl-lh);
+  color:          rgba(var(--mut), 0.65);  /* muted — contextual, not decorative */
   margin:         0 0 1.5cqw;
   font-size:      2cqw;
-  font-weight:    400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color:          rgba(var(--mut), 0.65);
 }

@@ -22,13 +22,15 @@
 }
 
 .mh-ttl {
-  font-weight: 700;
-  font-size: .9em;             /* em — relative to mh-wrap's 5cqw base */
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--tx-c-gold);
-  margin: 0;
-  text-align: center;
+  font-family:    var(--txr-shd-ff);
+  font-weight:    var(--txr-shd-fw);
+  letter-spacing: var(--txr-shd-ls);
+  text-transform: var(--txr-shd-tt);
+  color:          var(--txr-shd-c);
+  line-height:    var(--txr-shd-lh);
+  margin:         0;
+  text-align:     center;
+  font-size:      .9em;         /* em — relative to mh-wrap's 5cqw base */
 }
 
 /* ── Edit mode — whole-heading highlight ─────────────────────────────────── */

@@ -4,16 +4,17 @@
 /* ── Section label — Cinzel uppercase heading + trailing gradient rule ───
    Usage: <span className="sec-lbl">Assign</span>                           */
 .sec-lbl {
-  display: flex;
+  display:     flex;
   align-items: center;
-  gap: 8px;
-  font-family: var(--ffc);
-  font-size: var(--tx-sz-ter);
-  font-weight: 700;
-  letter-spacing: 0.20em;
-  text-transform: uppercase;
-  color: rgba(var(--gold), 0.72);
-  margin-bottom: 10px;
+  gap:         8px;
+  font-family:    var(--txr-lbl-ff);
+  font-weight:    var(--txr-lbl-fw);
+  letter-spacing: var(--txr-lbl-ls);
+  text-transform: var(--txr-lbl-tt);
+  line-height:    var(--txr-lbl-lh);
+  color:          var(--txr-lbl-c);
+  font-size:      var(--tx-sz-ter);
+  margin-bottom:  10px;
 }
 .sec-lbl::after {
   content: '';
@@ -56,22 +57,23 @@
 
 /* Gold pill — staff roles, categories, status labels */
 .bdg--role {
-  font-family: var(--ff);
-  background: rgba(var(--gold), 0.14);
-  border: 1px solid rgba(var(--gold), 0.40);
-  color: rgb(var(--gl));
-  box-shadow: inset 0 0 6px rgba(var(--gold), 0.10);
+  font-family: var(--txr-sts-ff);
+  color:       var(--txr-sts-c);
+  background:  rgba(var(--gold), 0.14);
+  border:      1px solid rgba(var(--gold), 0.40);
+  box-shadow:  inset 0 0 6px rgba(var(--gold), 0.10);
 }
 
 /* Amber square — quantities, measurements, numeric tags */
 .bdg--qty {
-  font-family: var(--ffc);
-  padding: 3px 7px;
-  border-radius: 0.28rem;
-  background: rgba(var(--lntn), 0.16);
-  border: 1px solid rgba(var(--lntn), 0.38);
-  color: rgba(255, 200, 120, 0.92);
-  letter-spacing: 0.05em;
+  font-family:    var(--txr-qty-ff);
+  font-weight:    var(--txr-qty-fw);
+  letter-spacing: var(--txr-qty-ls);
+  color:          var(--txr-qty-c);
+  padding:        3px 7px;
+  border-radius:  0.28rem;
+  background:     rgba(var(--lntn), 0.16);
+  border:         1px solid rgba(var(--lntn), 0.38);
 }
 
 /* ── Key-value row — text-only data pair, reusable across modal sections ─
@@ -92,23 +94,26 @@
 
 /* Primary — name or label; visually dominant */
 .kv-key {
-  font-size: var(--tx-sz-sec);
-  font-weight: 500;
-  color: var(--tx-c-normal);
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-  flex: 1;
-  min-width: 0;
+  font-family:    var(--txr-sec-ff);
+  font-weight:    var(--txr-sec-fw);
+  letter-spacing: var(--txr-sec-ls);
+  line-height:    1.3;
+  color:          var(--txr-sec-c);
+  flex:           1;
+  min-width:      0;
+  font-size:      var(--tx-sz-sec);
 }
 
 /* Secondary — role, quantity, or supporting value */
 .kv-val {
-  font-size: var(--tx-sz-ter);
-  font-weight: 500;
-  font-style: normal;
-  letter-spacing: 0.04em;
-  color: var(--tx-c-title);
-  white-space: nowrap;
-  flex-shrink: 0;
-  text-align: right;
+  font-family:    var(--txr-qty-ff);   /* Cinzel — matches ff-c class applied in HTML */
+  font-weight:    var(--txr-sts-fw);   /* 500 */
+  letter-spacing: 0.04em;              /* contextual: between label and body */
+  line-height:    var(--txr-sts-lh);
+  color:          var(--txr-sts-c);    /* light gold */
+  font-style:     normal;
+  white-space:    nowrap;
+  flex-shrink:    0;
+  text-align:     right;
+  font-size:      var(--tx-sz-ter);
 }

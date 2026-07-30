@@ -42,11 +42,14 @@
 }
 
 .avt-upl-hint {
-  font-size: 1.75cqw;
-  letter-spacing: 0.05em;
-  color: rgba(var(--mut), 0.65);
-  white-space: nowrap;
-  text-align: center;
+  font-family:    var(--txr-cap-ff);
+  font-weight:    var(--txr-cap-fw);
+  letter-spacing: var(--txr-cap-ls);
+  line-height:    var(--txr-cap-lh);
+  color:          var(--txr-cap-c);
+  white-space:    nowrap;
+  text-align:     center;
+  font-size:      1.75cqw;
 }
 
 .avt-drop-ovr {
@@ -67,13 +70,14 @@
 }
 
 .avt-drop-here {
-  font-size: 2cqw;
-  font-family: inherit;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgb(var(--gold));
+  font-family:    var(--txr-shd-ff);
+  font-weight:    var(--txr-shd-fw);
+  letter-spacing: var(--txr-shd-ls);
+  text-transform: var(--txr-shd-tt);
+  color:          var(--txr-shd-c);
   text-shadow:
     0 0 1cqw rgba(var(--gold), 0.85),
     0 0 2.5cqw rgba(var(--gold), 0.40);
   pointer-events: none;
+  font-size:      2cqw;
 }

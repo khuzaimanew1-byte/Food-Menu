@@ -49,12 +49,15 @@
 }
 
 .mic-name {
-  font-weight: 500;
-  text-transform: capitalize;
-  font-size: 3.5cqw;           /* cqw override — scales with menu card */
-  white-space: nowrap;
-  color: var(--tx-c-title);
-  margin: 0;
+  font-family:    var(--txr-chd-ff);
+  font-weight:    var(--txr-chd-fw);
+  letter-spacing: var(--txr-chd-ls);
+  text-transform: var(--txr-chd-tt);
+  color:          var(--txr-chd-c);
+  line-height:    var(--txr-chd-lh);
+  white-space:    nowrap;
+  margin:         0;
+  font-size:      3.5cqw;
 }
 
 .mic-lead {
@@ -72,28 +75,40 @@
 }
 
 .mic-prow {
-  display: inline-flex;
+  display:    inline-flex;
   align-items: baseline;
-  gap: 0.4cqw;
+  gap:         0.4cqw;
   white-space: nowrap;
-  color: var(--tx-c-gold);
-  font-size: 3.2cqw;           /* cqw override */
+  color:       var(--txr-prc-c);
+  font-size:   3.2cqw;
 }
 
 .mic-pfx {
-  opacity: 0.72;
-  font-size: 2.6cqw;
-  user-select: none;
+  font-family:    var(--txr-cur-ff);
+  font-weight:    var(--txr-cur-fw);
+  letter-spacing: var(--txr-cur-ls);
+  color:          var(--txr-cur-c);   /* rgba(--cr, 0.45) — replaces opacity: 0.72 */
+  font-style:     normal;
+  user-select:    none;
   pointer-events: none;
+  font-size:      2.6cqw;
 }
 
-.mic-price { font-size: 3.2cqw; }
+.mic-price {
+  font-family:    var(--txr-prc-ff);
+  font-weight:    var(--txr-prc-fw);
+  letter-spacing: var(--txr-prc-ls);
+  font-size:      3.2cqw;
+}
 
 .mic-desc {
-  font-size: 2.7cqw;           /* cqw override */
-  line-height: 1.1;
-  color: var(--tx-c-muted);
-  margin: 0;
+  font-family:    var(--txr-mut-ff);
+  font-weight:    var(--txr-mut-fw);
+  letter-spacing: var(--txr-mut-ls);
+  line-height:    1.1;              /* tighter than role default for compact card */
+  color:          var(--txr-mut-c);
+  margin:         0;
+  font-size:      2.7cqw;
 }
 
 .mic-qty {

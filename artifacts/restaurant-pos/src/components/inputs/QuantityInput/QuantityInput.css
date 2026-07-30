@@ -1,15 +1,16 @@
 .qty-inp {
-  display: inline-flex;
-  align-items: center;
+  display:        inline-flex;
+  align-items:    center;
   justify-content: center;
-  min-width: 3cqw;
-  height: 4cqw;
-  font-size: 2.8cqw;
-  font-weight: 600;
-  font-family: var(--ff);
-  color: rgb(var(--gl));
-  user-select: none;
-  text-align: center;
+  min-width:      3cqw;
+  height:         4cqw;
+  font-family:    var(--txr-qty-ff);
+  font-weight:    var(--txr-qty-fw);
+  letter-spacing: var(--txr-qty-ls);
+  color:          var(--txr-qty-c);
+  user-select:    none;
+  text-align:     center;
+  font-size:      2.8cqw;
 }
 
 /* Editable <input> variant — browsers don't inherit font onto inputs, force it */

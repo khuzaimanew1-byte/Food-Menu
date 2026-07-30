@@ -100,11 +100,13 @@ body.mdl-open {
 .mdl-ttl {
   margin: 0;
   flex: 1;
-  font-size: var(--tx-sz-sec);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--tx-c-title);
-  line-height: var(--tx-lh-sec);
+  font-family:    var(--txr-ttl-ff);
+  font-weight:    var(--txr-ttl-fw);
+  letter-spacing: var(--txr-ttl-ls);
+  text-transform: var(--txr-ttl-tt);
+  color:          var(--txr-ttl-c);
+  line-height:    var(--txr-ttl-lh);
+  font-size:      var(--tx-sz-sec);
 }
 
 .mdl-cls {
@@ -131,8 +133,8 @@ body.mdl-open {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 20px 22px 24px;
-  color: var(--tx-c-normal);
-  font-family: var(--ff);
+  font-family: var(--txr-bdy-ff);
+  color:       var(--txr-bdy-c);
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--gold), .30) transparent;
 }

@@ -22,9 +22,10 @@
 }
 
 .btit-lbl {
-  font-size: 0.9em;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1;
+  font-family:    var(--txr-btn-ff);
+  font-weight:    var(--txr-btn-fw);
+  letter-spacing: var(--txr-btn-ls);
+  text-transform: var(--txr-btn-tt);
+  line-height:    var(--txr-btn-lh);
+  font-size:      0.9em;
 }

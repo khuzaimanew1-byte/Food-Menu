@@ -70,16 +70,17 @@
 }
 
 .mb-pgn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 3.4cqw;
-  font-weight: 700;
-  letter-spacing: .15cqw;
-  color: rgb(var(--lntn));
+  position:       absolute;
+  top:            50%;
+  left:           50%;
+  transform:      translate(-50%, -50%);
+  font-family:    var(--txr-qty-ff);  /* Cinzel — display numeral */
+  font-weight:    700;
+  letter-spacing: 0.10em;             /* em — scales with font-size */
+  line-height:    1;
+  color:          rgb(var(--lntn));   /* lantern amber — distinct from price gold */
   text-shadow:
     0 0 10px rgba(var(--lntn), .55),
     0 1px 3px rgba(var(--blk), .8);
-  line-height: 1;
+  font-size:      3.4cqw;
 }

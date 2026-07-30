@@ -41,39 +41,48 @@
 }
 
 .asn-mlbl {
-  font-size: var(--tx-sz-ter);
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(var(--cr), 0.45);
+  font-family:    var(--txr-lbl-ff);
+  font-weight:    400;                 /* lighter than label default — footer is de-emphasised */
+  font-style:     normal;
+  letter-spacing: 0.08em;             /* tighter than label (0.20em) for compact footer */
+  text-transform: var(--txr-lbl-tt);
+  line-height:    var(--txr-lbl-lh);
+  color:          rgba(var(--cr), 0.45);
+  font-size:      var(--tx-sz-ter);
 }
 
 /* Value matches kv-val colour — unified gold across roles, qty, margin */
 .asn-mval {
-  font-size: var(--tx-sz-sec);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: var(--tx-c-title);
+  font-family:    var(--txr-prc-ff);
+  font-weight:    var(--txr-prc-fw);
+  letter-spacing: var(--txr-prc-ls);
+  line-height:    var(--txr-prc-lh);
+  color:          var(--txr-prc-c);
+  font-size:      var(--tx-sz-sec);
 }
 
 /* ── Currency prefix — "Rs." smaller + muted vs the bold number ─────────── */
 .asn-mcur {
-  font-size: var(--tx-sz-ter);
-  font-weight: 400;
-  color: rgba(var(--cr), 0.45);
-  letter-spacing: 0.04em;
-  margin-right: 1px;
+  font-family:    var(--txr-cur-ff);
+  font-weight:    var(--txr-cur-fw);
+  letter-spacing: var(--txr-cur-ls);
+  line-height:    var(--txr-cur-lh);
+  color:          var(--txr-cur-c);
+  font-style:     normal;
+  margin-right:   1px;
+  font-size:      var(--tx-sz-ter);
 }
 
 /* ── Unit label — distinct colour + left gap from qty number ─────────────── */
 .asn-unit {
-  margin-left: 3px;
-  color: rgba(var(--cr), 0.45);
-  font-style: normal;
-  font-size: var(--tx-sz-ter);
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  font-family:    var(--txr-unt-ff);
+  font-weight:    var(--txr-unt-fw);
+  letter-spacing: var(--txr-unt-ls);
+  line-height:    var(--txr-unt-lh);
+  color:          var(--txr-unt-c);
+  font-style:     normal;
+  margin-left:    3px;
+  font-size:      var(--tx-sz-ter);
 }
 
 /* ── Edit title-action button ─────────────────────────────────────────────── */
