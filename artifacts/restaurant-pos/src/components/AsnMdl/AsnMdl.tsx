@@ -72,7 +72,7 @@ export function AsnMdl() {
           {SAMPLE_STF.map(s => (
             <div key={s.name} className="kv-rw">
               <span className="kv-key ff-s">{s.name}</span>
-              <span className="asn-role">{s.role}</span>
+              <span className="kv-val ff-s">{s.role}</span>
             </div>
           ))}
         </div>

@@ -61,18 +61,6 @@
   font-size:      var(--tx-sz-sec);
 }
 
-/* ── Role text — staff role label, smaller + italic via txr-sts tokens ───── */
-.asn-role {
-  font-family:    var(--txr-sts-ff);
-  font-weight:    var(--txr-sts-fw);
-  letter-spacing: var(--txr-sts-ls);
-  text-transform: var(--txr-sts-tt);
-  font-style:     var(--txr-sts-fst);
-  line-height:    var(--txr-sts-lh);
-  color:          var(--txr-sts-c);
-  font-size:      calc(var(--tx-sz-ter) * 0.82);
-}
-
 /* ── Currency prefix — "Rs." smaller + muted vs the bold number ─────────── */
 .asn-mcur {
   font-family:    var(--txr-cur-ff);
