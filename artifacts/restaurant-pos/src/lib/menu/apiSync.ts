@@ -45,22 +45,67 @@ function mapToLocal(sects: DbSect[], items: DbItem[]): MnSect[] {
 
 // ── Initial load ──────────────────────────────────────────────────────────
 
-/**
- * Fetch all sections + items in two requests (N+1-free).
- * Returns mapped local sections, or null on network error.
- * Returns empty array if DB has no sections yet.
- */
-export async function fetchAll(): Promise<MnSect[] | null> {
-  try {
-    const sectPage = await listSects({ sz: 200 });
-    const allSects = sectPage.data;
-    if (!allSects.length) return [];
-    const allItems = await queryItems({ sectIds: allSects.map(s => s.id), sz: 1000 });
-    return mapToLocal(allSects as DbSect[], allItems as DbItem[]);
-  } catch (e: unknown) {
-    console.error('[apiSync] fetchAll failed:', e);
-    return null;
+/** Returns true for errors that are worth retrying (server starting up, network blip). */
+function isTransient(e: unknown): boolean {
+  if (e instanceof TypeError) return true;               // network / CORS / fetch failed
+  if (e && typeof e === 'object' && 'status' in e) {
+    const s = (e as { status: number }).status;
+    return s === 0 || s === 502 || s === 503 || s === 504;
   }
+  return false;
+}
+
+/**
+ * Fetch all with smart retry.
+ *
+ * - Tries once immediately.
+ * - Retries ONLY on transient errors (502 / 503 / 504 / network failure).
+ * - Fails fast on permanent errors (401, 404, 500, etc.) — no wasted requests.
+ * - Uses exponential back-off (baseDelayMs × 2ⁿ) between attempts.
+ * - Aborts cleanly when the AbortSignal fires (e.g. component unmounts).
+ */
+export async function fetchAllWithRetry(opts: {
+  maxAttempts?: number;
+  baseDelayMs?: number;
+  signal?:      AbortSignal;
+}): Promise<MnSect[] | null> {
+  const { maxAttempts = 3, baseDelayMs = 1000, signal } = opts;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    if (signal?.aborted) return null;
+
+    try {
+      const sectPage = await listSects({ sz: 200 });
+      const allSects = sectPage.data;
+      if (!allSects.length) return [];
+      const allItems = await queryItems({ sectIds: allSects.map(s => s.id), sz: 1000 });
+      return mapToLocal(allSects as DbSect[], allItems as DbItem[]);
+    } catch (e: unknown) {
+      if (!isTransient(e)) {
+        // Permanent error — no point retrying
+        console.warn('[apiSync] fetchAll permanent error:', e);
+        return null;
+      }
+
+      const isLast = attempt === maxAttempts - 1;
+      if (isLast) {
+        console.warn('[apiSync] fetchAll failed after', maxAttempts, 'attempts:', e);
+        return null;
+      }
+
+      // Transient — wait then retry
+      const delay = baseDelayMs * 2 ** attempt;
+      console.warn(`[apiSync] fetchAll attempt ${attempt + 1} failed, retrying in ${delay}ms…`);
+      await new Promise<void>((res, rej) => {
+        const t = setTimeout(res, delay);
+        signal?.addEventListener('abort', () => { clearTimeout(t); rej(); }, { once: true });
+      }).catch(() => null);
+
+      if (signal?.aborted) return null;
+    }
+  }
+
+  return null;
 }
 
 // ── Item mutations ────────────────────────────────────────────────────────

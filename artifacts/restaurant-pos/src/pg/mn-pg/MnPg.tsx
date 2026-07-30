@@ -10,7 +10,7 @@ import { AsnMdl }        from "../../components/AsnMdl/AsnMdl";
 import { dispatchCtxAction }    from "../../components/ContextMenu/actions";
 import { paginateMenuSections } from "../../lib/menu/paginate";
 import { getSections, initSections } from "../../lib/menu/menuStore";
-import { fetchAll }               from "../../lib/menu/apiSync";
+import { fetchAllWithRetry }       from "../../lib/menu/apiSync";
 
 
 import { initSpl, destroySpl } from "../../lib/spl/spl";
@@ -42,15 +42,23 @@ export function MnPg() {
 
   // ── Load data from DB on mount ─────────────────────────────────────────
   useEffect(() => {
-    fetchAll().then(sects => {
+    const controller = new AbortController();
+
+    fetchAllWithRetry({
+      maxAttempts: 6,
+      baseDelayMs: 1500,
+      signal: controller.signal,
+    }).then(sects => {
       if (sects && sects.length > 0) {
         initSections(sects);
       } else if (sects !== null) {
         // DB is empty — show one default section so the page isn't blank
         initSections([{ title: 'New Section', items: [] }]);
       }
-      // sects === null means network error — keep current store state
+      // sects === null means all retries failed — keep current store state
     });
+
+    return () => controller.abort();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
