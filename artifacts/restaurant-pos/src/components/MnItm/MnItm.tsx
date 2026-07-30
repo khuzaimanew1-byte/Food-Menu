@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Avt } from "../avatar/Avt";
 import type { MnItem } from "@/data/menu";
 import { useUpld } from "@/lib/upld/useUpld";
@@ -7,8 +7,8 @@ import { useEdt } from "@/lib/edt/useEdt";
 import { setDirty } from "@/lib/edt/edtStore";
 import { useMvItem } from "@/lib/mv/useMv";
 import { useMvItemActive } from "@/lib/mv/useMvActive";
-import { pkFmt } from "@/lib/fmt/fmt";
-import { PRICE_SYMBOL, stripCurrency } from "@/lib/currency";
+import { usePriceEdt } from "@/lib/edt/usePriceEdt";
+import { PRICE_SYMBOL } from "@/lib/currency";
 import { MinusButton } from "../buttons/MinusButton/MinusButton";
 import { QuantityInput } from "../inputs/QuantityInput/QuantityInput";
 import "./MnItm.css";
@@ -28,7 +28,6 @@ export function MnItm({
   const [qty, setQty]                 = useState(0);
   const [editedName,  setEditedName]  = useState<string | null>(null);
   const [editedDesc,  setEditedDesc]  = useState<string | null>(null);
-  const [editedPrice, setEditedPrice] = useState<string | null>(null);
   const isActive  = useEdt(String(id));
   const isMoving  = useMvItem(String(id));
 
@@ -41,35 +40,25 @@ export function MnItm({
 
   const nameRef  = useRef<HTMLHeadingElement>(null);
   const descRef  = useRef<HTMLParagraphElement>(null);
-  const priceRef = useRef<HTMLSpanElement>(null);
 
-  const displayNameRef  = useRef(editedName  ?? name  ?? DEF_NAME);
-  const displayDescRef  = useRef(editedDesc  ?? description ?? DEF_DESC);
-  const rawPriceRef     = useRef((editedPrice ?? stripCurrency(price ?? DEF_PRICE).replace(/\D/g, '')) || '0');
+  const { priceRef, displayPrice, handlePriceInput } = usePriceEdt(id, isActive, price);
 
-  displayNameRef.current  = editedName  ?? name  ?? DEF_NAME;
-  displayDescRef.current  = editedDesc  ?? description ?? DEF_DESC;
-  rawPriceRef.current     = (editedPrice ?? stripCurrency(price ?? DEF_PRICE).replace(/\D/g, '')) || '0';
+  const displayNameRef = useRef(editedName ?? name ?? DEF_NAME);
+  const displayDescRef = useRef(editedDesc ?? description ?? DEF_DESC);
+
+  displayNameRef.current = editedName ?? name ?? DEF_NAME;
+  displayDescRef.current = editedDesc ?? description ?? DEF_DESC;
 
   const didSaveRef = useRef(false);
 
   useEffect(() => { if (isActive) setQty(0); }, [isActive]);
 
   useEffect(() => {
-    if (isActive && priceRef.current) {
-      priceRef.current.textContent = rawPriceRef.current;
-    }
-  }, [isActive]);
-
-  useEffect(() => {
     const handler = (e: Event) => {
       const d = (e as CustomEvent<{ id: string; fields: Record<string, string> }>).detail;
       if (d?.id !== String(id)) return;
-      if (d.fields['name']  !== undefined) setEditedName(d.fields['name']);
-      if (d.fields['desc']  !== undefined) setEditedDesc(d.fields['desc']);
-      if (d.fields['price'] !== undefined) {
-        setEditedPrice(d.fields['price'].replace(/\D/g, '') || '0');
-      }
+      if (d.fields['name'] !== undefined) setEditedName(d.fields['name']);
+      if (d.fields['desc'] !== undefined) setEditedDesc(d.fields['desc']);
       didSaveRef.current = true;
     };
     document.addEventListener('edt:save', handler);
@@ -84,40 +73,15 @@ export function MnItm({
         img.revert();
       }
       didSaveRef.current = false;
-      if (nameRef.current)  nameRef.current.textContent  = displayNameRef.current;
-      if (descRef.current)  descRef.current.textContent  = displayDescRef.current;
-      if (priceRef.current) priceRef.current.textContent = pkFmt(rawPriceRef.current);
+      if (nameRef.current) nameRef.current.textContent = displayNameRef.current;
+      if (descRef.current) descRef.current.textContent = displayDescRef.current;
     }
   }, [isActive, img.commit, img.revert]);
 
-  const handlePriceInput = useCallback(() => {
-    const span = priceRef.current;
-    if (!span) return;
-    const raw      = span.textContent ?? '';
-    const filtered = raw.replace(/\D/g, '');
-    if (raw !== filtered) {
-      span.textContent = filtered;
-      const sel = window.getSelection();
-      const range = document.createRange();
-      if (span.firstChild) {
-        range.setStart(span.firstChild, filtered.length);
-        range.collapse(true);
-      } else {
-        range.selectNodeContents(span);
-        range.collapse(false);
-      }
-      sel?.removeAllRanges();
-      sel?.addRange(range);
-    }
-    setDirty(true);
-  }, []);
-
   const sel = qty > 0;
 
-  const displayName  = editedName  ?? name  ?? DEF_NAME;
-  const displayDesc  = editedDesc  ?? description ?? DEF_DESC;
-  const rawPrice     = editedPrice ?? stripCurrency(price ?? DEF_PRICE);
-  const displayPrice = pkFmt(rawPrice);
+  const displayName = editedName ?? name ?? DEF_NAME;
+  const displayDesc = editedDesc ?? description ?? DEF_DESC;
 
   const cls = [
     'mic-wpr',
