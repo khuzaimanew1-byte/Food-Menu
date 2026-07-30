@@ -42,17 +42,21 @@
 :root {
   --tx-sz-pri: clamp(1.25rem, 3.5vw, 1.50rem);
   --tx-sz-sec: clamp(0.92rem, 2.5vw, 1.05rem);
-  --tx-sz-ter: clamp(0.63rem, 1.7vw, 0.75rem);
+  --tx-sz-ter: clamp(0.3rem, 1.5vw, 0.55rem);
 
   --tx-lh-pri: 1.25;
   --tx-lh-sec: 1.40;
   --tx-lh-ter: 1.30;
 
   /* Colour aliases — semantic intent, not raw palette */
-  --tx-c-normal: rgb(var(--cr));      /* warm cream  — default body text  */
-  --tx-c-title:  rgb(var(--gl));      /* light gold  — headings, values   */
-  --tx-c-muted:  rgb(var(--mut));     /* slate grey  — supporting text    */
-  --tx-c-gold:   rgb(var(--gold));    /* bright gold — prices, highlights */
+  --tx-c-normal: rgb(var(--cr));
+  /* warm cream  — default body text  */
+  --tx-c-title: rgb(var(--gl));
+  /* light gold  — headings, values   */
+  --tx-c-muted: rgb(var(--mut));
+  /* slate grey  — supporting text    */
+  --tx-c-gold: rgb(var(--gold));
+  /* bright gold — prices, highlights */
 }
 
 /* ── Role tokens — full typographic personality, font-size excluded ─────── */
@@ -64,7 +68,7 @@
   --txr-ttl-ls: 0.10em;
   --txr-ttl-lh: 1.25;
   --txr-ttl-tt: uppercase;
-  --txr-ttl-c:  var(--tx-c-title);
+  --txr-ttl-c: var(--tx-c-title);
 
   /* txr-shd — section headings (bold bright gold) ──────────────────────── */
   --txr-shd-ff: var(--ffc);
@@ -72,7 +76,7 @@
   --txr-shd-ls: 0.14em;
   --txr-shd-lh: 1.2;
   --txr-shd-tt: uppercase;
-  --txr-shd-c:  var(--tx-c-gold);
+  --txr-shd-c: var(--tx-c-gold);
 
   /* txr-chd — card headings (item names, Cormorant) ────────────────────── */
   --txr-chd-ff: var(--ff);
@@ -80,7 +84,7 @@
   --txr-chd-ls: 0.01em;
   --txr-chd-lh: 1.2;
   --txr-chd-tt: capitalize;
-  --txr-chd-c:  var(--tx-c-title);
+  --txr-chd-c: var(--tx-c-title);
 
   /* txr-lbl — uppercase data labels (Cinzel, gold-tinted) ─────────────── */
   --txr-lbl-ff: var(--ffc);
@@ -88,7 +92,7 @@
   --txr-lbl-ls: 0.20em;
   --txr-lbl-lh: 1.3;
   --txr-lbl-tt: uppercase;
-  --txr-lbl-c:  rgba(var(--gold), 0.72);
+  --txr-lbl-c: rgba(var(--gold), 0.72);
 
   /* txr-bdy — body / flowing prose text ───────────────────────────────── */
   --txr-bdy-ff: var(--ff);
@@ -96,7 +100,7 @@
   --txr-bdy-ls: 0.01em;
   --txr-bdy-lh: 1.5;
   --txr-bdy-tt: none;
-  --txr-bdy-c:  var(--tx-c-normal);
+  --txr-bdy-c: var(--tx-c-normal);
 
   /* txr-sec — secondary / supporting text ─────────────────────────────── */
   --txr-sec-ff: var(--ff);
@@ -104,7 +108,7 @@
   --txr-sec-ls: 0.02em;
   --txr-sec-lh: 1.35;
   --txr-sec-tt: none;
-  --txr-sec-c:  rgba(var(--cr), 0.75);
+  --txr-sec-c: rgba(var(--cr), 0.75);
 
   /* txr-mut — muted / descriptive text ────────────────────────────────── */
   --txr-mut-ff: var(--ff);
@@ -112,7 +116,7 @@
   --txr-mut-ls: 0.03em;
   --txr-mut-lh: 1.2;
   --txr-mut-tt: none;
-  --txr-mut-c:  var(--tx-c-muted);
+  --txr-mut-c: var(--tx-c-muted);
 
   /* txr-cap — captions (upload hints, small footnotes) ────────────────── */
   --txr-cap-ff: var(--ff);
@@ -120,7 +124,7 @@
   --txr-cap-ls: 0.05em;
   --txr-cap-lh: 1.3;
   --txr-cap-tt: none;
-  --txr-cap-c:  rgba(var(--mut), 0.65);
+  --txr-cap-c: rgba(var(--mut), 0.65);
 
   /* txr-hlp — helper text / keyboard hints ────────────────────────────── */
   --txr-hlp-ff: var(--ff);
@@ -128,7 +132,7 @@
   --txr-hlp-ls: 0.04em;
   --txr-hlp-lh: 1.3;
   --txr-hlp-tt: none;
-  --txr-hlp-c:  rgba(var(--wht), 0.26);
+  --txr-hlp-c: rgba(var(--wht), 0.26);
 
   /* txr-prc — price numerics (gold, Cormorant) ────────────────────────── */
   --txr-prc-ff: var(--ff);
@@ -136,7 +140,7 @@
   --txr-prc-ls: 0.01em;
   --txr-prc-lh: 1;
   --txr-prc-tt: none;
-  --txr-prc-c:  var(--tx-c-gold);
+  --txr-prc-c: var(--tx-c-gold);
 
   /* txr-cur — currency prefix ("Rs.") ─────────────────────────────────── */
   --txr-cur-ff: var(--ff);
@@ -144,7 +148,7 @@
   --txr-cur-ls: 0.04em;
   --txr-cur-lh: 1;
   --txr-cur-tt: none;
-  --txr-cur-c:  rgba(var(--gold), 0.72);
+  --txr-cur-c: rgba(var(--gold), 0.72);
 
   /* txr-qty — quantities / numeric measurement tags ───────────────────── */
   --txr-qty-ff: var(--ffc);
@@ -152,7 +156,7 @@
   --txr-qty-ls: 0.05em;
   --txr-qty-lh: 1;
   --txr-qty-tt: none;
-  --txr-qty-c:  rgba(255, 200, 120, 0.92);
+  --txr-qty-c: rgba(255, 200, 120, 0.92);
 
   /* txr-unt — unit labels ("kg", "pcs", "ml") ─────────────────────────── */
   --txr-unt-ff: var(--ff);
@@ -160,16 +164,16 @@
   --txr-unt-ls: 0.04em;
   --txr-unt-lh: 1.3;
   --txr-unt-tt: none;
-  --txr-unt-c:  rgba(var(--gold), 0.85);
+  --txr-unt-c: rgba(var(--gold), 0.85);
 
   /* txr-sts — status / role / category badges ─────────────────────────── */
-  --txr-sts-ff:  var(--ffc);
-  --txr-sts-fw:  600;
-  --txr-sts-ls:  0.12em;
-  --txr-sts-lh:  1;
-  --txr-sts-tt:  uppercase;
+  --txr-sts-ff: var(--ffc);
+  --txr-sts-fw: 600;
+  --txr-sts-ls: 0.12em;
+  --txr-sts-lh: 1;
+  --txr-sts-tt: uppercase;
   --txr-sts-fst: italic;
-  --txr-sts-c:   rgb(var(--gl));
+  --txr-sts-c: rgb(var(--gl));
 
   /* txr-btn — action button text (Cinzel, uppercase) ──────────────────── */
   --txr-btn-ff: var(--ffc);
@@ -177,7 +181,7 @@
   --txr-btn-ls: 0.09em;
   --txr-btn-lh: 1;
   --txr-btn-tt: uppercase;
-  --txr-btn-c:  var(--tx-c-title);
+  --txr-btn-c: var(--tx-c-title);
 
   /* txr-inp — editable fields / contenteditable ───────────────────────── */
   --txr-inp-ff: var(--ff);
@@ -185,7 +189,7 @@
   --txr-inp-ls: 0.01em;
   --txr-inp-lh: 1.4;
   --txr-inp-tt: none;
-  --txr-inp-c:  rgb(var(--gl));
+  --txr-inp-c: rgb(var(--gl));
 
   /* txr-err — danger / error text ─────────────────────────────────────── */
   --txr-err-ff: var(--ff);
@@ -193,7 +197,7 @@
   --txr-err-ls: 0.04em;
   --txr-err-lh: 1.3;
   --txr-err-tt: none;
-  --txr-err-c:  rgb(var(--dngh));
+  --txr-err-c: rgb(var(--dngh));
 
   /* txr-ok — success / confirmation text ──────────────────────────────── */
   --txr-ok-ff: var(--ff);
@@ -201,14 +205,14 @@
   --txr-ok-ls: 0.04em;
   --txr-ok-lh: 1.3;
   --txr-ok-tt: none;
-  --txr-ok-c:  rgb(var(--ok));
+  --txr-ok-c: rgb(var(--ok));
 
   /* txr-phd — placeholder token — no class, use ::placeholder per component
      e.g. input::placeholder { font-family: var(--txr-phd-ff); color: var(--txr-phd-c); } */
   --txr-phd-ff: var(--ff);
   --txr-phd-fw: 400;
   --txr-phd-ls: 0.02em;
-  --txr-phd-c:  rgba(var(--mut), 0.55);
+  --txr-phd-c: rgba(var(--mut), 0.55);
 }
 
 /* ── Role utility classes — all role properties, font-size excluded ───────── */
@@ -216,121 +220,246 @@
 /* then set font-size (and only font-size) in the component class.             */
 
 .txr-ttl {
-  font-family: var(--txr-ttl-ff); font-weight: var(--txr-ttl-fw);
-  letter-spacing: var(--txr-ttl-ls); line-height: var(--txr-ttl-lh);
-  text-transform: var(--txr-ttl-tt); color: var(--txr-ttl-c);
+  font-family: var(--txr-ttl-ff);
+  font-weight: var(--txr-ttl-fw);
+  letter-spacing: var(--txr-ttl-ls);
+  line-height: var(--txr-ttl-lh);
+  text-transform: var(--txr-ttl-tt);
+  color: var(--txr-ttl-c);
 }
+
 .txr-shd {
-  font-family: var(--txr-shd-ff); font-weight: var(--txr-shd-fw);
-  letter-spacing: var(--txr-shd-ls); line-height: var(--txr-shd-lh);
-  text-transform: var(--txr-shd-tt); color: var(--txr-shd-c);
+  font-family: var(--txr-shd-ff);
+  font-weight: var(--txr-shd-fw);
+  letter-spacing: var(--txr-shd-ls);
+  line-height: var(--txr-shd-lh);
+  text-transform: var(--txr-shd-tt);
+  color: var(--txr-shd-c);
 }
+
 .txr-chd {
-  font-family: var(--txr-chd-ff); font-weight: var(--txr-chd-fw);
-  letter-spacing: var(--txr-chd-ls); line-height: var(--txr-chd-lh);
-  text-transform: var(--txr-chd-tt); color: var(--txr-chd-c);
+  font-family: var(--txr-chd-ff);
+  font-weight: var(--txr-chd-fw);
+  letter-spacing: var(--txr-chd-ls);
+  line-height: var(--txr-chd-lh);
+  text-transform: var(--txr-chd-tt);
+  color: var(--txr-chd-c);
 }
+
 .txr-lbl {
-  font-family: var(--txr-lbl-ff); font-weight: var(--txr-lbl-fw);
-  letter-spacing: var(--txr-lbl-ls); line-height: var(--txr-lbl-lh);
-  text-transform: var(--txr-lbl-tt); color: var(--txr-lbl-c);
+  font-family: var(--txr-lbl-ff);
+  font-weight: var(--txr-lbl-fw);
+  letter-spacing: var(--txr-lbl-ls);
+  line-height: var(--txr-lbl-lh);
+  text-transform: var(--txr-lbl-tt);
+  color: var(--txr-lbl-c);
 }
+
 .txr-bdy {
-  font-family: var(--txr-bdy-ff); font-weight: var(--txr-bdy-fw);
-  letter-spacing: var(--txr-bdy-ls); line-height: var(--txr-bdy-lh);
-  text-transform: var(--txr-bdy-tt); color: var(--txr-bdy-c);
+  font-family: var(--txr-bdy-ff);
+  font-weight: var(--txr-bdy-fw);
+  letter-spacing: var(--txr-bdy-ls);
+  line-height: var(--txr-bdy-lh);
+  text-transform: var(--txr-bdy-tt);
+  color: var(--txr-bdy-c);
 }
+
 .txr-sec {
-  font-family: var(--txr-sec-ff); font-weight: var(--txr-sec-fw);
-  letter-spacing: var(--txr-sec-ls); line-height: var(--txr-sec-lh);
-  text-transform: var(--txr-sec-tt); color: var(--txr-sec-c);
+  font-family: var(--txr-sec-ff);
+  font-weight: var(--txr-sec-fw);
+  letter-spacing: var(--txr-sec-ls);
+  line-height: var(--txr-sec-lh);
+  text-transform: var(--txr-sec-tt);
+  color: var(--txr-sec-c);
 }
+
 .txr-mut {
-  font-family: var(--txr-mut-ff); font-weight: var(--txr-mut-fw);
-  letter-spacing: var(--txr-mut-ls); line-height: var(--txr-mut-lh);
-  text-transform: var(--txr-mut-tt); color: var(--txr-mut-c);
+  font-family: var(--txr-mut-ff);
+  font-weight: var(--txr-mut-fw);
+  letter-spacing: var(--txr-mut-ls);
+  line-height: var(--txr-mut-lh);
+  text-transform: var(--txr-mut-tt);
+  color: var(--txr-mut-c);
 }
+
 .txr-cap {
-  font-family: var(--txr-cap-ff); font-weight: var(--txr-cap-fw);
-  letter-spacing: var(--txr-cap-ls); line-height: var(--txr-cap-lh);
-  text-transform: var(--txr-cap-tt); color: var(--txr-cap-c);
+  font-family: var(--txr-cap-ff);
+  font-weight: var(--txr-cap-fw);
+  letter-spacing: var(--txr-cap-ls);
+  line-height: var(--txr-cap-lh);
+  text-transform: var(--txr-cap-tt);
+  color: var(--txr-cap-c);
 }
+
 .txr-hlp {
-  font-family: var(--txr-hlp-ff); font-weight: var(--txr-hlp-fw);
-  letter-spacing: var(--txr-hlp-ls); line-height: var(--txr-hlp-lh);
-  text-transform: var(--txr-hlp-tt); color: var(--txr-hlp-c);
+  font-family: var(--txr-hlp-ff);
+  font-weight: var(--txr-hlp-fw);
+  letter-spacing: var(--txr-hlp-ls);
+  line-height: var(--txr-hlp-lh);
+  text-transform: var(--txr-hlp-tt);
+  color: var(--txr-hlp-c);
 }
+
 .txr-prc {
-  font-family: var(--txr-prc-ff); font-weight: var(--txr-prc-fw);
-  letter-spacing: var(--txr-prc-ls); line-height: var(--txr-prc-lh);
-  text-transform: var(--txr-prc-tt); color: var(--txr-prc-c);
+  font-family: var(--txr-prc-ff);
+  font-weight: var(--txr-prc-fw);
+  letter-spacing: var(--txr-prc-ls);
+  line-height: var(--txr-prc-lh);
+  text-transform: var(--txr-prc-tt);
+  color: var(--txr-prc-c);
 }
+
 .txr-cur {
-  font-family: var(--txr-cur-ff); font-weight: var(--txr-cur-fw);
-  letter-spacing: var(--txr-cur-ls); line-height: var(--txr-cur-lh);
-  text-transform: var(--txr-cur-tt); color: var(--txr-cur-c);
+  font-family: var(--txr-cur-ff);
+  font-weight: var(--txr-cur-fw);
+  letter-spacing: var(--txr-cur-ls);
+  line-height: var(--txr-cur-lh);
+  text-transform: var(--txr-cur-tt);
+  color: var(--txr-cur-c);
 }
+
 .txr-qty {
-  font-family: var(--txr-qty-ff); font-weight: var(--txr-qty-fw);
-  letter-spacing: var(--txr-qty-ls); line-height: var(--txr-qty-lh);
-  text-transform: var(--txr-qty-tt); color: var(--txr-qty-c);
+  font-family: var(--txr-qty-ff);
+  font-weight: var(--txr-qty-fw);
+  letter-spacing: var(--txr-qty-ls);
+  line-height: var(--txr-qty-lh);
+  text-transform: var(--txr-qty-tt);
+  color: var(--txr-qty-c);
 }
+
 .txr-unt {
-  font-family: var(--txr-unt-ff); font-weight: var(--txr-unt-fw);
-  letter-spacing: var(--txr-unt-ls); line-height: var(--txr-unt-lh);
-  text-transform: var(--txr-unt-tt); color: var(--txr-unt-c);
+  font-family: var(--txr-unt-ff);
+  font-weight: var(--txr-unt-fw);
+  letter-spacing: var(--txr-unt-ls);
+  line-height: var(--txr-unt-lh);
+  text-transform: var(--txr-unt-tt);
+  color: var(--txr-unt-c);
 }
+
 .txr-sts {
-  font-family: var(--txr-sts-ff); font-weight: var(--txr-sts-fw);
-  letter-spacing: var(--txr-sts-ls); line-height: var(--txr-sts-lh);
-  text-transform: var(--txr-sts-tt); font-style: var(--txr-sts-fst);
+  font-family: var(--txr-sts-ff);
+  font-weight: var(--txr-sts-fw);
+  letter-spacing: var(--txr-sts-ls);
+  line-height: var(--txr-sts-lh);
+  text-transform: var(--txr-sts-tt);
+  font-style: var(--txr-sts-fst);
   color: var(--txr-sts-c);
 }
+
 .txr-btn {
-  font-family: var(--txr-btn-ff); font-weight: var(--txr-btn-fw);
-  letter-spacing: var(--txr-btn-ls); line-height: var(--txr-btn-lh);
-  text-transform: var(--txr-btn-tt); color: var(--txr-btn-c);
+  font-family: var(--txr-btn-ff);
+  font-weight: var(--txr-btn-fw);
+  letter-spacing: var(--txr-btn-ls);
+  line-height: var(--txr-btn-lh);
+  text-transform: var(--txr-btn-tt);
+  color: var(--txr-btn-c);
 }
+
 .txr-inp {
-  font-family: var(--txr-inp-ff); font-weight: var(--txr-inp-fw);
-  letter-spacing: var(--txr-inp-ls); line-height: var(--txr-inp-lh);
-  text-transform: var(--txr-inp-tt); color: var(--txr-inp-c);
+  font-family: var(--txr-inp-ff);
+  font-weight: var(--txr-inp-fw);
+  letter-spacing: var(--txr-inp-ls);
+  line-height: var(--txr-inp-lh);
+  text-transform: var(--txr-inp-tt);
+  color: var(--txr-inp-c);
 }
+
 .txr-err {
-  font-family: var(--txr-err-ff); font-weight: var(--txr-err-fw);
-  letter-spacing: var(--txr-err-ls); line-height: var(--txr-err-lh);
-  text-transform: var(--txr-err-tt); color: var(--txr-err-c);
+  font-family: var(--txr-err-ff);
+  font-weight: var(--txr-err-fw);
+  letter-spacing: var(--txr-err-ls);
+  line-height: var(--txr-err-lh);
+  text-transform: var(--txr-err-tt);
+  color: var(--txr-err-c);
 }
+
 .txr-ok {
-  font-family: var(--txr-ok-ff); font-weight: var(--txr-ok-fw);
-  letter-spacing: var(--txr-ok-ls); line-height: var(--txr-ok-lh);
-  text-transform: var(--txr-ok-tt); color: var(--txr-ok-c);
+  font-family: var(--txr-ok-ff);
+  font-weight: var(--txr-ok-fw);
+  letter-spacing: var(--txr-ok-ls);
+  line-height: var(--txr-ok-lh);
+  text-transform: var(--txr-ok-tt);
+  color: var(--txr-ok-c);
 }
 
 /* ── Legacy low-level utilities — kept for backward compatibility ─────────── */
 /* Prefer txr-* semantic classes for new work                                  */
 
-.ff-s { font-family: var(--ff);  }   /* Cormorant Garamond */
-.ff-c { font-family: var(--ffc); }   /* Cinzel             */
+.ff-s {
+  font-family: var(--ff);
+}
 
-.tx-pri { font-size: var(--tx-sz-pri); line-height: var(--tx-lh-pri); }
-.tx-sec { font-size: var(--tx-sz-sec); line-height: var(--tx-lh-sec); }
-.tx-ter { font-size: var(--tx-sz-ter); line-height: var(--tx-lh-ter); }
+/* Cormorant Garamond */
+.ff-c {
+  font-family: var(--ffc);
+}
 
-.fw-thin { font-weight: 300; }
-.fw-reg  { font-weight: 400; }
-.fw-med  { font-weight: 500; }
-.fw-mbd  { font-weight: 600; }
-.fw-bld  { font-weight: 700; }
+/* Cinzel             */
 
-.tx-normal { color: var(--tx-c-normal); }
-.tx-title  { color: var(--tx-c-title);  }
-.tx-muted  { color: var(--tx-c-muted);  }
-.tx-gold   { color: var(--tx-c-gold);   }
+.tx-pri {
+  font-size: var(--tx-sz-pri);
+  line-height: var(--tx-lh-pri);
+}
 
-.tx-caps   { text-transform: uppercase; letter-spacing: 0.12em; }
-.tx-caps-w { text-transform: uppercase; letter-spacing: 0.20em; }
-.tx-ital   { font-style: italic; }
+.tx-sec {
+  font-size: var(--tx-sz-sec);
+  line-height: var(--tx-lh-sec);
+}
+
+.tx-ter {
+  font-size: var(--tx-sz-ter);
+  line-height: var(--tx-lh-ter);
+}
+
+.fw-thin {
+  font-weight: 300;
+}
+
+.fw-reg {
+  font-weight: 400;
+}
+
+.fw-med {
+  font-weight: 500;
+}
+
+.fw-mbd {
+  font-weight: 600;
+}
+
+.fw-bld {
+  font-weight: 700;
+}
+
+.tx-normal {
+  color: var(--tx-c-normal);
+}
+
+.tx-title {
+  color: var(--tx-c-title);
+}
+
+.tx-muted {
+  color: var(--tx-c-muted);
+}
+
+.tx-gold {
+  color: var(--tx-c-gold);
+}
+
+.tx-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.tx-caps-w {
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+}
+
+.tx-ital {
+  font-style: italic;
+}
 
 /* ── cqw overrides inside MnPg ────────────────────────────────────────────
    When inside the menu-page container (.pg-wrap), override --tx-sz-* with
@@ -347,10 +476,10 @@
 /* ── tx-disp — gold-glow display numerics (prices, page numbers) ─────────
    Builds on txr-prc personality; adds luminous text-shadow treatment.     */
 .tx-disp {
-  font-family:    var(--txr-prc-ff);
-  font-weight:    var(--txr-prc-fw);
+  font-family: var(--txr-prc-ff);
+  font-weight: var(--txr-prc-fw);
   letter-spacing: 0.05em;
-  color:          var(--txr-prc-c);
+  color: var(--txr-prc-c);
   text-shadow:
     0 0 10px rgba(var(--gold), 0.50),
     0 0 22px rgba(var(--gold), 0.22);
